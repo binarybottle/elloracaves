@@ -1,0 +1,7 @@
+images
+#*
+~*
+.DS_store
+.next
+poetry.lock 
+pyproject.toml

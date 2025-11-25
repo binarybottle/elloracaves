@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-50 text-gray-900;
+  }
+}
+
+@layer components {
+  .cave-card {
+    @apply bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow p-4;
+  }
+  
+  .image-marker {
+    @apply absolute w-4 h-4 bg-primary-500 rounded-full border-2 border-white shadow-md cursor-pointer hover:scale-125 transition-transform;
+  }
+  
+  .image-marker.active {
+    @apply bg-primary-400 scale-125;
+  }
+}
