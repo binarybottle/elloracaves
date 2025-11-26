@@ -33,13 +33,13 @@ export interface Image {
   thumbnail_url: string;
 }
 
-export interface ImageDetail extends Image {
+interface ImageDetail extends Image {
   motifs?: string;
   medium?: string;
   plan_id?: number;
   floor_number?: number;
+  photographer?: string;
 }
-
 export interface FloorPlan {
   id: number;
   floor_number: number;

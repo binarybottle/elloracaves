@@ -12,7 +12,7 @@ def get_image(image_id: int):
                    i.image_motifs, i.image_medium, i."image_cave_ID", i."image_plan_ID",
                    i.image_plan_x_num, i.image_plan_y_num,
                    i.image_plan_x_norm, i.image_plan_y_norm,
-                   p.plan_floor
+                   p.plan_floor, i.image_photographer
             FROM images i
             LEFT JOIN plans p ON i."image_plan_ID" = p."plan_ID"
             WHERE i."image_ID" = :id
@@ -29,6 +29,7 @@ def get_image(image_id: int):
             "cave_id": image[6],
             "plan_id": image[7],
             "floor_number": image[12],
+            "photographer": image[13],
             "coordinates": {
                 "plan_x_px": image[8],
                 "plan_y_px": image[9],
