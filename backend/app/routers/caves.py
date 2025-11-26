@@ -101,7 +101,8 @@ def get_cave_floor_images(cave_number: str, floor_number: int):
                    image_plan_x_norm, image_plan_y_norm,
                    image_thumbnail
             FROM images
-            WHERE "image_plan_ID" = :plan_id AND image_rank = 1
+            WHERE "image_plan_ID" = :plan_id 
+            AND image_rank = 1
             ORDER BY image_file
         '''), {"plan_id": plan[0]}).fetchall()
         

@@ -1,8 +1,9 @@
 // components/cave/FloorPlanSidebar.tsx
 'use client';
 
-import Link from 'next/link';
-import { Layers } from 'lucide-react';
+import ImageWithFallback from '@/components/image/ImageWithFallback';
+
+const IMAGE_BASE_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api/v1', '') || 'http://localhost:8000';
 
 interface FloorPlanSidebarProps {
   floors: any[];
@@ -29,8 +30,13 @@ export default function FloorPlanSidebar({
             selectedFloor === floor.floor_number ? 'opacity-100' : 'opacity-60 hover:opacity-80'
           }`}
         >
-          <div className="bg-gray-800 rounded-lg p-2 mb-1">
-            <Layers className="h-12 w-12 mx-auto text-gray-400" />
+          <div className="bg-black rounded-lg overflow-hidden mb-1 relative" style={{ aspectRatio: `${floor.plan_width}/${floor.plan_height}` }}>
+            <ImageWithFallback
+              src={`${IMAGE_BASE_URL}/images/plans/${floor.plan_image}`}
+              alt={`Floor ${floor.floor_number}`}
+              fill
+              className="object-contain"
+            />
           </div>
           <div className="text-sm text-[#eae2c4]">
             floor {floor.floor_number}

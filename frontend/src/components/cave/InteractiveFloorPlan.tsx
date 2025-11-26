@@ -50,6 +50,8 @@ export default function InteractiveFloorPlan({
 
   const imagesWithCoords = images.filter(
     (img) =>
+      img.image_url &&
+      img.image_url.trim() !== '' &&
       img.coordinates?.plan_x_norm !== null &&
       img.coordinates?.plan_x_norm !== undefined &&
       img.coordinates?.plan_y_norm !== null &&
@@ -59,11 +61,9 @@ export default function InteractiveFloorPlan({
   const planImageUrl = `${IMAGE_BASE_URL}/images/plans/${plan.plan_image}`;
 
   return (
-    <div className="relative">
-      <h2 className="text-lg font-semibold mb-3 text-[#eae2c4]">Floor Plan</h2>
-      
+    <div className="relative flex flex-col">
       <div
-        className="relative bg-gray-900 rounded-lg overflow-hidden"
+        className="relative bg-black rounded-lg overflow-hidden"
         style={{ aspectRatio: `${plan.plan_width}/${plan.plan_height}` }}
       >
         {/* Loading Spinner */}
@@ -108,16 +108,14 @@ export default function InteractiveFloorPlan({
                     isHovered || isSelected ? 'scale-125' : 'scale-100'
                   } transition-transform`}
                 >
-                  {/* Marker icon */}
-                  <div
-                    className={`w-2 h-2 rounded-full ${
-                      isSelected
-                        ? 'bg-[#6ebd20]'
-                        : isHovered
-                        ? 'bg-[#487a14]'
-                        : 'bg-[#487a14]'
-                    } border-2 border-white shadow-lg`}
-                  />
+                  {/* Marker icon - green with white center when unselected, solid red when selected */}
+                  {isSelected ? (
+                    <div className="w-2 h-2 rounded-full bg-red-600 shadow-lg" />
+                  ) : (
+                    <div className="w-2 h-2 rounded-full bg-[#6ebd20] shadow-lg flex items-center justify-center">
+                      <div className="w-1 h-1 rounded-full bg-white" />
+                    </div>
+                  )}
                   
                   {/* Tooltip on hover/select */}
                   {(isHovered || isSelected) && img.subject && (

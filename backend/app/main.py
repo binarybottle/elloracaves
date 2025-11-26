@@ -20,8 +20,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Mount images directory - check both Docker and local paths
 if os.path.exists("/app/images"):
     app.mount("/images", StaticFiles(directory="/app/images"), name="images")
+elif os.path.exists("../images"):
+    app.mount("/images", StaticFiles(directory="../images"), name="images")
+elif os.path.exists("images"):
+    app.mount("/images", StaticFiles(directory="images"), name="images")
 
 app.include_router(caves.router, prefix="/api/v1/caves", tags=["caves"])
 app.include_router(images.router, prefix="/api/v1/images", tags=["images"])

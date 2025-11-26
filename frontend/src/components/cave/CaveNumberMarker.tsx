@@ -10,11 +10,11 @@ export default function CaveNumberMarker({ size = 20 }: { size?: number }) {
       className="absolute"
     >
       {/* Outer glow */}
-      <circle cx="10" cy="10" r="9" fill="#6ebd20" opacity="0.3" />
+      <circle cx="10" cy="10" r="9" fill="#ef4444" opacity="0.3" />
       {/* Main circle */}
-      <circle cx="10" cy="10" r="7" fill="#6ebd20" />
+      <circle cx="10" cy="10" r="7" fill="#dc2626" />
       {/* Inner highlight */}
-      <circle cx="10" cy="10" r="5" fill="#8ed83f" opacity="0.5" />
+      <circle cx="10" cy="10" r="5" fill="#ef4444" opacity="0.5" />
       {/* Center dot */}
       <circle cx="10" cy="10" r="3" fill="#fff" opacity="0.8" />
     </svg>

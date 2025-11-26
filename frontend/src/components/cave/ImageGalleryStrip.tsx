@@ -20,11 +20,13 @@ export default function ImageGalleryStrip({
   cave,
   floorNumber
 }: ImageGalleryStripProps) {
+  const validImages = images.filter(img => img.image_url && img.image_url.trim() !== '');
+  
   return (
-    <div className="bg-gray-900/50 rounded-lg p-6">
+    <div className="bg-black p-6">
       <div className="mb-4 text-[#eae2c4]">
-        <span className="text-lg">
-          {images.length} result{images.length !== 1 ? 's' : ''}
+        <span className="text-base">
+          {validImages.length} result{validImages.length !== 1 ? 's' : ''}
         </span>
         {cave && (
           <span className="text-sm">
@@ -33,24 +35,37 @@ export default function ImageGalleryStrip({
         )}
       </div>
 
-      <div className="flex gap-2 overflow-x-auto pb-2">
-        {images.map((image) => (
-          <button
-            key={image.id}
-            onClick={() => onImageSelect(image)}
-            className={`flex-shrink-0 relative ${
-              selectedImageId === image.id ? 'ring-2 ring-[#6ebd20]' : ''
-            }`}
-          >
-            <ImageWithFallback
-              src={`${IMAGE_BASE_URL}${image.thumbnail_url || image.image_url}`}
-              alt={image.subject || `Image ${image.id}`}
-              width={120}
-              height={100}
-              className="object-cover rounded"
-            />
-          </button>
-        ))}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2">
+        {validImages.map((image) => {
+          const hasCoordinates = image.coordinates?.plan_x_norm !== null && 
+                                 image.coordinates?.plan_x_norm !== undefined &&
+                                 image.coordinates?.plan_y_norm !== null && 
+                                 image.coordinates?.plan_y_norm !== undefined;
+          
+          return (
+            <button
+              key={image.id}
+              onClick={() => onImageSelect(image)}
+              className="relative block"
+            >
+              <div className={`relative ${
+                selectedImageId === image.id ? 'ring-2 ring-red-600 rounded' : ''
+              }`}>
+                <ImageWithFallback
+                  src={`${IMAGE_BASE_URL}${image.thumbnail_url || image.image_url}`}
+                  alt={image.subject || `Image ${image.id}`}
+                  width={120}
+                  height={100}
+                  className="object-cover rounded w-full"
+                />
+                {/* Green dot indicator for images with floor plan coordinates */}
+                {hasCoordinates && (
+                  <div className="absolute top-1 right-1 w-2 h-2 bg-[#6ebd20] rounded-full border border-white shadow-sm" />
+                )}
+              </div>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
