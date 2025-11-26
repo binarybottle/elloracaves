@@ -23,7 +23,7 @@ export default function CaveCard({ cave }: CaveCardProps) {
   const colorClass = traditionColors[cave.tradition as keyof typeof traditionColors] || 'bg-gray-100 text-gray-800';
 
   return (
-    <Link href={`/caves/${cave.cave_number}`} className="cave-card block">
+    <Link href={`/explore?cave=${cave.cave_number}&floor=1`} className="cave-card block">
       <div className="flex items-start justify-between mb-2">
         <div>
           <h3 className="text-xl font-semibold text-gray-900">

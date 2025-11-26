@@ -7,3 +7,4 @@ __pycache__
 .next
 poetry.lock 
 pyproject.toml
+node_modules

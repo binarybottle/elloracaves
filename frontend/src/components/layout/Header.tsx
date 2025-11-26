@@ -29,8 +29,8 @@ export default function Header() {
             <Link href="/" className="text-gray-700 hover:text-primary-600 transition-colors">
               Home
             </Link>
-            <Link href="/caves" className="text-gray-700 hover:text-primary-600 transition-colors">
-              Browse Caves
+            <Link href="/explore?cave=10&floor=1" className="text-gray-700 hover:text-primary-600 transition-colors">
+              Explorer
             </Link>
             <Link href="/search" className="text-gray-700 hover:text-primary-600 transition-colors">
               Search
@@ -62,11 +62,11 @@ export default function Header() {
               Home
             </Link>
             <Link
-              href="/caves"
+              href="/explore?cave=10&floor=1"
               className="block py-2 text-gray-700 hover:text-primary-600 transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Browse Caves
+              Explorer
             </Link>
             <Link
               href="/search"
