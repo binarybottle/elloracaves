@@ -117,9 +117,14 @@ export default function InteractiveFloorPlan({
                     </div>
                   )}
                   
-                  {/* Tooltip on hover/select */}
+                  {/* Tooltip on hover/select - positioned to avoid cutoff */}
                   {(isHovered || isSelected) && img.subject && (
-                    <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 bg-gray-900 text-white text-xs rounded px-2 py-1 whitespace-nowrap z-30 shadow-lg border border-gray-700">
+                    <div className="fixed bg-gray-900 text-white text-xs rounded px-2 py-1 whitespace-nowrap z-50 shadow-lg border border-gray-700 max-w-xs pointer-events-none"
+                      style={{
+                        left: `${Math.min(Math.max(x, 10), 90)}%`,
+                        top: `${Math.min(y + 5, 85)}%`
+                      }}
+                    >
                       {img.subject}
                     </div>
                   )}

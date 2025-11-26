@@ -168,7 +168,7 @@ export default function CaveMap({ selectedCaveId, className = '' }: CaveMapProps
               window.location.href = `/explore?cave=${caveId}&floor=1`;
             }}
             className="
-              bg-white text-black border-2 border-gray-300 
+              bg-black text-white border-2 border-gray-600 
               rounded-lg px-4 py-2 text-base font-bold
               hover:border-gray-400
               focus:outline-none focus:ring-2 focus:ring-gray-400
@@ -176,7 +176,7 @@ export default function CaveMap({ selectedCaveId, className = '' }: CaveMapProps
               transition-all duration-200
             "
           >
-            <option value="" disabled className="bg-white text-gray-500">
+            <option value="" disabled className="bg-black text-gray-500">
               Select a cave...
             </option>
             {allCaves.map(([caveId, position]) => {
@@ -188,7 +188,7 @@ export default function CaveMap({ selectedCaveId, className = '' }: CaveMapProps
                 <option 
                   key={caveId} 
                   value={caveId}
-                  className="bg-white text-black py-2"
+                  className="bg-black text-white py-2"
                 >
                   {displayLabel}
                 </option>

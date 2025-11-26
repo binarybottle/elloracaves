@@ -8,32 +8,63 @@ router = APIRouter()
 def search_images(
     q: str = Query(..., min_length=1),
     cave_id: int = Query(None),
+    floor_number: int = Query(None),
     page: int = Query(1, ge=1),
-    page_size: int = Query(20, ge=1, le=100)
+    page_size: int = Query(20, ge=1, le=100),
+    fuzzy: bool = Query(True)  # Enable fuzzy search by default
 ):
     skip = (page - 1) * page_size
     with engine.connect() as conn:
         where_clauses = ["image_rank = 1"]
         params = {"query": q, "skip": skip, "limit": page_size}
+        
         if cave_id:
             where_clauses.append('"image_cave_ID" = :cave_id')
             params["cave_id"] = cave_id
+            
+        if floor_number:
+            # Join with plans table to filter by floor
+            where_clauses.append('EXISTS (SELECT 1 FROM plans p WHERE p."plan_ID" = images."image_plan_ID" AND p.plan_floor = :floor_number)')
+            params["floor_number"] = floor_number
+            
         where_sql = " AND ".join(where_clauses)
+        
+        # Build search condition with fuzzy matching
+        if fuzzy:
+            # Use both full-text search AND trigram similarity for fuzzy matching
+            search_condition = '''(
+                search_vector @@ plainto_tsquery('english', :query)
+                OR similarity(image_subject, :query) > 0.3
+                OR similarity(image_description, :query) > 0.2
+                OR similarity(image_motifs, :query) > 0.3
+            )'''
+        else:
+            # Exact full-text search only
+            search_condition = "search_vector @@ plainto_tsquery('english', :query)"
+        
         # Get total count
         count_query = f'''
             SELECT COUNT(*) FROM images
             WHERE {where_sql}
-            AND search_vector @@ plainto_tsquery('english', :query)
+            AND {search_condition}
         '''
         total = conn.execute(text(count_query), params).scalar()
-        # Get results
+        
+        # Get results with relevance ranking
         search_query = f'''
             SELECT "image_ID", image_file, image_subject, image_description,
-                   "image_cave_ID"
+                   "image_cave_ID",
+                   COALESCE(
+                       ts_rank(search_vector, plainto_tsquery('english', :query)),
+                       0
+                   ) + 
+                   COALESCE(similarity(image_subject, :query), 0) * 2 +
+                   COALESCE(similarity(image_description, :query), 0) +
+                   COALESCE(similarity(image_motifs, :query), 0) as relevance
             FROM images
             WHERE {where_sql}
-            AND search_vector @@ plainto_tsquery('english', :query)
-            ORDER BY image_file
+            AND {search_condition}
+            ORDER BY relevance DESC, image_file
             OFFSET :skip LIMIT :limit
         '''
         results = conn.execute(text(search_query), params).fetchall()

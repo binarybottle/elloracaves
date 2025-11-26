@@ -3,12 +3,14 @@
 
 import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { Search } from 'lucide-react';
 import CaveMap from '@/components/cave/CaveMap';
 import FloorPlanSidebar from '@/components/cave/FloorPlanSidebar';
 import InteractiveFloorPlan from '@/components/cave/InteractiveFloorPlan';
 import ImageDisplay from '@/components/cave/ImageDisplay';
 import ImageInfoPanel from '@/components/cave/ImageInfoPanel';
 import ImageGalleryStrip from '@/components/cave/ImageGalleryStrip';
+import SearchOverlay from '@/components/search/SearchOverlay';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
 
@@ -24,6 +26,7 @@ export default function ExplorePage() {
   const [floorImages, setFloorImages] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   // Fetch cave data
   useEffect(() => {
@@ -36,12 +39,21 @@ export default function ExplorePage() {
         const res = await fetch(`${API_URL}/caves/${caveId}`);
         const data = await res.json();
         setCave(data);
+        
+        // Check if selected floor exists, if not redirect to floor 1
+        if (data && data.plans && data.plans.length > 0) {
+          const hasFloor = data.plans.some((p: any) => p.floor_number === floorNumber);
+          if (!hasFloor) {
+            // Redirect to floor 1 of this cave
+            router.replace(`/explore?cave=${caveId}&floor=1`);
+          }
+        }
       } catch (error) {
         console.error('Error fetching cave:', error);
       }
     }
     fetchCave();
-  }, [caveId]);
+  }, [caveId, floorNumber, router]);
 
   // Fetch floor images
   useEffect(() => {
@@ -124,6 +136,22 @@ export default function ExplorePage() {
     router.push(`/explore?cave=${caveId}&floor=${floorNumber}&image=${image.id}`, { scroll: false });
   };
 
+  const handleSearchSelect = (searchCaveId: number, searchFloorNumber: number, searchImageId: number) => {
+    router.push(`/explore?cave=${searchCaveId}&floor=${searchFloorNumber}&image=${searchImageId}`);
+  };
+
+  // Keyboard shortcut: Cmd/Ctrl + K
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setSearchOpen(true);
+      }
+    };
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, []);
+
   const currentPlan = cave?.plans?.find((p: any) => p.floor_number === floorNumber);
 
   if (loading) {
@@ -134,13 +162,47 @@ export default function ExplorePage() {
     );
   }
 
+  // If cave has no plans or selected floor doesn't exist, show message
+  if (cave && (!cave.plans || cave.plans.length === 0)) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-center text-[#eae2c4]">
+          <p className="text-xl mb-2">No floor plans available for Cave {caveId}</p>
+          <button
+            onClick={() => router.push('/explore?cave=10&floor=1')}
+            className="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg"
+          >
+            Go to Cave 10
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-black text-[#eae2c4]">
+      {/* Search Overlay */}
+      {searchOpen && (
+        <SearchOverlay 
+          onClose={() => setSearchOpen(false)} 
+          onImageSelect={handleSearchSelect}
+        />
+      )}
+
       {/* Header Section with Cave Map - Hidden on mobile */}
       <header className="relative w-full overflow-hidden hidden md:block">
-        {/* Title */}
-        <div className="absolute left-5 top-4 z-20">
+        {/* Title and Search Button */}
+        <div className="absolute left-5 top-4 z-20 flex items-center gap-4">
           <h1 className="text-3xl">The Ellora caves</h1>
+          <button
+            onClick={() => setSearchOpen(true)}
+            className="flex items-center gap-2 px-4 py-2 bg-black/90 hover:bg-black border-2 border-gray-600 hover:border-gray-400 rounded-lg text-white transition-all"
+            title="Search images (Cmd/Ctrl + K)"
+          >
+            <Search className="h-5 w-5" />
+            <span className="hidden lg:inline">Search</span>
+            <kbd className="hidden lg:inline px-2 py-0.5 text-xs bg-gray-800 rounded border border-gray-600">⌘K</kbd>
+          </button>
         </div>
 
         {/* Cave Map with clickable numbers */}
@@ -152,9 +214,17 @@ export default function ExplorePage() {
         </div>
       </header>
 
-      {/* Mobile Title - Only shown on mobile */}
+      {/* Mobile Title and Search - Only shown on mobile */}
       <div className="block md:hidden px-4 pt-4 pb-2">
-        <h1 className="text-2xl text-[#eae2c4]">The Ellora caves</h1>
+        <div className="flex items-center justify-between">
+          <h1 className="text-2xl text-[#eae2c4]">The Ellora caves</h1>
+          <button
+            onClick={() => setSearchOpen(true)}
+            className="flex items-center gap-2 px-3 py-2 bg-black border-2 border-gray-600 rounded-lg text-white"
+          >
+            <Search className="h-5 w-5" />
+          </button>
+        </div>
       </div>
 
       {/* Main Content Area */}
@@ -208,9 +278,9 @@ export default function ExplorePage() {
                 <button
                   key={plan.floor_number}
                   onClick={() => handleFloorSelect(plan.floor_number)}
-                  className={`px-4 py-2 rounded ${
+                  className={`px-4 py-2 rounded font-semibold ${
                     plan.floor_number === floorNumber
-                      ? 'bg-[#487a14] text-white'
+                      ? 'bg-white text-black'
                       : 'bg-black text-[#eae2c4] border border-gray-700'
                   }`}
                 >
@@ -251,7 +321,7 @@ export default function ExplorePage() {
               const newCaveId = e.target.value;
               window.location.href = `/explore?cave=${newCaveId}&floor=1`;
             }}
-            className="w-full bg-white text-black border-2 border-gray-300 rounded-lg px-4 py-2 text-base font-bold"
+            className="w-full bg-black text-white border-2 border-gray-600 rounded-lg px-4 py-2 text-base font-bold"
           >
             <option value="" disabled>Select a cave...</option>
             {/* All main caves 1-34 */}
@@ -284,9 +354,9 @@ export default function ExplorePage() {
                 <button
                   key={plan.floor_number}
                   onClick={() => handleFloorSelect(plan.floor_number)}
-                  className={`px-4 py-2 rounded whitespace-nowrap ${
+                  className={`px-4 py-2 rounded whitespace-nowrap font-semibold ${
                     plan.floor_number === floorNumber
-                      ? 'bg-[#487a14] text-white'
+                      ? 'bg-white text-black'
                       : 'bg-black text-[#eae2c4] border border-gray-700'
                   }`}
                 >
