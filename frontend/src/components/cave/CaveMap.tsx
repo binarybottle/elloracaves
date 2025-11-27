@@ -23,60 +23,61 @@ type CavePosition = {
   label?: string;
   fontSize?: string;
   extraCave?: boolean; // for right-side list
+  highlight?: boolean; // show circle behind number
 };
 
 const CAVE_POSITIONS: Record<number, CavePosition> = {
-  1: { left: (954 * SCALE_X) + OFFSET_X, top: (157 * SCALE_Y) + OFFSET_Y },
-  2: { left: (954 * SCALE_X) + OFFSET_X, top: (140 * SCALE_Y) + OFFSET_Y },
-  3: { left: (945 * SCALE_X) + OFFSET_X, top: (125 * SCALE_Y) + OFFSET_Y },
-  4: { left: (934 * SCALE_X) + OFFSET_X, top: (112 * SCALE_Y) + OFFSET_Y },
-  5: { left: (920 * SCALE_X) + OFFSET_X, top: (108 * SCALE_Y) + OFFSET_Y },
-  6: { left: (906 * SCALE_X) + OFFSET_X, top: (117 * SCALE_Y) + OFFSET_Y },
-  7: { left: (906 * SCALE_X) + OFFSET_X, top: (107 * SCALE_Y) + OFFSET_Y },
-  8: { left: (906 * SCALE_X) + OFFSET_X, top: (96 * SCALE_Y) + OFFSET_Y },
-  9: { left: (906 * SCALE_X) + OFFSET_X, top: (85 * SCALE_Y) + OFFSET_Y },
-  10: { left: (886 * SCALE_X) + OFFSET_X, top: (101 * SCALE_Y) + OFFSET_Y },
-  11: { left: (871 * SCALE_X) + OFFSET_X, top: (98 * SCALE_Y) + OFFSET_Y },
-  12: { left: (848 * SCALE_X) + OFFSET_X, top: (90 * SCALE_Y) + OFFSET_Y },
-  13: { left: (818 * SCALE_X) + OFFSET_X, top: (100 * SCALE_Y) + OFFSET_Y },
-  14: { left: (800 * SCALE_X) + OFFSET_X, top: (99 * SCALE_Y) + OFFSET_Y },
-  15: { left: (792 * SCALE_X) + OFFSET_X, top: (68 * SCALE_Y) + OFFSET_Y },
-  16: { left: (728 * SCALE_X) + OFFSET_X, top: (70 * SCALE_Y) + OFFSET_Y },
-  17: { left: (680 * SCALE_X) + OFFSET_X, top: (73 * SCALE_Y) + OFFSET_Y },
-  18: { left: (621 * SCALE_X) + OFFSET_X, top: (75 * SCALE_Y) + OFFSET_Y },
-  19: { left: (605 * SCALE_X) + OFFSET_X, top: (74 * SCALE_Y) + OFFSET_Y },
-  21: { left: (562 * SCALE_X) + OFFSET_X, top: (74 * SCALE_Y) + OFFSET_Y },
-  22: { left: (542 * SCALE_X) + OFFSET_X, top: (74 * SCALE_Y) + OFFSET_Y },
-  23: { left: (512 * SCALE_X) + OFFSET_X, top: (80 * SCALE_Y) + OFFSET_Y },
-  24: { left: (494 * SCALE_X) + OFFSET_X, top: (77 * SCALE_Y) + OFFSET_Y },
-  25: { left: (480 * SCALE_X) + OFFSET_X, top: (63 * SCALE_Y) + OFFSET_Y },
-  26: { left: (467 * SCALE_X) + OFFSET_X, top: (50 * SCALE_Y) + OFFSET_Y },
-  27: { left: (451 * SCALE_X) + OFFSET_X, top: (42 * SCALE_Y) + OFFSET_Y },
-  28: { left: (432 * SCALE_X) + OFFSET_X, top: (39 * SCALE_Y) + OFFSET_Y },
-  29: { left: (384 * SCALE_X) + OFFSET_X, top: (68 * SCALE_Y) + OFFSET_Y },
-  30: { left: (146 * SCALE_X) + OFFSET_X, top: (47 * SCALE_Y) + OFFSET_Y },
-  31: { left: (95 * SCALE_X) + OFFSET_X, top: (110 * SCALE_Y) + OFFSET_Y },
-  32: { left: (46 * SCALE_X) + OFFSET_X, top: (120 * SCALE_Y) + OFFSET_Y },
-  33: { left: (46 * SCALE_X) + OFFSET_X, top: (142 * SCALE_Y) + OFFSET_Y },
-  34: { left: (60 * SCALE_X) + OFFSET_X, top: (165 * SCALE_Y) + OFFSET_Y },
-  // Extra caves (right side list) - no offset, positioned separately
-  1016: { left: 703, top: 62, label: 'Cave 16: Lankeshvara', extraCave: true },
-  2016: { left: 684, top: 54, label: '16: north satellite', extraCave: true },
-  3016: { left: 748, top: 80, label: '16: southeast satellite', extraCave: true },
-  4016: { left: 750, top: 95, label: '16: southwest satellite', extraCave: true },
-  120: { left: 578, top: 64, label: 'Cave 20 A', extraCave: true },
-  //220: { left: 578, top: 64, label: 'Cave 20 B', extraCave: true },
-  130: { left: 43, top: 99, label: 'Cave 30 A', extraCave: true },
+  1: { left: (954 * SCALE_X) + OFFSET_X, top: (157 * SCALE_Y) + OFFSET_Y},
+  2: { left: (954 * SCALE_X) + OFFSET_X, top: (142 * SCALE_Y) + OFFSET_Y, highlight: true },
+  3: { left: (945 * SCALE_X) + OFFSET_X, top: (125 * SCALE_Y) + OFFSET_Y},
+  4: { left: (934 * SCALE_X) + OFFSET_X, top: (112 * SCALE_Y) + OFFSET_Y},
+  5: { left: (920 * SCALE_X) + OFFSET_X, top: (108 * SCALE_Y) + OFFSET_Y, highlight: true },
+  6: { left: (907 * SCALE_X) + OFFSET_X, top: (116 * SCALE_Y) + OFFSET_Y},
+  7: { left: (907 * SCALE_X) + OFFSET_X, top: (107 * SCALE_Y) + OFFSET_Y},
+  8: { left: (907 * SCALE_X) + OFFSET_X, top: (98 * SCALE_Y) + OFFSET_Y},
+  9: { left: (907 * SCALE_X) + OFFSET_X, top: (89 * SCALE_Y) + OFFSET_Y},
+  10: { left: (892 * SCALE_X) + OFFSET_X, top: (120 * SCALE_Y) + OFFSET_Y, highlight: true },
+  11: { left: (879 * SCALE_X) + OFFSET_X, top: (98 * SCALE_Y) + OFFSET_Y, highlight: true },
+  12: { left: (848 * SCALE_X) + OFFSET_X, top: (88 * SCALE_Y) + OFFSET_Y, highlight: true },
+  13: { left: (822 * SCALE_X) + OFFSET_X, top: (102 * SCALE_Y) + OFFSET_Y},
+  14: { left: (803 * SCALE_X) + OFFSET_X, top: (98 * SCALE_Y) + OFFSET_Y, highlight: true },
+  15: { left: (792 * SCALE_X) + OFFSET_X, top: (66 * SCALE_Y) + OFFSET_Y, highlight: true },
+  16: { left: (728 * SCALE_X) + OFFSET_X, top: (70 * SCALE_Y) + OFFSET_Y, highlight: true },
+  17: { left: (680 * SCALE_X) + OFFSET_X, top: (73 * SCALE_Y) + OFFSET_Y},
+  18: { left: (621 * SCALE_X) + OFFSET_X, top: (75 * SCALE_Y) + OFFSET_Y},
+  19: { left: (605 * SCALE_X) + OFFSET_X, top: (74 * SCALE_Y) + OFFSET_Y},
+  21: { left: (560 * SCALE_X) + OFFSET_X, top: (74 * SCALE_Y) + OFFSET_Y, highlight: true },
+  22: { left: (541 * SCALE_X) + OFFSET_X, top: (75 * SCALE_Y) + OFFSET_Y},
+  23: { left: (512 * SCALE_X) + OFFSET_X, top: (80 * SCALE_Y) + OFFSET_Y},
+  24: { left: (497 * SCALE_X) + OFFSET_X, top: (77 * SCALE_Y) + OFFSET_Y},
+  25: { left: (477 * SCALE_X) + OFFSET_X, top: (62 * SCALE_Y) + OFFSET_Y},
+  26: { left: (467 * SCALE_X) + OFFSET_X, top: (50 * SCALE_Y) + OFFSET_Y},
+  27: { left: (451 * SCALE_X) + OFFSET_X, top: (42 * SCALE_Y) + OFFSET_Y},
+  28: { left: (432 * SCALE_X) + OFFSET_X, top: (39 * SCALE_Y) + OFFSET_Y},
+  29: { left: (384 * SCALE_X) + OFFSET_X, top: (68 * SCALE_Y) + OFFSET_Y, highlight: true },
+  30: { left: (146 * SCALE_X) + OFFSET_X, top: (45 * SCALE_Y) + OFFSET_Y},
+  31: { left: (95 * SCALE_X) + OFFSET_X, top: (110 * SCALE_Y) + OFFSET_Y},
+  32: { left: (42 * SCALE_X) + OFFSET_X, top: (122 * SCALE_Y) + OFFSET_Y, highlight: true },
+  33: { left: (43 * SCALE_X) + OFFSET_X, top: (143 * SCALE_Y) + OFFSET_Y, highlight: true },
+  34: { left: (58 * SCALE_X) + OFFSET_X, top: (165 * SCALE_Y) + OFFSET_Y, highlight: true },
+  // Satellite shrines and additional caves - on the map
+  1016: { left: (700 * SCALE_X) + OFFSET_X, top: (62 * SCALE_Y) + OFFSET_Y, label: '16L', highlight: true },
+  2016: { left: (698 * SCALE_X) + OFFSET_X, top: (46 * SCALE_Y) + OFFSET_Y, label: '16n'},
+  3016: { left: (752 * SCALE_X) + OFFSET_X, top: (83 * SCALE_Y) + OFFSET_Y, label: '16se'},
+  4016: { left: (753 * SCALE_X) + OFFSET_X, top: (95 * SCALE_Y) + OFFSET_Y, label: '16sw'},
+  120: { left: (583 * SCALE_X) + OFFSET_X, top: (76 * SCALE_Y) + OFFSET_Y, label: '20a'},
+  124: { left: (502 * SCALE_X) + OFFSET_X, top: (65 * SCALE_Y) + OFFSET_Y, label: '24a1'},
+  224: { left: (502 * SCALE_X) + OFFSET_X, top: (53 * SCALE_Y) + OFFSET_Y, label: '24a2'},
+  130: { left: (43 * SCALE_X) + OFFSET_X, top: (99 * SCALE_Y) + OFFSET_Y, label: '30a', highlight: true },
+  // Extra caves (dropdown only) - positioned separately
   132: { left: 1000, top: 55, label: '32 Yadavas', extraCave: true },
-  124: { left: 494, top: 65, label: '24 A shrine 1', extraCave: true },
-  224: { left: 494, top: 53, label: '24 A shrine 2', extraCave: true },
-  10001: { left: 1000, top: 70, label: 'Ganeshleni 1-5', fontSize: '80%', extraCave: true },
-  10006: { left: 1000, top: 85, label: 'Ganeshleni 6-7', fontSize: '80%', extraCave: true },
-  10008: { left: 1000, top: 100, label: 'Ganeshleni 8-12', fontSize: '80%', extraCave: true },
-  10013: { left: 1000, top: 115, label: 'Ganeshleni 13-16', fontSize: '80%', extraCave: true },
-  10017: { left: 1000, top: 130, label: 'Ganeshleni 17-19', fontSize: '80%', extraCave: true },
-  20001: { left: 1000, top: 145, label: 'Jogeshwari 1-2', fontSize: '80%', extraCave: true },
-  20003: { left: 1000, top: 160, label: 'Jogeshwari 3-4', fontSize: '80%', extraCave: true },
+  10001: { left: 1000, top: 70, label: 'Ganeshleni 1-5', extraCave: true },
+  10006: { left: 1000, top: 85, label: 'Ganeshleni 6-7', extraCave: true },
+  10008: { left: 1000, top: 100, label: 'Ganeshleni 8-12', extraCave: true },
+  10013: { left: 1000, top: 115, label: 'Ganeshleni 13-16', extraCave: true },
+  10017: { left: 1000, top: 130, label: 'Ganeshleni 17-19', extraCave: true },
+  20001: { left: 1000, top: 145, label: 'Jogeshwari 1-2', extraCave: true },
+  20003: { left: 1000, top: 160, label: 'Jogeshwari 3-4', extraCave: true },
 };
 
 export default function CaveMap({ selectedCaveId, className = '' }: CaveMapProps) {
@@ -139,15 +140,32 @@ export default function CaveMap({ selectedCaveId, className = '' }: CaveMapProps
                     top: `${(position.top / 260) * 100}%`,
                   }}
                 >
+                  {/* Circle background for highlighted caves */}
+                  {position.highlight && (
+                    <svg
+                      className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 -z-10"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                    >
+                      <circle
+                        cx="10"
+                        cy="13"
+                        r="8"
+                        fill="white"
+                        opacity="0.9"
+                      />
+                    </svg>
+                  )}
                   {/* Cave number/label - green by default, white for specific caves, red when selected */}
                   <span
                     className={`
-                      font-bold whitespace-nowrap transition-colors
+                      relative font-bold whitespace-nowrap transition-colors
                       ${isWhiteText ? 'text-white' : isSelected ? 'text-red-600' : 'text-black'}
                       group-hover:text-red-600
                     `}
                     style={{
-                      fontSize: position.fontSize || '60%',
+                      fontSize: position.fontSize || '0.5rem',
                     }}
                   >
                     {label}

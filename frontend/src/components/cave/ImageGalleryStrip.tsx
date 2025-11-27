@@ -35,7 +35,7 @@ export default function ImageGalleryStrip({
         )}
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2">
+      <div className="flex flex-wrap gap-2">
         {validImages.map((image) => {
           const hasCoordinates = image.coordinates?.plan_x_norm !== null && 
                                  image.coordinates?.plan_x_norm !== undefined &&
@@ -46,17 +46,17 @@ export default function ImageGalleryStrip({
             <button
               key={image.id}
               onClick={() => onImageSelect(image)}
-              className="relative block"
+              className="relative block h-24 flex-shrink-0"
             >
-              <div className={`relative ${
-                selectedImageId === image.id ? 'ring-2 ring-red-600 rounded' : ''
+              <div className={`relative h-full rounded ${
+                selectedImageId === image.id ? 'ring-2 ring-red-600' : ''
               }`}>
                 <ImageWithFallback
                   src={`${IMAGE_BASE_URL}${image.thumbnail_url || image.image_url}`}
                   alt={image.subject || `Image ${image.id}`}
                   width={120}
-                  height={100}
-                  className="object-cover rounded w-full"
+                  height={96}
+                  className="h-full w-auto object-contain rounded"
                 />
                 {/* Green dot indicator for images with floor plan coordinates */}
                 {hasCoordinates && (

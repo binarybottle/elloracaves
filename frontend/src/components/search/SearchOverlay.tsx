@@ -286,9 +286,55 @@ export default function SearchOverlay({ onClose, onImageSelect }: SearchOverlayP
               className="bg-gray-900 text-white border-2 border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-500"
             >
               <option value="">All Caves</option>
-              {[...Array(34)].map((_, i) => (
-                <option key={i + 1} value={i + 1}>Cave {i + 1}</option>
-              ))}
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+              <option value="11">11</option>
+              <option value="12">12</option>
+              <option value="13">13</option>
+              <option value="14">14</option>
+              <option value="15">15</option>
+              <option value="16">16</option>
+              <option value="1016">Cave 16: Lankeshvara</option>
+              <option value="4016">16: southwest satellite</option>
+              <option value="3016">16: southeast satellite</option>
+              <option value="2016">16: north satellite</option>
+              <option value="17">17</option>
+              <option value="18">18</option>
+              <option value="19">19</option>
+              <option value="120">Cave 20 A</option>
+              <option value="21">21</option>
+              <option value="22">22</option>
+              <option value="23">23</option>
+              <option value="24">24</option>
+              <option value="124">24 A shrine 1</option>
+              <option value="224">24 A shrine 2</option>
+              <option value="25">25</option>
+              <option value="26">26</option>
+              <option value="27">27</option>
+              <option value="28">28</option>
+              <option value="29">29</option>
+              <option value="30">30</option>
+              <option value="130">Cave 30 A</option>
+              <option value="31">31</option>
+              <option value="32">32</option>
+              <option value="132">32 Yadavas</option>
+              <option value="33">33</option>
+              <option value="34">34</option>
+              <option value="10001">Ganeshleni 1-5</option>
+              <option value="10006">Ganeshleni 6-7</option>
+              <option value="10008">Ganeshleni 8-12</option>
+              <option value="10013">Ganeshleni 13-16</option>
+              <option value="10017">Ganeshleni 17-19</option>
+              <option value="20001">Jogeshwari 1-2</option>
+              <option value="20003">Jogeshwari 3-4</option>
             </select>
             
             <select

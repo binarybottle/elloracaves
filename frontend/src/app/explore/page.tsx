@@ -42,12 +42,13 @@ export default function ExplorePage() {
         const data = await res.json();
         setCave(data);
         
-        // Check if selected floor exists, if not redirect to floor 1
+        // Check if selected floor exists, if not redirect to first available floor
         if (data && data.plans && data.plans.length > 0) {
           const hasFloor = data.plans.some((p: any) => p.floor_number === floorNumber);
           if (!hasFloor) {
-            // Redirect to floor 1 of this cave
-            router.replace(`/explore?cave=${caveId}&floor=1`);
+            // Redirect to first available floor for this cave
+            const firstFloor = Math.min(...data.plans.map((p: any) => p.floor_number));
+            router.replace(`/explore?cave=${caveId}&floor=${firstFloor}`);
           }
         }
       } catch (error) {
@@ -261,8 +262,8 @@ export default function ExplorePage() {
             />
           )}
 
-          {/* Column 2: Interactive Floor Plan - only if valid plan exists - RAISED to overlap map */}
-          <div style={{ marginTop: '-65px' }}>
+          {/* Column 2: Interactive Floor Plan - RAISED to overlap map (only if multiple floors) */}
+          <div style={{ marginTop: cave?.plans?.length > 1 ? '-65px' : '0' }}>
             {currentPlan && currentPlan.plan_image && 
              currentPlan.plan_image.trim() !== '' && 
              currentPlan.plan_image !== 'blank.png' && (
