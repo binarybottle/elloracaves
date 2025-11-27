@@ -33,7 +33,7 @@ export default function ImageDisplay({ image, cave, floorNumber }: ImageDisplayP
         <img
           src={fullImageUrl}
           alt={image.subject || `Cave image ${image.id}`}
-          className="w-full h-auto object-contain max-h-[calc(100vh-250px)]"
+          className="w-full h-auto object-contain max-h-[calc(100vh-300px)]"
         />
       </div>
     </div>

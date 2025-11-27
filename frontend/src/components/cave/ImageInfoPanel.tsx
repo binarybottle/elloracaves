@@ -28,13 +28,6 @@ export default function ImageInfoPanel({ image, cave, collapsible = false }: Ima
         </div>
       )}
 
-      {/* Motifs - single line */}
-      {image.motifs && (
-        <p className="text-xs text-[#eae2c4]">
-          <span className="text-gray-400">Motifs:</span> {image.motifs}
-        </p>
-      )}
-
       {/* Photographer - single line */}
       {image.photographer && (
         <p className="text-xs text-[#eae2c4]">
