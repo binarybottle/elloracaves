@@ -11,12 +11,11 @@ interface CaveMapProps {
   className?: string;
 }
 
-// Cave positions from the original cave_numbers.css
-// Adding offsets AND scaling factors to position numbers correctly
-const OFFSET_X = 25;    // pixels right
-const OFFSET_Y = 54;    // pixels down
-const SCALE_X = 1.0;    // horizontal scaling factor (adjust to stretch/compress X positions)
-const SCALE_Y = 1.0;    // vertical scaling factor (adjust to stretch/compress Y positions)
+  // Cave positions from the original cave_numbers.css
+  const OFFSET_X = 25;    // pixels right for fine-tuning
+  const OFFSET_Y = 54;    // pixels down for fine-tuning
+  const SCALE_X = 1.0;    // horizontal scaling factor
+  const SCALE_Y = 1.0;    // vertical scaling factor
 
 type CavePosition = {
   left: number;
@@ -111,14 +110,14 @@ export default function CaveMap({ selectedCaveId, className = '' }: CaveMapProps
       {/* Map container with aspect ratio wrapper */}
       <div className="relative flex-1">
         {/* Aspect ratio container that exactly matches the image */}
-        <div className="relative w-full" style={{ paddingBottom: `${(260 / 1024) * 100}%` }}>
+        <div className="relative w-full overflow-hidden" style={{ paddingBottom: `${(260 / 1024) * 100}%` }}>
           {/* Map image positioned absolutely within aspect ratio container */}
           <div className="absolute inset-0">
             <Image
               src="/images/maps/map_260x1024px_gradient.png"
               alt="Ellora Caves Map"
               fill
-              className="object-contain object-left"
+              className="object-contain"
               priority
               sizes="100vw"
             />
@@ -128,7 +127,7 @@ export default function CaveMap({ selectedCaveId, className = '' }: CaveMapProps
               const id = Number(caveId);
               const isSelected = selectedCaveId === id;
               const label = position.label || caveId;
-              const isWhiteText = id === 16 || id === 30; // Original used white for these
+              const isWhiteText = (id === 16 || id === 30) && !isSelected; // White unless selected
               
               return (
                 <Link

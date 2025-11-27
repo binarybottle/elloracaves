@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Search } from 'lucide-react';
 import CaveMap from '@/components/cave/CaveMap';
 import FloorPlanSidebar from '@/components/cave/FloorPlanSidebar';
@@ -22,9 +23,10 @@ export default function ExplorePage() {
   const floorNumber = parseInt(searchParams.get('floor') || '1');
   const imageId = searchParams.get('image');
   
-  const [cave, setCave] = useState(null);
-  const [floorImages, setFloorImages] = useState([]);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [cave, setCave] = useState<any>(null);
+  const [floorImages, setFloorImages] = useState<any[]>([]);
+  const [selectedImage, setSelectedImage] = useState<any>(null);
+  const [hoveredImage, setHoveredImage] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [searchOpen, setSearchOpen] = useState(false);
 
@@ -191,9 +193,15 @@ export default function ExplorePage() {
 
       {/* Header Section with Cave Map - Hidden on mobile */}
       <header className="relative w-full overflow-hidden hidden md:block">
-        {/* Title and Search Button */}
+        {/* Title, About, and Search Button */}
         <div className="absolute left-5 top-4 z-20 flex items-center gap-4">
           <h1 className="text-3xl">The Ellora caves</h1>
+          <Link
+            href="/about"
+            className="px-4 py-2 bg-black/90 hover:bg-black border-2 border-gray-600 hover:border-gray-400 rounded-lg text-white transition-all text-sm font-semibold"
+          >
+            About
+          </Link>
           <button
             onClick={() => setSearchOpen(true)}
             className="flex items-center gap-2 px-4 py-2 bg-black/90 hover:bg-black border-2 border-gray-600 hover:border-gray-400 rounded-lg text-white transition-all"
@@ -214,28 +222,36 @@ export default function ExplorePage() {
         </div>
       </header>
 
-      {/* Mobile Title and Search - Only shown on mobile */}
+      {/* Mobile Title, About, and Search - Only shown on mobile */}
       <div className="block md:hidden px-4 pt-4 pb-2">
         <div className="flex items-center justify-between">
-          <h1 className="text-2xl text-[#eae2c4]">The Ellora caves</h1>
-          <button
-            onClick={() => setSearchOpen(true)}
-            className="flex items-center gap-2 px-3 py-2 bg-black border-2 border-gray-600 rounded-lg text-white"
-          >
-            <Search className="h-5 w-5" />
-          </button>
+          <h1 className="text-xl text-[#eae2c4]">The Ellora caves</h1>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/about"
+              className="px-3 py-2 bg-black border-2 border-gray-600 rounded-lg text-white text-sm font-semibold"
+            >
+              About
+            </Link>
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="flex items-center gap-2 px-3 py-2 bg-black border-2 border-gray-600 rounded-lg text-white"
+            >
+              <Search className="h-5 w-5" />
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Main Content Area */}
       <main className="px-4 py-8">
         {/* Desktop Layout: 4-column grid or 3-column if single floor */}
-        <div className={`hidden lg:grid gap-6 items-start ${
+        <div className={`hidden lg:grid gap-2 items-start ${
           cave?.plans?.length > 1 
-            ? 'lg:grid-cols-[120px_2fr_2fr_320px]' 
-            : 'lg:grid-cols-[2fr_2fr_320px]'
+            ? 'lg:grid-cols-[100px_1.5fr_3fr_280px]' 
+            : 'lg:grid-cols-[1.5fr_3fr_280px]'
         }`}>
-          {/* Column 1: Mini Floor Plans (only if multiple floors) */}
+          {/* Column 1: Mini Floor Plans (only if multiple floors) - stays below map */}
           {cave?.plans?.length > 1 && (
             <FloorPlanSidebar
               floors={cave?.plans || []}
@@ -245,26 +261,33 @@ export default function ExplorePage() {
             />
           )}
 
-          {/* Column 2: Interactive Floor Plan */}
-          {currentPlan && (
-            <InteractiveFloorPlan
-              plan={currentPlan}
-              images={floorImages}
-              selectedImageId={selectedImage?.id}
-              onImageSelect={handleImageSelect}
+          {/* Column 2: Interactive Floor Plan - only if valid plan exists - RAISED to overlap map */}
+          <div style={{ marginTop: '-65px' }}>
+            {currentPlan && currentPlan.plan_image && 
+             currentPlan.plan_image.trim() !== '' && 
+             currentPlan.plan_image !== 'blank.png' && (
+              <InteractiveFloorPlan
+                plan={currentPlan}
+                images={floorImages}
+                selectedImageId={selectedImage?.id}
+                onImageSelect={handleImageSelect}
+                onImageHover={setHoveredImage}
+              />
+            )}
+          </div>
+
+          {/* Column 3: Main Image Display - RAISED to overlap map - show hovered OR selected */}
+          <div style={{ marginTop: '-65px' }}>
+            <ImageDisplay
+              image={hoveredImage || selectedImage}
+              cave={cave}
+              floorNumber={floorNumber}
             />
-          )}
+          </div>
 
-          {/* Column 3: Main Image Display */}
-          <ImageDisplay
-            image={selectedImage}
-            cave={cave}
-            floorNumber={floorNumber}
-          />
-
-          {/* Column 4: Image Info Panel */}
+          {/* Column 4: Image Info Panel - stays below map - show info for hovered OR selected */}
           <ImageInfoPanel
-            image={selectedImage}
+            image={hoveredImage || selectedImage}
             cave={cave}
           />
         </div>
@@ -291,23 +314,26 @@ export default function ExplorePage() {
           )}
 
           <div className="grid grid-cols-2 gap-4">
-            {currentPlan && (
+            {currentPlan && currentPlan.plan_image && 
+             currentPlan.plan_image.trim() !== '' && 
+             currentPlan.plan_image !== 'blank.png' && (
               <InteractiveFloorPlan
                 plan={currentPlan}
                 images={floorImages}
                 selectedImageId={selectedImage?.id}
                 onImageSelect={handleImageSelect}
+                onImageHover={setHoveredImage}
               />
             )}
             <ImageDisplay
-              image={selectedImage}
+              image={hoveredImage || selectedImage}
               cave={cave}
               floorNumber={floorNumber}
             />
           </div>
 
           <ImageInfoPanel
-            image={selectedImage}
+            image={hoveredImage || selectedImage}
             cave={cave}
           />
         </div>
@@ -367,18 +393,20 @@ export default function ExplorePage() {
           )}
 
           <ImageDisplay
-            image={selectedImage}
+            image={hoveredImage || selectedImage}
             cave={cave}
             floorNumber={floorNumber}
           />
 
           <ImageInfoPanel
-            image={selectedImage}
+            image={hoveredImage || selectedImage}
             cave={cave}
             collapsible
           />
 
-          {currentPlan && (
+          {currentPlan && currentPlan.plan_image && 
+           currentPlan.plan_image.trim() !== '' && 
+           currentPlan.plan_image !== 'blank.png' && (
             <details className="bg-black rounded-lg p-4 border border-gray-700" open>
               <summary className="cursor-pointer font-semibold text-[#eae2c4] text-lg">
                 Floor Plan with Image Locations
@@ -389,6 +417,7 @@ export default function ExplorePage() {
                   images={floorImages}
                   selectedImageId={selectedImage?.id}
                   onImageSelect={handleImageSelect}
+                  onImageHover={setHoveredImage}
                 />
               </div>
             </details>

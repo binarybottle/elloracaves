@@ -37,6 +37,7 @@ interface InteractiveFloorPlanProps {
   images: ImageType[];
   selectedImageId?: number;
   onImageSelect: (image: ImageType) => void;
+  onImageHover?: (image: ImageType | null) => void;
 }
 
 export default function InteractiveFloorPlan({
@@ -44,6 +45,7 @@ export default function InteractiveFloorPlan({
   images,
   selectedImageId,
   onImageSelect,
+  onImageHover,
 }: InteractiveFloorPlanProps) {
   const [hoveredImageId, setHoveredImageId] = useState<number | null>(null);
   const [planLoaded, setPlanLoaded] = useState(false);
@@ -99,8 +101,14 @@ export default function InteractiveFloorPlan({
                   top: `${y}%`,
                   zIndex: isHovered || isSelected ? 20 : 10,
                 }}
-                onMouseEnter={() => setHoveredImageId(img.id)}
-                onMouseLeave={() => setHoveredImageId(null)}
+                onMouseEnter={() => {
+                  setHoveredImageId(img.id);
+                  onImageHover?.(img);
+                }}
+                onMouseLeave={() => {
+                  setHoveredImageId(null);
+                  onImageHover?.(null);
+                }}
                 onClick={() => onImageSelect(img)}
               >
                 <div
@@ -110,24 +118,14 @@ export default function InteractiveFloorPlan({
                 >
                   {/* Marker icon - green with white center when unselected, solid red when selected */}
                   {isSelected ? (
-                    <div className="w-2 h-2 rounded-full bg-red-600 shadow-lg" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-red-600 shadow-md" />
                   ) : (
-                    <div className="w-2 h-2 rounded-full bg-[#6ebd20] shadow-lg flex items-center justify-center">
-                      <div className="w-1 h-1 rounded-full bg-white" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-[#6ebd20] shadow-md flex items-center justify-center">
+                      <div className="w-0.5 h-0.5 rounded-full bg-white" />
                     </div>
                   )}
                   
-                  {/* Tooltip on hover/select - positioned to avoid cutoff */}
-                  {(isHovered || isSelected) && img.subject && (
-                    <div className="fixed bg-gray-900 text-white text-xs rounded px-2 py-1 whitespace-nowrap z-50 shadow-lg border border-gray-700 max-w-xs pointer-events-none"
-                      style={{
-                        left: `${Math.min(Math.max(x, 10), 90)}%`,
-                        top: `${Math.min(y + 5, 85)}%`
-                      }}
-                    >
-                      {img.subject}
-                    </div>
-                  )}
+                  {/* No tooltip needed - image preview shows on hover */}
                 </div>
               </button>
             );

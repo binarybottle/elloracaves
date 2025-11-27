@@ -14,7 +14,7 @@ export default function ImageDisplay({ image, cave, floorNumber }: ImageDisplayP
   // Check if image exists and has a valid image_url
   if (!image || !image.image_url || image.image_url.trim() === '') {
     return (
-      <div className="relative bg-black rounded-lg overflow-hidden flex items-center justify-center" style={{ aspectRatio: '4/3' }}>
+      <div className="relative bg-black rounded-lg overflow-hidden flex items-center justify-center min-h-[300px]">
         <div className="text-gray-500 text-center p-8">
           <p>Select an image to view</p>
           {image && !image.image_url && (
@@ -29,13 +29,11 @@ export default function ImageDisplay({ image, cave, floorNumber }: ImageDisplayP
 
   return (
     <div className="relative w-full">
-      <div className="relative bg-black rounded-lg overflow-hidden" style={{ aspectRatio: '4/3' }}>
-        <ImageWithFallback
+      <div className="relative bg-black rounded-lg overflow-hidden w-full">
+        <img
           src={fullImageUrl}
           alt={image.subject || `Cave image ${image.id}`}
-          fill
-          className="object-contain"
-          priority
+          className="w-full h-auto object-contain max-h-[calc(100vh-250px)]"
         />
       </div>
     </div>
