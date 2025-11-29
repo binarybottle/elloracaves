@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Search } from 'lucide-react';
-import CaveMap from '@/components/cave/CaveMap';
+import CaveMap, { CAVE_POSITIONS, getDropdownLabel } from '@/components/cave/CaveMap';
 import FloorPlanSidebar from '@/components/cave/FloorPlanSidebar';
 import InteractiveFloorPlan from '@/components/cave/InteractiveFloorPlan';
 import ImageDisplay from '@/components/cave/ImageDisplay';
@@ -135,6 +135,8 @@ export default function ExplorePage() {
     }
     // Immediately update the selected image
     setSelectedImage(image);
+    // Scroll to top of page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     // Update URL to reflect selection (this will also trigger the image fetch useEffect)
     router.push(`/explore?cave=${caveId}&floor=${floorNumber}&image=${image.id}`, { scroll: false });
   };
@@ -143,19 +145,65 @@ export default function ExplorePage() {
     router.push(`/explore?cave=${searchCaveId}&floor=${searchFloorNumber}&image=${searchImageId}`);
   };
 
-  // Keyboard shortcut: Cmd/Ctrl + K
+  // Navigate to previous/next image in gallery
+  const navigateImage = (direction: 'prev' | 'next') => {
+    const validImages = floorImages.filter(img => img.image_url && img.image_url.trim() !== '');
+    if (validImages.length === 0) return;
+    
+    const currentIndex = validImages.findIndex(img => img.id === selectedImage?.id);
+    if (currentIndex === -1) return;
+    
+    let newIndex;
+    if (direction === 'prev') {
+      newIndex = currentIndex > 0 ? currentIndex - 1 : validImages.length - 1;
+    } else {
+      newIndex = currentIndex < validImages.length - 1 ? currentIndex + 1 : 0;
+    }
+    
+    handleImageSelect(validImages[newIndex]);
+  };
+
+  // Keyboard shortcuts: Cmd/Ctrl + K for search, Arrow keys for navigation
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
+      // Search shortcut
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
         setSearchOpen(true);
+        return;
+      }
+      
+      // Arrow key navigation (only if not typing in an input)
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+        return;
+      }
+      
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        navigateImage('prev');
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        navigateImage('next');
       }
     };
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, []);
+  }, [selectedImage, floorImages]);
 
   const currentPlan = cave?.plans?.find((p: any) => p.floor_number === floorNumber);
+
+  // Generate sorted list of all caves using the same logic as CaveMap
+  const favoriteOrder = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1016,4016,3016,2016,17,18,19,120,220,21,22,23,24,124,224,25,26,27,28,29,30,130,31,32,33,34,10001,10006,10008,10013,10017,20001,20003];
+  const allCaves = Object.entries(CAVE_POSITIONS).sort((a, b) => {
+    const idA = Number(a[0]);
+    const idB = Number(b[0]);
+    const indexA = favoriteOrder.indexOf(idA);
+    const indexB = favoriteOrder.indexOf(idB);
+    if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+    if (indexA !== -1) return -1;
+    if (indexB !== -1) return 1;
+    return idA - idB;
+  });
 
   if (loading) {
     return (
@@ -283,6 +331,9 @@ export default function ExplorePage() {
               image={hoveredImage || selectedImage}
               cave={cave}
               floorNumber={floorNumber}
+              onPrevImage={() => navigateImage('prev')}
+              onNextImage={() => navigateImage('next')}
+              showNavigation={!hoveredImage && !!selectedImage}
             />
           </div>
 
@@ -330,6 +381,9 @@ export default function ExplorePage() {
               image={hoveredImage || selectedImage}
               cave={cave}
               floorNumber={floorNumber}
+              onPrevImage={() => navigateImage('prev')}
+              onNextImage={() => navigateImage('next')}
+              showNavigation={!hoveredImage && !!selectedImage}
             />
           </div>
 
@@ -351,27 +405,11 @@ export default function ExplorePage() {
             className="w-full bg-black text-white border-2 border-gray-600 rounded-lg px-4 py-2 text-base font-bold"
           >
             <option value="" disabled>Select a cave...</option>
-            {/* All main caves 1-34 */}
-            {[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34].map(num => (
-              <option key={num} value={num}>Cave {num}</option>
+            {allCaves.map(([caveId]) => (
+              <option key={caveId} value={caveId}>
+                {getDropdownLabel(Number(caveId))}
+              </option>
             ))}
-            {/* Extra caves */}
-            <option value="1016">Cave 16: Lankeshvara</option>
-            <option value="4016">16: southwest satellite</option>
-            <option value="3016">16: southeast satellite</option>
-            <option value="2016">16: north satellite</option>
-            <option value="120">Cave 20 A</option>
-            <option value="124">24 A shrine 1</option>
-            <option value="224">24 A shrine 2</option>
-            <option value="130">Cave 30 A</option>
-            <option value="132">32 Yadavas</option>
-            <option value="10001">Ganeshleni 1-5</option>
-            <option value="10006">Ganeshleni 6-7</option>
-            <option value="10008">Ganeshleni 8-12</option>
-            <option value="10013">Ganeshleni 13-16</option>
-            <option value="10017">Ganeshleni 17-19</option>
-            <option value="20001">Jogeshwari 1-2</option>
-            <option value="20003">Jogeshwari 3-4</option>
           </select>
 
           {/* Floor tabs - only show if multiple floors */}
@@ -397,6 +435,9 @@ export default function ExplorePage() {
             image={hoveredImage || selectedImage}
             cave={cave}
             floorNumber={floorNumber}
+            onPrevImage={() => navigateImage('prev')}
+            onNextImage={() => navigateImage('next')}
+            showNavigation={!hoveredImage && !!selectedImage}
           />
 
           <ImageInfoPanel

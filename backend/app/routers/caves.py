@@ -99,11 +99,11 @@ def get_cave_floor_images(cave_number: str, floor_number: int):
             SELECT "image_ID", image_file, image_subject, image_description,
                    image_plan_x_num, image_plan_y_num, 
                    image_plan_x_norm, image_plan_y_norm,
-                   image_thumbnail
+                   image_thumbnail, default_priority
             FROM images
             WHERE "image_plan_ID" = :plan_id 
             AND image_rank = 1
-            ORDER BY image_file
+            ORDER BY default_priority DESC, image_file
         '''), {"plan_id": plan[0]}).fetchall()
         
         return [{

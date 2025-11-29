@@ -8,7 +8,7 @@ export default function HomePage() {
   
   useEffect(() => {
     // Redirect to About page on initial load
-    router.replace('/about');
+    router.replace('/explore?cave=10&floor=1');
   }, [router]);
 
   return (

@@ -149,3 +149,79 @@ http://localhost:3000/explore?cave=33&floor=1
 2. Access the site at http://localhost:3000
 
 3. Customize colors in `frontend/tailwind.config.js`
+
+## Database Backup
+
+### Quick Backup
+
+Create a backup of the entire database:
+
+```bash
+# Backup to a file with timestamp
+pg_dump -d elloracaves > backup_elloracaves_$(date +%Y%m%d_%H%M%S).sql
+
+# Or specify the full path
+/opt/homebrew/Cellar/postgresql@17/17.7/bin/pg_dump -d elloracaves > backup_elloracaves_$(date +%Y%m%d_%H%M%S).sql
+```
+
+### Backup with Compression
+
+For large databases, use compression:
+
+```bash
+pg_dump -d elloracaves | gzip > backup_elloracaves_$(date +%Y%m%d_%H%M%S).sql.gz
+```
+
+### Restore from Backup
+
+```bash
+# From uncompressed backup
+psql -d elloracaves < backup_elloracaves_20251129_120000.sql
+
+# From compressed backup
+gunzip -c backup_elloracaves_20251129_120000.sql.gz | psql -d elloracaves
+```
+
+### Backup Specific Tables
+
+If you only want to backup specific tables:
+
+```bash
+# Backup only caves and images tables
+pg_dump -d elloracaves -t caves -t images -t plans > backup_core_tables.sql
+```
+
+### Automated Backups
+
+Create a backup script (`scripts/backup_db.sh`):
+
+```bash
+#!/bin/bash
+BACKUP_DIR="$HOME/elloracaves_backups"
+mkdir -p "$BACKUP_DIR"
+TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+pg_dump -d elloracaves | gzip > "$BACKUP_DIR/elloracaves_$TIMESTAMP.sql.gz"
+echo "✅ Backup created: $BACKUP_DIR/elloracaves_$TIMESTAMP.sql.gz"
+
+# Optional: Keep only last 10 backups
+ls -t "$BACKUP_DIR"/elloracaves_*.sql.gz | tail -n +11 | xargs rm -f
+```
+
+Make it executable and run:
+```bash
+chmod +x scripts/backup_db.sh
+./scripts/backup_db.sh
+```
+
+### Backup Before Major Changes
+
+Always backup before:
+- Renaming cave IDs
+- Bulk updates to image priorities
+- Schema changes
+- Importing new data
+
+```bash
+# Quick backup with descriptive name
+pg_dump -d elloracaves > backup_before_cave_rename_$(date +%Y%m%d).sql
+```
