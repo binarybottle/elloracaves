@@ -1,39 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import ImageWithFallback from '@/components/image/ImageWithFallback';
-import { MapPin, Loader2 } from 'lucide-react';
-
-const IMAGE_BASE_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api/v1', '') || 'http://localhost:8000';
-
-interface Coordinates {
-  plan_x_px?: number;
-  plan_y_px?: number;
-  plan_x_norm?: number;
-  plan_y_norm?: number;
-}
-
-interface ImageType {
-  id: number;
-  file_path: string;
-  subject?: string;
-  description?: string;
-  coordinates?: Coordinates;
-  image_url: string;
-  thumbnail_url: string;
-}
-
-interface Plan {
-  id: number;
-  floor_number: number;
-  plan_image: string;
-  plan_width: number;
-  plan_height: number;
-  image_count: number;
-}
+import { Loader2 } from 'lucide-react';
+import { Image as ImageType, FloorPlan } from '@/lib/api';
+import { getPlanImageUrl } from '@/lib/cloudflare-images';
 
 interface InteractiveFloorPlanProps {
-  plan: Plan;
+  plan: FloorPlan;
   images: ImageType[];
   selectedImageId?: number;
   onImageSelect: (image: ImageType) => void;
@@ -60,7 +33,8 @@ export default function InteractiveFloorPlan({
       img.coordinates?.plan_y_norm !== undefined
   );
 
-  const planImageUrl = `${IMAGE_BASE_URL}/images/plans/${plan.plan_image}`;
+  // Use plan_url from API (already includes full path) or construct it
+  const planImageUrl = plan.plan_url || getPlanImageUrl(plan.plan_image);
 
   return (
     <div className="relative flex flex-col">
@@ -76,11 +50,10 @@ export default function InteractiveFloorPlan({
         )}
 
         {/* Floor Plan Image */}
-        <ImageWithFallback
+        <img
           src={planImageUrl}
           alt={`Floor ${plan.floor_number} plan`}
-          fill
-          className="object-contain"
+          className="absolute inset-0 w-full h-full object-contain"
           onLoad={() => setPlanLoaded(true)}
         />
 
@@ -140,4 +113,3 @@ export default function InteractiveFloorPlan({
     </div>
   );
 }
-

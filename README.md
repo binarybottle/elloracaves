@@ -2,226 +2,184 @@
 
 Complete photographic documentation of Ellora cave temples.
 
-## Quick Start
+## Architecture
 
-### 1. Start Backend (if not running)
-```bash
-cd /Users/arno/elloracaves
-docker-compose up backend
+```
+Users → Cloudflare DNS/CDN
+         ├─→ Cloudflare Pages (Next.js SSG)
+         │    └─→ Cloudflare Images (optimized images)
+         └─→ Supabase Edge Functions (search only)
+              └─→ Supabase PostgreSQL
 ```
 
-Wait for: `Uvicorn running on http://0.0.0.0:8000`
+## Quick Start (Development)
 
-### 2. Start Frontend
-```bash
-cd /Users/arno/elloracaves/frontend
-npm run dev
-```
+### Prerequisites
 
-Wait for: `ready started server on 0.0.0.0:3000`
+- Node.js 18+
+- Supabase account with project created
+- Cloudflare account with Images enabled
 
-### 3. Open Explorer
-Open browser: **http://localhost:3000/explore?cave=10&floor=1**
-
-## View the Site
-
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:8000
-- API Docs: http://localhost:8000/docs
-
-## Database Connection
-
-Uses Unix socket to connect to local PostgreSQL:
-- Database: elloracaves
-- User: arno
-- Connection: postgresql://arno@/elloracaves
-
-Make sure your PostgreSQL database is running with the elloracaves database.
-
-## Project Structure
-
-- `backend/` - FastAPI backend
-- `frontend/` - Next.js frontend
-- `images/` - Image storage
-- `docker-compose.yml` - Service orchestration
-
-## Commands
+### 1. Set Up Environment
 
 ```bash
-# Start everything
-docker-compose up -d
+cd frontend
 
-# Stop everything
-docker-compose down
-
-# Rebuild after code changes
-docker-compose build
-docker-compose up -d
-
-# View logs
-docker-compose logs -f
-docker-compose logs -f backend
-docker-compose logs -f frontend
+# Copy environment template and fill in values
+cp .env.local.example .env.local
+# Edit .env.local with your Supabase and Cloudflare credentials
 ```
 
-## Success Checklist
+Required environment variables:
+```
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+NEXT_PUBLIC_CF_IMAGES_ACCOUNT=your-cloudflare-account-hash
+```
 
-You should see:
-- [ ] Black background with gradient cave map
-- [ ] Clickable cave numbers positioned on contour
-- [ ] "The Ellora caves" title in top left
-- [ ] Floor plans on left (if cave has multiple floors)
-- [ ] Interactive floor plan with markers
-- [ ] Large image display in center
-- [ ] Info panel on right
-- [ ] Thumbnail gallery at bottom
+### 2. Install Dependencies
 
-## Common Issues
-
-### Issue: "Cannot GET /explore"
-**Solution**: Make sure you installed dependencies first:
 ```bash
 cd frontend
 npm install
+```
+
+### 3. Start Development Server
+
+```bash
 npm run dev
 ```
 
-### Issue: Images not loading
-**Solution**: Make sure backend is running:
-```bash
-docker-compose up backend
-```
+Open http://localhost:3000/explore?cave=10&floor=1
 
-### Issue: Map not showing
-**Solution**: Verify map files exist:
-```bash
-ls -lh frontend/public/images/maps/
-# Should show:
-# map_260x1024px_gradient.png (69KB)
-# map_260x1024px_photo.png (358KB)
-```
+## Deployment
 
-### Issue: Cave numbers not positioned
-**Solution**: 
-1. Open browser console (F12)
-2. Check for errors
-3. Verify CaveMap.tsx imported correctly
+### Database Migration (Supabase)
 
-### Issue: API errors in console
-**Solution**: Check backend is accessible:
-```bash
-curl http://localhost:8000/api/v1/caves/10
-# Should return JSON data
-```
+1. Create a Supabase project at https://supabase.com
+2. Run the schema migration:
+   ```bash
+   psql $SUPABASE_DB_URL -f supabase/migrations/001_initial_schema.sql
+   ```
+3. Run the seed data:
+   ```bash
+   psql $SUPABASE_DB_URL -f supabase/migrations/002_seed_data.sql
+   ```
 
-## Test URLs
-
-Try these different caves:
-
-**Buddhist Caves:**
-```
-http://localhost:3000/explore?cave=5&floor=1
-http://localhost:3000/explore?cave=10&floor=1  # Cave 10 (Vishvakarma)
-http://localhost:3000/explore?cave=12&floor=1  # Cave 12 (Teen Tal)
-```
-
-**Hindu Caves:**
-```
-http://localhost:3000/explore?cave=16&floor=1  # ⭐ Kailasa Temple
-http://localhost:3000/explore?cave=16&floor=2  # Kailasa Floor 2
-http://localhost:3000/explore?cave=29&floor=1  # Dhumar Lena
-```
-
-**Jain Caves:**
-```
-http://localhost:3000/explore?cave=32&floor=1  # ⭐ Indra Sabha
-http://localhost:3000/explore?cave=32&floor=2  # Indra Sabha Floor 2
-http://localhost:3000/explore?cave=33&floor=1
-```
-
-## Setup
-
-1. Copy your images to:
-   - `images/caves_1200px/` - Web images
-   - `images/caves_thumbs/` - Thumbnails
-   - `images/plans/` - Floor plans
-
-2. Access the site at http://localhost:3000
-
-3. Customize colors in `frontend/tailwind.config.js`
-
-## Database Backup
-
-### Quick Backup
-
-Create a backup of the entire database:
+### Image Upload (Cloudflare Images)
 
 ```bash
-# Backup to a file with timestamp
-pg_dump -d elloracaves > backup_elloracaves_$(date +%Y%m%d_%H%M%S).sql
-
-# Or specify the full path
-/opt/homebrew/Cellar/postgresql@17/17.7/bin/pg_dump -d elloracaves > backup_elloracaves_$(date +%Y%m%d_%H%M%S).sql
+cd scripts
+python upload_cloudflare.py ../images/caves_1200px YOUR_CF_API_TOKEN
 ```
 
-### Backup with Compression
+Then update the database with Cloudflare image IDs:
+```bash
+python update_image_ids.py upload_log.csv
+```
 
-For large databases, use compression:
+### Frontend Deployment (Cloudflare Pages)
+
+1. Push to GitHub
+2. Connect repo to Cloudflare Pages
+3. Build settings:
+   - Framework preset: Next.js (Static HTML Export)
+   - Build command: `npm run build`
+   - Build output directory: `out`
+4. Set environment variables in Cloudflare Pages dashboard
+
+### Search Function (Supabase)
+
+Deploy the edge function:
+```bash
+cd supabase
+supabase functions deploy search
+```
+
+## Project Structure
+
+```
+├── frontend/           # Next.js frontend (Cloudflare Pages)
+│   ├── src/
+│   │   ├── app/       # Pages (App Router)
+│   │   ├── components/ # React components
+│   │   └── lib/       # API client, Supabase, helpers
+│   └── next.config.js # Static export config
+├── supabase/          # Supabase configuration
+│   ├── migrations/    # Database schema and seed data
+│   └── functions/     # Edge functions (search)
+├── scripts/           # Utility scripts
+│   ├── upload_cloudflare.py    # Upload images to CF
+│   ├── update_image_ids.py     # Update DB with CF IDs
+│   └── migrate_to_supabase.py  # Generate migration SQL
+└── images/            # Local images (for reference)
+```
+
+## Services
+
+| Component | Service | Purpose |
+|-----------|---------|---------|
+| Frontend | Cloudflare Pages | Static Next.js hosting |
+| Database | Supabase | PostgreSQL + auto-generated API |
+| Images | Cloudflare Images | Optimized image delivery |
+| Search | Supabase Edge Functions | Full-text search |
+| DNS | Cloudflare | DNS, DDoS protection |
+
+## Cost Estimate
+
+| Service | Monthly Cost |
+|---------|-------------|
+| Cloudflare Pages | $0 (free tier) |
+| Cloudflare Images | $5-6 |
+| Supabase | $0 (free tier <500MB) |
+| **Total** | **$5-6/month** |
+
+## Environment Variables
+
+### Frontend (.env.local)
 
 ```bash
-pg_dump -d elloracaves | gzip > backup_elloracaves_$(date +%Y%m%d_%H%M%S).sql.gz
+# Supabase
+NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
+
+# Cloudflare Images
+NEXT_PUBLIC_CF_IMAGES_ACCOUNT=xxx
+
+# Optional: Local API fallback (development only)
+NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
 ```
 
-### Restore from Backup
+### Supabase Edge Functions
 
+Set in Supabase dashboard:
 ```bash
-# From uncompressed backup
-psql -d elloracaves < backup_elloracaves_20251129_120000.sql
-
-# From compressed backup
-gunzip -c backup_elloracaves_20251129_120000.sql.gz | psql -d elloracaves
+CF_IMAGES_ACCOUNT=xxx
 ```
 
-### Backup Specific Tables
+## Development Workflow
 
-If you only want to backup specific tables:
+1. Make changes to frontend code
+2. Test locally with `npm run dev`
+3. Push to GitHub
+4. Cloudflare Pages auto-deploys
 
-```bash
-# Backup only caves and images tables
-pg_dump -d elloracaves -t caves -t images -t plans > backup_core_tables.sql
-```
+## Database Changes
 
-### Automated Backups
+1. Update `supabase/migrations/` with new SQL
+2. Apply to Supabase:
+   ```bash
+   psql $SUPABASE_DB_URL -f supabase/migrations/xxx.sql
+   ```
 
-Create a backup script (`scripts/backup_db.sh`):
+## Legacy Backend (Deprecated)
 
-```bash
-#!/bin/bash
-BACKUP_DIR="$HOME/elloracaves_backups"
-mkdir -p "$BACKUP_DIR"
-TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-pg_dump -d elloracaves | gzip > "$BACKUP_DIR/elloracaves_$TIMESTAMP.sql.gz"
-echo "✅ Backup created: $BACKUP_DIR/elloracaves_$TIMESTAMP.sql.gz"
+The `backend/` directory contains the old FastAPI backend.
+It is kept for reference but is no longer used in production.
+All API functionality has been migrated to:
+- Supabase auto-generated REST API (for CRUD operations)
+- Supabase Edge Functions (for search)
 
-# Optional: Keep only last 10 backups
-ls -t "$BACKUP_DIR"/elloracaves_*.sql.gz | tail -n +11 | xargs rm -f
-```
+## License
 
-Make it executable and run:
-```bash
-chmod +x scripts/backup_db.sh
-./scripts/backup_db.sh
-```
-
-### Backup Before Major Changes
-
-Always backup before:
-- Renaming cave IDs
-- Bulk updates to image priorities
-- Schema changes
-- Importing new data
-
-```bash
-# Quick backup with descriptive name
-pg_dump -d elloracaves > backup_before_cave_rename_$(date +%Y%m%d).sql
-```
+Photographs copyright Arno Klein. All other content copyright Deepanjana Klein.

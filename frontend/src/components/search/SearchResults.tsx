@@ -8,19 +8,9 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-
-interface ImageType {
-  id: number;
-  file_path: string;
-  subject?: string;
-  description?: string;
-  cave_id?: number;
-  image_url: string;
-  thumbnail_url: string;
-}
+import { Image as ImageType } from '@/lib/api';
 
 interface SearchResultsProps {
   results: Array<{ image: ImageType }>;
@@ -30,15 +20,13 @@ interface SearchResultsProps {
   query: string;
 }
 
-const IMAGE_BASE_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api/v1', '') || 'http://localhost:8000';
-
 export default function SearchResults({ results, total, page, pageSize, query }: SearchResultsProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const totalPages = Math.ceil(total / pageSize);
   
   const goToPage = (newPage: number) => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams.toString());
     params.set('page', newPage.toString());
     router.push(`/search?${params.toString()}`);
   };
@@ -64,21 +52,21 @@ export default function SearchResults({ results, total, page, pageSize, query }:
       {/* Results Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-8">
         {results.map(({ image }) => {
-          const imageUrl = `${IMAGE_BASE_URL}${image.thumbnail_url || image.image_url}`;
+          // Use thumbnail_url directly - already full URL from API
+          const imageUrl = image.thumbnail_url || image.image_url;
+          
           return (
             <Link
               key={image.id}
-              href={`/images/${image.id}`}
+              href={`/explore?cave=${image.cave_id}&floor=1&image=${image.id}`}
               className="bg-white rounded-lg shadow hover:shadow-md transition-shadow overflow-hidden"
             >
               <div className="aspect-square bg-gray-100 relative overflow-hidden">
-                <Image
+                <img
                   src={imageUrl}
                   alt={image.subject || 'Search result'}
-                  fill
-                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  className="object-cover hover:scale-105 transition-transform duration-200"
-                  unoptimized
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-200"
+                  loading="lazy"
                 />
               </div>
               <div className="p-4">

@@ -4,12 +4,10 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { CAVE_POSITIONS, getDropdownLabel } from '@/components/cave/CaveMap';
 import ImageWithFallback from '@/components/image/ImageWithFallback';
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
-const IMAGE_BASE_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api/v1', '') || 'http://localhost:8000';
+import { fetchCaveDetail, fetchCaveFloorImages, Cave, Image } from '@/lib/api';
 
 export default function AboutPage() {
-  const [caveData, setCaveData] = useState<Record<number, any>>({});
+  const [caveData, setCaveData] = useState<Record<number, { caveId: number; cave: Cave; defaultImage: Image | null }>>({});
   const [loading, setLoading] = useState(true);
 
   // Fetch cave details and default images for all caves
@@ -18,19 +16,14 @@ export default function AboutPage() {
       const allCaveIds = Object.keys(CAVE_POSITIONS).map(Number);
       const cavePromises = allCaveIds.map(async (caveId) => {
         try {
-          const res = await fetch(`${API_URL}/caves/${caveId}`);
-          if (!res.ok) return null;
-          const cave = await res.json();
+          const cave = await fetchCaveDetail(String(caveId));
           
           // Fetch first floor images to get default image
           if (cave.plans && cave.plans.length > 0) {
-            const firstFloor = Math.min(...cave.plans.map((p: any) => p.floor_number));
-            const imgRes = await fetch(`${API_URL}/caves/${caveId}/floors/${firstFloor}/images`);
-            if (imgRes.ok) {
-              const images = await imgRes.json();
-              const defaultImage = images.find((img: any) => img.image_url && img.image_url.trim() !== '');
-              return { caveId, cave, defaultImage };
-            }
+            const firstFloor = Math.min(...cave.plans.map((p) => p.floor_number));
+            const images = await fetchCaveFloorImages(String(caveId), firstFloor);
+            const defaultImage = images.find((img) => img.image_url && img.image_url.trim() !== '') || null;
+            return { caveId, cave, defaultImage };
           }
           return { caveId, cave, defaultImage: null };
         } catch (error) {
@@ -40,7 +33,7 @@ export default function AboutPage() {
       });
 
       const results = await Promise.all(cavePromises);
-      const dataMap: Record<number, any> = {};
+      const dataMap: Record<number, { caveId: number; cave: Cave; defaultImage: Image | null }> = {};
       results.forEach((result) => {
         if (result) {
           dataMap[result.caveId] = result;
@@ -62,7 +55,7 @@ export default function AboutPage() {
   };
 
   // Sort caves using the same logic as dropdown menus
-  const favoriteOrder = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1016,4016,3016,2016,17,18,19,120,220,21,22,23,24,124,224,25,26,27,28,29,30,130,31,32,33,34,10001,10006,10008,10013,10017,20001,20003];
+  const favoriteOrder = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1016,4016,3016,2016,17,18,19,20,120,21,22,23,24,124,224,25,26,27,28,29,30,130,31,32,33,34,10001,10006,10008,10013,10017,20001,20003];
   
   const sortedCaves = Object.keys(CAVE_POSITIONS)
     .map(Number)
@@ -191,7 +184,7 @@ export default function AboutPage() {
                     <div className="aspect-square relative bg-gray-900">
                       {defaultImage ? (
                         <ImageWithFallback
-                          src={`${IMAGE_BASE_URL}${defaultImage.thumbnail_url || defaultImage.image_url}`}
+                          src={defaultImage.thumbnail_url || defaultImage.image_url}
                           alt={label}
                           fill
                           className="object-cover group-hover:opacity-75 transition-opacity"
@@ -329,8 +322,9 @@ export default function AboutPage() {
           <h2 className="text-xl font-bold mb-4 text-white">Technical Information</h2>
           <div className="space-y-2 text-sm text-gray-400">
             <p><strong>Website:</strong> Arno Klein</p>
-            <p><strong>Frontend:</strong> Next.js, React, TypeScript, Tailwind CSS</p>
-            <p><strong>Backend:</strong> FastAPI, PostgreSQL</p>
+            <p><strong>Frontend:</strong> Next.js, React, TypeScript, Tailwind CSS (hosted on Cloudflare Pages)</p>
+            <p><strong>Backend:</strong> Supabase (PostgreSQL + Edge Functions)</p>
+            <p><strong>Images:</strong> Cloudflare Images</p>
             <p><strong>Features:</strong> Interactive floor plans, advanced search with fuzzy matching, boolean operators, cave/floor filters</p>
           </div>
         </section>

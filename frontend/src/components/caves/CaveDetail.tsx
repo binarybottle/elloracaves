@@ -6,31 +6,15 @@
 
 import Link from 'next/link';
 import { Building2, Layers } from 'lucide-react';
-
-interface Plan {
-  id: number;
-  floor_number: number;
-  plan_image: string;
-  plan_width: number;
-  plan_height: number;
-  image_count: number;
-}
-
-interface Cave {
-  id: number;
-  cave_number: string;
-  name: string;
-  tradition: string;
-  date_range?: string;
-  description?: string;
-  plans: Plan[];
-}
+import { Cave } from '@/lib/api';
 
 interface CaveDetailProps {
   cave: Cave;
 }
 
 export function CaveDetail({ cave }: CaveDetailProps) {
+  const plans = cave.plans || [];
+  
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -77,7 +61,7 @@ export function CaveDetail({ cave }: CaveDetailProps) {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {cave.plans.map((plan) => (
+            {plans.map((plan) => (
               <Link
                 key={plan.id}
                 href={`/caves/${cave.cave_number}/floor/${plan.floor_number}`}
@@ -109,7 +93,7 @@ export function CaveDetail({ cave }: CaveDetailProps) {
             ))}
           </div>
 
-          {cave.plans.length === 0 && (
+          {plans.length === 0 && (
             <div className="bg-white rounded-lg shadow-sm p-8 text-center">
               <Layers className="h-12 w-12 text-gray-400 mx-auto mb-3" />
               <p className="text-gray-600">No floor plans available yet</p>

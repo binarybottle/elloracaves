@@ -1,19 +1,18 @@
-module.exports = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // Use standard build for Cloudflare Pages with Next.js
+  // Cloudflare Pages supports Next.js natively (no need for static export)
+  
+  // Disable Next.js image optimization (using Cloudflare Images instead)
   images: {
-    domains: ['localhost'],
-    remotePatterns: [
-      {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '8000',
-        pathname: '/images/**',
-      },
-      {
-        protocol: 'http',
-        hostname: 'backend',
-        port: '8000',
-        pathname: '/images/**',
-      },
-    ],
+    unoptimized: true,
   },
-}
+  
+  // Trailing slashes for cleaner URLs
+  trailingSlash: true,
+  
+  // Enable React strict mode
+  reactStrictMode: true,
+};
+
+module.exports = nextConfig;

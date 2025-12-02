@@ -1,90 +1,55 @@
-import { Suspense } from 'react';
+'use client';
+
+import { useState, useEffect } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
-import SearchResults from '@/components/search/SearchResults';
 import { Loader2 } from 'lucide-react';
+import SearchResults from '@/components/search/SearchResults';
+import { searchImages, SearchResult } from '@/lib/api';
 
-const API_URL = process.env.API_URL || 'http://backend:8000/api/v1';
+export default function SearchPage() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  
+  const query = searchParams.get('q') || '';
+  const page = parseInt(searchParams.get('page') || '1', 10);
+  
+  const [results, setResults] = useState<SearchResult | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [searchInput, setSearchInput] = useState(query);
 
-async function searchImages(query: string, page: number = 1) {
-  if (!query || query.trim() === '') {
-    return null;
-  }
+  // Perform search when query or page changes
+  useEffect(() => {
+    async function performSearch() {
+      if (!query || query.trim() === '') {
+        setResults(null);
+        return;
+      }
 
-  try {
-    const res = await fetch(
-      `${API_URL}/search?q=${encodeURIComponent(query)}&page=${page}&page_size=20`,
-      { cache: 'no-store' }
-    );
-    
-    if (!res.ok) {
-      console.error('Search failed:', res.status);
-      return null;
+      setLoading(true);
+      setError(null);
+
+      try {
+        const data = await searchImages(query, undefined, page);
+        setResults(data);
+      } catch (err) {
+        console.error('Search error:', err);
+        setError('Search failed. Please try again.');
+      } finally {
+        setLoading(false);
+      }
     }
-    
-    return res.json();
-  } catch (error) {
-    console.error('Error searching:', error);
-    return null;
-  }
-}
 
-async function SearchContent({ 
-  searchParams 
-}: { 
-  searchParams: { q?: string; page?: string } 
-}) {
-  const query = searchParams.q || '';
-  const page = parseInt(searchParams.page || '1', 10);
+    performSearch();
+  }, [query, page]);
 
-  if (!query) {
-    return (
-      <div className="bg-white rounded-lg shadow-sm p-12 text-center">
-        <p className="text-gray-600 text-lg">Enter a search query to find images</p>
-        <p className="text-gray-500 text-sm mt-2">
-          Try searching for subjects, deities, or descriptions
-        </p>
-      </div>
-    );
-  }
-
-  const data = await searchImages(query, page);
-
-  if (!data) {
-    return (
-      <div className="bg-white rounded-lg shadow-sm p-12 text-center">
-        <p className="text-red-600 text-lg">Search failed</p>
-        <p className="text-gray-500 text-sm mt-2">
-          Please try again later
-        </p>
-      </div>
-    );
-  }
-
-  return (
-    <SearchResults
-      results={data.results}
-      total={data.total}
-      page={data.page}
-      pageSize={data.page_size}
-      query={data.query}
-    />
-  );
-}
-
-function SearchLoading() {
-  return (
-    <div className="flex items-center justify-center py-12">
-      <Loader2 className="h-8 w-8 animate-spin text-primary-500" />
-    </div>
-  );
-}
-
-export default function SearchPage({
-  searchParams,
-}: {
-  searchParams: { q?: string; page?: string };
-}) {
-  const query = searchParams.q || '';
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchInput.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchInput.trim())}`);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -100,34 +65,63 @@ export default function SearchPage({
 
         {/* Page Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Search Results
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">
+            Search Images
           </h1>
+          
+          {/* Search Form */}
+          <form onSubmit={handleSearch} className="flex gap-2 max-w-xl">
+            <input
+              type="text"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+              placeholder="Search for subjects, deities, descriptions..."
+              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            />
+            <button
+              type="submit"
+              className="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+            >
+              Search
+            </button>
+          </form>
+          
           {query && (
-            <p className="text-gray-600">
+            <p className="text-gray-600 mt-4">
               Searching for: <span className="font-semibold">{query}</span>
             </p>
           )}
         </div>
 
         {/* Search Results */}
-        <Suspense fallback={<SearchLoading />}>
-          <SearchContent searchParams={searchParams} />
-        </Suspense>
+        {loading ? (
+          <div className="flex items-center justify-center py-12">
+            <Loader2 className="h-8 w-8 animate-spin text-primary-500" />
+          </div>
+        ) : error ? (
+          <div className="bg-white rounded-lg shadow-sm p-12 text-center">
+            <p className="text-red-600 text-lg">{error}</p>
+            <p className="text-gray-500 text-sm mt-2">
+              Please try again later
+            </p>
+          </div>
+        ) : !query ? (
+          <div className="bg-white rounded-lg shadow-sm p-12 text-center">
+            <p className="text-gray-600 text-lg">Enter a search query to find images</p>
+            <p className="text-gray-500 text-sm mt-2">
+              Try searching for subjects, deities, or descriptions
+            </p>
+          </div>
+        ) : results ? (
+          <SearchResults
+            results={results.results}
+            total={results.total}
+            page={results.page}
+            pageSize={results.page_size}
+            query={results.query}
+          />
+        ) : null}
       </div>
     </div>
   );
-}
-
-export async function generateMetadata({
-  searchParams,
-}: {
-  searchParams: { q?: string };
-}) {
-  const query = searchParams.q || '';
-  
-  return {
-    title: query ? `Search: ${query} - Ellora Caves` : 'Search - Ellora Caves',
-    description: 'Search through the photographic documentation of Ellora cave temples',
-  };
 }

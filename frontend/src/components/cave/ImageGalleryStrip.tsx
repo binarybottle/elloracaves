@@ -1,14 +1,12 @@
 // components/cave/ImageGalleryStrip.tsx
 'use client';
 
-import ImageWithFallback from '@/components/image/ImageWithFallback';
-
-const IMAGE_BASE_URL = process.env.NEXT_PUBLIC_API_URL?.replace('/api/v1', '') || 'http://localhost:8000';
+import { Image as ImageType } from '@/lib/api';
 
 interface ImageGalleryStripProps {
-  images: any[];
+  images: ImageType[];
   selectedImageId?: number;
-  onImageSelect: (image: any) => void;
+  onImageSelect: (image: ImageType) => void;
   cave: any;
   floorNumber: number;
 }
@@ -42,6 +40,9 @@ export default function ImageGalleryStrip({
                                  image.coordinates?.plan_y_norm !== null && 
                                  image.coordinates?.plan_y_norm !== undefined;
           
+          // Use thumbnail_url directly - already full URL from API
+          const thumbnailUrl = image.thumbnail_url || image.image_url;
+          
           return (
             <button
               key={image.id}
@@ -51,12 +52,11 @@ export default function ImageGalleryStrip({
               <div className={`relative h-full rounded ${
                 selectedImageId === image.id ? 'ring-2 ring-red-600' : ''
               }`}>
-                <ImageWithFallback
-                  src={`${IMAGE_BASE_URL}${image.thumbnail_url || image.image_url}`}
+                <img
+                  src={thumbnailUrl}
                   alt={image.subject || `Image ${image.id}`}
-                  width={120}
-                  height={96}
                   className="h-full w-auto object-contain rounded"
+                  loading="lazy"
                 />
                 {/* Green dot indicator for images with floor plan coordinates */}
                 {hasCoordinates && (

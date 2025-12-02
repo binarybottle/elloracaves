@@ -1,20 +1,33 @@
 /**
- * API client for Ellora Caves backend.
- * Provides type-safe functions for all API endpoints.
- * Uses different URLs for server-side (Docker network) vs client-side (browser) requests.
+ * API client for Ellora Caves
+ * 
+ * This module provides type-safe functions for all data operations.
+ * Uses Supabase for database queries and Cloudflare Images for image delivery.
  */
 
-// Use API_URL for server-side, NEXT_PUBLIC_API_URL for client-side
-const getApiUrl = () => {
-  // Server-side: use internal Docker network URL
-  if (typeof window === 'undefined') {
-    return process.env.API_URL || 'http://backend:8000/api/v1';
-  }
-  // Client-side: use public URL
-  return process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
-};
+import { 
+  getCaves as dbGetCaves, 
+  getCave as dbGetCave, 
+  getCaveFloorImages as dbGetCaveFloorImages,
+  getImage as dbGetImage,
+  searchImages as dbSearchImages,
+  getAllCaveIds as dbGetAllCaveIds,
+  DbCave, 
+  DbPlan, 
+  DbImage 
+} from './supabase';
 
-// Type Definitions
+import { 
+  getImageUrl, 
+  getThumbnailUrl, 
+  getPlanImageUrl,
+  ImageVariant 
+} from './cloudflare-images';
+
+// ============================================
+// Type Definitions (API response types)
+// ============================================
+
 export interface Coordinates {
   plan_x_px?: number;
   plan_y_px?: number;
@@ -33,17 +46,19 @@ export interface Image {
   thumbnail_url: string;
 }
 
-interface ImageDetail extends Image {
+export interface ImageDetail extends Image {
   motifs?: string;
   medium?: string;
   plan_id?: number;
   floor_number?: number;
   photographer?: string;
 }
+
 export interface FloorPlan {
   id: number;
   floor_number: number;
   plan_image: string;
+  plan_url: string;
   plan_width: number;
   plan_height: number;
   image_count: number;
@@ -69,36 +84,143 @@ export interface SearchResult {
   query: string;
 }
 
-// API Functions
-async function fetchAPI<T>(endpoint: string): Promise<T> {
-  const apiUrl = getApiUrl();
-  const res = await fetch(`${apiUrl}${endpoint}`, {
-    // Disable caching for development
-    cache: 'no-store',
-  });
-  if (!res.ok) {
-    throw new Error(`API error: ${res.status}`);
-  }
-  return res.json();
+// ============================================
+// Transform Functions (DB -> API types)
+// ============================================
+
+function transformCave(dbCave: DbCave & { plans?: DbPlan[]; images?: { count: number }[] }): Cave {
+  return {
+    id: dbCave.cave_id,
+    cave_number: String(dbCave.cave_id),
+    name: dbCave.cave_name || `Cave ${dbCave.cave_id}`,
+    tradition: dbCave.cave_religion || '',
+    date_range: dbCave.cave_dates || undefined,
+    description: dbCave.cave_description || undefined,
+    floor_count: dbCave.plans?.length || 0,
+    image_count: dbCave.images?.[0]?.count || 0,
+    plans: dbCave.plans?.map(transformPlan),
+  };
 }
 
+function transformPlan(dbPlan: DbPlan & { image_count?: number }): FloorPlan {
+  return {
+    id: dbPlan.plan_id,
+    floor_number: dbPlan.plan_floor,
+    plan_image: dbPlan.plan_image || '',
+    plan_url: getPlanImageUrl(dbPlan.plan_image),
+    plan_width: dbPlan.plan_width || 0,
+    plan_height: dbPlan.plan_height || 0,
+    image_count: dbPlan.image_count || 0,
+  };
+}
+
+function transformImage(dbImage: DbImage): Image {
+  return {
+    id: dbImage.image_id,
+    file_path: dbImage.file_path,
+    subject: dbImage.subject || undefined,
+    description: dbImage.description || undefined,
+    cave_id: dbImage.cave_id,
+    coordinates: dbImage.plan_x_px ? {
+      plan_x_px: dbImage.plan_x_px,
+      plan_y_px: dbImage.plan_y_px || undefined,
+      plan_x_norm: dbImage.plan_x_norm || undefined,
+      plan_y_norm: dbImage.plan_y_norm || undefined,
+    } : undefined,
+    image_url: getImageUrl(dbImage.cloudflare_image_id, dbImage.file_path, 'large'),
+    thumbnail_url: getThumbnailUrl(
+      dbImage.cloudflare_image_id,
+      dbImage.cloudflare_thumbnail_id,
+      dbImage.file_path,
+      dbImage.thumbnail
+    ),
+  };
+}
+
+function transformImageDetail(
+  dbImage: DbImage & { 
+    caves?: { cave_name: string; cave_religion: string }; 
+    plans?: { plan_floor: number } 
+  }
+): ImageDetail {
+  const base = transformImage(dbImage);
+  return {
+    ...base,
+    motifs: dbImage.motifs || undefined,
+    medium: dbImage.medium || undefined,
+    plan_id: dbImage.plan_id || undefined,
+    floor_number: dbImage.plans?.plan_floor,
+    photographer: dbImage.photographer || undefined,
+  };
+}
+
+// ============================================
+// API Functions (public interface)
+// ============================================
+
+/**
+ * Fetch all caves, optionally filtered by tradition
+ */
 export async function fetchCaves(tradition?: string): Promise<Cave[]> {
-  const params = tradition ? `?tradition=${encodeURIComponent(tradition)}` : '';
-  return fetchAPI<Cave[]>(`/caves${params}`);
+  const data = await dbGetCaves(tradition);
+  return data?.map(transformCave) || [];
 }
 
+/**
+ * Fetch a single cave with its floor plans
+ */
 export async function fetchCaveDetail(caveNumber: string): Promise<Cave> {
-  return fetchAPI<Cave>(`/caves/${caveNumber}`);
-}
-
-export async function fetchImageDetail(imageId: number): Promise<ImageDetail> {
-  return fetchAPI<ImageDetail>(`/images/${imageId}`);
-}
-
-export async function searchImages(query: string, caveId?: number, page: number = 1): Promise<SearchResult> {
-  const params = new URLSearchParams({ q: query, page: page.toString() });
-  if (caveId) {
-    params.append('cave_id', caveId.toString());
+  const caveId = parseInt(caveNumber, 10);
+  const data = await dbGetCave(caveId);
+  
+  if (!data) {
+    throw new Error(`Cave ${caveNumber} not found`);
   }
-  return fetchAPI<SearchResult>(`/search?${params.toString()}`);
+  
+  return transformCave(data);
+}
+
+/**
+ * Fetch images for a specific cave floor
+ */
+export async function fetchCaveFloorImages(caveNumber: string, floorNumber: number): Promise<Image[]> {
+  const caveId = parseInt(caveNumber, 10);
+  const data = await dbGetCaveFloorImages(caveId, floorNumber);
+  return data?.map(transformImage) || [];
+}
+
+/**
+ * Fetch details for a single image
+ */
+export async function fetchImageDetail(imageId: number): Promise<ImageDetail> {
+  const data = await dbGetImage(imageId);
+  
+  if (!data) {
+    throw new Error(`Image ${imageId} not found`);
+  }
+  
+  return transformImageDetail(data);
+}
+
+/**
+ * Search images by query string
+ */
+export async function searchImages(query: string, caveId?: number, page: number = 1): Promise<SearchResult> {
+  const result = await dbSearchImages(query, caveId, page);
+  
+  return {
+    results: result.results.map(img => ({ image: transformImage(img) })),
+    total: result.total,
+    page: result.page,
+    page_size: result.pageSize,
+    query: result.query,
+  };
+}
+
+/**
+ * Get all cave IDs for static generation
+ */
+export async function getAllCaveIds(): Promise<string[]> {
+  const ids = await dbGetAllCaveIds();
+  return ids.map(String);
 }
