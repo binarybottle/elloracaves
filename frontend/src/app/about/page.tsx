@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { CAVE_POSITIONS, getDropdownLabel } from '@/components/cave/CaveMap';
-import ImageWithFallback from '@/components/image/ImageWithFallback';
 import { fetchCaveDetail, fetchCaveFloorImages, Cave, Image } from '@/lib/api';
 
 export default function AboutPage() {
@@ -49,13 +48,13 @@ export default function AboutPage() {
   // Get tradition for each cave
   const getTradition = (caveId: number): string => {
     if ((caveId >= 1 && caveId <= 12) || (caveId >= 10001 && caveId <= 10017) || (caveId >= 20001 && caveId <= 20003)) return 'Buddhist';
-    if ((caveId >= 13 && caveId <= 29) || (caveId >= 1016 && caveId <= 4016) || caveId === 120 || caveId === 20 || caveId === 124 || caveId === 224) return 'Hindu';
+    if ((caveId >= 13 && caveId <= 29) || (caveId >= 1016 && caveId <= 4016) || caveId === 120 || caveId === 220 || caveId === 20 || caveId === 124 || caveId === 224) return 'Hindu';
     if ((caveId >= 30 && caveId <= 34) || caveId === 130 || caveId === 132) return 'Jain';
     return 'Unknown';
   };
 
   // Sort caves using the same logic as dropdown menus
-  const favoriteOrder = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1016,4016,3016,2016,17,18,19,20,120,21,22,23,24,124,224,25,26,27,28,29,30,130,31,32,33,34,10001,10006,10008,10013,10017,20001,20003];
+  const favoriteOrder = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1016,4016,3016,2016,17,18,19,120,220,21,22,23,24,124,224,25,26,27,28,29,30,130,31,32,33,34,10001,10006,10008,10013,10017,20001,20003];
   
   const sortedCaves = Object.keys(CAVE_POSITIONS)
     .map(Number)
@@ -123,8 +122,8 @@ export default function AboutPage() {
           <h2 className="text-2xl mb-6 text-white">Upcoming Book</h2>
           <div className="prose prose-invert max-w-none space-y-4 text-base leading-relaxed">
             <p>
-              The book "<b>Ellora: Cross-fertilization of Style in Buddhist, 
-              Hindu and Jain Cave Temples</b>" will be published by Mapin in early 2026. 
+              The book &ldquo;<b>Ellora: Cross-fertilization of Style in Buddhist, 
+              Hindu and Jain Cave Temples</b>&rdquo; will be published by Mapin in early 2026. 
               The contributing authors investigate the temples by religion and myth, patronage and support, 
               stylistic influence and exchange, chronology, and the process of carving and completion 
               of these rock-cut temples. The book includes extensive photographic documentation, ground plans, 
@@ -183,11 +182,10 @@ export default function AboutPage() {
                     {/* Image */}
                     <div className="aspect-square relative bg-gray-900">
                       {defaultImage ? (
-                        <ImageWithFallback
+                        <img
                           src={defaultImage.thumbnail_url || defaultImage.image_url}
                           alt={label}
-                          fill
-                          className="object-cover group-hover:opacity-75 transition-opacity"
+                          className="w-full h-full object-cover group-hover:opacity-75 transition-opacity"
                         />
                       ) : (
                         <div className="absolute inset-0 flex items-center justify-center text-gray-600">
@@ -322,10 +320,9 @@ export default function AboutPage() {
           <h2 className="text-xl font-bold mb-4 text-white">Technical Information</h2>
           <div className="space-y-2 text-sm text-gray-400">
             <p><strong>Website:</strong> Arno Klein</p>
-            <p><strong>Frontend:</strong> Next.js, React, TypeScript, Tailwind CSS (hosted on Cloudflare Pages)</p>
-            <p><strong>Backend:</strong> Supabase (PostgreSQL + Edge Functions)</p>
-            <p><strong>Images:</strong> Cloudflare Images</p>
-            <p><strong>Features:</strong> Interactive floor plans, advanced search with fuzzy matching, boolean operators, cave/floor filters</p>
+            <p><strong>Frontend:</strong> Next.js, React, TypeScript, Tailwind CSS</p>
+            <p><strong>Backend:</strong> Supabase PostgreSQL</p>
+            <p><strong>Features:</strong> Interactive floor plans, advanced search with fuzzy matching, cave filters</p>
           </div>
         </section>
       </main>

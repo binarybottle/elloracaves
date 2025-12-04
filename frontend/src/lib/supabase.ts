@@ -172,12 +172,13 @@ export async function getCaveFloorImages(caveId: number, floorNumber: number) {
     return [];
   }
 
-  // Then get images for this plan
+  // Then get images for this plan, sorted by default_priority (highest first)
   const { data, error } = await supabase
     .from('images')
     .select('*')
     .eq('plan_id', plan.plan_id)
     .eq('rank', 1)
+    .order('default_priority', { ascending: false })
     .order('file_path');
 
   if (error) {
@@ -210,10 +211,133 @@ export async function getImage(imageId: number) {
   return data;
 }
 
+// Synonym mapping for variant spellings (Indian names, Sanskrit transliterations)
+const SYNONYM_MAP: Record<string, string[]> = {
+  'siva': ['siva', 'shiva'],
+  'shiva': ['siva', 'shiva'],
+  'vishnu': ['vishnu', 'visnu'],
+  'visnu': ['vishnu', 'visnu'],
+  'krishna': ['krishna', 'krsna'],
+  'krsna': ['krishna', 'krsna'],
+  'ganesh': ['ganesh', 'ganesha', 'ganesa'],
+  'ganesha': ['ganesh', 'ganesha', 'ganesa'],
+  'ganesa': ['ganesh', 'ganesha', 'ganesa'],
+  'durga': ['durga', 'durgah'],
+  'parvati': ['parvati', 'parvathi'],
+  'lakshmi': ['lakshmi', 'laksmi'],
+  'laksmi': ['lakshmi', 'laksmi'],
+  'brahma': ['brahma', 'brahmaa'],
+  'indra': ['indra', 'indrah'],
+  'bodhisattva': ['bodhisattva', 'boddhisattva', 'bodhisatva'],
+  'buddha': ['buddha', 'buddah'],
+  'mahavira': ['mahavira', 'mahaveer'],
+  'tirthankara': ['tirthankara', 'tirthankar'],
+  'nataraja': ['nataraja', 'nataraj'],
+  'lingam': ['lingam', 'linga', 'shivling'],
+  'linga': ['lingam', 'linga', 'shivling'],
+};
+
 /**
- * Search images using full-text search
+ * Expand search query with synonym variants
+ */
+function expandQueryWithSynonyms(query: string): string[] {
+  const words = query.toLowerCase().split(/\s+/);
+  const expandedTerms: string[] = [query]; // Always include original
+  
+  for (const word of words) {
+    const cleanWord = word.replace(/[.,!?;:]/g, '');
+    if (SYNONYM_MAP[cleanWord]) {
+      // Add all variants as separate search terms
+      for (const variant of SYNONYM_MAP[cleanWord]) {
+        if (variant !== cleanWord) {
+          expandedTerms.push(query.toLowerCase().replace(cleanWord, variant));
+        }
+      }
+    }
+  }
+  
+  return Array.from(new Set(expandedTerms)); // Remove duplicates
+}
+
+/**
+ * Search images using full-text search + fuzzy matching (ILIKE fallback)
  */
 export async function searchImages(query: string, caveId?: number, page: number = 1, pageSize: number = 20) {
+  // Try RPC function first (if installed)
+  try {
+    const { data, error } = await supabase.rpc('search_images_fuzzy', {
+      search_query: query,
+      target_cave_id: caveId || null,
+      page_num: page,
+      page_size: pageSize,
+      use_fuzzy: true
+    });
+
+    if (!error && data && data.length > 0) {
+      const total = data[0]?.total_count || data.length;
+      return {
+        results: data,
+        total: Number(total),
+        page,
+        pageSize,
+        query
+      };
+    }
+  } catch (e) {
+    console.log('RPC not available, using fallback search');
+  }
+
+  // Fallback: Use ILIKE for fuzzy-ish matching (works without pg_trgm)
+  return searchImagesFallback(query, caveId, page, pageSize);
+}
+
+/**
+ * Fallback search using ILIKE for fuzzy-ish matching with synonym support
+ */
+async function searchImagesFallback(query: string, caveId?: number, page: number = 1, pageSize: number = 20) {
+  // Expand query with synonyms
+  const expandedQueries = expandQueryWithSynonyms(query);
+  
+  // Build OR conditions for all synonym variants
+  const orConditions = expandedQueries.map(q => {
+    const pattern = `%${q}%`;
+    return `subject.ilike.${pattern},description.ilike.${pattern},motifs.ilike.${pattern}`;
+  }).join(',');
+  
+  // Build query with OR conditions for subject, description, motifs
+  let dbQuery = supabase
+    .from('images')
+    .select('*', { count: 'exact' })
+    .eq('rank', 1)
+    .or(orConditions)
+    .range((page - 1) * pageSize, page * pageSize - 1)
+    .order('file_path');
+
+  if (caveId) {
+    dbQuery = dbQuery.eq('cave_id', caveId);
+  }
+
+  const { data, error, count } = await dbQuery;
+
+  if (error) {
+    console.error('Error in fallback search:', error);
+    // Last resort: try full-text search
+    return searchImagesFullText(query, caveId, page, pageSize);
+  }
+
+  return {
+    results: data || [],
+    total: count || 0,
+    page,
+    pageSize,
+    query
+  };
+}
+
+/**
+ * Full-text search (last resort)
+ */
+async function searchImagesFullText(query: string, caveId?: number, page: number = 1, pageSize: number = 20) {
   let dbQuery = supabase
     .from('images')
     .select('*', { count: 'exact' })
@@ -231,7 +355,7 @@ export async function searchImages(query: string, caveId?: number, page: number 
   const { data, error, count } = await dbQuery;
 
   if (error) {
-    console.error('Error searching images:', error);
+    console.error('Error in full-text search:', error);
     throw error;
   }
 
