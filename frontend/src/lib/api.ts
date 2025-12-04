@@ -89,6 +89,9 @@ export interface SearchResult {
 // ============================================
 
 function transformCave(dbCave: DbCave & { plans?: DbPlan[]; images?: { count: number }[] }): Cave {
+  // Filter out plans with blank.png (placeholder for no plan)
+  const validPlans = dbCave.plans?.filter(p => p.plan_image && p.plan_image !== 'blank.png');
+  
   return {
     id: dbCave.cave_id,
     cave_number: String(dbCave.cave_id),
@@ -96,9 +99,9 @@ function transformCave(dbCave: DbCave & { plans?: DbPlan[]; images?: { count: nu
     tradition: dbCave.cave_religion || '',
     date_range: dbCave.cave_dates || undefined,
     description: dbCave.cave_description || undefined,
-    floor_count: dbCave.plans?.length || 0,
+    floor_count: validPlans?.length || 0,
     image_count: dbCave.images?.[0]?.count || 0,
-    plans: dbCave.plans?.map(transformPlan),
+    plans: validPlans?.map(transformPlan),
   };
 }
 

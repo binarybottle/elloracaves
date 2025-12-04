@@ -20,7 +20,6 @@ export default function InteractiveFloorPlan({
   onImageSelect,
   onImageHover,
 }: InteractiveFloorPlanProps) {
-  const [hoveredImageId, setHoveredImageId] = useState<number | null>(null);
   const [planLoaded, setPlanLoaded] = useState(false);
 
   const imagesWithCoords = images.filter(
@@ -62,7 +61,7 @@ export default function InteractiveFloorPlan({
           imagesWithCoords.map((img) => {
             const x = (img.coordinates!.plan_x_norm! * 100);
             const y = (img.coordinates!.plan_y_norm! * 100);
-            const isHovered = hoveredImageId === img.id;
+            const isHovered = false; // We track hover via onImageHover callback now
             const isSelected = selectedImageId === img.id;
 
             return (
@@ -72,22 +71,20 @@ export default function InteractiveFloorPlan({
                 style={{
                   left: `${x}%`,
                   top: `${y}%`,
-                  zIndex: isHovered || isSelected ? 20 : 10,
+                  zIndex: isSelected ? 20 : 10,
                 }}
                 onMouseEnter={() => {
-                  setHoveredImageId(img.id);
                   onImageHover?.(img);
                 }}
                 onMouseLeave={() => {
-                  setHoveredImageId(null);
                   onImageHover?.(null);
                 }}
                 onClick={() => onImageSelect(img)}
               >
                 <div
                   className={`relative ${
-                    isHovered || isSelected ? 'scale-125' : 'scale-100'
-                  } transition-transform`}
+                    isSelected ? 'scale-125' : 'scale-100'
+                  } transition-transform hover:scale-150`}
                 >
                   {/* Marker icon - green with white center when unselected, solid red when selected */}
                   {isSelected ? (
@@ -97,8 +94,6 @@ export default function InteractiveFloorPlan({
                       <div className="w-0.5 h-0.5 rounded-full bg-white" />
                     </div>
                   )}
-                  
-                  {/* No tooltip needed - image preview shows on hover */}
                 </div>
               </button>
             );
