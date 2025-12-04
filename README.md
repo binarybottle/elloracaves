@@ -1,184 +1,121 @@
-# Ellora Caves Website
+# Ellora Caves Documentation
 
-Complete photographic documentation of Ellora cave temples.
+A comprehensive photographic documentation of the Ellora cave temples, a UNESCO World Heritage Site in Maharashtra, India.
+
+## Live Site
+
+🌐 **[elloracaves.org](https://elloracaves.org)** (or your Cloudflare Pages URL)
 
 ## Architecture
 
 ```
 Users → Cloudflare DNS/CDN
-         ├─→ Cloudflare Pages (Next.js SSG)
-         │    └─→ Cloudflare Images (optimized images)
-         └─→ Supabase Edge Functions (search only)
-              └─→ Supabase PostgreSQL
+         ├─→ Cloudflare Pages (Next.js)
+         │    └─→ Cloudflare Images (7,400+ photos)
+         └─→ Supabase PostgreSQL (database)
 ```
 
-## Quick Start (Development)
+## Tech Stack
 
-### Prerequisites
+- **Frontend**: Next.js 14, React, TypeScript, Tailwind CSS
+- **Database**: Supabase (PostgreSQL)
+- **Images**: Cloudflare Images (auto-optimized WebP/AVIF)
+- **Hosting**: Cloudflare Pages
+- **Domain**: Cloudflare DNS
 
-- Node.js 18+
-- Supabase account with project created
-- Cloudflare account with Images enabled
-
-### 1. Set Up Environment
-
-```bash
-cd frontend
-
-# Copy environment template and fill in values
-cp .env.local.example .env.local
-# Edit .env.local with your Supabase and Cloudflare credentials
-```
-
-Required environment variables:
-```
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-NEXT_PUBLIC_CF_IMAGES_ACCOUNT=your-cloudflare-account-hash
-```
-
-### 2. Install Dependencies
+## Local Development
 
 ```bash
 cd frontend
 npm install
-```
-
-### 3. Start Development Server
-
-```bash
+cp .env.local.example .env.local  # Add your Supabase/Cloudflare credentials
 npm run dev
 ```
 
-Open http://localhost:3000/explore?cave=10&floor=1
+Open [http://localhost:3000](http://localhost:3000)
 
-## Deployment
+### Environment Variables
 
-### Database Migration (Supabase)
+Create `frontend/.env.local`:
 
-1. Create a Supabase project at https://supabase.com
-2. Run the schema migration:
-   ```bash
-   psql $SUPABASE_DB_URL -f supabase/migrations/001_initial_schema.sql
-   ```
-3. Run the seed data:
-   ```bash
-   psql $SUPABASE_DB_URL -f supabase/migrations/002_seed_data.sql
-   ```
-
-### Image Upload (Cloudflare Images)
-
-```bash
-cd scripts
-python upload_cloudflare.py ../images/caves_1200px YOUR_CF_API_TOKEN
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://YOUR_PROJECT.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+NEXT_PUBLIC_CF_IMAGES_ACCOUNT=your_cloudflare_account_hash
 ```
 
-Then update the database with Cloudflare image IDs:
+## Deployment to Cloudflare Pages
+
+### 1. Push to GitHub
+
 ```bash
-python update_image_ids.py upload_log.csv
+git add .
+git commit -m "Prepare for Cloudflare Pages deployment"
+git push origin main
 ```
 
-### Frontend Deployment (Cloudflare Pages)
+### 2. Connect to Cloudflare Pages
 
-1. Push to GitHub
-2. Connect repo to Cloudflare Pages
-3. Build settings:
-   - Framework preset: Next.js (Static HTML Export)
-   - Build command: `npm run build`
-   - Build output directory: `out`
-4. Set environment variables in Cloudflare Pages dashboard
+1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com) → Pages
+2. Click **Create a project** → **Connect to Git**
+3. Select your GitHub repository
+4. Configure build settings:
+   - **Framework preset**: Next.js
+   - **Build command**: `npm run build`
+   - **Build output directory**: `.next`
+   - **Root directory**: `frontend`
 
-### Search Function (Supabase)
+### 3. Set Environment Variables
 
-Deploy the edge function:
-```bash
-cd supabase
-supabase functions deploy search
-```
+In Cloudflare Pages → Settings → Environment variables, add:
+
+| Variable | Value |
+|----------|-------|
+| `NEXT_PUBLIC_SUPABASE_URL` | `https://xxx.supabase.co` |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `eyJ...` |
+| `NEXT_PUBLIC_CF_IMAGES_ACCOUNT` | `your_account_hash` |
+| `NODE_VERSION` | `18` |
+
+### 4. Deploy
+
+Click **Save and Deploy**. Cloudflare will build and deploy your site.
+
+### 5. Custom Domain (optional)
+
+1. Pages → Your project → Custom domains
+2. Add `elloracaves.org` (or your domain)
+3. Follow DNS setup instructions
 
 ## Project Structure
 
 ```
-├── frontend/           # Next.js frontend (Cloudflare Pages)
-│   ├── src/
-│   │   ├── app/       # Pages (App Router)
-│   │   ├── components/ # React components
-│   │   └── lib/       # API client, Supabase, helpers
-│   └── next.config.js # Static export config
-├── supabase/          # Supabase configuration
-│   ├── migrations/    # Database schema and seed data
-│   └── functions/     # Edge functions (search)
-├── scripts/           # Utility scripts
-│   ├── upload_cloudflare.py    # Upload images to CF
-│   ├── update_image_ids.py     # Update DB with CF IDs
-│   └── migrate_to_supabase.py  # Generate migration SQL
-└── images/            # Local images (for reference)
+frontend/
+├── src/
+│   ├── app/              # Next.js pages
+│   │   ├── about/        # About page
+│   │   ├── caves/        # Cave detail pages
+│   │   ├── explore/      # Main exploration interface
+│   │   └── search/       # Search page
+│   ├── components/       # React components
+│   └── lib/              # API, Supabase client, helpers
+├── public/
+│   └── images/           # Static images (maps, contributors)
+└── package.json
 ```
 
-## Services
+## Features
 
-| Component | Service | Purpose |
-|-----------|---------|---------|
-| Frontend | Cloudflare Pages | Static Next.js hosting |
-| Database | Supabase | PostgreSQL + auto-generated API |
-| Images | Cloudflare Images | Optimized image delivery |
-| Search | Supabase Edge Functions | Full-text search |
-| DNS | Cloudflare | DNS, DDoS protection |
+- 📍 Interactive floor plans with image markers
+- 🔍 Full-text search with fuzzy matching & synonyms
+- 🖼️ 7,400+ photographs with Cloudflare Images optimization
+- 📱 Responsive design (mobile, tablet, desktop)
+- ⌨️ Keyboard navigation (arrow keys, Cmd/Ctrl+K for search)
 
-## Cost Estimate
+## Credits
 
-| Service | Monthly Cost |
-|---------|-------------|
-| Cloudflare Pages | $0 (free tier) |
-| Cloudflare Images | $5-6 |
-| Supabase | $0 (free tier <500MB) |
-| **Total** | **$5-6/month** |
-
-## Environment Variables
-
-### Frontend (.env.local)
-
-```bash
-# Supabase
-NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
-
-# Cloudflare Images
-NEXT_PUBLIC_CF_IMAGES_ACCOUNT=xxx
-
-# Optional: Local API fallback (development only)
-NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
-```
-
-### Supabase Edge Functions
-
-Set in Supabase dashboard:
-```bash
-CF_IMAGES_ACCOUNT=xxx
-```
-
-## Development Workflow
-
-1. Make changes to frontend code
-2. Test locally with `npm run dev`
-3. Push to GitHub
-4. Cloudflare Pages auto-deploys
-
-## Database Changes
-
-1. Update `supabase/migrations/` with new SQL
-2. Apply to Supabase:
-   ```bash
-   psql $SUPABASE_DB_URL -f supabase/migrations/xxx.sql
-   ```
-
-## Legacy Backend (Deprecated)
-
-The `backend/` directory contains the old FastAPI backend.
-It is kept for reference but is no longer used in production.
-All API functionality has been migrated to:
-- Supabase auto-generated REST API (for CRUD operations)
-- Supabase Edge Functions (for search)
+- **Photography**: Arno Klein
+- **Annotations**: Deepanjana Klein
+- **Website**: Arno Klein
 
 ## License
 
