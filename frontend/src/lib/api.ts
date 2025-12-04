@@ -212,7 +212,7 @@ export async function searchImages(query: string, caveId?: number, page: number 
   const result = await dbSearchImages(query, caveId, page);
   
   return {
-    results: result.results.map(img => ({ image: transformImage(img) })),
+    results: result.results.map((img: DbImage) => ({ image: transformImage(img) })),
     total: result.total,
     page: result.page,
     page_size: result.pageSize,
