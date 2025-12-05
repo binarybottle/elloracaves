@@ -10,17 +10,21 @@ import Link from 'next/link';
 import { ArrowLeft, MapPin, Download } from 'lucide-react';
 import { fetchImageDetail, fetchCaveDetail, fetchCaveFloorImages, ImageDetail } from '@/lib/api';
 
+// Use edge runtime for Cloudflare Pages
+export const runtime = 'edge';
+
 interface ImagePageProps {
-  params: {
+  params: Promise<{
     imageId: string;
-  };
+  }>;
 }
 
 export default async function ImagePage({ params }: ImagePageProps) {
+  const { imageId } = await params;
   let image: ImageDetail;
   
   try {
-    image = await fetchImageDetail(parseInt(params.imageId, 10));
+    image = await fetchImageDetail(parseInt(imageId, 10));
   } catch (error) {
     notFound();
   }
@@ -228,8 +232,9 @@ export default async function ImagePage({ params }: ImagePageProps) {
 }
 
 export async function generateMetadata({ params }: ImagePageProps) {
+  const { imageId } = await params;
   try {
-    const image = await fetchImageDetail(parseInt(params.imageId, 10));
+    const image = await fetchImageDetail(parseInt(imageId, 10));
     
     return {
       title: `${image.subject || `Image ${image.id}`} - Ellora Caves`,
