@@ -367,3 +367,4 @@ export default function SearchOverlay({ onClose, onImageSelect }: SearchOverlayP
   );
 }
 
+

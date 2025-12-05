@@ -17,7 +17,7 @@ Users → Cloudflare DNS/CDN
 
 ## Tech Stack
 
-- **Frontend**: Next.js 14, React, TypeScript, Tailwind CSS
+- **Frontend**: Next.js 15, React, TypeScript, Tailwind CSS
 - **Database**: Supabase (PostgreSQL)
 - **Images**: Cloudflare Images (auto-optimized WebP/AVIF)
 - **Hosting**: Cloudflare Pages
@@ -95,6 +95,7 @@ frontend/
 │   │   ├── about/        # About page
 │   │   ├── caves/        # Cave detail pages
 │   │   ├── explore/      # Main exploration interface
+│   │   ├── images/       # Images page
 │   │   └── search/       # Search page
 │   ├── components/       # React components
 │   └── lib/              # API, Supabase client, helpers
