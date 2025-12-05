@@ -1,6 +1,5 @@
 # Development files (not needed for deployment)
 dev/
-images/
 
 # Python
 *.pyc
