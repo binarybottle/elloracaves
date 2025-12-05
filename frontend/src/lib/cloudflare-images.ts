@@ -110,15 +110,15 @@ export function getThumbnailUrl(
 }
 
 /**
- * Get plan image URL (floor plans are stored locally, not on Cloudflare)
+ * Get plan image URL (floor plans are stored in public/plans/)
  */
-export function getPlanImageUrl(planImage: string | null, baseUrl?: string): string {
+export function getPlanImageUrl(planImage: string | null): string {
   // Treat blank.png as no plan (it's a placeholder in the database)
   if (!planImage || planImage === 'blank.png') {
     return '';
   }
   
-  const apiUrl = baseUrl || process.env.NEXT_PUBLIC_API_URL || '';
-  return `${apiUrl}/plans/${planImage}`;
+  // Plans are served statically from /plans/ directory
+  return `/plans/${planImage}`;
 }
 
