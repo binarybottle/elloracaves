@@ -190,6 +190,28 @@ export async function getCaveFloorImages(caveId: number, floorNumber: number) {
 }
 
 /**
+ * Fetch images for a cave (without needing a specific floor)
+ * Useful for caves without floor plans
+ */
+export async function getCaveImages(caveId: number, limit: number = 20) {
+  const { data, error } = await supabase
+    .from('images')
+    .select('*')
+    .eq('cave_id', caveId)
+    .eq('rank', 1)
+    .order('default_priority', { ascending: false })
+    .order('file_path')
+    .limit(limit);
+
+  if (error) {
+    console.error('Error fetching cave images:', error);
+    throw error;
+  }
+
+  return data || [];
+}
+
+/**
  * Fetch a single image detail
  */
 export async function getImage(imageId: number) {

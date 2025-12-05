@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { CAVE_POSITIONS, getDropdownLabel } from '@/components/cave/CaveMap';
-import { fetchCaveDetail, fetchCaveFloorImages, Cave, Image } from '@/lib/api';
+import { fetchCaveDetail, fetchCaveFloorImages, fetchCaveImages, Cave, Image } from '@/lib/api';
 
 export default function AboutPage() {
   const [caveData, setCaveData] = useState<Record<number, { caveId: number; cave: Cave; defaultImage: Image | null }>>({});
@@ -17,14 +17,22 @@ export default function AboutPage() {
         try {
           const cave = await fetchCaveDetail(String(caveId));
           
-          // Fetch first floor images to get default image
+          let defaultImage: Image | null = null;
+          
+          // Fetch images - try floor-based first, then cave-based fallback
           if (cave.plans && cave.plans.length > 0) {
             const firstFloor = Math.min(...cave.plans.map((p) => p.floor_number));
             const images = await fetchCaveFloorImages(String(caveId), firstFloor);
-            const defaultImage = images.find((img) => img.image_url && img.image_url.trim() !== '') || null;
-            return { caveId, cave, defaultImage };
+            defaultImage = images.find((img) => img.image_url && img.image_url.trim() !== '') || null;
           }
-          return { caveId, cave, defaultImage: null };
+          
+          // Fallback: if no plans or no images found, fetch images directly by cave_id
+          if (!defaultImage) {
+            const images = await fetchCaveImages(String(caveId), 5);
+            defaultImage = images.find((img) => img.image_url && img.image_url.trim() !== '') || null;
+          }
+          
+          return { caveId, cave, defaultImage };
         } catch (error) {
           console.error(`Error fetching cave ${caveId}:`, error);
           return null;
@@ -87,7 +95,7 @@ export default function AboutPage() {
           <div className="flex items-center justify-between">
             <h1 className="text-3xl ">About the Ellora Caves and elloracaves.org</h1>
             <Link
-              href="/explore?cave=10&floor=1"
+              href="/explore?cave=10"
               className="px-4 py-2 bg-white text-black rounded-lg font-semibold hover:bg-gray-200 transition-colors"
             >
               Explore the Caves
@@ -172,7 +180,7 @@ export default function AboutPage() {
                 return (
                   <Link
                     key={caveId}
-                    href={`/explore?cave=${caveId}&floor=1`}
+                    href={`/explore?cave=${caveId}`}
                     className={`
                       group relative rounded-lg border-2 transition-all overflow-hidden
                       ${traditionColors[tradition as keyof typeof traditionColors]}
