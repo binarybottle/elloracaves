@@ -2,36 +2,17 @@ import { notFound } from 'next/navigation';
 import { CaveDetail } from '@/components/caves/CaveDetail';
 import { fetchCaveDetail, getAllCaveIds } from '@/lib/api';
 
-// Generate static params for all caves at build time
-// Returns empty array if Supabase isn't configured (pages will be generated on-demand)
-export async function generateStaticParams() {
-  // Skip static generation if Supabase isn't configured
-  if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
-    console.log('Skipping static generation: Supabase not configured');
-    return [];
-  }
-  
-  try {
-    const caveIds = await getAllCaveIds();
-    return caveIds.map((caveNumber) => ({
-      caveNumber: caveNumber,
-    }));
-  } catch (error) {
-    console.error('Error generating static params:', error);
-    return [];
-  }
-}
-
-// Static page generation with revalidation
-export const revalidate = 3600; // Revalidate every hour
+// Use edge runtime for Cloudflare Pages
+export const runtime = 'edge';
 
 export default async function CavePage({
   params,
 }: {
-  params: { caveNumber: string };
+  params: Promise<{ caveNumber: string }>;
 }) {
+  const { caveNumber } = await params;
   try {
-    const cave = await fetchCaveDetail(params.caveNumber);
+    const cave = await fetchCaveDetail(caveNumber);
 
     if (!cave) {
       notFound();
@@ -47,10 +28,11 @@ export default async function CavePage({
 export async function generateMetadata({
   params,
 }: {
-  params: { caveNumber: string };
+  params: Promise<{ caveNumber: string }>;
 }) {
+  const { caveNumber } = await params;
   try {
-    const cave = await fetchCaveDetail(params.caveNumber);
+    const cave = await fetchCaveDetail(caveNumber);
 
     if (!cave) {
       return {

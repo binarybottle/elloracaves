@@ -1,7 +1,7 @@
 // app/explore/page.tsx
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { Suspense, useState, useEffect, useCallback } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Search } from 'lucide-react';
@@ -14,7 +14,7 @@ import ImageGalleryStrip from '@/components/cave/ImageGalleryStrip';
 import SearchOverlay from '@/components/search/SearchOverlay';
 import { fetchCaveDetail, fetchCaveFloorImages, fetchImageDetail, Cave, Image } from '@/lib/api';
 
-export default function ExplorePage() {
+function ExploreContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   
@@ -445,5 +445,17 @@ export default function ExplorePage() {
         />
       )}
     </div>
+  );
+}
+
+export default function ExplorePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-[#eae2c4]">Loading...</div>
+      </div>
+    }>
+      <ExploreContent />
+    </Suspense>
   );
 }

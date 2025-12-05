@@ -1,0 +1,12 @@
+name = "ellora-caves"
+compatibility_date = "2024-12-01"
+compatibility_flags = ["nodejs_compat"]
+
+# next-on-pages output configuration
+pages_build_output_dir = ".vercel/output/static"
+
+[vars]
+NEXT_PUBLIC_SUPABASE_URL = "https://sekkcjgsudznjxlojjby.supabase.co"
+NEXT_PUBLIC_CF_IMAGES_ACCOUNT = "KIW9yF8c-WGugbU7KgzvZQ"
+NEXT_PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNla2tjamdzdWR6bmp4bG9qamJ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ2NzY4MTcsImV4cCI6MjA4MDI1MjgxN30.feBIDaOcnClYRUG7O9W5uCwhws2hC8spSuObZjDvVtk"
+
