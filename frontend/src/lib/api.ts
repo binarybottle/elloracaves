@@ -9,6 +9,7 @@ import {
   getCaves as dbGetCaves, 
   getCave as dbGetCave, 
   getCaveFloorImages as dbGetCaveFloorImages,
+  getCaveImages as dbGetCaveImages,
   getImage as dbGetImage,
   searchImages as dbSearchImages,
   getAllCaveIds as dbGetAllCaveIds,
@@ -189,6 +190,15 @@ export async function fetchCaveDetail(caveNumber: string): Promise<Cave> {
 export async function fetchCaveFloorImages(caveNumber: string, floorNumber: number): Promise<Image[]> {
   const caveId = parseInt(caveNumber, 10);
   const data = await dbGetCaveFloorImages(caveId, floorNumber);
+  return data?.map(transformImage) || [];
+}
+
+/**
+ * Fetch images for a cave (without needing a specific floor)
+ */
+export async function fetchCaveImages(caveNumber: string, limit: number = 20): Promise<Image[]> {
+  const caveId = parseInt(caveNumber, 10);
+  const data = await dbGetCaveImages(caveId, limit);
   return data?.map(transformImage) || [];
 }
 
