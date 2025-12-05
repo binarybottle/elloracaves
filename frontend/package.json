@@ -8,7 +8,7 @@
     "pages:build": "npx @cloudflare/next-on-pages",
     "start": "next start",
     "preview": "wrangler pages dev .vercel/output/static",
-    "deploy": "wrangler pages deploy .vercel/output/static --project-name=ellora-caves",
+    "deploy": "wrangler pages deploy .vercel/output/static --project-name=elloracaves",
     "lint": "next lint"
   },
   "dependencies": {
