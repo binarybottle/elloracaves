@@ -19,10 +19,11 @@ function ExploreContent() {
   const router = useRouter();
   
   const caveId = searchParams.get('cave') || '10';
-  const floorNumber = parseInt(searchParams.get('floor') || '1');
+  const floorNumberParam = searchParams.get('floor');
   const imageId = searchParams.get('image');
   
   const [cave, setCave] = useState<Cave | null>(null);
+  const [floorNumber, setFloorNumber] = useState<number>(1);
   const [floorImages, setFloorImages] = useState<Image[]>([]);
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
   const [hoveredImage, setHoveredImage] = useState<Image | null>(null);
@@ -80,18 +81,30 @@ function ExploreContent() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [goToPrevImage, goToNextImage, showSearch]);
 
-  // Fetch cave data
+  // Fetch cave data and determine default floor
   useEffect(() => {
     async function loadCave() {
       try {
         const data = await fetchCaveDetail(caveId);
         setCave(data);
+        
+        // Determine the floor to show
+        if (floorNumberParam) {
+          // Use floor from URL if specified
+          setFloorNumber(parseInt(floorNumberParam));
+        } else if (data.plans && data.plans.length > 0) {
+          // Default to the lowest floor number
+          const lowestFloor = Math.min(...data.plans.map(p => p.floor_number));
+          setFloorNumber(lowestFloor);
+          // Update URL to include the default floor
+          router.replace(`/explore?cave=${caveId}&floor=${lowestFloor}`, { scroll: false });
+        }
       } catch (error) {
         console.error('Error fetching cave:', error);
       }
     }
     loadCave();
-  }, [caveId]);
+  }, [caveId, floorNumberParam, router]);
 
   // Fetch floor images
   useEffect(() => {
@@ -130,7 +143,7 @@ function ExploreContent() {
   }, [imageId]);
 
   const handleCaveSelect = (newCaveId: number) => {
-    router.push(`/explore?cave=${newCaveId}&floor=1`);
+    router.push(`/explore?cave=${newCaveId}`);
   };
 
   const handleFloorSelect = (newFloor: number) => {

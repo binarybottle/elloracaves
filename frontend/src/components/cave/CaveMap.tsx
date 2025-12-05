@@ -193,7 +193,7 @@ export default function CaveMap({ selectedCaveId, className = '' }: CaveMapProps
               return (
                 <Link
                   key={caveId}
-                  href={`/explore?cave=${caveId}&floor=1`}
+                  href={`/explore?cave=${caveId}`}
                   className="absolute group transform -translate-x-1/2 -translate-y-1/2 z-10"
                   style={{
                     left: `${(position.left / 1024) * 100}%`,
@@ -244,7 +244,7 @@ export default function CaveMap({ selectedCaveId, className = '' }: CaveMapProps
             value={selectedCaveId}
             onChange={(e) => {
               const caveId = e.target.value;
-              window.location.href = `/explore?cave=${caveId}&floor=1`;
+              window.location.href = `/explore?cave=${caveId}`;
             }}
             className="
               bg-black text-white border-2 border-gray-600 
