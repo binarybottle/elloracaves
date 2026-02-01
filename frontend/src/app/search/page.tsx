@@ -13,13 +13,15 @@ function SearchContent() {
   
   const query = searchParams.get('q') || '';
   const page = parseInt(searchParams.get('page') || '1', 10);
+  const caveFilter = searchParams.get('cave') || '';
   
   const [results, setResults] = useState<SearchResult | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [searchInput, setSearchInput] = useState(query);
+  const [selectedCave, setSelectedCave] = useState(caveFilter);
 
-  // Perform search when query or page changes
+  // Perform search when query, page, or cave filter changes
   useEffect(() => {
     async function performSearch() {
       if (!query || query.trim() === '') {
@@ -31,7 +33,8 @@ function SearchContent() {
       setError(null);
 
       try {
-        const data = await searchImages(query, undefined, page);
+        const caveId = selectedCave ? parseInt(selectedCave, 10) : undefined;
+        const data = await searchImages(query, caveId, page);
         setResults(data);
       } catch (err) {
         console.error('Search error:', err);
@@ -42,12 +45,29 @@ function SearchContent() {
     }
 
     performSearch();
-  }, [query, page]);
+  }, [query, page, selectedCave]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchInput.trim()) {
-      router.push(`/search?q=${encodeURIComponent(searchInput.trim())}`);
+      const params = new URLSearchParams();
+      params.set('q', searchInput.trim());
+      if (selectedCave) {
+        params.set('cave', selectedCave);
+      }
+      router.push(`/search?${params.toString()}`);
+    }
+  };
+
+  const handleCaveChange = (cave: string) => {
+    setSelectedCave(cave);
+    if (query) {
+      const params = new URLSearchParams();
+      params.set('q', query);
+      if (cave) {
+        params.set('cave', cave);
+      }
+      router.push(`/search?${params.toString()}`);
     }
   };
 
@@ -70,25 +90,46 @@ function SearchContent() {
           </h1>
           
           {/* Search Form */}
-          <form onSubmit={handleSearch} className="flex gap-2 max-w-xl">
-            <input
-              type="text"
-              value={searchInput}
-              onChange={(e) => setSearchInput(e.target.value)}
-              placeholder="Search for subjects, deities, descriptions..."
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-            />
-            <button
-              type="submit"
-              className="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
-            >
-              Search
-            </button>
+          <form onSubmit={handleSearch} className="max-w-xl space-y-3">
+            <div className="flex gap-2">
+              <input
+                type="text"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                placeholder="Search for subjects, deities, descriptions..."
+                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              />
+              <button
+                type="submit"
+                className="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
+              >
+                Search
+              </button>
+            </div>
+            
+            {/* Cave Filter */}
+            <div className="flex gap-2 items-center">
+              <label htmlFor="cave-filter" className="text-sm text-gray-600 font-medium">
+                Filter by cave:
+              </label>
+              <select
+                id="cave-filter"
+                value={selectedCave}
+                onChange={(e) => handleCaveChange(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+              >
+                <option value="">All Caves</option>
+                {Array.from({ length: 34 }, (_, i) => i + 1).map(num => (
+                  <option key={num} value={num}>Cave {num}</option>
+                ))}
+              </select>
+            </div>
           </form>
           
           {query && (
             <p className="text-gray-600 mt-4">
               Searching for: <span className="font-semibold">{query}</span>
+              {selectedCave && <span> in Cave {selectedCave}</span>}
             </p>
           )}
         </div>

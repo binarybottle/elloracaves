@@ -257,6 +257,10 @@ const SYNONYM_MAP: Record<string, string[]> = {
   'nataraja': ['nataraja', 'nataraj'],
   'lingam': ['lingam', 'linga', 'shivling'],
   'linga': ['lingam', 'linga', 'shivling'],
+  'lankeshvar': ['lankeshvar', 'lankeshvara', 'lankeshwar', 'lankeshwara'],
+  'lankeshvara': ['lankeshvar', 'lankeshvara', 'lankeshwar', 'lankeshwara'],
+  'lankeshwar': ['lankeshvar', 'lankeshvara', 'lankeshwar', 'lankeshwara'],
+  'lankeshwara': ['lankeshvar', 'lankeshvara', 'lankeshwar', 'lankeshwara'],
 };
 
 /**
@@ -314,17 +318,95 @@ export async function searchImages(query: string, caveId?: number, page: number 
 }
 
 /**
- * Fallback search using ILIKE for fuzzy-ish matching with synonym support
+ * Fallback search using ILIKE for fuzzy-ish matching with synonym support and Boolean operators
  */
 async function searchImagesFallback(query: string, caveId?: number, page: number = 1, pageSize: number = 20) {
-  // Expand query with synonyms
-  const expandedQueries = expandQueryWithSynonyms(query);
+  // Parse Boolean operators (OR, AND)
+  const hasExplicitOR = /\s+OR\s+/i.test(query);
+  const hasExplicitAND = /\s+AND\s+/i.test(query);
   
-  // Build OR conditions for all synonym variants
-  const orConditions = expandedQueries.map(q => {
-    const pattern = `%${q}%`;
-    return `subject.ilike.${pattern},description.ilike.${pattern},motifs.ilike.${pattern}`;
-  }).join(',');
+  let orConditions: string;
+  
+  if (hasExplicitOR) {
+    // Split by OR and create conditions for each term
+    const orTerms = query.split(/\s+OR\s+/i).map(t => t.trim());
+    const allConditions: string[] = [];
+    
+    for (const term of orTerms) {
+      // Expand each term with synonyms
+      const expandedQueries = expandQueryWithSynonyms(term);
+      for (const q of expandedQueries) {
+        const pattern = `%${q}%`;
+        allConditions.push(`subject.ilike.${pattern}`);
+        allConditions.push(`description.ilike.${pattern}`);
+        allConditions.push(`motifs.ilike.${pattern}`);
+      }
+    }
+    
+    orConditions = allConditions.join(',');
+  } else if (hasExplicitAND) {
+    // For AND queries, we need to fetch results that match all terms
+    // This is more complex, so we'll handle it differently
+    const andTerms = query.split(/\s+AND\s+/i).map(t => t.trim());
+    
+    // Start with base query
+    let dbQuery = supabase
+      .from('images')
+      .select('*', { count: 'exact' })
+      .eq('rank', 1);
+    
+    if (caveId) {
+      dbQuery = dbQuery.eq('cave_id', caveId);
+    }
+    
+    // Add OR conditions for each AND term
+    for (const term of andTerms) {
+      const expandedQueries = expandQueryWithSynonyms(term);
+      const termConditions: string[] = [];
+      
+      for (const q of expandedQueries) {
+        const pattern = `%${q}%`;
+        termConditions.push(`subject.ilike.${pattern}`);
+        termConditions.push(`description.ilike.${pattern}`);
+        termConditions.push(`motifs.ilike.${pattern}`);
+      }
+      
+      dbQuery = dbQuery.or(termConditions.join(','));
+    }
+    
+    dbQuery = dbQuery
+      .range((page - 1) * pageSize, page * pageSize - 1)
+      .order('file_path');
+    
+    const { data, error, count } = await dbQuery;
+    
+    if (error) {
+      console.error('Error in fallback search:', error);
+      return searchImagesFullText(query, caveId, page, pageSize);
+    }
+    
+    return {
+      results: data || [],
+      total: count || 0,
+      page,
+      pageSize,
+      query
+    };
+  } else {
+    // No explicit Boolean operators - expand with synonyms
+    const expandedQueries = expandQueryWithSynonyms(query);
+    
+    // Build OR conditions for all synonym variants
+    const allConditions: string[] = [];
+    for (const q of expandedQueries) {
+      const pattern = `%${q}%`;
+      allConditions.push(`subject.ilike.${pattern}`);
+      allConditions.push(`description.ilike.${pattern}`);
+      allConditions.push(`motifs.ilike.${pattern}`);
+    }
+    
+    orConditions = allConditions.join(',');
+  }
   
   // Build query with OR conditions for subject, description, motifs
   let dbQuery = supabase
