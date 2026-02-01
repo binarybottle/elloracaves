@@ -80,6 +80,10 @@ In Cloudflare Pages → Settings → Environment variables, add:
 
 Click **Save and Deploy**. Cloudflare will build and deploy your site.
 
+Later deployments:
+cd /Users/arno/Software/www/elloracaves/frontend
+npx wrangler pages deploy .vercel/output/static --project-name=elloracaves
+
 ### 5. Custom Domain (optional)
 
 1. Pages → Your project → Custom domains

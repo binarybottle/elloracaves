@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { X, Search, ChevronDown, Clock, Loader2 } from 'lucide-react';
 import { searchImages, fetchImageDetail } from '@/lib/api';
+import { CAVE_POSITIONS, getDropdownLabel } from '@/components/cave/CaveMap';
 
 const RECENT_SEARCHES_KEY = 'ellora_recent_searches';
 const MAX_RECENT = 10;
@@ -268,9 +269,13 @@ export default function SearchOverlay({ onClose, onImageSelect }: SearchOverlayP
               className="bg-gray-900 text-white border-2 border-gray-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-gray-500"
             >
               <option value="">All Caves</option>
-              {[...Array(34)].map((_, i) => (
-                <option key={i + 1} value={i + 1}>Cave {i + 1}</option>
-              ))}
+              {Object.keys(CAVE_POSITIONS)
+                .sort((a, b) => Number(a) - Number(b))
+                .map(caveId => (
+                  <option key={caveId} value={caveId}>
+                    {getDropdownLabel(Number(caveId))}
+                  </option>
+                ))}
             </select>
           </div>
           

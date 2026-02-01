@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { Loader2 } from 'lucide-react';
 import SearchResults from '@/components/search/SearchResults';
 import { searchImages, SearchResult } from '@/lib/api';
+import { CAVE_POSITIONS, getDropdownLabel } from '@/components/cave/CaveMap';
 
 function SearchContent() {
   const searchParams = useSearchParams();
@@ -119,9 +120,13 @@ function SearchContent() {
                 className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               >
                 <option value="">All Caves</option>
-                {Array.from({ length: 34 }, (_, i) => i + 1).map(num => (
-                  <option key={num} value={num}>Cave {num}</option>
-                ))}
+                {Object.keys(CAVE_POSITIONS)
+                  .sort((a, b) => Number(a) - Number(b))
+                  .map(caveId => (
+                    <option key={caveId} value={caveId}>
+                      {getDropdownLabel(Number(caveId))}
+                    </option>
+                  ))}
               </select>
             </div>
           </form>
