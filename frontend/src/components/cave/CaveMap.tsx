@@ -144,25 +144,11 @@ export default function CaveMap({ selectedCaveId, className = '' }: CaveMapProps
   const extraCaves = Object.entries(CAVE_POSITIONS).filter(([_, pos]) => pos.extraCave);
   const mainCaves = Object.entries(CAVE_POSITIONS).filter(([_, pos]) => !pos.extraCave);
   
-  // Favorite caves to show first in dropdown (most important/popular caves)
-  const favoriteOrder = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1016,4016,3016,2016,17,18,19,120,220,21,22,23,24,124,224,25,26,27,28,29,30,130,31,32,33,34,10001,10006,10008,10013,10017,20001,20003];
-  
-  // All caves for dropdown (favorites first, then numerical order)
+  // All caves for dropdown (alphabetical order by label)
   const allCaves = [...mainCaves, ...extraCaves].sort((a, b) => {
-    const idA = Number(a[0]);
-    const idB = Number(b[0]);
-    
-    const indexA = favoriteOrder.indexOf(idA);
-    const indexB = favoriteOrder.indexOf(idB);
-    
-    // If both in favorites, sort by favorite order
-    if (indexA !== -1 && indexB !== -1) return indexA - indexB;
-    // If only A is favorite, it comes first
-    if (indexA !== -1) return -1;
-    // If only B is favorite, it comes first
-    if (indexB !== -1) return 1;
-    // Neither is favorite, sort numerically
-    return idA - idB;
+    const labelA = getDropdownLabel(Number(a[0]));
+    const labelB = getDropdownLabel(Number(b[0]));
+    return labelA.localeCompare(labelB, undefined, { numeric: true, sensitivity: 'base' });
   });
 
   return (

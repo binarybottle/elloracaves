@@ -121,7 +121,11 @@ function SearchContent() {
               >
                 <option value="">All Caves</option>
                 {Object.keys(CAVE_POSITIONS)
-                  .sort((a, b) => Number(a) - Number(b))
+                  .sort((a, b) => {
+                    const labelA = getDropdownLabel(Number(a));
+                    const labelB = getDropdownLabel(Number(b));
+                    return labelA.localeCompare(labelB, undefined, { numeric: true, sensitivity: 'base' });
+                  })
                   .map(caveId => (
                     <option key={caveId} value={caveId}>
                       {getDropdownLabel(Number(caveId))}
