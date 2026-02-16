@@ -82,7 +82,8 @@ Click **Save and Deploy**. Cloudflare will build and deploy your site.
 
 Later deployments:
 cd /Users/arno/Software/www/elloracaves/frontend
-npx wrangler pages deploy .vercel/output/static --project-name=elloracaves
+#npx wrangler pages deploy .vercel/output/static --project-name=elloracaves
+npm run pages:build && npm run deploy
 
 ### 5. Custom Domain (optional)
 
