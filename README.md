@@ -123,6 +123,53 @@ frontend/
 - **Annotations**: Deepanjana Klein
 - **Website**: Arno Klein
 
+## Database Schema: `images` Table
+
+The `images` table contains ~8,400 rows. Each row represents a photograph with its metadata and floor plan coordinates.
+
+### Columns Displayed in the UI
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `image_id` | int | Primary key. Used for URL routing (`/images/[imageId]`) and all lookups |
+| `cave_id` | int | Foreign key to `caves` table. Used for navigation, breadcrumbs, search filtering |
+| `plan_id` | int | Foreign key to `plans` table. Links image to a specific floor plan |
+| `subject` | text | Short title (e.g. "Bodhisattva", "Seated Buddha"). Used as image title, alt text, headings, search results |
+| `description` | text | Long-form scholarly description. Displayed on detail pages, info panels, truncated in search/gallery |
+| `motifs` | text | Iconographic motifs (e.g. "Avalokitesvara"). Displayed as tags on detail page; searched during queries |
+| `medium` | text | Artwork type (e.g. "rock-cut", "painting", "sculpture"). Displayed on detail page |
+| `photographer` | text | Photographer credit (e.g. "Arno Klein"). Displayed on detail page and info panel |
+| `file_path` | text | Relative path to original image (e.g. "c9/_CAV3647.jpg"). Displayed as file info; fallback URL when Cloudflare IDs are missing |
+| `plan_x_norm` | float | X coordinate normalized (0.0–1.0) on the floor plan. Used to position markers on interactive floor plans |
+| `plan_y_norm` | float | Y coordinate normalized (0.0–1.0) on the floor plan. Used to position markers on interactive floor plans |
+
+### Columns Used Behind the Scenes (not displayed)
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `rank` | int | `1` = shown in the UI; `> 1` = hidden. All queries filter on `rank = 1` |
+| `default_priority` | int | Sort order (descending): higher values appear first in image galleries. `0` (default) = no special priority, shown last |
+| `cloudflare_image_id` | uuid | Cloudflare Images ID for the full-size image. Used to construct `image_url` |
+| `cloudflare_thumbnail_id` | uuid | Cloudflare Images ID for a dedicated thumbnail. Falls back to `cloudflare_image_id` with `thumb` variant |
+| `thumbnail` | text | Local thumbnail file path override. Last-resort fallback for thumbnail URL generation |
+| `search_vector` | tsvector | Pre-computed PostgreSQL full-text search index (built from subject, motifs, description, medium) |
+| `plan_x_px` | int | X coordinate in pixels. Only used to check if coordinates exist; not used for rendering |
+| `plan_y_px` | int | Y coordinate in pixels. Not used for rendering |
+
+### Columns Not Used by the Frontend
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `master_id` | int | Grouping/parent ID (usually null). Intended to link variant shots of the same subject |
+| `rotate` | int | Rotation value. Not applied by the frontend |
+| `image_date` | text | Date the photo was taken (often empty) |
+| `notes` | text | Internal/editorial notes |
+| `assignment_questionable` | bool | Flags uncertain cave/plan assignments |
+| `assignment_notes` | text | Notes about questionable assignments |
+| `coordinates_questionable` | bool | Flags uncertain floor plan coordinates |
+| `created_at` | timestamp | Row creation timestamp |
+| `updated_at` | timestamp | Row last-updated timestamp |
+
 ## License
 
 Photographs copyright Arno Klein. All other content copyright Deepanjana Klein.

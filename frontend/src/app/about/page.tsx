@@ -127,7 +127,7 @@ export default function AboutPage() {
 
         {/* Book Section */}
         <section className="mb-16">
-          <h2 className="text-2xl mb-6 text-white"><i>New book: </i>&ldquo;Ellora: Cross-fertilization of Style in Buddhist, 
+          <h2 className="text-2xl mb-6 text-white"><i>Just released: </i>&ldquo;Ellora: Cross-fertilization of Style in Buddhist, 
           Hindu and Jain Cave Temples&rdquo;</h2>
           <div className="flex flex-col md:flex-row gap-8 items-start">
             <img
@@ -137,7 +137,7 @@ export default function AboutPage() {
             />
             <div className="prose prose-invert max-w-none space-y-4 text-base leading-relaxed">
               <p>
-                The book &ldquo;<b>Ellora: Cross-fertilization of Style in Buddhist, 
+                Our book &ldquo;<b>Ellora: Cross-fertilization of Style in Buddhist, 
                 Hindu and Jain Cave Temples</b>&rdquo; was published by Mapin in Spring of 2026. 
                 The contributing authors investigate the temples by religion and myth, patronage and support, 
                 stylistic influence and exchange, chronology, and the process of carving and completion 
@@ -146,14 +146,26 @@ export default function AboutPage() {
                 with contributing authors Nicolas Morrissey, Lisa N. Owen, Vidya Dehejia, and Pia Brancaccio, 
                 and foreword by Naman Ahuja. Contains 203 photographs and 23 illustrations.]</i>
               </p>
-              <p>
-                Bookshop.org: <a href="https://bookshop.org/p/books/ellora-cross-fertilization-of-style-in-buddhist-hindu-and-jain-cave-temples-arno-klein/fbc708426bf6bf07?ean=9789385360800&next=t" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:text-primary-500 transition-colors">https://bookshop.org/p/books/ellora-cross-fertilization-of-style-in-buddhist-hindu-and-jain-cave-temples-arno-klein/fbc708426bf6bf07?ean=9789385360800&next=t</a> 
-                Amazon: <a href="https://www.amazon.com/Ellora-Cross-Fertilization-Style-Buddhist-Temples/dp/9385360809/ref=sr_1_1?crid=CUCT82EK45Q1&dib=eyJ2IjoiMSJ9.xykhDBcLYGYHicmpPG79Sg.vWo4SPFj48-06lHb99G9OxdMhcqq-XVjXnKinaeoK60&dib_tag=se&keywords=ellora+cross+fertilization&qid=1771208890&sprefix=ellora+cross+fertilization%2Caps%2C194&sr=8-1" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:text-primary-500 transition-colors">https://www.amazon.com/Ellora-Cross-Fertilization-Style-Buddhist-Temples/dp/9385360809/ref=sr_1_1?crid=CUCT82EK45Q1&dib=eyJ2IjoiMSJ9.xykhDBcLYGYHicmpPG79Sg.vWo4SPFj48-06lHb99G9OxdMhcqq-XVjXnKinaeoK60&dib_tag=se&keywords=ellora+cross+fertilization&qid=1771208890&sprefix=ellora+cross+fertilization%2Caps%2C194&sr=8-1</a>
-                Barnes & Noble: <a href="https://www.barnesandnoble.com/w/ellora-deepanjana-klein/1147556954?ean=9789385360800" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:text-primary-500 transition-colors">https://www.barnesandnoble.com/w/ellora-deepanjana-klein/1147556954?ean=9789385360800</a>
-                Google Books: <a href="https://www.google.com/books/edition/Ellora/n69p0QEACAAJ?hl=en" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:text-primary-500 transition-colors">https://www.google.com/books/edition/Ellora/n69p0QEACAAJ?hl=en</a>
-                Goodreads: <a href="https://www.goodreads.com/book/show/235991868-ellora?from_search=true&from_srp=true&qid=aEMsf4IIhn&rank=1" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:text-primary-500 transition-colors">https://www.goodreads.com/book/show/235991868-ellora?from_search=true&from_srp=true&qid=aEMsf4IIhn&rank=1</a>
-                WorldCat: <a href="https://search.worldcat.org/title/1523196884" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:text-primary-500 transition-colors">https://search.worldcat.org/title/1523196884</a>
-              </p>
+              <div className="flex flex-wrap gap-3 mt-2 not-prose">
+                <a href="https://bookshop.org/p/books/ellora-cross-fertilization-of-style-in-buddhist-hindu-and-jain-cave-temples-arno-klein/fbc708426bf6bf07?ean=9789385360800&next=t" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-4 py-2 rounded-md bg-white/10 border border-white/20 text-[#eae2c4] hover:bg-white/20 hover:border-white/40 transition-all text-sm">
+                  Bookshop.org
+                </a>
+                <a href="https://www.amazon.com/Ellora-Cross-Fertilization-Style-Buddhist-Temples/dp/9385360809" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-4 py-2 rounded-md bg-white/10 border border-white/20 text-[#eae2c4] hover:bg-white/20 hover:border-white/40 transition-all text-sm">
+                  Amazon
+                </a>
+                <a href="https://www.barnesandnoble.com/w/ellora-deepanjana-klein/1147556954?ean=9789385360800" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-4 py-2 rounded-md bg-white/10 border border-white/20 text-[#eae2c4] hover:bg-white/20 hover:border-white/40 transition-all text-sm">
+                  Barnes &amp; Noble
+                </a>
+                <a href="https://www.google.com/books/edition/Ellora/n69p0QEACAAJ?hl=en" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-4 py-2 rounded-md bg-white/10 border border-white/20 text-[#eae2c4] hover:bg-white/20 hover:border-white/40 transition-all text-sm">
+                  Google Books
+                </a>
+                <a href="https://www.goodreads.com/book/show/235991868-ellora" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-4 py-2 rounded-md bg-white/10 border border-white/20 text-[#eae2c4] hover:bg-white/20 hover:border-white/40 transition-all text-sm">
+                  Goodreads
+                </a>
+                <a href="https://search.worldcat.org/title/1523196884" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-4 py-2 rounded-md bg-white/10 border border-white/20 text-[#eae2c4] hover:bg-white/20 hover:border-white/40 transition-all text-sm">
+                  WorldCat
+                </a>
+              </div>
             </div>
           </div>
         </section>
