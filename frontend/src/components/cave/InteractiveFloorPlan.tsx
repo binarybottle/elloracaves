@@ -22,6 +22,19 @@ export default function InteractiveFloorPlan({
 }: InteractiveFloorPlanProps) {
   const [planLoaded, setPlanLoaded] = useState(false);
 
+  const planTransforms: Record<number, { sx: number; sy: number; tx: number; ty: number }> = {
+    // Add per-plan image transforms here (plan.id -> { scale, translate }).
+    // Example: 12: { sx: 1.02, sy: 1.02, tx: -8, ty: -6 }
+    // TODO: Tune these values as needed.
+    2: { sx: 1, sy: 1, tx: 0, ty: 0 }, // Cave 2
+    30: { sx: 1, sy: 1, tx: 0, ty: 0 }, // Cave 30
+    130: { sx: 1, sy: 1, tx: 0, ty: 0 }, // Cave 30a
+    32: { sx: 1, sy: 1, tx: 0, ty: 0 }, // Cave 32 floor 1
+    232: { sx: 1, sy: 1, tx: 0, ty: 0 }, // Cave 32 floor 2
+    34: { sx: 1, sy: 1, tx: 0, ty: 0 }, // Cave 34
+  };
+  const transform = planTransforms[plan.id] || { sx: 1, sy: 1, tx: 0, ty: 0 };
+
   const imagesWithCoords = images.filter(
     (img) =>
       img.image_url &&
@@ -53,6 +66,10 @@ export default function InteractiveFloorPlan({
           src={planImageUrl}
           alt={`Floor ${plan.floor_number} plan`}
           className="absolute inset-0 w-full h-full object-contain"
+          style={{
+            transform: `translate(${transform.tx}px, ${transform.ty}px) scale(${transform.sx}, ${transform.sy})`,
+            transformOrigin: 'top left',
+          }}
           onLoad={() => setPlanLoaded(true)}
         />
 

@@ -127,17 +127,25 @@ export default function AboutPage() {
 
         {/* Book Section */}
         <section className="mb-16">
-          <h2 className="text-2xl mb-6 text-white">Upcoming Book</h2>
-          <div className="prose prose-invert max-w-none space-y-4 text-base leading-relaxed">
-            <p>
-              The book &ldquo;<b>Ellora: Cross-fertilization of Style in Buddhist, 
-              Hindu and Jain Cave Temples</b>&rdquo; will be published by Mapin in early 2026. 
-              The contributing authors investigate the temples by religion and myth, patronage and support, 
-              stylistic influence and exchange, chronology, and the process of carving and completion 
-              of these rock-cut temples. The book includes extensive photographic documentation, ground plans, 
-              and rarely seen 19th-century archival materials. <i>[Co-edited by Deepanjana Klein and Arno Klein, 
-                with contributing authors Nicolas Morrissey, Lisa N. Owen, Vidya Dehejia, and Pia Brancaccio.]</i>
-            </p>
+          <h2 className="text-2xl mb-6 text-white">Our book on Ellora</h2>
+          <div className="flex flex-col md:flex-row gap-8 items-start">
+            <img
+              src="/images/book.jpg"
+              alt="Ellora: Cross-fertilization of Style in Buddhist, Hindu and Jain Cave Temples"
+              className="w-full md:w-64 lg:w-72 rounded-lg shadow-lg flex-shrink-0"
+            />
+            <div className="prose prose-invert max-w-none space-y-4 text-base leading-relaxed">
+              <p>
+                The book &ldquo;<b>Ellora: Cross-fertilization of Style in Buddhist, 
+                Hindu and Jain Cave Temples</b>&rdquo; was published by Mapin in Spring of 2026. 
+                The contributing authors investigate the temples by religion and myth, patronage and support, 
+                stylistic influence and exchange, chronology, and the process of carving and completion 
+                of these rock-cut temples. The book includes extensive photographic documentation, ground plans, 
+                and rarely seen 19th-century archival materials. <i>[Co-edited by Deepanjana Klein and Arno Klein, 
+                with contributing authors Nicolas Morrissey, Lisa N. Owen, Vidya Dehejia, and Pia Brancaccio, 
+                and foreword by Naman Ahuja.]</i>
+              </p>
+            </div>
           </div>
         </section>
 
