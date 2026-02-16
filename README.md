@@ -4,14 +4,14 @@ A comprehensive photographic documentation of the Ellora cave temples, a UNESCO 
 
 ## Live Site
 
-🌐 **[elloracaves.org](https://elloracaves.org)** (or your Cloudflare Pages URL)
+**[elloracaves.org](https://elloracaves.org)**
 
 ## Architecture
 
 ```
 Users → Cloudflare DNS/CDN
          ├─→ Cloudflare Pages (Next.js)
-         │    └─→ Cloudflare Images (7,400+ photos)
+         │    └─→ Cloudflare Images (8,400+ photos)
          └─→ Supabase PostgreSQL (database)
 ```
 
@@ -28,7 +28,7 @@ Users → Cloudflare DNS/CDN
 ```bash
 cd frontend
 npm install
-cp .env.local.example .env.local  # Add your Supabase/Cloudflare credentials
+# Create .env.local with your Supabase/Cloudflare credentials (see below)
 npm run dev
 ```
 
@@ -46,26 +46,14 @@ NEXT_PUBLIC_CF_IMAGES_ACCOUNT=your_cloudflare_account_hash
 
 ## Deployment to Cloudflare Pages
 
-### 1. Push to GitHub
-
-```bash
-git add .
-git commit -m "Prepare for Cloudflare Pages deployment"
-git push origin main
-```
-
-### 2. Connect to Cloudflare Pages
+### Initial Setup
 
 1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com) → Pages
 2. Click **Create a project** → **Connect to Git**
 3. Select your GitHub repository
-4. Configure build settings:
-   - **Framework preset**: Next.js
-   - **Build command**: `npm run build`
-   - **Build output directory**: `.next`
-   - **Root directory**: `frontend`
+4. Set **Root directory** to `frontend`
 
-### 3. Set Environment Variables
+### Environment Variables
 
 In Cloudflare Pages → Settings → Environment variables, add:
 
@@ -76,16 +64,18 @@ In Cloudflare Pages → Settings → Environment variables, add:
 | `NEXT_PUBLIC_CF_IMAGES_ACCOUNT` | `your_account_hash` |
 | `NODE_VERSION` | `18` |
 
-### 4. Deploy
+### Build and Deploy
 
-Click **Save and Deploy**. Cloudflare will build and deploy your site.
+The site uses `@cloudflare/next-on-pages` to build and `wrangler` to deploy:
 
-Later deployments:
-cd /Users/arno/Software/www/elloracaves/frontend
-#npx wrangler pages deploy .vercel/output/static --project-name=elloracaves
+```bash
+cd frontend
 npm run pages:build && npm run deploy
+```
 
-### 5. Custom Domain (optional)
+This runs `npx @cloudflare/next-on-pages` (builds to `.vercel/output/static`) then `wrangler pages deploy` to push to Cloudflare.
+
+### Custom Domain (optional)
 
 1. Pages → Your project → Custom domains
 2. Add `elloracaves.org` (or your domain)
@@ -96,26 +86,33 @@ npm run pages:build && npm run deploy
 ```
 frontend/
 ├── src/
-│   ├── app/              # Next.js pages
-│   │   ├── about/        # About page
-│   │   ├── caves/        # Cave detail pages
-│   │   ├── explore/      # Main exploration interface
-│   │   ├── images/       # Images page
-│   │   └── search/       # Search page
-│   ├── components/       # React components
-│   └── lib/              # API, Supabase client, helpers
+│   ├── app/                          # Next.js pages
+│   │   ├── page.tsx                  # Home/landing page
+│   │   ├── about/                    # About page
+│   │   ├── explore/                  # Main exploration interface
+│   │   ├── caves/[caveNumber]/       # Cave detail pages
+│   │   │   └── floor/[floorNumber]/  # Floor-specific views
+│   │   ├── images/[imageId]/         # Individual image detail pages
+│   │   └── search/                   # Search results page
+│   ├── components/                   # React components
+│   │   ├── cave/                     # Floor plans, image display, gallery strip, info panel
+│   │   ├── caves/                    # Cave detail wrapper
+│   │   ├── image/                    # Image gallery, fallback handling
+│   │   └── search/                   # Search overlay, search results
+│   └── lib/                          # API client, Supabase queries, Cloudflare Images helpers
 ├── public/
-│   └── images/           # Static images (maps, contributors)
+│   ├── images/                       # Static images (book cover, contributors, maps)
+│   └── plans/                        # Floor plan images
 └── package.json
 ```
 
 ## Features
 
-- 📍 Interactive floor plans with image markers
-- 🔍 Full-text search with fuzzy matching & synonyms
-- 🖼️ 7,400+ photographs with Cloudflare Images optimization
-- 📱 Responsive design (mobile, tablet, desktop)
-- ⌨️ Keyboard navigation (arrow keys, Cmd/Ctrl+K for search)
+- Interactive floor plans with image markers
+- Full-text search with fuzzy matching and synonym support
+- 8,400+ photographs with Cloudflare Images optimization
+- Responsive design (mobile, tablet, desktop)
+- Keyboard navigation (arrow keys, Cmd/Ctrl+K for search)
 
 ## Credits
 
