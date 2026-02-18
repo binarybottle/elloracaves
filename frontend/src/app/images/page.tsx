@@ -18,6 +18,7 @@ interface ImageRow {
   plan_x_norm: number | null;
   plan_y_norm: number | null;
   hide_plan_xy: number;
+  best_id: number | null;
 }
 
 interface CaveOption { cave_id: number; cave_name: string | null; }
@@ -139,7 +140,7 @@ export default function ImagesReviewPage() {
     setSaving(null);
   }
 
-  async function updateField(imageId: number, field: 'rank' | 'cave_id' | 'plan_id', value: number) {
+  async function updateField(imageId: number, field: 'rank' | 'cave_id' | 'plan_id' | 'best_id', value: number | null) {
     setSaving(imageId);
     const { error } = await supabase
       .from('images')
@@ -167,7 +168,7 @@ export default function ImagesReviewPage() {
       while (hasMore) {
         const { data, error } = await supabase
           .from('images')
-          .select('image_id, cave_id, plan_id, rank, file_path, subject, description, cloudflare_image_id, cloudflare_thumbnail_id, thumbnail, plan_x_norm, plan_y_norm, hide_plan_xy')
+          .select('image_id, cave_id, plan_id, rank, file_path, subject, description, cloudflare_image_id, cloudflare_thumbnail_id, thumbnail, plan_x_norm, plan_y_norm, hide_plan_xy, best_id')
           .order('cave_id')
           .order('file_path')
           .range(from, from + PAGE_SIZE - 1);
@@ -397,6 +398,7 @@ export default function ImagesReviewPage() {
 
               const hasCoords = img.plan_x_norm !== null && img.plan_y_norm !== null;
               const isEditingRank = editingField?.imageId === img.image_id && editingField?.field === 'rank';
+              const isEditingBestId = editingField?.imageId === img.image_id && editingField?.field === 'best_id';
               const isEditingCave = editingField?.imageId === img.image_id && editingField?.field === 'cave_id';
               const isEditingPlan = editingField?.imageId === img.image_id && editingField?.field === 'plan_id';
 
@@ -436,63 +438,40 @@ export default function ImagesReviewPage() {
                     <div className="flex items-center justify-between">
                       <div className="text-xs font-mono text-gray-400 break-all flex-1">{img.file_path}</div>
                       {isEditingRank ? (
-                        <form
-                          className="flex items-center gap-1 ml-1"
-                          onSubmit={(e) => {
-                            e.preventDefault();
-                            const val = parseInt(fieldInput, 10);
-                            if (!isNaN(val)) updateField(img.image_id, 'rank', val);
-                          }}
-                        >
-                          <input
-                            type="number"
-                            value={fieldInput}
-                            onChange={(e) => setFieldInput(e.target.value)}
-                            className="w-10 bg-gray-800 text-white text-xs text-center rounded border border-gray-600 px-1 py-0.5"
-                            autoFocus
-                            onBlur={() => setEditingField(null)}
-                          />
+                        <form className="flex items-center gap-1 ml-1" onSubmit={(e) => { e.preventDefault(); const val = parseInt(fieldInput, 10); if (!isNaN(val)) updateField(img.image_id, 'rank', val); }}>
+                          <input type="number" value={fieldInput} onChange={(e) => setFieldInput(e.target.value)} className="w-10 bg-gray-800 text-white text-xs text-center rounded border border-gray-600 px-1 py-0.5" autoFocus onBlur={() => setEditingField(null)} />
                         </form>
                       ) : (
-                        <button
-                          onClick={() => { setEditingField({ imageId: img.image_id, field: 'rank' }); setFieldInput(String(img.rank)); }}
-                          className={`ml-1 flex-shrink-0 bg-white/90 text-black text-xs font-bold px-1.5 py-0.5 rounded hover:bg-white transition-colors ${saving === img.image_id ? 'opacity-50' : ''}`}
-                          title="Click to edit rank"
-                        >
+                        <button onClick={() => { setEditingField({ imageId: img.image_id, field: 'rank' }); setFieldInput(String(img.rank)); }} className={`ml-1 flex-shrink-0 bg-white/90 text-black text-xs font-bold px-1.5 py-0.5 rounded hover:bg-white transition-colors ${saving === img.image_id ? 'opacity-50' : ''}`} title="Click to edit rank">
                           {saving === img.image_id ? '...' : img.rank}
                         </button>
                       )}
                     </div>
                     <div className="text-xs text-gray-500 flex items-center gap-0.5 flex-wrap">
-                      <span className="shrink-0">Cave</span>
+                      <span>ID {img.image_id} |</span>
+                      <span className="shrink-0">best</span>
+                      {isEditingBestId ? (
+                        <form className="inline-flex" onSubmit={(e) => { e.preventDefault(); const raw = fieldInput.trim(); if (raw === '') { updateField(img.image_id, 'best_id', null); } else { const val = parseInt(raw, 10); if (!isNaN(val)) updateField(img.image_id, 'best_id', val); } }}>
+                          <input type="text" value={fieldInput} onChange={(e) => setFieldInput(e.target.value)} placeholder="—" className="w-12 bg-gray-800 text-white text-xs text-center rounded border border-gray-600 px-0.5 py-0" autoFocus onBlur={() => setEditingField(null)} />
+                        </form>
+                      ) : (
+                        <button onClick={() => { setEditingField({ imageId: img.image_id, field: 'best_id' }); setFieldInput(img.best_id != null ? String(img.best_id) : ''); }} className="text-gray-300 hover:text-white underline decoration-dotted" title="Click to set best image ID">
+                          {img.best_id ?? '—'}
+                        </button>
+                      )}
+                      <span>| Cave</span>
                       {isEditingCave ? (
-                        <select
-                          value={String(img.cave_id)}
-                          onChange={(e) => { const val = parseInt(e.target.value, 10); if (!isNaN(val)) updateField(img.image_id, 'cave_id', val); }}
-                          className="bg-gray-800 text-white text-xs rounded border border-gray-600 px-0.5 py-0"
-                          autoFocus
-                          onBlur={() => setEditingField(null)}
-                        >
-                          {allCaveIds.map(id => (
-                            <option key={id} value={String(id)}>{caveLabel(id)}</option>
-                          ))}
+                        <select value={String(img.cave_id)} onChange={(e) => { const val = parseInt(e.target.value, 10); if (!isNaN(val)) updateField(img.image_id, 'cave_id', val); }} className="bg-gray-800 text-white text-xs rounded border border-gray-600 px-0.5 py-0" autoFocus onBlur={() => setEditingField(null)}>
+                          {allCaveIds.map(id => (<option key={id} value={String(id)}>{caveLabel(id)}</option>))}
                         </select>
                       ) : (
                         <button onClick={() => setEditingField({ imageId: img.image_id, field: 'cave_id' })} className="text-gray-300 hover:text-white underline decoration-dotted" title="Click to edit cave_id">{img.cave_id}</button>
                       )}
-                      <span>| ID {img.image_id} | Plan</span>
+                      <span>| Plan</span>
                       {isEditingPlan ? (
-                        <select
-                          value={String(img.plan_id ?? '')}
-                          onChange={(e) => { const val = parseInt(e.target.value, 10); if (!isNaN(val)) updateField(img.image_id, 'plan_id', val); }}
-                          className="bg-gray-800 text-white text-xs rounded border border-gray-600 px-0.5 py-0"
-                          autoFocus
-                          onBlur={() => setEditingField(null)}
-                        >
+                        <select value={String(img.plan_id ?? '')} onChange={(e) => { const val = parseInt(e.target.value, 10); if (!isNaN(val)) updateField(img.image_id, 'plan_id', val); }} className="bg-gray-800 text-white text-xs rounded border border-gray-600 px-0.5 py-0" autoFocus onBlur={() => setEditingField(null)}>
                           <option value="">—</option>
-                          {allPlanIds.map(id => (
-                            <option key={id} value={String(id)}>{planLabel(id)}</option>
-                          ))}
+                          {allPlanIds.map(id => (<option key={id} value={String(id)}>{planLabel(id)}</option>))}
                         </select>
                       ) : (
                         <button onClick={() => setEditingField({ imageId: img.image_id, field: 'plan_id' })} className="text-gray-300 hover:text-white underline decoration-dotted" title="Click to edit plan_id">

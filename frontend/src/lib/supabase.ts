@@ -82,6 +82,7 @@ export interface DbImage {
   assignment_notes: string | null;
   coordinates_questionable: boolean;
   hide_plan_xy: number;
+  best_id: number | null;
   cloudflare_image_id: string | null;
   cloudflare_thumbnail_id: string | null;
   created_at: string;
@@ -232,6 +233,26 @@ export async function getImage(imageId: number) {
   }
 
   return data;
+}
+
+/**
+ * Fetch images whose best_id references the given image
+ */
+export async function getAssociatedImages(imageId: number) {
+  const { data, error } = await supabase
+    .from('images')
+    .select('*')
+    .eq('best_id', imageId)
+    .in('rank', [1, 2])
+    .order('rank')
+    .order('default_priority', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching associated images:', error);
+    return [];
+  }
+
+  return data || [];
 }
 
 // Synonym mapping for variant spellings (Indian names, Sanskrit transliterations)

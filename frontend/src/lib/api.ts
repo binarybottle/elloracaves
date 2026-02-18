@@ -44,6 +44,7 @@ export interface Image {
   cave_id: number;
   coordinates?: Coordinates;
   hide_plan_xy?: number;
+  best_id?: number | null;
   image_url: string;
   thumbnail_url: string;
 }
@@ -133,6 +134,7 @@ function transformImage(dbImage: DbImage): Image {
       plan_y_norm: dbImage.plan_y_norm || undefined,
     } : undefined,
     hide_plan_xy: dbImage.hide_plan_xy || 0,
+    best_id: dbImage.best_id || null,
     image_url: getImageUrl(dbImage.cloudflare_image_id, dbImage.file_path, 'large'),
     thumbnail_url: getThumbnailUrl(
       dbImage.cloudflare_image_id,
@@ -215,6 +217,15 @@ export async function fetchImageDetail(imageId: number): Promise<ImageDetail> {
   }
   
   return transformImageDetail(data);
+}
+
+/**
+ * Fetch images that reference the given image as their best_id
+ */
+export async function fetchAssociatedImages(imageId: number): Promise<Image[]> {
+  const { getAssociatedImages } = await import('./supabase');
+  const data = await getAssociatedImages(imageId);
+  return data.map(transformImage);
 }
 
 /**
