@@ -241,17 +241,45 @@ export default function ImagesReviewPage() {
 
   const hasActiveFilter = !!(filterImageId.trim() || filterCaveId.trim() || filterPlanId.trim() || filterFilePath.trim() || filterRank.trim());
 
-  const sortedImages = [...filteredImages].sort((a, b) => {
-    if (sortBy === 'rank') {
-      if (a.rank !== b.rank) return a.rank - b.rank;
-      if (a.cave_id !== b.cave_id) return a.cave_id - b.cave_id;
+  const sortedImages = useMemo(() => {
+    const sorted = [...filteredImages].sort((a, b) => {
+      if (sortBy === 'rank') {
+        if (a.rank !== b.rank) return a.rank - b.rank;
+        if (a.cave_id !== b.cave_id) return a.cave_id - b.cave_id;
+        return a.file_path.localeCompare(b.file_path);
+      }
+      if (sortBy === 'image_id') {
+        return a.image_id - b.image_id;
+      }
       return a.file_path.localeCompare(b.file_path);
+    });
+
+    const childrenMap = new Map<number, ImageRow[]>();
+    for (const img of sorted) {
+      if (img.best_id != null) {
+        const group = childrenMap.get(img.best_id) || [];
+        group.push(img);
+        childrenMap.set(img.best_id, group);
+      }
     }
-    if (sortBy === 'image_id') {
-      return a.image_id - b.image_id;
+
+    const placed = new Set<number>();
+    const result: ImageRow[] = [];
+
+    function placeTree(img: ImageRow) {
+      if (placed.has(img.image_id)) return;
+      placed.add(img.image_id);
+      result.push(img);
+      const children = childrenMap.get(img.image_id);
+      if (children) {
+        for (const child of children) placeTree(child);
+      }
     }
-    return a.file_path.localeCompare(b.file_path);
-  });
+
+    for (const img of sorted) placeTree(img);
+
+    return result;
+  }, [filteredImages, sortBy]);
 
   const navigatePopup = useCallback((dir: -1 | 1) => {
     setSelectedImage(prev => {
