@@ -81,6 +81,7 @@ export interface DbImage {
   assignment_questionable: boolean;
   assignment_notes: string | null;
   coordinates_questionable: boolean;
+  hide_plan_xy: number;
   cloudflare_image_id: string | null;
   cloudflare_thumbnail_id: string | null;
   created_at: string;

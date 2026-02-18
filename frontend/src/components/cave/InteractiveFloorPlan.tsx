@@ -42,7 +42,8 @@ export default function InteractiveFloorPlan({
       img.coordinates?.plan_x_norm !== null &&
       img.coordinates?.plan_x_norm !== undefined &&
       img.coordinates?.plan_y_norm !== null &&
-      img.coordinates?.plan_y_norm !== undefined
+      img.coordinates?.plan_y_norm !== undefined &&
+      !img.hide_plan_xy
   );
 
   // Use plan_url from API (already includes full path) or construct it
