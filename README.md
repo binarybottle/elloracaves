@@ -23,6 +23,26 @@ Users → Cloudflare DNS/CDN
 - **Hosting**: Cloudflare Pages
 - **Domain**: Cloudflare DNS
 
+## Pages
+
+| Route | Description |
+|-------|-------------|
+| `/` | Landing page |
+| `/explore` | Main exploration interface — interactive floor plans, image display with similar-image groups, gallery strip, info panel |
+| `/about` | About the project, contributors, and bibliography |
+| `/search` | Full-text search results |
+| `/images` | Admin/review page — bulk image management with inline editing of `rank`, `cave_id`, `plan_id`, `best_id`; multi-select comparison; images clustered by `best_id` tree |
+
+## Features
+
+- Interactive floor plans with clickable image markers
+- Full-text search with fuzzy matching and synonym support
+- 8,400+ photographs with Cloudflare Images optimization
+- Similar image groups via `best_id` hierarchy (tree traversal up and down)
+- Image review page with inline field editing, multi-select comparison, and `best_id` clustering
+- Responsive design (mobile, tablet, desktop layouts)
+- Keyboard navigation (arrow keys for images, Escape to close, Cmd/Ctrl+K for search)
+
 ## Local Development
 
 ```bash
@@ -81,6 +101,38 @@ This runs `npx @cloudflare/next-on-pages` (builds to `.vercel/output/static`) th
 2. Add `elloracaves.org` (or your domain)
 3. Follow DNS setup instructions
 
+## Supabase: Enabling/Disabling Anon Write Access
+
+The `/images` admin page writes directly to the database using the Supabase anon key. By default Supabase enables Row Level Security (RLS) which blocks anonymous writes. To allow editing from the frontend, you need to add a policy. **Turn this on only when actively editing, and revoke when done.**
+
+### Enable anon write access
+
+Run in the [Supabase SQL Editor](https://supabase.com/dashboard/project/_/sql):
+
+```sql
+-- Allow anonymous users to update image metadata
+CREATE POLICY "Allow anon update on images"
+  ON images
+  FOR UPDATE
+  USING (true)
+  WITH CHECK (true);
+```
+
+### Disable anon write access
+
+```sql
+-- Revoke anonymous update access
+DROP POLICY IF EXISTS "Allow anon update on images" ON images;
+```
+
+### Check current policies
+
+```sql
+SELECT policyname, cmd, qual, with_check
+FROM pg_policies
+WHERE tablename = 'images';
+```
+
 ## Project Structure
 
 ```
@@ -90,35 +142,23 @@ frontend/
 │   │   ├── page.tsx                  # Home/landing page
 │   │   ├── about/                    # About page
 │   │   ├── explore/                  # Main exploration interface
-│   │   ├── caves/[caveNumber]/       # Cave detail pages
-│   │   │   └── floor/[floorNumber]/  # Floor-specific views
-│   │   ├── images/[imageId]/         # Individual image detail pages
+│   │   ├── images/                   # Image review/admin page
 │   │   └── search/                   # Search results page
-│   ├── components/                   # React components
-│   │   ├── cave/                     # Floor plans, image display, gallery strip, info panel
-│   │   ├── caves/                    # Cave detail wrapper
-│   │   ├── image/                    # Image gallery, fallback handling
-│   │   └── search/                   # Search overlay, search results
-│   └── lib/                          # API client, Supabase queries, Cloudflare Images helpers
+│   ├── components/
+│   │   ├── cave/                     # CaveMap, FloorPlanSidebar, InteractiveFloorPlan,
+│   │   │                             #   ImageDisplay, ImageGalleryStrip, ImageInfoPanel
+│   │   ├── caves/                    # CaveDetail wrapper
+│   │   ├── image/                    # ImageGallery, ImageWithFallback
+│   │   └── search/                   # SearchOverlay, SearchResults
+│   └── lib/
+│       ├── api.ts                    # API types (Image, Cave, etc.), data transforms, fetch functions
+│       ├── supabase.ts               # Supabase client, all database queries
+│       └── cloudflare-images.ts      # Cloudflare Images URL helpers
 ├── public/
 │   ├── images/                       # Static images (book cover, contributors, maps)
 │   └── plans/                        # Floor plan images
 └── package.json
 ```
-
-## Features
-
-- Interactive floor plans with image markers
-- Full-text search with fuzzy matching and synonym support
-- 8,400+ photographs with Cloudflare Images optimization
-- Responsive design (mobile, tablet, desktop)
-- Keyboard navigation (arrow keys, Cmd/Ctrl+K for search)
-
-## Credits
-
-- **Photography**: Arno Klein
-- **Annotations**: Deepanjana Klein
-- **Website**: Arno Klein
 
 ## Database Schema: `images` Table
 
@@ -128,7 +168,7 @@ The `images` table contains ~8,400 rows. Each row represents a photograph with i
 
 | Column | Type | Description |
 |--------|------|-------------|
-| `image_id` | int | Primary key. Used for URL routing (`/images/[imageId]`) and all lookups |
+| `image_id` | int | Primary key. Used for URL routing and all lookups |
 | `cave_id` | int | Foreign key to `caves` table. Used for navigation, breadcrumbs, search filtering |
 | `plan_id` | int | Foreign key to `plans` table. Links image to a specific floor plan |
 | `subject` | text | Short title (e.g. "Bodhisattva", "Seated Buddha"). Used as image title, alt text, headings, search results |
@@ -140,12 +180,14 @@ The `images` table contains ~8,400 rows. Each row represents a photograph with i
 | `plan_x_norm` | float | X coordinate normalized (0.0–1.0) on the floor plan. Used to position markers on interactive floor plans |
 | `plan_y_norm` | float | Y coordinate normalized (0.0–1.0) on the floor plan. Used to position markers on interactive floor plans |
 
-### Columns Used Behind the Scenes (not displayed)
+### Columns Used Behind the Scenes
 
 | Column | Type | Description |
 |--------|------|-------------|
-| `rank` | int | `1` = shown in the UI; `> 1` = hidden. All queries filter on `rank = 1` |
-| `default_priority` | int | Sort order (descending): higher values appear first in image galleries. `0` (default) = no special priority, shown last |
+| `rank` | int | `1` = shown in explore UI; `2` = shown only as alternate to a `best_id` parent; `> 2` = hidden entirely |
+| `best_id` | int | Points to a "better" image of the same subject. Forms a tree: root has no `best_id`, children point to parent. Used to group similar images in explore view and cluster images in the review page |
+| `default_priority` | int | Sort order (descending): higher values appear first in image galleries. `0` (default) = no special priority |
+| `hide_plan_xy` | int | `1` = hide this image's marker on the floor plan even though coordinates exist; `0` = show marker |
 | `cloudflare_image_id` | uuid | Cloudflare Images ID for the full-size image. Used to construct `image_url` |
 | `cloudflare_thumbnail_id` | uuid | Cloudflare Images ID for a dedicated thumbnail. Falls back to `cloudflare_image_id` with `thumb` variant |
 | `thumbnail` | text | Local thumbnail file path override. Last-resort fallback for thumbnail URL generation |
@@ -166,6 +208,20 @@ The `images` table contains ~8,400 rows. Each row represents a photograph with i
 | `coordinates_questionable` | bool | Flags uncertain floor plan coordinates |
 | `created_at` | timestamp | Row creation timestamp |
 | `updated_at` | timestamp | Row last-updated timestamp |
+
+### Schema Maintenance
+
+To add the `best_id` column (if not already present):
+
+```sql
+ALTER TABLE images ADD COLUMN best_id integer;
+```
+
+## Credits
+
+- **Photography**: Arno Klein
+- **Annotations**: Deepanjana Klein
+- **Website**: Arno Klein
 
 ## License
 
