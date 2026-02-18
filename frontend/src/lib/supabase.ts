@@ -161,8 +161,7 @@ export async function getAllCaveIds(): Promise<number[]> {
 /**
  * Fetch images for a cave floor
  */
-export async function getCaveFloorImages(caveId: number, floorNumber: number) {
-  // First get the plan_id for this floor
+export async function getCaveFloorImages(caveId: number, floorNumber: number, includeAlternates = false) {
   const { data: plan, error: planError } = await supabase
     .from('plans')
     .select('plan_id')
@@ -174,12 +173,18 @@ export async function getCaveFloorImages(caveId: number, floorNumber: number) {
     return [];
   }
 
-  // Then get images for this plan, sorted by default_priority (highest first)
-  const { data, error } = await supabase
+  let query = supabase
     .from('images')
     .select('*')
-    .eq('plan_id', plan.plan_id)
-    .eq('rank', 1)
+    .eq('plan_id', plan.plan_id);
+
+  if (!includeAlternates) {
+    query = query.eq('rank', 1);
+  } else {
+    query = query.in('rank', [1, 2]);
+  }
+
+  const { data, error } = await query
     .order('default_priority', { ascending: false })
     .order('file_path');
 
@@ -253,6 +258,63 @@ export async function getAssociatedImages(imageId: number) {
   }
 
   return data || [];
+}
+
+/**
+ * Walk up best_id chain to find the root, then collect all descendants.
+ * Returns the full connected tree regardless of which node was selected.
+ */
+export async function getImageSiblingGroup(imageId: number, bestId: number | null | undefined) {
+  let rootId = imageId;
+  let currentBestId = bestId;
+
+  // Walk up to find the root (the image with no best_id)
+  while (currentBestId) {
+    rootId = currentBestId;
+    const { data } = await supabase
+      .from('images')
+      .select('image_id, best_id')
+      .eq('image_id', currentBestId)
+      .single();
+    currentBestId = data?.best_id || null;
+  }
+
+  // BFS down from root: collect all descendants
+  const collected = new Map<number, DbImage>();
+  const queue = [rootId];
+
+  // Fetch the root image itself
+  const { data: rootData } = await supabase
+    .from('images')
+    .select('*')
+    .eq('image_id', rootId)
+    .single();
+  if (rootData) collected.set(rootId, rootData);
+
+  while (queue.length > 0) {
+    const parentIds = queue.splice(0, queue.length);
+    const { data: children } = await supabase
+      .from('images')
+      .select('*')
+      .in('best_id', parentIds)
+      .in('rank', [1, 2])
+      .order('rank')
+      .order('default_priority', { ascending: false });
+
+    if (!children || children.length === 0) break;
+    for (const child of children) {
+      if (!collected.has(child.image_id)) {
+        collected.set(child.image_id, child);
+        queue.push(child.image_id);
+      }
+    }
+  }
+
+  const all = Array.from(collected.values());
+  const rootImage = collected.get(rootId) || null;
+  const siblings = all.filter(i => i.image_id !== imageId);
+
+  return { bestImage: rootImage, siblings, targetBestId: rootId };
 }
 
 // Synonym mapping for variant spellings (Indian names, Sanskrit transliterations)

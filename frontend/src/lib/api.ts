@@ -191,9 +191,9 @@ export async function fetchCaveDetail(caveNumber: string): Promise<Cave> {
 /**
  * Fetch images for a specific cave floor
  */
-export async function fetchCaveFloorImages(caveNumber: string, floorNumber: number): Promise<Image[]> {
+export async function fetchCaveFloorImages(caveNumber: string, floorNumber: number, includeAlternates = false): Promise<Image[]> {
   const caveId = parseInt(caveNumber, 10);
-  const data = await dbGetCaveFloorImages(caveId, floorNumber);
+  const data = await dbGetCaveFloorImages(caveId, floorNumber, includeAlternates);
   return data?.map(transformImage) || [];
 }
 
@@ -226,6 +226,20 @@ export async function fetchAssociatedImages(imageId: number): Promise<Image[]> {
   const { getAssociatedImages } = await import('./supabase');
   const data = await getAssociatedImages(imageId);
   return data.map(transformImage);
+}
+
+/**
+ * Fetch the full sibling group: the best image + all images sharing the same best_id
+ */
+export async function fetchImageSiblingGroup(imageId: number, bestId: number | null | undefined): Promise<Image[]> {
+  const { getImageSiblingGroup } = await import('./supabase');
+  const { bestImage, siblings, targetBestId } = await getImageSiblingGroup(imageId, bestId);
+  const result: Image[] = [];
+  if (bestImage && bestImage.image_id !== imageId) result.push(transformImage(bestImage));
+  for (const s of siblings) {
+    if (s.image_id !== targetBestId && s.image_id !== imageId) result.push(transformImage(s));
+  }
+  return result;
 }
 
 /**

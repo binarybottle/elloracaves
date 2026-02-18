@@ -19,7 +19,37 @@ export default function ImageGalleryStrip({
   floorNumber
 }: ImageGalleryStripProps) {
   const validImages = images.filter(img => img.image_url && img.image_url.trim() !== '');
-  
+
+  const groupedImages = (() => {
+    const bestIdMap = new Map<number, ImageType[]>();
+    const placed = new Set<number>();
+
+    for (const img of validImages) {
+      if (img.best_id) {
+        const group = bestIdMap.get(img.best_id) || [];
+        group.push(img);
+        bestIdMap.set(img.best_id, group);
+      }
+    }
+
+    const result: ImageType[] = [];
+    for (const img of validImages) {
+      if (placed.has(img.id)) continue;
+      placed.add(img.id);
+      result.push(img);
+      const group = bestIdMap.get(img.id);
+      if (group) {
+        for (const g of group) {
+          if (!placed.has(g.id)) {
+            placed.add(g.id);
+            result.push(g);
+          }
+        }
+      }
+    }
+    return result;
+  })();
+
   return (
     <div className="bg-black p-6">
       <div className="mb-4 text-[#eae2c4]">
@@ -34,13 +64,12 @@ export default function ImageGalleryStrip({
       </div>
 
       <div className="flex flex-wrap gap-2">
-        {validImages.map((image) => {
+        {groupedImages.map((image) => {
           const hasCoordinates = image.coordinates?.plan_x_norm !== null && 
                                  image.coordinates?.plan_x_norm !== undefined &&
                                  image.coordinates?.plan_y_norm !== null && 
                                  image.coordinates?.plan_y_norm !== undefined;
           
-          // Use thumbnail_url directly - already full URL from API
           const thumbnailUrl = image.thumbnail_url || image.image_url;
           
           return (
@@ -58,7 +87,6 @@ export default function ImageGalleryStrip({
                   className="h-full w-auto object-contain rounded"
                   loading="lazy"
                 />
-                {/* Green dot indicator for images with floor plan coordinates */}
                 {hasCoordinates && (
                   <div className="absolute top-1 right-1 w-2 h-2 bg-[#6ebd20] rounded-full border border-white shadow-sm" />
                 )}

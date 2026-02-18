@@ -106,7 +106,6 @@ function ExploreContent() {
     loadCave();
   }, [caveId, floorNumberParam, router]);
 
-  // Fetch floor images
   useEffect(() => {
     async function loadFloorImages() {
       if (!cave) return;
@@ -114,7 +113,6 @@ function ExploreContent() {
         const data = await fetchCaveFloorImages(caveId, floorNumber);
         setFloorImages(data);
         
-        // Select first image if none selected (or default/priority image)
         if (!imageId && data.length > 0) {
           const defaultImage = data[0];
           setSelectedImage(defaultImage);

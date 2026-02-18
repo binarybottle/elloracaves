@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Maximize2, Minimize2, X } from 'lucide-react';
-import { Image as ImageType, fetchAssociatedImages } from '@/lib/api';
+import { Image as ImageType, fetchImageSiblingGroup } from '@/lib/api';
 
 interface ImageDisplayProps {
   image: ImageType | null;
@@ -31,11 +31,11 @@ export default function ImageDisplay({
     if (!image) { setAssociatedImages([]); return; }
     setFullscreenImage(null);
     let cancelled = false;
-    fetchAssociatedImages(image.id).then(imgs => {
+    fetchImageSiblingGroup(image.id, image.best_id).then(imgs => {
       if (!cancelled) setAssociatedImages(imgs);
     });
     return () => { cancelled = true; };
-  }, [image?.id]);
+  }, [image?.id, image?.best_id]);
 
   const stateRef = useRef({ image, associatedImages, fullscreenImage, isFullscreen, onPrev, onNext });
   stateRef.current = { image, associatedImages, fullscreenImage, isFullscreen, onPrev, onNext };
