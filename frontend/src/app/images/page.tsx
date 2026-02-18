@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import { getImageUrl, getThumbnailUrl } from '@/lib/cloudflare-images';
 
@@ -41,6 +41,11 @@ export default function ImagesReviewPage() {
   const [editingField, setEditingField] = useState<{ imageId: number; field: string } | null>(null);
   const [fieldInput, setFieldInput] = useState('');
   const [saving, setSaving] = useState<number | null>(null);
+  const [selectedImage, setSelectedImage] = useState<ImageRow | null>(null);
+  const [checkedIds, setCheckedIds] = useState<Set<number>>(new Set());
+  const [comparing, setComparing] = useState(false);
+  const [compareRankEditing, setCompareRankEditing] = useState<number | null>(null);
+  const [compareRankInput, setCompareRankInput] = useState('');
 
   const caveNameMap = useMemo(() => new Map(caves.map(c => [c.cave_id, c.cave_name])), [caves]);
 
@@ -106,6 +111,15 @@ export default function ImagesReviewPage() {
       return floorA - floorB;
     });
   }, [plans, images, planInfoMap]);
+
+  function toggleChecked(imageId: number) {
+    setCheckedIds(prev => {
+      const next = new Set(prev);
+      if (next.has(imageId)) next.delete(imageId);
+      else next.add(imageId);
+      return next;
+    });
+  }
 
   async function toggleHidePlanXY(imageId: number, currentValue: number) {
     const newValue = currentValue ? 0 : 1;
@@ -238,6 +252,30 @@ export default function ImagesReviewPage() {
     return a.file_path.localeCompare(b.file_path);
   });
 
+  const navigatePopup = useCallback((dir: -1 | 1) => {
+    setSelectedImage(prev => {
+      if (!prev) return prev;
+      const idx = sortedImages.findIndex(i => i.image_id === prev.image_id);
+      const next = sortedImages[idx + dir];
+      return next ?? prev;
+    });
+  }, [sortedImages]);
+
+  useEffect(() => {
+    if (!selectedImage && !comparing) return;
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        if (comparing) setComparing(false);
+        else setSelectedImage(null);
+      } else if (selectedImage && !comparing) {
+        if (e.key === 'ArrowRight') navigatePopup(1);
+        else if (e.key === 'ArrowLeft') navigatePopup(-1);
+      }
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [selectedImage, comparing, navigatePopup]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
@@ -364,30 +402,36 @@ export default function ImagesReviewPage() {
 
               return (
                 <div key={img.image_id} className="bg-gray-900 rounded-lg overflow-hidden border border-gray-800">
-                  {hasCloudflare ? (
-                    <a href={fullUrl} target="_blank" rel="noopener noreferrer">
-                      <div className="aspect-square relative bg-gray-950">
+                  <div className="aspect-square relative bg-gray-950">
+                    <button onClick={() => hasCloudflare && setSelectedImage(img)} className="w-full h-full text-left">
+                      {hasCloudflare ? (
                         <img
                           src={thumbUrl}
                           alt={img.subject || img.file_path}
                           className="w-full h-full object-cover hover:opacity-80 transition-opacity"
                         />
-                        {hasCoords && (
-                          <button
-                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleHidePlanXY(img.image_id, img.hide_plan_xy); }}
-                            className={`absolute top-1 left-1 w-3 h-3 rounded-full border-2 border-white shadow-sm transition-colors ${
-                              img.hide_plan_xy ? 'bg-gray-500' : 'bg-[#6ebd20]'
-                            }`}
-                            title={img.hide_plan_xy ? 'Landmark hidden — click to show on plan' : 'Landmark shown — click to hide from plan'}
-                          />
-                        )}
-                      </div>
-                    </a>
-                  ) : (
-                    <div className="aspect-square relative bg-gray-950 flex items-center justify-center">
-                      <span className="text-xs text-gray-600 text-center px-2">No image on Cloudflare</span>
-                    </div>
-                  )}
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <span className="text-xs text-gray-600 text-center px-2">No image on Cloudflare</span>
+                        </div>
+                      )}
+                    </button>
+                    {hasCoords && (
+                      <button
+                        onClick={() => toggleHidePlanXY(img.image_id, img.hide_plan_xy)}
+                        className={`absolute top-1 left-1 w-3 h-3 rounded-full border-2 border-white shadow-sm transition-colors ${
+                          img.hide_plan_xy ? 'bg-gray-500' : 'bg-[#6ebd20]'
+                        }`}
+                        title={img.hide_plan_xy ? 'Landmark hidden — click to show on plan' : 'Landmark shown — click to hide from plan'}
+                      />
+                    )}
+                    <input
+                      type="checkbox"
+                      checked={checkedIds.has(img.image_id)}
+                      onChange={() => toggleChecked(img.image_id)}
+                      className="absolute top-1 right-1 w-4 h-4 accent-blue-500 cursor-pointer rounded"
+                    />
+                  </div>
                   <div className="p-2 space-y-1">
                     <div className="flex items-center justify-between">
                       <div className="text-xs font-mono text-gray-400 break-all flex-1">{img.file_path}</div>
@@ -466,6 +510,147 @@ export default function ImagesReviewPage() {
           </div>
         )}
       </main>
+
+      {checkedIds.size > 0 && !comparing && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-3 bg-gray-900 border border-gray-700 rounded-full px-5 py-2.5 shadow-2xl">
+          <span className="text-sm text-gray-300">{checkedIds.size} selected</span>
+          <button
+            onClick={() => setCheckedIds(new Set())}
+            className="px-3 py-1 text-sm rounded-full bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white transition-colors"
+          >
+            Unselect
+          </button>
+          {checkedIds.size >= 2 && (
+            <button
+              onClick={() => setComparing(true)}
+              className="px-3 py-1 text-sm rounded-full bg-blue-600 text-white hover:bg-blue-500 transition-colors"
+            >
+              Compare
+            </button>
+          )}
+        </div>
+      )}
+
+      {selectedImage && (() => {
+        const si = selectedImage;
+        const popupFullUrl = getImageUrl(si.cloudflare_image_id, si.file_path, 'large');
+        const idx = sortedImages.findIndex(i => i.image_id === si.image_id);
+        const hasPrev = idx > 0;
+        const hasNext = idx < sortedImages.length - 1;
+        return (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm" onClick={() => setSelectedImage(null)}>
+            <div className="relative max-w-5xl w-full mx-4 max-h-[90vh] flex flex-col" onClick={e => e.stopPropagation()}>
+              <button onClick={() => setSelectedImage(null)} className="absolute -top-2 -right-2 z-10 w-8 h-8 rounded-full bg-gray-800 border border-gray-600 text-gray-300 hover:text-white hover:bg-gray-700 flex items-center justify-center text-lg">&times;</button>
+
+              {hasPrev && (
+                <button onClick={() => navigatePopup(-1)} className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 z-10 w-10 h-10 rounded-full bg-gray-800/80 border border-gray-600 text-gray-300 hover:text-white hover:bg-gray-700 flex items-center justify-center text-xl">&lsaquo;</button>
+              )}
+              {hasNext && (
+                <button onClick={() => navigatePopup(1)} className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 z-10 w-10 h-10 rounded-full bg-gray-800/80 border border-gray-600 text-gray-300 hover:text-white hover:bg-gray-700 flex items-center justify-center text-xl">&rsaquo;</button>
+              )}
+
+              <div className="flex-1 min-h-0 flex items-center justify-center">
+                <img
+                  src={popupFullUrl}
+                  alt={si.subject || si.file_path}
+                  className="max-w-full max-h-[75vh] object-contain rounded-lg"
+                />
+              </div>
+
+              <div className="bg-gray-900 rounded-b-lg px-4 py-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+                <span className="text-gray-400 font-mono text-xs">{si.file_path}</span>
+                <span className="text-gray-500">ID {si.image_id}</span>
+                <span className="text-gray-500">Cave {si.cave_id}</span>
+                {si.plan_id != null && <span className="text-gray-500">Plan {planLabel(si.plan_id)}</span>}
+                <span className="text-gray-500">Rank {si.rank}</span>
+                {si.subject && <span className="text-[#eae2c4]">{si.subject}</span>}
+                {si.description && <span className="text-gray-400 text-xs">{si.description}</span>}
+                <a href={popupFullUrl} target="_blank" rel="noopener noreferrer" className="ml-auto text-xs text-blue-400 hover:text-blue-300 underline">Open full size</a>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
+
+      {comparing && (() => {
+        const checkedImages = sortedImages.filter(img => checkedIds.has(img.image_id));
+        return (
+          <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm overflow-y-auto" onClick={() => setComparing(false)}>
+            <div className="max-w-4xl mx-auto py-8 px-4 space-y-6" onClick={e => e.stopPropagation()}>
+              <div className="flex items-center justify-between sticky top-0 z-10 bg-black/90 backdrop-blur py-3 px-1 -mx-1 rounded-lg">
+                <span className="text-white text-lg">Comparing {checkedImages.length} images</span>
+                <button
+                  onClick={() => setComparing(false)}
+                  className="px-4 py-1.5 rounded-full bg-gray-700 text-gray-300 hover:bg-gray-600 hover:text-white transition-colors text-sm"
+                >
+                  Close
+                </button>
+              </div>
+              {checkedImages.map(img => {
+                const cFullUrl = getImageUrl(img.cloudflare_image_id, img.file_path, 'large');
+                const isEditingCompareRank = compareRankEditing === img.image_id;
+                return (
+                  <div key={img.image_id} className="bg-gray-900 rounded-lg overflow-hidden border border-gray-800">
+                    <img
+                      src={cFullUrl}
+                      alt={img.subject || img.file_path}
+                      className="w-full object-contain max-h-[70vh]"
+                    />
+                    <div className="px-4 py-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
+                      <span className="text-gray-400 font-mono text-xs">{img.file_path}</span>
+                      <span className="text-gray-500">ID {img.image_id}</span>
+                      <span className="text-gray-500">Cave {img.cave_id}</span>
+                      {img.plan_id != null && <span className="text-gray-500">Plan {planLabel(img.plan_id)}</span>}
+                      {img.subject && <span className="text-[#eae2c4]">{img.subject}</span>}
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-gray-500">Rank</span>
+                        {isEditingCompareRank ? (
+                          <form
+                            className="inline-flex"
+                            onSubmit={(e) => {
+                              e.preventDefault();
+                              const val = parseInt(compareRankInput, 10);
+                              if (!isNaN(val)) updateField(img.image_id, 'rank', val);
+                              setCompareRankEditing(null);
+                            }}
+                          >
+                            <input
+                              type="number"
+                              value={compareRankInput}
+                              onChange={(e) => setCompareRankInput(e.target.value)}
+                              className="w-12 bg-gray-800 text-white text-xs text-center rounded border border-gray-600 px-1 py-0.5"
+                              autoFocus
+                              onBlur={() => setCompareRankEditing(null)}
+                            />
+                          </form>
+                        ) : (
+                          <button
+                            onClick={() => { setCompareRankEditing(img.image_id); setCompareRankInput(String(img.rank)); }}
+                            className="bg-white/90 text-black text-xs font-bold px-1.5 py-0.5 rounded hover:bg-white transition-colors"
+                          >
+                            {saving === img.image_id ? '...' : img.rank}
+                          </button>
+                        )}
+                      </div>
+                      <button
+                        onClick={() => {
+                          const next = new Set(checkedIds);
+                          next.delete(img.image_id);
+                          setCheckedIds(next);
+                          if (next.size < 2) setComparing(false);
+                        }}
+                        className="ml-auto text-xs text-red-400 hover:text-red-300 underline"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }
