@@ -28,14 +28,7 @@ export default function ImageInfoPanel({ image, cave, collapsible = false }: Ima
         </div>
       )}
 
-      {/* Photographer - single line */}
-      {image.photographer && (
-        <p className="text-xs text-[#eae2c4]">
-          <span className="text-gray-400">Photographer:</span> {image.photographer}
-        </p>
-      )}
-
-      {/* Location and File Information - grouped together */}
+      {/* Location, File Information, Photographer - grouped together */}
       <div className="text-xs space-y-2 pt-1">
         <div>
           <div className="text-gray-400">Location:</div>
@@ -48,6 +41,11 @@ export default function ImageInfoPanel({ image, cave, collapsible = false }: Ima
           <div className="text-gray-400">File Information:</div>
           <div className="text-gray-600">{image.file_path} ({image.id})</div>
         </div>
+        {image.photographer && (
+          <p className="text-[#eae2c4]">
+            <span className="text-gray-400">Photographer:</span> {image.photographer}
+          </p>
+        )}
       </div>
     </div>
   );
