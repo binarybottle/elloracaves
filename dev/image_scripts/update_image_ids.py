@@ -64,10 +64,23 @@ def update_supabase(client: Client, file_to_cf_id: dict, dry_run: bool = False):
         file_to_cf_id: Mapping of file paths to Cloudflare IDs
         dry_run: If True, don't actually update, just print what would be done
     """
-    # Get all images from Supabase
+    # Get all images from Supabase (paginate to bypass the 1000-row default limit)
     print("Fetching images from Supabase...")
-    response = client.table('images').select('id, file_path, thumbnail').execute()
-    images = response.data
+    images = []
+    page_size = 1000
+    offset = 0
+    while True:
+        response = (
+            client.table('images')
+            .select('image_id, file_path, thumbnail')
+            .range(offset, offset + page_size - 1)
+            .execute()
+        )
+        batch = response.data
+        images.extend(batch)
+        if len(batch) < page_size:
+            break
+        offset += page_size
     print(f"Found {len(images)} images in database")
     
     updated = 0
@@ -83,29 +96,37 @@ def update_supabase(client: Client, file_to_cf_id: dict, dry_run: bool = False):
         
         cf_image_id = None
         cf_thumbnail_id = None
-        
-        # Look for main image
+
+        # Match by: full path suffix, caves_1200px/ prefix, or bare filename
+        file_basename = file_path.split("/")[-1]
         for log_path, cf_id in file_to_cf_id.items():
-            if log_path.endswith(file_path) or f"caves_1200px/{file_path}" == log_path:
+            log_basename = log_path.split("/")[-1]
+            if (log_path.endswith(file_path)
+                    or f"caves_1200px/{file_path}" == log_path
+                    or log_basename == file_basename):
                 cf_image_id = cf_id
                 break
-        
+
         # Look for thumbnail
         if thumbnail:
+            thumb_basename = thumbnail.split("/")[-1]
             for log_path, cf_id in file_to_cf_id.items():
-                if log_path.endswith(thumbnail) or f"caves_thumbs/{thumbnail}" == log_path:
+                log_basename = log_path.split("/")[-1]
+                if (log_path.endswith(thumbnail)
+                        or f"caves_thumbs/{thumbnail}" == log_path
+                        or log_basename == thumb_basename):
                     cf_thumbnail_id = cf_id
                     break
         
         if cf_image_id:
             if dry_run:
-                print(f"Would update image {img['id']}: {file_path} -> {cf_image_id}")
+                print(f"Would update image {img['image_id']}: {file_path} -> {cf_image_id}")
             else:
                 update_data = {'cloudflare_image_id': cf_image_id}
                 if cf_thumbnail_id:
                     update_data['cloudflare_thumbnail_id'] = cf_thumbnail_id
                 
-                client.table('images').update(update_data).eq('id', img['id']).execute()
+                client.table('images').update(update_data).eq('image_id', img['image_id']).execute()
             updated += 1
         else:
             not_found += 1

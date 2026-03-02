@@ -70,7 +70,7 @@ export default async function ImagePage({ params }: ImagePageProps) {
           >
             {cave?.name || `Cave ${image.cave_id}`}
           </Link>
-          {image.floor_number && (
+          {(image.floor_number ?? 0) > 1 && (
             <>
               <span className="text-gray-400">/</span>
               <Link
@@ -171,7 +171,7 @@ export default async function ImagePage({ params }: ImagePageProps) {
                 <p className="text-gray-700">
                   {cave?.name || `Cave ${image.cave_id}`}
                 </p>
-                {image.floor_number && (
+                {(image.floor_number ?? 0) > 1 && (
                   <p className="text-sm text-gray-600 mt-1">
                     Floor {image.floor_number}
                   </p>

@@ -34,7 +34,7 @@ export default function ImageInfoPanel({ image, cave, collapsible = false }: Ima
           <div className="text-gray-400">Location:</div>
           <div className="text-[#eae2c4]">
             {cave?.name || `Cave ${image.cave_id}`}
-            {image.floor_number && ` (floor ${image.floor_number})`}
+            {(image.floor_number ?? 0) > 1 && ` (floor ${image.floor_number})`}
           </div>
         </div>
         <div>

@@ -9,7 +9,8 @@ Usage:
     python scripts/sync_cloudflare_ids.py
 
 Environment variables:
-    CF_API_TOKEN: Cloudflare API token
+    CF_API_TOKEN:  Cloudflare API Token (Bearer) or Global API Key
+    CF_AUTH_EMAIL: Cloudflare account email — required when using a Global API Key
     CF_ACCOUNT_ID: Cloudflare account ID
     SUPABASE_URL: Supabase project URL
     SUPABASE_SERVICE_KEY: Supabase service role key
@@ -20,8 +21,16 @@ import sys
 import requests
 
 # Cloudflare credentials
-CF_API_TOKEN = os.getenv('CF_API_TOKEN', 'REDACTED')
+CF_API_TOKEN  = os.getenv('CF_API_TOKEN', 'REDACTED')
+CF_AUTH_EMAIL = os.getenv('CF_AUTH_EMAIL', '')
 CF_ACCOUNT_ID = os.getenv('CF_ACCOUNT_ID', '4e65b8f97b6c2c3f485dcda82c179275')
+
+def cf_headers():
+    """Return appropriate Cloudflare auth headers."""
+    if CF_AUTH_EMAIL:
+        return {"X-Auth-Key": CF_API_TOKEN, "X-Auth-Email": CF_AUTH_EMAIL,
+                "Content-Type": "application/json"}
+    return {"Authorization": f"Bearer {CF_API_TOKEN}", "Content-Type": "application/json"}
 
 # Supabase credentials - update these
 SUPABASE_URL = os.getenv('SUPABASE_URL', '')
@@ -38,10 +47,7 @@ def fetch_cloudflare_images():
     
     while True:
         url = f"https://api.cloudflare.com/client/v4/accounts/{CF_ACCOUNT_ID}/images/v1"
-        headers = {
-            "Authorization": f"Bearer {CF_API_TOKEN}",
-            "Content-Type": "application/json"
-        }
+        headers = cf_headers()
         params = {
             "page": page,
             "per_page": per_page

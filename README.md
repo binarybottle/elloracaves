@@ -31,7 +31,8 @@ Users → Cloudflare DNS/CDN
 | `/explore` | Main exploration interface — interactive floor plans, image display with similar-image groups, gallery strip, info panel |
 | `/about` | About the project, contributors, and bibliography |
 | `/search` | Full-text search results |
-| `/images` | Admin/review page — bulk image management with inline editing of `rank`, `cave_id`, `plan_id`, `best_id`; multi-select comparison; images clustered by `best_id` tree |
+| `/images` | Image browsing page — filterable by cave, floor, and rank; inline search by subject/description |
+| `/admin` | Admin/review page — bulk image management with inline editing of `rank`, `cave_id`, `plan_id`, `best_id`; multi-select comparison; images clustered by `best_id` tree |
 
 ## Features
 
@@ -142,7 +143,8 @@ frontend/
 │   │   ├── page.tsx                  # Home/landing page
 │   │   ├── about/                    # About page
 │   │   ├── explore/                  # Main exploration interface
-│   │   ├── images/                   # Image review/admin page
+│   │   ├── images/                   # Image browsing page
+│   │   ├── admin/                    # Admin/review page (editing)
 │   │   └── search/                   # Search results page
 │   ├── components/
 │   │   ├── cave/                     # CaveMap, FloorPlanSidebar, InteractiveFloorPlan,
@@ -209,12 +211,84 @@ The `images` table contains ~8,400 rows. Each row represents a photograph with i
 | `created_at` | timestamp | Row creation timestamp |
 | `updated_at` | timestamp | Row last-updated timestamp |
 
-### Schema Maintenance
 
-To add the `best_id` column (if not already present):
+## Image Management
+
+### How images are served
+
+The website does **not** serve images from local files. At runtime, it only uses the `cloudflare_image_id` column in Supabase to construct Cloudflare Images URLs. The `file_path` column is just a reference string used for display and for matching during the Cloudflare sync step.
+
+Three things must be in sync:
+
+| System | What it stores | What matters for the website |
+|--------|---------------|------------------------------|
+| **Local folder tree** | Original image files (e.g. `c9/_CAV3647.jpg`) | Not used by the website; your offline archive |
+| **Cloudflare Images** | Hosted copies with auto-optimization | Serves the actual images via `cloudflare_image_id` |
+| **Supabase `images` table** | Metadata: `cave_id`, `plan_id`, `file_path`, `cloudflare_image_id`, etc. | Determines which cave/floor an image appears on |
+
+### Adding new images
+
+#### 1. Upload to Cloudflare Images
+
+```bash
+cd dev/image_scripts
+python upload_cloudflare.py /path/to/new/photos YOUR_CF_API_TOKEN
+```
+
+This uploads every image and logs results to `upload_log.csv`.
+
+#### 2. Insert rows into Supabase
+
+Each photo needs a row in `images` with the correct `cave_id`, `plan_id`, and `file_path` (matching the uploaded filename). Look up the plan_id first:
 
 ```sql
-ALTER TABLE images ADD COLUMN best_id integer;
+SELECT plan_id, plan_floor FROM plans WHERE cave_id = YOUR_CAVE_ID ORDER BY plan_floor;
+```
+
+Then insert:
+
+```sql
+INSERT INTO images (image_id, cave_id, plan_id, file_path, rank, subject)
+VALUES
+  (nextval('images_image_id_seq'), 3016, 3016, 'c16S/photo1.jpg', 1, ''),
+  (nextval('images_image_id_seq'), 3016, 3016, 'c16S/photo2.jpg', 1, '');
+```
+
+#### 3. Sync Cloudflare IDs to Supabase
+
+This matches uploaded filenames to `file_path` values and populates `cloudflare_image_id`:
+
+```bash
+cd dev/image_scripts
+CF_API_TOKEN=your_token python sync_cloudflare_ids.py
+```
+
+If Supabase credentials aren't set, it generates a `.sql` file to run manually.
+
+### Reassigning images to different caves/plans
+
+If you've changed `cave_id` or `plan_id` for images in Supabase (via the `/admin` page or SQL), here's what else needs updating:
+
+**Cloudflare Images**: Nothing. Cloudflare doesn't know about caves or plans — it just stores image blobs by ID. No changes needed.
+
+**Supabase**: Already done if you updated `cave_id`/`plan_id`. The website reads these columns to determine where images appear.
+
+**Local folder tree** (optional): If you want your local archive to mirror the database assignments, move the files to match. For example, if you moved images from cave 4016 (16sw) to 3016 (16 Satellite), you'd move local files from `c16sw/` to `c16S/`. Then update `file_path` in Supabase to match:
+
+```sql
+UPDATE images
+SET file_path = REPLACE(file_path, 'c16sw/', 'c16S/')
+WHERE file_path LIKE 'c16sw/%';
+```
+
+This is cosmetic — the website doesn't use `file_path` for serving images — but keeps things consistent for your records and for the `/admin` page display.
+
+### Setting a cave's default image
+
+The image with the highest `default_priority` appears first in galleries and becomes the default on the About page:
+
+```sql
+UPDATE images SET default_priority = 10 WHERE image_id = 1234;
 ```
 
 ## Credits
