@@ -17,8 +17,10 @@ interface ImageRow {
   thumbnail: string | null;
   plan_x_norm: number | null;
   plan_y_norm: number | null;
-  hide_plan_xy: number;
+  hide_plan_xy: boolean;
   best_id: number | null;
+  book_page: number | null;
+  book_figure: string | null;
 }
 
 interface CaveOption { cave_id: number; cave_name: string | null; }
@@ -122,8 +124,8 @@ export default function ImagesReviewPage() {
     });
   }
 
-  async function toggleHidePlanXY(imageId: number, currentValue: number) {
-    const newValue = currentValue ? 0 : 1;
+  async function toggleHidePlanXY(imageId: number, currentValue: boolean) {
+    const newValue = !currentValue;
     setSaving(imageId);
     const { error } = await supabase
       .from('images')
@@ -140,7 +142,7 @@ export default function ImagesReviewPage() {
     setSaving(null);
   }
 
-  async function updateField(imageId: number, field: 'rank' | 'cave_id' | 'plan_id' | 'best_id', value: number | null) {
+  async function updateField(imageId: number, field: 'rank' | 'cave_id' | 'plan_id' | 'best_id' | 'book_page', value: number | null) {
     setSaving(imageId);
     const { error } = await supabase
       .from('images')
@@ -158,6 +160,24 @@ export default function ImagesReviewPage() {
     setEditingField(null);
   }
 
+  async function updateTextField(imageId: number, field: 'book_figure', value: string | null) {
+    setSaving(imageId);
+    const { error } = await supabase
+      .from('images')
+      .update({ [field]: value || null })
+      .eq('image_id', imageId);
+
+    if (error) {
+      alert(`Failed to update ${field}: ${error.message}`);
+    } else {
+      setImages(prev => prev.map(img =>
+        img.image_id === imageId ? { ...img, [field]: value || null } : img
+      ));
+    }
+    setSaving(null);
+    setEditingField(null);
+  }
+
   useEffect(() => {
     async function fetchImages() {
       const PAGE_SIZE = 1000;
@@ -168,7 +188,7 @@ export default function ImagesReviewPage() {
       while (hasMore) {
         const { data, error } = await supabase
           .from('images')
-          .select('image_id, cave_id, plan_id, rank, file_path, subject, description, cloudflare_image_id, cloudflare_thumbnail_id, thumbnail, plan_x_norm, plan_y_norm, hide_plan_xy, best_id')
+          .select('image_id, cave_id, plan_id, rank, file_path, subject, description, cloudflare_image_id, cloudflare_thumbnail_id, thumbnail, plan_x_norm, plan_y_norm, hide_plan_xy, best_id, book_page, book_figure')
           .order('cave_id')
           .order('file_path')
           .range(from, from + PAGE_SIZE - 1);
@@ -429,6 +449,8 @@ export default function ImagesReviewPage() {
               const isEditingBestId = editingField?.imageId === img.image_id && editingField?.field === 'best_id';
               const isEditingCave = editingField?.imageId === img.image_id && editingField?.field === 'cave_id';
               const isEditingPlan = editingField?.imageId === img.image_id && editingField?.field === 'plan_id';
+              const isEditingBookPage = editingField?.imageId === img.image_id && editingField?.field === 'book_page';
+              const isEditingBookFigure = editingField?.imageId === img.image_id && editingField?.field === 'book_figure';
 
               return (
                 <div key={img.image_id} className="bg-gray-900 rounded-lg overflow-hidden border border-gray-800">
@@ -504,6 +526,26 @@ export default function ImagesReviewPage() {
                       ) : (
                         <button onClick={() => setEditingField({ imageId: img.image_id, field: 'plan_id' })} className="text-gray-300 hover:text-white underline decoration-dotted" title="Click to edit plan_id">
                           {img.plan_id != null ? planLabel(img.plan_id) : '—'}
+                        </button>
+                      )}
+                      <span>| p.</span>
+                      {isEditingBookPage ? (
+                        <form className="inline-flex" onSubmit={(e) => { e.preventDefault(); const raw = fieldInput.trim(); if (raw === '') { updateField(img.image_id, 'book_page', null); } else { const val = parseInt(raw, 10); if (!isNaN(val)) updateField(img.image_id, 'book_page', val); } }}>
+                          <input type="text" value={fieldInput} onChange={(e) => setFieldInput(e.target.value)} placeholder="—" className="w-10 bg-gray-800 text-white text-xs text-center rounded border border-gray-600 px-0.5 py-0" autoFocus onBlur={() => setEditingField(null)} />
+                        </form>
+                      ) : (
+                        <button onClick={() => { setEditingField({ imageId: img.image_id, field: 'book_page' }); setFieldInput(img.book_page != null ? String(img.book_page) : ''); }} className="text-gray-300 hover:text-white underline decoration-dotted" title="Click to set book page number">
+                          {img.book_page ?? '—'}
+                        </button>
+                      )}
+                      <span>| fig.</span>
+                      {isEditingBookFigure ? (
+                        <form className="inline-flex" onSubmit={(e) => { e.preventDefault(); updateTextField(img.image_id, 'book_figure', fieldInput.trim()); }}>
+                          <input type="text" value={fieldInput} onChange={(e) => setFieldInput(e.target.value)} placeholder="—" className="w-14 bg-gray-800 text-white text-xs text-center rounded border border-gray-600 px-0.5 py-0" autoFocus onBlur={() => setEditingField(null)} />
+                        </form>
+                      ) : (
+                        <button onClick={() => { setEditingField({ imageId: img.image_id, field: 'book_figure' }); setFieldInput(img.book_figure ?? ''); }} className="text-gray-300 hover:text-white underline decoration-dotted" title="Click to set book figure number">
+                          {img.book_figure ?? '—'}
                         </button>
                       )}
                     </div>

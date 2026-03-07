@@ -43,7 +43,7 @@ export interface Image {
   description?: string;
   cave_id: number;
   coordinates?: Coordinates;
-  hide_plan_xy?: number;
+  hide_plan_xy?: boolean;
   best_id?: number | null;
   image_url: string;
   thumbnail_url: string;
@@ -133,7 +133,7 @@ function transformImage(dbImage: DbImage): Image {
       plan_x_norm: dbImage.plan_x_norm || undefined,
       plan_y_norm: dbImage.plan_y_norm || undefined,
     } : undefined,
-    hide_plan_xy: dbImage.hide_plan_xy || 0,
+    hide_plan_xy: dbImage.hide_plan_xy || false,
     best_id: dbImage.best_id || null,
     image_url: getImageUrl(dbImage.cloudflare_image_id, dbImage.file_path, 'large'),
     thumbnail_url: getThumbnailUrl(
