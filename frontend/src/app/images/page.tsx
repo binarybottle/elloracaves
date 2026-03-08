@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import { Search, X } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
@@ -194,10 +195,23 @@ export default function ImagesPage() {
     <div className="min-h-screen bg-black text-[#eae2c4]">
       <header className="bg-gray-900 border-b border-gray-800">
         <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex flex-wrap items-center justify-between gap-4">
             <h1 className="text-2xl text-white shrink-0">
-              Images
+              All Images
             </h1>
+            <div className="flex flex-wrap gap-2 shrink-0">
+              <Link href="/explore?cave=10" className="px-3 py-2 bg-white text-black rounded-md text-sm font-semibold hover:bg-gray-200 transition-colors">
+                Explore
+              </Link>
+              <Link href="/more" className="px-3 py-2 bg-white/10 border border-white/20 rounded-md text-sm hover:bg-white/20 transition-colors">
+                More
+              </Link>
+              <Link href="/about" className="px-3 py-2 bg-white/10 border border-white/20 rounded-md text-sm hover:bg-white/20 transition-colors">
+                About
+              </Link>
+            </div>
+          </div>
+          <div className="mt-4 flex items-center gap-4">
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
               <input

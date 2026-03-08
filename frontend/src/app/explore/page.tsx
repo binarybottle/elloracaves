@@ -187,6 +187,12 @@ function ExploreContent() {
           >
             About
           </Link>
+          <Link
+            href="/more"
+            className="px-4 py-2 bg-black/90 hover:bg-black border-2 border-gray-600 hover:border-gray-400 rounded-lg text-white transition-all text-sm font-semibold"
+          >
+            More
+          </Link>
           <button
             onClick={() => setShowSearch(true)}
             className="flex items-center gap-2 px-4 py-2 bg-black/90 hover:bg-black border-2 border-gray-600 hover:border-gray-400 rounded-lg text-white transition-all"
@@ -219,6 +225,12 @@ function ExploreContent() {
             >
               <Search className="h-5 w-5" />
             </button>
+            <Link
+              href="/more"
+              className="px-3 py-2 bg-black/90 border border-gray-600 rounded-lg text-white text-sm"
+            >
+              More
+            </Link>
             <Link
               href="/about"
               className="px-3 py-2 bg-black/90 border border-gray-600 rounded-lg text-white text-sm"

@@ -92,14 +92,16 @@ export default function AboutPage() {
       {/* Header */}
       <header className="bg-gray-900 border-b border-gray-800">
         <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center justify-between">
-            <h1 className="text-3xl ">About the Ellora Caves and elloracaves.org</h1>
-            <Link
-              href="/explore?cave=10"
-              className="px-4 py-2 bg-white text-black rounded-lg font-semibold hover:bg-gray-200 transition-colors"
-            >
-              Explore the Caves
-            </Link>
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <h1 className="text-3xl">About the Ellora Caves and elloracaves.org</h1>
+            <div className="flex flex-wrap gap-2">
+              <Link href="/explore?cave=10" className="px-3 py-2 bg-white text-black rounded-md text-sm font-semibold hover:bg-gray-200 transition-colors">
+                Explore
+              </Link>
+              <Link href="/more" className="px-3 py-2 bg-white/10 border border-white/20 rounded-md text-sm hover:bg-white/20 transition-colors">
+                More
+              </Link>
+            </div>
           </div>
         </div>
       </header>

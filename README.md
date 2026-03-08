@@ -30,9 +30,13 @@ Users → Cloudflare DNS/CDN
 | `/` | Landing page |
 | `/explore` | Main exploration interface — interactive floor plans, image display with similar-image groups, gallery strip, info panel |
 | `/about` | About the project, contributors, and bibliography |
+| `/archives` | Archival image collection with expandable image viewer |
+| `/book` | Book information + all images tagged with `book_figure` and `book_page` |
+| `/3d` | 3D photogrammetry models (GLB) with interactive `<model-viewer>` |
+| `/more` | Link hub for About, Images, Archives, Book, and 3D pages |
 | `/search` | Full-text search results |
 | `/images` | Image browsing page — filterable by cave, floor, and rank; inline search by subject/description |
-| `/admin` | Admin/review page — bulk image management with inline editing of `rank`, `cave_id`, `plan_id`, `best_id`; multi-select comparison; images clustered by `best_id` tree |
+| `/admin` | Admin/review page — bulk image management with inline editing of `rank`, `cave_id`, `plan_id`, `best_id`, `book_page`, `book_figure`; multi-select comparison; images clustered by `best_id` tree |
 
 ## Features
 
@@ -181,6 +185,9 @@ The `images` table contains ~8,400 rows. Each row represents a photograph with i
 | `file_path` | text | Relative path to original image (e.g. "c9/_CAV3647.jpg"). Displayed as file info; fallback URL when Cloudflare IDs are missing |
 | `plan_x_norm` | float | X coordinate normalized (0.0–1.0) on the floor plan. Used to position markers on interactive floor plans |
 | `plan_y_norm` | float | Y coordinate normalized (0.0–1.0) on the floor plan. Used to position markers on interactive floor plans |
+| `archival` | bool | Marks archival/legacy source images. Used by `/archives` |
+| `book_page` | int | Book page reference used by `/book` |
+| `book_figure` | text | Book figure reference used by `/book` |
 
 ### Columns Used Behind the Scenes
 
@@ -210,6 +217,29 @@ The `images` table contains ~8,400 rows. Each row represents a photograph with i
 | `coordinates_questionable` | bool | Flags uncertain floor plan coordinates |
 | `created_at` | timestamp | Row creation timestamp |
 | `updated_at` | timestamp | Row last-updated timestamp |
+
+
+## Database Schema: `models_3d` Table
+
+The `models_3d` table stores 3D photogrammetry models (GLB files captured with Polycam). Displayed on the `/3d` page using Google's `<model-viewer>` web component.
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `model_id` | serial | Primary key |
+| `cave_id` | int | Foreign key to `caves` table |
+| `plan_id` | int | Foreign key to `plans` table (optional) |
+| `title` | text | Display title for the model |
+| `description` | text | Description of what was captured |
+| `file_url` | text | URL to the `.glb` file (hosted on Cloudflare R2 or similar) |
+| `poster_url` | text | Static preview image URL (Cloudflare Images) |
+| `file_size` | bigint | File size in bytes (for display) |
+| `source_app` | text | Capture application (default: `Polycam`) |
+| `photographer` | text | Who captured the model |
+| `capture_date` | text | When the model was captured |
+| `created_at` | timestamptz | Row creation timestamp |
+| `updated_at` | timestamptz | Row last-updated timestamp |
+
+To create this table, run `create_models_3d.sql` in the Supabase SQL Editor.
 
 
 ## Image Management

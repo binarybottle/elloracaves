@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
 import { getImageUrl, getThumbnailUrl } from '@/lib/cloudflare-images';
@@ -41,6 +42,7 @@ export default function ImagesReviewPage() {
   const [filterPlanId, setFilterPlanId] = useState('');
   const [filterFilePath, setFilterFilePath] = useState('');
   const [filterRank, setFilterRank] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [editingField, setEditingField] = useState<{ imageId: number; field: string } | null>(null);
   const [fieldInput, setFieldInput] = useState('');
   const [saving, setSaving] = useState<number | null>(null);
@@ -242,6 +244,12 @@ export default function ImagesReviewPage() {
     if (filterCaveId.trim() && String(img.cave_id) !== filterCaveId.trim()) return false;
     if (filterPlanId.trim() && String(img.plan_id) !== filterPlanId.trim()) return false;
     if (filterFilePath.trim() && !img.file_path.toLowerCase().includes(filterFilePath.trim().toLowerCase())) return false;
+    if (searchQuery.trim()) {
+      const q = searchQuery.trim().toLowerCase();
+      const haystack = `${img.subject || ''} ${img.description || ''}`.toLowerCase();
+      const words = q.split(/\s+/);
+      if (!words.every(w => haystack.includes(w))) return false;
+    }
     if (filterRank.trim()) {
       const val = filterRank.trim();
       if (val.includes('-')) {
@@ -259,7 +267,7 @@ export default function ImagesReviewPage() {
     return true;
   });
 
-  const hasActiveFilter = !!(filterImageId.trim() || filterCaveId.trim() || filterPlanId.trim() || filterFilePath.trim() || filterRank.trim());
+  const hasActiveFilter = !!(filterImageId.trim() || filterCaveId.trim() || filterPlanId.trim() || filterFilePath.trim() || filterRank.trim() || searchQuery.trim());
 
   const sortedImages = useMemo(() => {
     const sorted = [...filteredImages].sort((a, b) => {
@@ -345,9 +353,32 @@ export default function ImagesReviewPage() {
     <div className="min-h-screen bg-black text-[#eae2c4]">
       <header className="bg-gray-900 border-b border-gray-800">
         <div className="container mx-auto px-4 py-6">
-          <h1 className="text-2xl text-white">
-            Admin — {images.length} images
-          </h1>
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <h1 className="text-2xl text-white">
+              Admin — {images.length} images
+            </h1>
+            <div className="flex flex-wrap gap-2">
+              <Link href="/explore?cave=10" className="px-3 py-2 bg-white text-black rounded-md text-sm font-semibold hover:bg-gray-200 transition-colors">
+                Explore
+              </Link>
+              <Link href="/more" className="px-3 py-2 bg-white/10 border border-white/20 rounded-md text-sm hover:bg-white/20 transition-colors">
+                More
+              </Link>
+              <Link href="/about" className="px-3 py-2 bg-white/10 border border-white/20 rounded-md text-sm hover:bg-white/20 transition-colors">
+                About
+              </Link>
+            </div>
+          </div>
+
+          <div className="mt-4">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search subject, description…"
+              className="w-full md:w-96 bg-gray-800 text-gray-200 text-sm rounded-lg px-3 py-2 border border-gray-700 focus:outline-none focus:border-gray-500 placeholder-gray-600"
+            />
+          </div>
 
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mt-4">
             <div className="flex items-center gap-3">
@@ -417,7 +448,7 @@ export default function ImagesReviewPage() {
                   {filteredImages.length} of {images.length}
                 </span>
                 <button
-                  onClick={() => { setFilterImageId(''); setFilterCaveId(''); setFilterPlanId(''); setFilterFilePath(''); setFilterRank(''); }}
+                  onClick={() => { setFilterImageId(''); setFilterCaveId(''); setFilterPlanId(''); setFilterFilePath(''); setFilterRank(''); setSearchQuery(''); }}
                   className="text-xs text-gray-400 hover:text-white transition-colors underline"
                 >
                   Clear
