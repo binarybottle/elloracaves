@@ -1,6 +1,7 @@
 'use client';
 
 import CuratedImageCollectionPage from '@/components/image/CuratedImageCollectionPage';
+import { getDropdownLabel } from '@/components/cave/CaveMap';
 
 export default function BookPage() {
   return (
@@ -61,9 +62,19 @@ export default function BookPage() {
         }
         return a.file_path.localeCompare(b.file_path);
       }}
-      renderMeta={(image) => (
-        <span>p. {image.book_page}, fig. {image.book_figure}</span>
-      )}
+      renderMeta={(image) => {
+        const fig = image.book_figure;
+        const figStr = fig
+          ? (/^\d/.test(fig) ? `, fig.${fig}` : `, ${fig}`)
+          : '';
+        return (
+          <span>
+            {getDropdownLabel(image.cave_id)} (ID:{image.image_id})
+            <br />
+            p.{image.book_page}{figStr}
+          </span>
+        );
+      }}
     />
   );
 }

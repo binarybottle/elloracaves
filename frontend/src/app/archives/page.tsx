@@ -1,6 +1,7 @@
 'use client';
 
 import CuratedImageCollectionPage from '@/components/image/CuratedImageCollectionPage';
+import { getDropdownLabel } from '@/components/cave/CaveMap';
 
 const MEDIUM_ORDER: Record<string, number> = {
   'photograph': 0,
@@ -38,7 +39,7 @@ export default function ArchivesPage() {
         return a.file_path.localeCompare(b.file_path);
       }}
       renderMeta={(image) => (
-        <span>{image.medium || 'unknown'} · ID {image.image_id}</span>
+        <span>{getDropdownLabel(image.cave_id)} (ID:{image.image_id})</span>
       )}
     />
   );

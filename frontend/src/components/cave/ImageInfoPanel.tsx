@@ -13,39 +13,26 @@ export default function ImageInfoPanel({ image, cave, collapsible = false }: Ima
 
   const content = (
     <div className="space-y-2">
-      {/* Subject/Title */}
       {image.subject && (
-        <div>
-          <h2 className="text-xl text-[#eae2c4] mb-2">{image.subject}</h2>
-        </div>
+        <h2 className="text-xl text-[#eae2c4] mb-2">{image.subject}</h2>
       )}
 
-      {/* Description */}
       {image.description && (
-        <div>
-          <h3 className="text-sm font-semibold text-gray-400 mb-1">Description</h3>
-          <p className="text-sm text-[#eae2c4] leading-relaxed">{image.description}</p>
-        </div>
+        <p className="text-sm text-[#eae2c4] leading-relaxed">{image.description}</p>
       )}
 
-      {/* Location, File Information, Photographer - grouped together */}
-      <div className="text-xs space-y-2 pt-1">
+      <div className="text-xs space-y-1 pt-1">
         <div>
-          <div className="text-gray-400">Location:</div>
-          <div className="text-[#eae2c4]">
+          <span className="text-gray-400">Location: </span>
+          <span className="text-[#eae2c4]">
             {cave?.name || `Cave ${image.cave_id}`}
             {(image.floor_number ?? 0) > 1 && ` (floor ${image.floor_number})`}
-          </div>
-        </div>
-        <div>
-          <div className="text-gray-400">File Information:</div>
-          <div className="text-gray-600">{image.file_path} ({image.id})</div>
+          </span>
         </div>
         {image.photographer && (
-          <p className="text-[#eae2c4]">
-            <span className="text-gray-400">Photographer:</span> {image.photographer}
-          </p>
+          <div className="text-gray-400">{image.photographer}</div>
         )}
+        <div className="text-gray-600">ID:{image.id}</div>
       </div>
     </div>
   );

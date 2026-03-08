@@ -307,9 +307,10 @@ export default function ImagesPage() {
                     {img.subject && (
                       <div className="text-xs text-[#eae2c4] truncate">{img.subject}</div>
                     )}
-                    <div className="text-xs text-gray-500">
+                    <div className="text-xs text-gray-400 truncate">
                       {caveDisplayName(img.cave_id)}
                       {floor > 1 && `, Floor ${floor}`}
+                      {` (ID:${img.image_id})`}
                     </div>
                   </div>
                 </div>

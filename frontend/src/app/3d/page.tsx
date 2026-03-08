@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Script from 'next/script';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { getDropdownLabel } from '@/components/cave/CaveMap';
 
@@ -88,6 +88,28 @@ export default function ThreeDPage() {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [selectedModel, navigatePopup]);
 
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!gridRef.current) return;
+    let rafId: number;
+    const startTime = Date.now();
+
+    function animate() {
+      if (!gridRef.current) return;
+      const elapsed = (Date.now() - startTime) / 1000;
+      const viewers = gridRef.current.querySelectorAll<HTMLElement>('model-viewer');
+      viewers.forEach((viewer: any, i) => {
+        const angle = 15 * Math.sin(elapsed * 0.6 + i * 0.7);
+        viewer.cameraOrbit = `${angle}deg 75deg auto`;
+      });
+      rafId = requestAnimationFrame(animate);
+    }
+    rafId = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(rafId);
+  }, [filteredModels]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
@@ -108,7 +130,7 @@ export default function ThreeDPage() {
     <div className="min-h-screen bg-black text-[#eae2c4]">
       <Script
         type="module"
-        src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0/model-viewer.min.js"
+        src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
         strategy="afterInteractive"
       />
 
@@ -146,7 +168,7 @@ export default function ThreeDPage() {
       <main className="container mx-auto px-4 py-10">
         <section className="mb-10 prose prose-invert max-w-none text-base leading-relaxed">
           <p>
-            3D photogrammetry models of cave interiors and sculptures, captured with the Polycam app.
+            Low-res 3D photogrammetry models of cave interiors and sculptures.
             Click any model to interact with it in 3D (orbit, pan, zoom).
           </p>
         </section>
@@ -158,27 +180,26 @@ export default function ThreeDPage() {
               : 'No models match the current search.'}
           </p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+          <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
             {filteredModels.map((model) => (
               <div key={model.model_id} className="bg-gray-900 rounded-lg overflow-hidden border border-gray-800">
                 <button
                   onClick={() => setSelectedModel(model)}
                   className="w-full text-left"
                 >
-                  <div className="aspect-[4/3] relative bg-gray-950 flex items-center justify-center">
-                    {model.poster_url ? (
-                      <img
-                        src={model.poster_url}
-                        alt={model.title}
-                        className="w-full h-full object-cover hover:opacity-80 transition-opacity"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <div className="text-gray-600 text-center px-4">
-                        <div className="text-3xl mb-1">&#x25A0;&#x25A0;&#x25A0;</div>
-                        <div className="text-xs">3D Model</div>
-                      </div>
-                    )}
+                  <div className="aspect-[4/3] relative bg-gray-950">
+                    {/* @ts-expect-error model-viewer web component */}
+                    <model-viewer
+                      src={model.file_url}
+                      poster={model.poster_url || undefined}
+                      alt={model.title}
+                      loading="lazy"
+                      reveal="auto"
+                      shadow-intensity="0.5"
+                      interaction-prompt="none"
+                      camera-orbit="0deg 75deg auto"
+                      style={{ width: '100%', height: '100%', pointerEvents: 'none' }}
+                    />
                   </div>
                 </button>
                 <div className="p-3 space-y-1">
@@ -187,9 +208,6 @@ export default function ThreeDPage() {
                     {getDropdownLabel(model.cave_id)}
                     {model.file_size ? ` · ${formatFileSize(model.file_size)}` : ''}
                   </div>
-                  {model.photographer && (
-                    <div className="text-xs text-gray-400 truncate">{model.photographer}</div>
-                  )}
                 </div>
               </div>
             ))}
@@ -205,18 +223,19 @@ export default function ThreeDPage() {
         return (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm" onClick={() => setSelectedModel(null)}>
             <div className="relative max-w-5xl w-full mx-4 max-h-[90vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
-              <button onClick={() => setSelectedModel(null)} className="absolute -top-2 -right-2 z-10 w-8 h-8 rounded-full bg-gray-800 border border-gray-600 text-gray-300 hover:text-white hover:bg-gray-700 flex items-center justify-center text-lg">&times;</button>
+              <button onClick={() => setSelectedModel(null)} className="absolute top-2 right-2 z-10 w-8 h-8 rounded-full bg-black/60 border border-gray-600 text-gray-300 hover:text-white hover:bg-black/80 flex items-center justify-center text-lg">&times;</button>
 
               {hasPrev && (
-                <button onClick={() => navigatePopup(-1)} className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 z-10 w-10 h-10 rounded-full bg-gray-800/80 border border-gray-600 text-gray-300 hover:text-white hover:bg-gray-700 flex items-center justify-center text-xl">&lsaquo;</button>
+                <button onClick={() => navigatePopup(-1)} className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/60 border border-gray-600 text-gray-300 hover:text-white hover:bg-black/80 flex items-center justify-center text-xl">&lsaquo;</button>
               )}
               {hasNext && (
-                <button onClick={() => navigatePopup(1)} className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 z-10 w-10 h-10 rounded-full bg-gray-800/80 border border-gray-600 text-gray-300 hover:text-white hover:bg-gray-700 flex items-center justify-center text-xl">&rsaquo;</button>
+                <button onClick={() => navigatePopup(1)} className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-black/60 border border-gray-600 text-gray-300 hover:text-white hover:bg-black/80 flex items-center justify-center text-xl">&rsaquo;</button>
               )}
 
               <div className="flex-1 min-h-0 flex items-center justify-center bg-gray-950 rounded-t-lg" style={{ minHeight: '60vh' }}>
                 {/* @ts-expect-error model-viewer is a web component not known to React's JSX types */}
                 <model-viewer
+                  key={selectedModel.model_id}
                   src={selectedModel.file_url}
                   poster={selectedModel.poster_url || undefined}
                   alt={selectedModel.title}
@@ -228,13 +247,18 @@ export default function ThreeDPage() {
                 />
               </div>
 
-              <div className="bg-gray-900 rounded-b-lg px-4 py-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
-                <span className="text-[#eae2c4] font-medium">{selectedModel.title}</span>
-                <span className="text-gray-500">{getDropdownLabel(selectedModel.cave_id)}</span>
-                {selectedModel.description && <span className="text-gray-400 text-xs">{selectedModel.description}</span>}
-                {selectedModel.photographer && <span className="text-gray-500 text-xs">Photo: {selectedModel.photographer}</span>}
-                {selectedModel.file_size && <span className="text-gray-600 text-xs">{formatFileSize(selectedModel.file_size)}</span>}
-                <a href={selectedModel.file_url} target="_blank" rel="noopener noreferrer" className="ml-auto text-xs text-blue-400 hover:text-blue-300 underline">Download GLB</a>
+              <div className="bg-gray-900 rounded-b-lg px-4 py-3">
+                <div className="flex items-center justify-between gap-4 text-sm">
+                  <span className="text-[#eae2c4] font-medium">{selectedModel.title}</span>
+                  <span className="text-gray-500 text-xs shrink-0">{index + 1} / {filteredModels.length}</span>
+                </div>
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm mt-1">
+                  <span className="text-gray-500">{getDropdownLabel(selectedModel.cave_id)}</span>
+                  {selectedModel.description && <span className="text-gray-400 text-xs">{selectedModel.description}</span>}
+                  {selectedModel.photographer && <span className="text-gray-500 text-xs">Photo: {selectedModel.photographer}</span>}
+                  {selectedModel.file_size && <span className="text-gray-600 text-xs">{formatFileSize(selectedModel.file_size)}</span>}
+                  <a href={selectedModel.file_url} target="_blank" rel="noopener noreferrer" className="ml-auto text-xs text-blue-400 hover:text-blue-300 underline">Download GLB</a>
+                </div>
               </div>
             </div>
           </div>

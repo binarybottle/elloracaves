@@ -247,13 +247,14 @@ export default function CuratedImageCollectionPage({
                     {img.subject && (
                       <div className="text-xs text-[#eae2c4] truncate">{img.subject}</div>
                     )}
-                    <div className="text-xs text-gray-500">
-                      {getDropdownLabel(img.cave_id)}
-                      {floor && floor > 1 ? `, Floor ${floor}` : ''}
-                    </div>
-                    {renderMeta && (
+                    {renderMeta ? (
                       <div className="text-xs text-gray-400 truncate">
                         {renderMeta(img, floor)}
+                      </div>
+                    ) : (
+                      <div className="text-xs text-gray-500">
+                        {getDropdownLabel(img.cave_id)}
+                        {floor && floor > 1 ? `, Floor ${floor}` : ''}
                       </div>
                     )}
                   </div>
