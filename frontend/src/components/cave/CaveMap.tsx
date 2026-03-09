@@ -117,7 +117,7 @@ export const CAVE_POSITIONS: Record<number, CavePosition> = {
   31: { left: (95 * SCALE_X) + OFFSET_X, top: (110 * SCALE_Y) + OFFSET_Y},
   32: { left: (42 * SCALE_X) + OFFSET_X, top: (122 * SCALE_Y) + OFFSET_Y, highlight: true },
   33: { left: (43 * SCALE_X) + OFFSET_X, top: (143 * SCALE_Y) + OFFSET_Y, highlight: true },
-  34: { left: (58 * SCALE_X) + OFFSET_X, top: (165 * SCALE_Y) + OFFSET_Y, highlight: true },
+  34: { left: (58 * SCALE_X) + OFFSET_X, top: (165 * SCALE_Y) + OFFSET_Y},
   // Satellite shrines and additional caves - on the map
   1016: { left: (700 * SCALE_X) + OFFSET_X, top: (62 * SCALE_Y) + OFFSET_Y, label: '16L', highlight: true },
   2016: { left: (752 * SCALE_X) + OFFSET_X, top: (83 * SCALE_Y) + OFFSET_Y, label: '16T'},

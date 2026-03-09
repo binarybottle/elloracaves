@@ -268,7 +268,6 @@ function ExploreContent() {
           >
             <Search className="h-5 w-5" />
             <span className="hidden lg:inline">Search</span>
-            <kbd className="hidden lg:inline px-2 py-0.5 text-xs bg-gray-800 rounded border border-gray-600">⌘K</kbd>
           </button>
         </div>
 
