@@ -10,6 +10,7 @@ import {
   getCave as dbGetCave, 
   getCaveFloorImages as dbGetCaveFloorImages,
   getCaveImages as dbGetCaveImages,
+  getCaveArchivalImages as dbGetCaveArchivalImages,
   getImage as dbGetImage,
   searchImages as dbSearchImages,
   getAllCaveIds as dbGetAllCaveIds,
@@ -45,6 +46,10 @@ export interface Image {
   coordinates?: Coordinates;
   hide_plan_xy?: boolean;
   best_id?: number | null;
+  archival_ids?: number[] | null;
+  model3d_ids?: number[] | null;
+  medium?: string;
+  archival?: boolean;
   image_url: string;
   thumbnail_url: string;
 }
@@ -135,6 +140,10 @@ function transformImage(dbImage: DbImage): Image {
     } : undefined,
     hide_plan_xy: dbImage.hide_plan_xy || false,
     best_id: dbImage.best_id || null,
+    archival_ids: (dbImage as any).archival_ids || null,
+    model3d_ids: (dbImage as any).model3d_ids || null,
+    medium: (dbImage as any).medium || undefined,
+    archival: (dbImage as any).archival || false,
     image_url: getImageUrl(dbImage.cloudflare_image_id, dbImage.file_path, 'large'),
     thumbnail_url: getThumbnailUrl(
       dbImage.cloudflare_image_id,
@@ -240,6 +249,14 @@ export async function fetchImageSiblingGroup(imageId: number, bestId: number | n
     if (s.image_id !== targetBestId && s.image_id !== imageId) result.push(transformImage(s));
   }
   return result;
+}
+
+/**
+ * Fetch archival images for a cave
+ */
+export async function fetchCaveArchivalImages(caveId: string | number): Promise<Image[]> {
+  const data = await dbGetCaveArchivalImages(Number(caveId));
+  return data.map(transformImage);
 }
 
 /**

@@ -146,24 +146,6 @@ export default function ImageDisplay({
         </div>
       </div>
 
-      {associatedImages.length > 0 && (
-        <div className="mt-2">
-          <p className="text-xs text-gray-500 mb-1">Similar images</p>
-          <div className="flex gap-1.5 overflow-x-auto pb-1">
-            {associatedImages.map(aImg => (
-              <img
-                key={aImg.id}
-                src={aImg.thumbnail_url}
-                alt={aImg.subject || `Image ${aImg.id}`}
-                className="w-16 h-16 object-cover rounded cursor-pointer border border-gray-700 hover:border-gray-400 transition-colors flex-shrink-0"
-                onClick={() => { setFullscreenImage(aImg); setIsFullscreen(true); }}
-                title={aImg.subject || `Image ${aImg.id}`}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-
       {/* Fullscreen Overlay */}
       {isFullscreen && (() => {
         const fsImg = fullscreenImage || image;

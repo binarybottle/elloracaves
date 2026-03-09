@@ -22,6 +22,8 @@ interface ImageRow {
   best_id: number | null;
   book_page: number | null;
   book_figure: string | null;
+  archival_ids: number[] | null;
+  model3d_ids: number[] | null;
 }
 
 interface CaveOption { cave_id: number; cave_name: string | null; }
@@ -180,6 +182,27 @@ export default function ImagesReviewPage() {
     setEditingField(null);
   }
 
+  async function updateArrayField(imageId: number, field: 'archival_ids' | 'model3d_ids', rawValue: string) {
+    const ids = rawValue.trim()
+      ? rawValue.split(',').map(s => parseInt(s.trim(), 10)).filter(n => !isNaN(n))
+      : [];
+    setSaving(imageId);
+    const { error } = await supabase
+      .from('images')
+      .update({ [field]: ids.length > 0 ? ids : null })
+      .eq('image_id', imageId);
+
+    if (error) {
+      alert(`Failed to update ${field}: ${error.message}`);
+    } else {
+      setImages(prev => prev.map(img =>
+        img.image_id === imageId ? { ...img, [field]: ids.length > 0 ? ids : null } : img
+      ));
+    }
+    setSaving(null);
+    setEditingField(null);
+  }
+
   useEffect(() => {
     async function fetchImages() {
       const PAGE_SIZE = 1000;
@@ -190,7 +213,7 @@ export default function ImagesReviewPage() {
       while (hasMore) {
         const { data, error } = await supabase
           .from('images')
-          .select('image_id, cave_id, plan_id, rank, file_path, subject, description, cloudflare_image_id, cloudflare_thumbnail_id, thumbnail, plan_x_norm, plan_y_norm, hide_plan_xy, best_id, book_page, book_figure')
+          .select('image_id, cave_id, plan_id, rank, file_path, subject, description, cloudflare_image_id, cloudflare_thumbnail_id, thumbnail, plan_x_norm, plan_y_norm, hide_plan_xy, best_id, book_page, book_figure, archival_ids, model3d_ids')
           .order('cave_id')
           .order('file_path')
           .range(from, from + PAGE_SIZE - 1);
@@ -577,6 +600,26 @@ export default function ImagesReviewPage() {
                       ) : (
                         <button onClick={() => { setEditingField({ imageId: img.image_id, field: 'book_figure' }); setFieldInput(img.book_figure ?? ''); }} className="text-gray-300 hover:text-white underline decoration-dotted" title="Click to set book figure number">
                           {img.book_figure ?? '—'}
+                        </button>
+                      )}
+                      <span>| arch.</span>
+                      {editingField?.imageId === img.image_id && editingField?.field === 'archival_ids' ? (
+                        <form className="inline-flex" onSubmit={(e) => { e.preventDefault(); updateArrayField(img.image_id, 'archival_ids', fieldInput); }}>
+                          <input type="text" value={fieldInput} onChange={(e) => setFieldInput(e.target.value)} placeholder="e.g. 12,34" className="w-20 bg-gray-800 text-white text-xs text-center rounded border border-gray-600 px-0.5 py-0" autoFocus onBlur={() => setEditingField(null)} />
+                        </form>
+                      ) : (
+                        <button onClick={() => { setEditingField({ imageId: img.image_id, field: 'archival_ids' }); setFieldInput((img.archival_ids ?? []).join(',')); }} className="text-gray-300 hover:text-white underline decoration-dotted" title="Archival image IDs (comma-separated)">
+                          {img.archival_ids?.length ? img.archival_ids.join(',') : '—'}
+                        </button>
+                      )}
+                      <span>| 3d.</span>
+                      {editingField?.imageId === img.image_id && editingField?.field === 'model3d_ids' ? (
+                        <form className="inline-flex" onSubmit={(e) => { e.preventDefault(); updateArrayField(img.image_id, 'model3d_ids', fieldInput); }}>
+                          <input type="text" value={fieldInput} onChange={(e) => setFieldInput(e.target.value)} placeholder="e.g. 1,2" className="w-16 bg-gray-800 text-white text-xs text-center rounded border border-gray-600 px-0.5 py-0" autoFocus onBlur={() => setEditingField(null)} />
+                        </form>
+                      ) : (
+                        <button onClick={() => { setEditingField({ imageId: img.image_id, field: 'model3d_ids' }); setFieldInput((img.model3d_ids ?? []).join(',')); }} className="text-gray-300 hover:text-white underline decoration-dotted" title="3D model IDs (comma-separated)">
+                          {img.model3d_ids?.length ? img.model3d_ids.join(',') : '—'}
                         </button>
                       )}
                     </div>

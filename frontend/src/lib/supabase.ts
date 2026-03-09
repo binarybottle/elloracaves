@@ -176,7 +176,8 @@ export async function getCaveFloorImages(caveId: number, floorNumber: number, in
   let query = supabase
     .from('images')
     .select('*')
-    .eq('plan_id', plan.plan_id);
+    .eq('plan_id', plan.plan_id)
+    .not('archival', 'eq', true);
 
   if (!includeAlternates) {
     query = query.eq('rank', 1);
@@ -200,12 +201,28 @@ export async function getCaveFloorImages(caveId: number, floorNumber: number, in
  * Fetch images for a cave (without needing a specific floor)
  * Useful for caves without floor plans
  */
+export async function getCaveArchivalImages(caveId: number) {
+  const { data, error } = await supabase
+    .from('images')
+    .select('*')
+    .eq('cave_id', caveId)
+    .eq('archival', true)
+    .eq('rank', 1);
+
+  if (error) {
+    console.error('Error fetching archival images:', error);
+    return [];
+  }
+  return data || [];
+}
+
 export async function getCaveImages(caveId: number, limit: number = 20) {
   const { data, error } = await supabase
     .from('images')
     .select('*')
     .eq('cave_id', caveId)
     .eq('rank', 1)
+    .not('archival', 'eq', true)
     .order('default_priority', { ascending: false })
     .order('file_path')
     .limit(limit);

@@ -1,7 +1,7 @@
 // app/explore/page.tsx
 'use client';
 
-import { Suspense, useState, useEffect, useCallback } from 'react';
+import { Suspense, useState, useEffect, useCallback, useMemo } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Search } from 'lucide-react';
@@ -12,7 +12,10 @@ import ImageDisplay from '@/components/cave/ImageDisplay';
 import ImageInfoPanel from '@/components/cave/ImageInfoPanel';
 import ImageGalleryStrip from '@/components/cave/ImageGalleryStrip';
 import SearchOverlay from '@/components/search/SearchOverlay';
-import { fetchCaveDetail, fetchCaveFloorImages, fetchImageDetail, Cave, Image } from '@/lib/api';
+import { fetchCaveDetail, fetchCaveFloorImages, fetchImageDetail, fetchCaveArchivalImages, fetchImageSiblingGroup, Cave, Image } from '@/lib/api';
+import { supabase } from '@/lib/supabase';
+import { getThumbnailUrl, getImageUrl } from '@/lib/cloudflare-images';
+import { getDropdownLabel } from '@/components/cave/CaveMap';
 
 function ExploreContent() {
   const searchParams = useSearchParams();
@@ -29,6 +32,15 @@ function ExploreContent() {
   const [hoveredImage, setHoveredImage] = useState<Image | null>(null);
   const [loading, setLoading] = useState(true);
   const [showSearch, setShowSearch] = useState(false);
+
+  interface ArchivalImage { id: number; thumbnail_url: string; image_url: string; subject?: string; }
+  interface Model3DItem { model_id: number; title: string; file_url: string; poster_url: string | null; cave_id: number; }
+  const [similarImages, setSimilarImages] = useState<Image[]>([]);
+  const [archivalImages, setArchivalImages] = useState<ArchivalImage[]>([]);
+  const [models3d, setModels3d] = useState<Model3DItem[]>([]);
+  const [caveArchivalImages, setCaveArchivalImages] = useState<Image[]>([]);
+  const [selectedArchival, setSelectedArchival] = useState<ArchivalImage | null>(null);
+  const [selectedModel3d, setSelectedModel3d] = useState<Model3DItem | null>(null);
 
   // The image to display - hovered takes precedence over selected
   const displayedImage = hoveredImage || selectedImage;
@@ -110,8 +122,12 @@ function ExploreContent() {
     async function loadFloorImages() {
       if (!cave) return;
       try {
-        const data = await fetchCaveFloorImages(caveId, floorNumber);
+        const [data, archival] = await Promise.all([
+          fetchCaveFloorImages(caveId, floorNumber),
+          fetchCaveArchivalImages(caveId),
+        ]);
         setFloorImages(data);
+        setCaveArchivalImages(archival);
         
         if (!imageId && data.length > 0) {
           const defaultImage = data[0];
@@ -139,6 +155,59 @@ function ExploreContent() {
     }
     loadImage();
   }, [imageId]);
+
+  // Fetch similar images (full best_id tree), archival images, and 3D models
+  useEffect(() => {
+    if (!displayedImage) {
+      setSimilarImages([]);
+      return;
+    }
+    let cancelled = false;
+    fetchImageSiblingGroup(displayedImage.id, displayedImage.best_id).then(imgs => {
+      if (!cancelled) setSimilarImages(imgs);
+    });
+    return () => { cancelled = true; };
+  }, [displayedImage?.id, displayedImage?.best_id]);
+
+  useEffect(() => {
+    if (!selectedImage) {
+      setArchivalImages([]);
+      setModels3d([]);
+      return;
+    }
+    const archIds: number[] = (selectedImage as any).archival_ids || [];
+    const model3dIds: number[] = (selectedImage as any).model3d_ids || [];
+
+    async function loadLinked() {
+      if (archIds.length > 0) {
+        const { data } = await supabase
+          .from('images')
+          .select('image_id, subject, cloudflare_image_id, cloudflare_thumbnail_id, file_path, thumbnail')
+          .in('image_id', archIds);
+        if (data) {
+          setArchivalImages(data.map((r: any) => ({
+            id: r.image_id,
+            subject: r.subject || undefined,
+            image_url: getImageUrl(r.cloudflare_image_id, r.file_path, 'large'),
+            thumbnail_url: getThumbnailUrl(r.cloudflare_image_id, r.cloudflare_thumbnail_id, r.file_path, r.thumbnail),
+          })));
+        }
+      } else {
+        setArchivalImages([]);
+      }
+
+      if (model3dIds.length > 0) {
+        const { data } = await supabase
+          .from('models_3d')
+          .select('model_id, title, file_url, poster_url, cave_id')
+          .in('model_id', model3dIds);
+        if (data) setModels3d(data as Model3DItem[]);
+      } else {
+        setModels3d([]);
+      }
+    }
+    loadLinked();
+  }, [selectedImage]);
 
   const handleCaveSelect = (newCaveId: number) => {
     router.push(`/explore?cave=${newCaveId}`);
@@ -247,7 +316,7 @@ function ExploreContent() {
         {currentPlan ? (
           hasMultipleFloors ? (
             /* Multi-floor layout: 4-column grid with sidebar */
-            <div className="hidden lg:grid lg:grid-cols-[120px_1fr_360px_320px] gap-6 max-w-7xl mx-auto">
+            <div className="hidden lg:grid lg:grid-cols-[120px_1fr_360px_320px] gap-6 max-w-7xl mx-auto items-start">
               {/* Column 1: Mini Floor Plans */}
               <FloorPlanSidebar
                 floors={cave?.plans || []}
@@ -280,11 +349,18 @@ function ExploreContent() {
               <ImageInfoPanel
                 image={displayedImage}
                 cave={cave}
+                similarImages={similarImages}
+                selectedImageId={selectedImage?.id}
+                onImageSelect={handleImageSelect}
+                archivalImages={archivalImages}
+                onSelectArchival={setSelectedArchival}
+                models3d={models3d}
+                onSelectModel3d={setSelectedModel3d}
               />
             </div>
           ) : (
             /* Single-floor layout: 3-column grid without sidebar */
-            <div className="hidden lg:grid lg:grid-cols-[1fr_360px_320px] gap-6 max-w-7xl mx-auto">
+            <div className="hidden lg:grid lg:grid-cols-[1fr_360px_320px] gap-6 max-w-7xl mx-auto items-start">
               {/* Column 1: Interactive Floor Plan (full size) */}
               <InteractiveFloorPlan
                 plan={currentPlan}
@@ -309,12 +385,19 @@ function ExploreContent() {
               <ImageInfoPanel
                 image={displayedImage}
                 cave={cave}
+                similarImages={similarImages}
+                selectedImageId={selectedImage?.id}
+                onImageSelect={handleImageSelect}
+                archivalImages={archivalImages}
+                onSelectArchival={setSelectedArchival}
+                models3d={models3d}
+                onSelectModel3d={setSelectedModel3d}
               />
             </div>
           )
         ) : (
           /* No plan available: 2-column layout with image and info only */
-          <div className="hidden lg:grid lg:grid-cols-[360px_320px] gap-6 max-w-3xl mx-auto">
+          <div className="hidden lg:grid lg:grid-cols-[360px_320px] gap-6 max-w-3xl mx-auto items-start">
             {/* Column 1: Main Image Display */}
             <ImageDisplay
               image={displayedImage}
@@ -330,6 +413,13 @@ function ExploreContent() {
             <ImageInfoPanel
               image={displayedImage}
               cave={cave}
+              similarImages={similarImages}
+              selectedImageId={selectedImage?.id}
+              onImageSelect={handleImageSelect}
+              archivalImages={archivalImages}
+              onSelectArchival={setSelectedArchival}
+              models3d={models3d}
+              onSelectModel3d={setSelectedModel3d}
             />
           </div>
         )}
@@ -379,6 +469,13 @@ function ExploreContent() {
           <ImageInfoPanel
             image={displayedImage}
             cave={cave}
+            similarImages={similarImages}
+            selectedImageId={selectedImage?.id}
+            onImageSelect={handleImageSelect}
+            archivalImages={archivalImages}
+            onSelectArchival={setSelectedArchival}
+            models3d={models3d}
+            onSelectModel3d={setSelectedModel3d}
           />
         </div>
 
@@ -428,6 +525,13 @@ function ExploreContent() {
             image={displayedImage}
             cave={cave}
             collapsible
+            similarImages={similarImages}
+            selectedImageId={selectedImage?.id}
+            onImageSelect={handleImageSelect}
+            archivalImages={archivalImages}
+            onSelectArchival={setSelectedArchival}
+            models3d={models3d}
+            onSelectModel3d={setSelectedModel3d}
           />
 
           {currentPlan && (
@@ -452,6 +556,7 @@ function ExploreContent() {
         <div className="mt-12 max-w-7xl mx-auto">
           <ImageGalleryStrip
             images={floorImages}
+            archivalImages={caveArchivalImages}
             selectedImageId={selectedImage?.id}
             onImageSelect={handleImageSelect}
             cave={cave}
@@ -459,6 +564,44 @@ function ExploreContent() {
           />
         </div>
       </main>
+
+      {/* Archival Image Lightbox */}
+      {selectedArchival && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm" onClick={() => setSelectedArchival(null)}>
+          <div className="relative max-w-4xl w-full mx-4" onClick={(e) => e.stopPropagation()}>
+            <button onClick={() => setSelectedArchival(null)} className="absolute top-2 right-2 z-10 w-8 h-8 rounded-full bg-black/60 border border-gray-600 text-gray-300 hover:text-white flex items-center justify-center text-lg">&times;</button>
+            <img src={selectedArchival.image_url} alt={selectedArchival.subject || 'Archival image'} className="w-full max-h-[85vh] object-contain rounded" />
+            {selectedArchival.subject && <div className="mt-2 text-center text-sm text-gray-300">{selectedArchival.subject}</div>}
+          </div>
+        </div>
+      )}
+
+      {/* 3D Model Popup */}
+      {selectedModel3d && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm" onClick={() => setSelectedModel3d(null)}>
+          <div className="relative max-w-3xl w-full mx-4" onClick={(e) => e.stopPropagation()}>
+            <button onClick={() => setSelectedModel3d(null)} className="absolute top-2 right-2 z-10 w-8 h-8 rounded-full bg-black/60 border border-gray-600 text-gray-300 hover:text-white flex items-center justify-center text-lg">&times;</button>
+            <div className="bg-gray-950 rounded-t-lg" style={{ height: '60vh' }}>
+              {/* @ts-expect-error model-viewer web component */}
+              <model-viewer
+                key={selectedModel3d.model_id}
+                src={selectedModel3d.file_url}
+                poster={selectedModel3d.poster_url || undefined}
+                alt={selectedModel3d.title}
+                camera-controls=""
+                touch-action="pan-y"
+                auto-rotate=""
+                shadow-intensity="1"
+                style={{ width: '100%', height: '100%' }}
+              />
+            </div>
+            <div className="bg-gray-900 rounded-b-lg px-4 py-3">
+              <div className="text-sm text-[#eae2c4] font-medium">{selectedModel3d.title}</div>
+              <div className="text-xs text-gray-500 mt-0.5">{getDropdownLabel(selectedModel3d.cave_id)}</div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Search Overlay */}
       {showSearch && (
