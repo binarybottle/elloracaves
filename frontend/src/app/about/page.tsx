@@ -277,7 +277,7 @@ export default function AboutPage() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <h3 className="text-base font-bold text-white mb-2">Arno Klein</h3>
+              <h3 className="text-base font-bold text-white mb-2"><a href="https://arnoklein.info" target="_blank" rel="noopener noreferrer" className="hover:text-primary-400 transition-colors">Arno Klein</a></h3>
               <p className="text-sm text-gray-300">First visited Ellora in 1992 with Professor Walter Spink and has photographed the site ever since. Provided photographs and created the website.</p>
             </div>
 
@@ -358,7 +358,7 @@ export default function AboutPage() {
         <section className="mt-16 pt-8 border-t border-gray-800">
           <h2 className="text-xl font-bold mb-4 text-white">Technical Information</h2>
           <div className="space-y-2 text-sm text-gray-400">
-            <p><strong>Website:</strong> Arno Klein</p>
+            <p><strong>Website:</strong> <a href="https://arnoklein.info" target="_blank" rel="noopener noreferrer" className="text-primary-400 hover:text-primary-500 transition-colors">Arno Klein</a></p>
             <p><strong>Frontend:</strong> Next.js, React, TypeScript, Tailwind CSS</p>
             <p><strong>Backend:</strong> Supabase PostgreSQL</p>
             <p><strong>Features:</strong> Interactive floor plans, advanced search with fuzzy matching, cave filters</p>
