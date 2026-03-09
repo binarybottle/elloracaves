@@ -1,6 +1,7 @@
 // components/cave/ImageGalleryStrip.tsx
 'use client';
 
+import { History, Box } from 'lucide-react';
 import { Image as ImageType } from '@/lib/api';
 
 const MEDIUM_ORDER: Record<string, number> = {
@@ -124,6 +125,16 @@ export default function ImageGalleryStrip({
                   />
                   {hasCoordinates && (
                     <div className="absolute top-1 right-1 w-2 h-2 bg-[#6ebd20] rounded-full border border-white shadow-sm" />
+                  )}
+                  {image.archival_ids && image.archival_ids.length > 0 && (
+                    <div className="absolute bottom-1 right-1 bg-black/60 rounded-sm p-px">
+                      <History className="w-2.5 h-2.5 text-amber-400" />
+                    </div>
+                  )}
+                  {image.model3d_ids && image.model3d_ids.length > 0 && (
+                    <div className="absolute bottom-1 left-1 bg-black/60 rounded-sm p-px">
+                      <Box className="w-2.5 h-2.5 text-cyan-400" />
+                    </div>
                   )}
                 </div>
               </button>

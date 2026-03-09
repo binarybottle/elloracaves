@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect, useMemo, useCallback } from 'react';
+import { History, Box } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { getImageUrl, getThumbnailUrl } from '@/lib/cloudflare-images';
 
@@ -13,6 +14,7 @@ interface ImageRow {
   file_path: string;
   subject: string;
   description: string;
+  photographer: string | null;
   cloudflare_image_id: string | null;
   cloudflare_thumbnail_id: string | null;
   thumbnail: string | null;
@@ -53,6 +55,7 @@ export default function ImagesReviewPage() {
   const [comparing, setComparing] = useState(false);
   const [compareRankEditing, setCompareRankEditing] = useState<number | null>(null);
   const [compareRankInput, setCompareRankInput] = useState('');
+  const [expandedCard, setExpandedCard] = useState<number | null>(null);
 
   const caveNameMap = useMemo(() => new Map(caves.map(c => [c.cave_id, c.cave_name])), [caves]);
 
@@ -164,7 +167,7 @@ export default function ImagesReviewPage() {
     setEditingField(null);
   }
 
-  async function updateTextField(imageId: number, field: 'book_figure', value: string | null) {
+  async function updateTextField(imageId: number, field: 'book_figure' | 'subject' | 'description' | 'photographer', value: string | null) {
     setSaving(imageId);
     const { error } = await supabase
       .from('images')
@@ -213,7 +216,7 @@ export default function ImagesReviewPage() {
       while (hasMore) {
         const { data, error } = await supabase
           .from('images')
-          .select('image_id, cave_id, plan_id, rank, file_path, subject, description, cloudflare_image_id, cloudflare_thumbnail_id, thumbnail, plan_x_norm, plan_y_norm, hide_plan_xy, best_id, book_page, book_figure, archival_ids, model3d_ids')
+          .select('image_id, cave_id, plan_id, rank, file_path, subject, description, photographer, cloudflare_image_id, cloudflare_thumbnail_id, thumbnail, plan_x_norm, plan_y_norm, hide_plan_xy, best_id, book_page, book_figure, archival_ids, model3d_ids')
           .order('cave_id')
           .order('file_path')
           .range(from, from + PAGE_SIZE - 1);
@@ -537,6 +540,16 @@ export default function ImagesReviewPage() {
                       onChange={() => toggleChecked(img.image_id)}
                       className="absolute top-1 right-1 w-4 h-4 accent-blue-500 cursor-pointer rounded"
                     />
+                    {img.archival_ids && img.archival_ids.length > 0 && (
+                      <div className="absolute bottom-1 right-1 bg-black/60 rounded-sm p-px">
+                        <History className="w-2.5 h-2.5 text-amber-400" />
+                      </div>
+                    )}
+                    {img.model3d_ids && img.model3d_ids.length > 0 && (
+                      <div className="absolute bottom-1 left-1 bg-black/60 rounded-sm p-px">
+                        <Box className="w-2.5 h-2.5 text-cyan-400" />
+                      </div>
+                    )}
                   </div>
                   <div className="p-2 space-y-1">
                     <div className="flex items-center justify-between">
@@ -623,8 +636,56 @@ export default function ImagesReviewPage() {
                         </button>
                       )}
                     </div>
-                    {img.subject && (
-                      <div className="text-xs text-[#eae2c4] truncate">{img.subject}</div>
+                    <button
+                      onClick={() => setExpandedCard(expandedCard === img.image_id ? null : img.image_id)}
+                      className="text-xs text-gray-500 hover:text-gray-300 w-full text-left truncate"
+                      title="Click to edit annotations"
+                    >
+                      {img.subject || img.description ? (img.subject || img.description) : 'Add annotations...'}
+                      <span className="ml-1 text-gray-600">{expandedCard === img.image_id ? '▾' : '▸'}</span>
+                    </button>
+                    {expandedCard === img.image_id && (
+                      <div className="space-y-1.5 pt-1 border-t border-gray-800">
+                        <div>
+                          <label className="text-[10px] text-gray-600 block">Subject</label>
+                          <input
+                            type="text"
+                            defaultValue={img.subject || ''}
+                            onBlur={(e) => {
+                              const val = e.target.value.trim();
+                              if (val !== (img.subject || '')) updateTextField(img.image_id, 'subject', val || null);
+                            }}
+                            className="w-full bg-gray-800 text-white text-xs rounded border border-gray-700 px-1.5 py-1"
+                            placeholder="Subject..."
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] text-gray-600 block">Description</label>
+                          <textarea
+                            defaultValue={img.description || ''}
+                            onBlur={(e) => {
+                              const val = e.target.value.trim();
+                              if (val !== (img.description || '')) updateTextField(img.image_id, 'description', val || null);
+                            }}
+                            className="w-full bg-gray-800 text-white text-xs rounded border border-gray-700 px-1.5 py-1 resize-none"
+                            rows={3}
+                            placeholder="Description..."
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] text-gray-600 block">Photographer</label>
+                          <input
+                            type="text"
+                            defaultValue={img.photographer || ''}
+                            onBlur={(e) => {
+                              const val = e.target.value.trim();
+                              if (val !== (img.photographer || '')) updateTextField(img.image_id, 'photographer', val || null);
+                            }}
+                            className="w-full bg-gray-800 text-white text-xs rounded border border-gray-700 px-1.5 py-1"
+                            placeholder="Photographer..."
+                          />
+                        </div>
+                      </div>
                     )}
                   </div>
                 </div>

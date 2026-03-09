@@ -1,6 +1,7 @@
 'use client';
 
 import Script from 'next/script';
+import { History, Box } from 'lucide-react';
 import { Image as ImageType } from '@/lib/api';
 
 interface ArchivalImage {
@@ -54,14 +55,24 @@ export default function ImageInfoPanel({
               <button
                 key={img.id}
                 onClick={() => onImageSelect?.(img)}
-                className={`block h-16 flex-shrink-0 rounded overflow-hidden ${selectedImageId === img.id ? 'ring-2 ring-red-600' : ''}`}
+                className={`relative block h-16 flex-shrink-0 rounded ${selectedImageId === img.id ? 'ring-2 ring-red-600' : ''}`}
               >
                 <img
                   src={img.thumbnail_url || img.image_url}
                   alt={img.subject || `Image ${img.id}`}
-                  className="h-full w-auto object-contain"
+                  className="h-full w-auto object-contain rounded"
                   loading="lazy"
                 />
+                {img.archival_ids && img.archival_ids.length > 0 && (
+                  <div className="absolute bottom-0.5 right-0.5 bg-black/60 rounded-sm p-px">
+                    <History className="w-2 h-2 text-amber-400" />
+                  </div>
+                )}
+                {img.model3d_ids && img.model3d_ids.length > 0 && (
+                  <div className="absolute bottom-0.5 left-0.5 bg-black/60 rounded-sm p-px">
+                    <Box className="w-2 h-2 text-cyan-400" />
+                  </div>
+                )}
               </button>
             ))}
           </div>
