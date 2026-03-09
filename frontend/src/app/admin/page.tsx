@@ -525,10 +525,19 @@ export default function ImagesReviewPage() {
                         </div>
                       )}
                     </button>
+                    {isEditingRank ? (
+                      <form className="absolute top-1 left-1 z-10" onSubmit={(e) => { e.preventDefault(); const val = parseInt(fieldInput, 10); if (!isNaN(val)) updateField(img.image_id, 'rank', val); }}>
+                        <input type="number" value={fieldInput} onChange={(e) => setFieldInput(e.target.value)} className="w-10 bg-gray-800 text-white text-xs text-center rounded border border-gray-600 px-1 py-0.5" autoFocus onBlur={() => setEditingField(null)} />
+                      </form>
+                    ) : (
+                      <button onClick={() => { setEditingField({ imageId: img.image_id, field: 'rank' }); setFieldInput(String(img.rank)); }} className={`absolute top-1 left-1 z-10 bg-white/90 text-black text-xs font-bold px-1.5 py-0.5 rounded hover:bg-white transition-colors ${saving === img.image_id ? 'opacity-50' : ''}`} title="Click to edit rank">
+                        {saving === img.image_id ? '...' : img.rank}
+                      </button>
+                    )}
                     {hasCoords && (
                       <button
                         onClick={() => toggleHidePlanXY(img.image_id, img.hide_plan_xy)}
-                        className={`absolute top-1 left-1 w-3 h-3 rounded-full border-2 border-white shadow-sm transition-colors ${
+                        className={`absolute top-1 left-8 w-3 h-3 rounded-full border-2 border-white shadow-sm transition-colors ${
                           img.hide_plan_xy ? 'bg-gray-500' : 'bg-[#6ebd20]'
                         }`}
                         title={img.hide_plan_xy ? 'Landmark hidden — click to show on plan' : 'Landmark shown — click to hide from plan'}
@@ -551,22 +560,11 @@ export default function ImagesReviewPage() {
                       </div>
                     )}
                   </div>
-                  <div className="p-2 space-y-1">
-                    <div className="flex items-center justify-between">
-                      <div className="text-xs font-mono text-gray-400 break-all flex-1">{img.file_path}</div>
-                      {isEditingRank ? (
-                        <form className="flex items-center gap-1 ml-1" onSubmit={(e) => { e.preventDefault(); const val = parseInt(fieldInput, 10); if (!isNaN(val)) updateField(img.image_id, 'rank', val); }}>
-                          <input type="number" value={fieldInput} onChange={(e) => setFieldInput(e.target.value)} className="w-10 bg-gray-800 text-white text-xs text-center rounded border border-gray-600 px-1 py-0.5" autoFocus onBlur={() => setEditingField(null)} />
-                        </form>
-                      ) : (
-                        <button onClick={() => { setEditingField({ imageId: img.image_id, field: 'rank' }); setFieldInput(String(img.rank)); }} className={`ml-1 flex-shrink-0 bg-white/90 text-black text-xs font-bold px-1.5 py-0.5 rounded hover:bg-white transition-colors ${saving === img.image_id ? 'opacity-50' : ''}`} title="Click to edit rank">
-                          {saving === img.image_id ? '...' : img.rank}
-                        </button>
-                      )}
-                    </div>
-                    <div className="text-xs text-gray-500 flex items-center gap-0.5 flex-wrap">
-                      <span>ID {img.image_id} |</span>
-                      <span className="shrink-0">best</span>
+                  <div className="p-2 space-y-0.5">
+                    {/* Line 1: ID, best */}
+                    <div className="text-xs text-gray-500 flex items-center gap-0.5">
+                      <span>ID {img.image_id}</span>
+                      <span>| best</span>
                       {isEditingBestId ? (
                         <form className="inline-flex" onSubmit={(e) => { e.preventDefault(); const raw = fieldInput.trim(); if (raw === '') { updateField(img.image_id, 'best_id', null); } else { const val = parseInt(raw, 10); if (!isNaN(val)) updateField(img.image_id, 'best_id', val); } }}>
                           <input type="text" value={fieldInput} onChange={(e) => setFieldInput(e.target.value)} placeholder="—" className="w-12 bg-gray-800 text-white text-xs text-center rounded border border-gray-600 px-0.5 py-0" autoFocus onBlur={() => setEditingField(null)} />
@@ -576,7 +574,10 @@ export default function ImagesReviewPage() {
                           {img.best_id ?? '—'}
                         </button>
                       )}
-                      <span>| Cave</span>
+                    </div>
+                    {/* Line 2: Cave, Plan */}
+                    <div className="text-xs text-gray-500 flex items-center gap-0.5">
+                      <span>Cave</span>
                       {isEditingCave ? (
                         <select value={String(img.cave_id)} onChange={(e) => { const val = parseInt(e.target.value, 10); if (!isNaN(val)) updateField(img.image_id, 'cave_id', val); }} className="bg-gray-800 text-white text-xs rounded border border-gray-600 px-0.5 py-0" autoFocus onBlur={() => setEditingField(null)}>
                           {allCaveIds.map(id => (<option key={id} value={String(id)}>{caveLabel(id)}</option>))}
@@ -595,27 +596,10 @@ export default function ImagesReviewPage() {
                           {img.plan_id != null ? planLabel(img.plan_id) : '—'}
                         </button>
                       )}
-                      <span>| p.</span>
-                      {isEditingBookPage ? (
-                        <form className="inline-flex" onSubmit={(e) => { e.preventDefault(); const raw = fieldInput.trim(); if (raw === '') { updateField(img.image_id, 'book_page', null); } else { const val = parseInt(raw, 10); if (!isNaN(val)) updateField(img.image_id, 'book_page', val); } }}>
-                          <input type="text" value={fieldInput} onChange={(e) => setFieldInput(e.target.value)} placeholder="—" className="w-10 bg-gray-800 text-white text-xs text-center rounded border border-gray-600 px-0.5 py-0" autoFocus onBlur={() => setEditingField(null)} />
-                        </form>
-                      ) : (
-                        <button onClick={() => { setEditingField({ imageId: img.image_id, field: 'book_page' }); setFieldInput(img.book_page != null ? String(img.book_page) : ''); }} className="text-gray-300 hover:text-white underline decoration-dotted" title="Click to set book page number">
-                          {img.book_page ?? '—'}
-                        </button>
-                      )}
-                      <span>| fig.</span>
-                      {isEditingBookFigure ? (
-                        <form className="inline-flex" onSubmit={(e) => { e.preventDefault(); updateTextField(img.image_id, 'book_figure', fieldInput.trim()); }}>
-                          <input type="text" value={fieldInput} onChange={(e) => setFieldInput(e.target.value)} placeholder="—" className="w-14 bg-gray-800 text-white text-xs text-center rounded border border-gray-600 px-0.5 py-0" autoFocus onBlur={() => setEditingField(null)} />
-                        </form>
-                      ) : (
-                        <button onClick={() => { setEditingField({ imageId: img.image_id, field: 'book_figure' }); setFieldInput(img.book_figure ?? ''); }} className="text-gray-300 hover:text-white underline decoration-dotted" title="Click to set book figure number">
-                          {img.book_figure ?? '—'}
-                        </button>
-                      )}
-                      <span>| arch.</span>
+                    </div>
+                    {/* Line 3: arch., 3d. */}
+                    <div className="text-xs text-gray-500 flex items-center gap-0.5">
+                      <span>arch.</span>
                       {editingField?.imageId === img.image_id && editingField?.field === 'archival_ids' ? (
                         <form className="inline-flex" onSubmit={(e) => { e.preventDefault(); updateArrayField(img.image_id, 'archival_ids', fieldInput); }}>
                           <input type="text" value={fieldInput} onChange={(e) => setFieldInput(e.target.value)} placeholder="e.g. 12,34" className="w-20 bg-gray-800 text-white text-xs text-center rounded border border-gray-600 px-0.5 py-0" autoFocus onBlur={() => setEditingField(null)} />
@@ -636,13 +620,37 @@ export default function ImagesReviewPage() {
                         </button>
                       )}
                     </div>
+                    {/* Line 4: p., fig. */}
+                    <div className="text-xs text-gray-500 flex items-center gap-0.5">
+                      <span>p.</span>
+                      {isEditingBookPage ? (
+                        <form className="inline-flex" onSubmit={(e) => { e.preventDefault(); const raw = fieldInput.trim(); if (raw === '') { updateField(img.image_id, 'book_page', null); } else { const val = parseInt(raw, 10); if (!isNaN(val)) updateField(img.image_id, 'book_page', val); } }}>
+                          <input type="text" value={fieldInput} onChange={(e) => setFieldInput(e.target.value)} placeholder="—" className="w-10 bg-gray-800 text-white text-xs text-center rounded border border-gray-600 px-0.5 py-0" autoFocus onBlur={() => setEditingField(null)} />
+                        </form>
+                      ) : (
+                        <button onClick={() => { setEditingField({ imageId: img.image_id, field: 'book_page' }); setFieldInput(img.book_page != null ? String(img.book_page) : ''); }} className="text-gray-300 hover:text-white underline decoration-dotted" title="Click to set book page number">
+                          {img.book_page ?? '—'}
+                        </button>
+                      )}
+                      <span>| fig.</span>
+                      {isEditingBookFigure ? (
+                        <form className="inline-flex" onSubmit={(e) => { e.preventDefault(); updateTextField(img.image_id, 'book_figure', fieldInput.trim()); }}>
+                          <input type="text" value={fieldInput} onChange={(e) => setFieldInput(e.target.value)} placeholder="—" className="w-14 bg-gray-800 text-white text-xs text-center rounded border border-gray-600 px-0.5 py-0" autoFocus onBlur={() => setEditingField(null)} />
+                        </form>
+                      ) : (
+                        <button onClick={() => { setEditingField({ imageId: img.image_id, field: 'book_figure' }); setFieldInput(img.book_figure ?? ''); }} className="text-gray-300 hover:text-white underline decoration-dotted" title="Click to set book figure number">
+                          {img.book_figure ?? '—'}
+                        </button>
+                      )}
+                    </div>
+                    {/* Expand toggle */}
                     <button
                       onClick={() => setExpandedCard(expandedCard === img.image_id ? null : img.image_id)}
-                      className="text-xs text-gray-500 hover:text-gray-300 w-full text-left truncate"
+                      className="text-xs text-gray-500 hover:text-gray-300 w-full text-left truncate pt-0.5"
                       title="Click to edit annotations"
                     >
-                      {img.subject || img.description ? (img.subject || img.description) : 'Add annotations...'}
-                      <span className="ml-1 text-gray-600">{expandedCard === img.image_id ? '▾' : '▸'}</span>
+                      <span className="text-gray-600">{expandedCard === img.image_id ? '▾' : '▸'}</span>
+                      <span className="ml-1">{img.subject || img.description || 'annotations...'}</span>
                     </button>
                     {expandedCard === img.image_id && (
                       <div className="space-y-1.5 pt-1 border-t border-gray-800">
@@ -685,6 +693,7 @@ export default function ImagesReviewPage() {
                             placeholder="Photographer..."
                           />
                         </div>
+                        <div className="text-[10px] font-mono text-gray-600 break-all pt-1 border-t border-gray-800">{img.file_path}</div>
                       </div>
                     )}
                   </div>
