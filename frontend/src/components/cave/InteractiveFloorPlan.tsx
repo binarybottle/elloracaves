@@ -52,7 +52,7 @@ export default function InteractiveFloorPlan({
   return (
     <div className="relative flex flex-col">
       <div
-        className="relative bg-black rounded-lg overflow-hidden"
+        className="relative bg-black rounded-lg overflow-hidden max-h-[calc(100vh-10rem)]"
         style={{ aspectRatio: `${plan.plan_width}/${plan.plan_height}` }}
       >
         {/* Loading Spinner */}

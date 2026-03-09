@@ -6,7 +6,6 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Search } from 'lucide-react';
 import CaveMap from '@/components/cave/CaveMap';
-import FloorPlanSidebar from '@/components/cave/FloorPlanSidebar';
 import InteractiveFloorPlan from '@/components/cave/InteractiveFloorPlan';
 import ImageDisplay from '@/components/cave/ImageDisplay';
 import ImageInfoPanel from '@/components/cave/ImageInfoPanel';
@@ -312,63 +311,34 @@ function ExploreContent() {
 
       {/* Main Content Area */}
       <main className="px-4 py-8">
-        {/* Desktop Layout - changes based on number of floors and plan availability */}
+        {/* Desktop Layout - changes based on plan availability */}
         {currentPlan ? (
-          hasMultipleFloors ? (
-            /* Multi-floor layout: 4-column grid with sidebar */
-            <div className="hidden lg:grid lg:grid-cols-[120px_1fr_360px_320px] gap-6 max-w-7xl mx-auto items-start">
-              {/* Column 1: Mini Floor Plans */}
-              <FloorPlanSidebar
-                floors={cave?.plans || []}
-                selectedFloor={floorNumber}
-                onSelectFloor={handleFloorSelect}
-                caveId={caveId}
-              />
-
-              {/* Column 2: Interactive Floor Plan */}
-              <InteractiveFloorPlan
-                plan={currentPlan}
-                images={floorImages}
-                selectedImageId={selectedImage?.id}
-                onImageSelect={handleImageSelect}
-                onImageHover={handleImageHover}
-              />
-
-              {/* Column 3: Main Image Display */}
-              <ImageDisplay
-                image={displayedImage}
-                cave={cave}
-                floorNumber={floorNumber}
-                onPrev={currentIndex > 0 ? goToPrevImage : undefined}
-                onNext={currentIndex < floorImages.length - 1 ? goToNextImage : undefined}
-                currentIndex={currentIndex}
-                totalImages={floorImages.length}
-              />
-
-              {/* Column 4: Image Info Panel */}
-              <ImageInfoPanel
-                image={displayedImage}
-                cave={cave}
-                similarImages={similarImages}
-                selectedImageId={selectedImage?.id}
-                onImageSelect={handleImageSelect}
-                archivalImages={archivalImages}
-                onSelectArchival={setSelectedArchival}
-                models3d={models3d}
-                onSelectModel3d={setSelectedModel3d}
-              />
-            </div>
-          ) : (
-            /* Single-floor layout: 3-column grid without sidebar */
-            <div className="hidden lg:grid lg:grid-cols-[1fr_360px_320px] gap-6 max-w-7xl mx-auto items-start">
-              {/* Column 1: Interactive Floor Plan (full size) */}
-              <InteractiveFloorPlan
-                plan={currentPlan}
-                images={floorImages}
-                selectedImageId={selectedImage?.id}
-                onImageSelect={handleImageSelect}
-                onImageHover={handleImageHover}
-              />
+            <div className="hidden lg:grid lg:grid-cols-[1fr_1fr_320px] gap-6 max-w-7xl mx-auto items-start">
+              {/* Column 1: Floor tabs + Interactive Floor Plan */}
+              <div>
+                {hasMultipleFloors && <div className="flex gap-1.5 mb-3">
+                  {cave?.plans?.map((plan) => (
+                    <button
+                      key={plan.floor_number}
+                      onClick={() => handleFloorSelect(plan.floor_number)}
+                      className={`px-3 py-1.5 text-sm font-semibold rounded-lg border-2 transition-all ${
+                        plan.floor_number === floorNumber
+                          ? 'bg-white text-black border-white'
+                          : 'bg-black/90 text-[#eae2c4] border-gray-600 hover:border-gray-400'
+                      }`}
+                    >
+                      Floor {plan.floor_number}
+                    </button>
+                  ))}
+                </div>}
+                <InteractiveFloorPlan
+                  plan={currentPlan}
+                  images={floorImages}
+                  selectedImageId={selectedImage?.id}
+                  onImageSelect={handleImageSelect}
+                  onImageHover={handleImageHover}
+                />
+              </div>
 
               {/* Column 2: Main Image Display */}
               <ImageDisplay
@@ -394,7 +364,6 @@ function ExploreContent() {
                 onSelectModel3d={setSelectedModel3d}
               />
             </div>
-          )
         ) : (
           /* No plan available: 2-column layout with image and info only */
           <div className="hidden lg:grid lg:grid-cols-[360px_320px] gap-6 max-w-3xl mx-auto items-start">
@@ -426,17 +395,17 @@ function ExploreContent() {
 
         {/* Tablet Layout: 2 columns, stacked */}
         <div className="hidden md:block lg:hidden max-w-4xl mx-auto space-y-6">
-          {/* Floor selector tabs (only if multiple floors) */}
+          {/* Floor selector tabs */}
           {hasMultipleFloors && (
             <div className="flex gap-2 justify-center">
               {cave?.plans?.map((plan) => (
                 <button
                   key={plan.floor_number}
                   onClick={() => handleFloorSelect(plan.floor_number)}
-                  className={`px-4 py-2 rounded ${
+                  className={`px-4 py-2 text-sm font-semibold rounded-lg border-2 transition-all ${
                     plan.floor_number === floorNumber
-                      ? 'bg-[#487a14] text-white'
-                      : 'bg-gray-800 text-[#eae2c4]'
+                      ? 'bg-white text-black border-white'
+                      : 'bg-black/90 text-[#eae2c4] border-gray-600 hover:border-gray-400'
                   }`}
                 >
                   Floor {plan.floor_number}
@@ -492,17 +461,17 @@ function ExploreContent() {
             ))}
           </select>
 
-          {/* Floor tabs (only if multiple floors) */}
+          {/* Floor tabs */}
           {hasMultipleFloors && (
             <div className="flex gap-2 overflow-x-auto">
               {cave?.plans?.map((plan) => (
                 <button
                   key={plan.floor_number}
                   onClick={() => handleFloorSelect(plan.floor_number)}
-                  className={`px-4 py-2 rounded whitespace-nowrap ${
+                  className={`px-4 py-2 text-sm font-semibold rounded-lg border-2 whitespace-nowrap transition-all ${
                     plan.floor_number === floorNumber
-                      ? 'bg-[#487a14] text-white'
-                      : 'bg-gray-800 text-[#eae2c4]'
+                      ? 'bg-white text-black border-white'
+                      : 'bg-black/90 text-[#eae2c4] border-gray-600 hover:border-gray-400'
                   }`}
                 >
                   Floor {plan.floor_number}

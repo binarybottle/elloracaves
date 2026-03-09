@@ -232,7 +232,6 @@ The `models_3d` table stores 3D photogrammetry models (GLB files captured with P
 | `description` | text | Description of what was captured |
 | `file_url` | text | URL to the `.glb` file (hosted on Cloudflare R2 or similar) |
 | `poster_url` | text | Static preview image URL (Cloudflare Images) |
-| `file_size` | bigint | File size in bytes (for display) |
 | `source_app` | text | Capture application (default: `Polycam`) |
 | `photographer` | text | Who captured the model |
 | `capture_date` | text | When the model was captured |

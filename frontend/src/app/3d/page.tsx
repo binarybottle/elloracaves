@@ -14,17 +14,11 @@ interface Model3D {
   description: string | null;
   file_url: string;
   poster_url: string | null;
-  file_size: number | null;
   source_app: string | null;
   photographer: string | null;
   capture_date: string | null;
 }
 
-function formatFileSize(bytes: number | null): string {
-  if (!bytes) return '';
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(0)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-}
 
 export default function ThreeDPage() {
   const [models, setModels] = useState<Model3D[]>([]);
@@ -206,7 +200,6 @@ export default function ThreeDPage() {
                   <div className="text-sm text-[#eae2c4] font-medium truncate">{model.title}</div>
                   <div className="text-xs text-gray-500">
                     {getDropdownLabel(model.cave_id)}
-                    {model.file_size ? ` · ${formatFileSize(model.file_size)}` : ''}
                   </div>
                 </div>
               </div>
@@ -256,7 +249,6 @@ export default function ThreeDPage() {
                   <span className="text-gray-500">{getDropdownLabel(selectedModel.cave_id)}</span>
                   {selectedModel.description && <span className="text-gray-400 text-xs">{selectedModel.description}</span>}
                   {selectedModel.photographer && <span className="text-gray-500 text-xs">Photo: {selectedModel.photographer}</span>}
-                  {selectedModel.file_size && <span className="text-gray-600 text-xs">{formatFileSize(selectedModel.file_size)}</span>}
                   <a href={selectedModel.file_url} target="_blank" rel="noopener noreferrer" className="ml-auto text-xs text-blue-400 hover:text-blue-300 underline">Download GLB</a>
                 </div>
               </div>
