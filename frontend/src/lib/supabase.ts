@@ -68,23 +68,17 @@ export interface DbImage {
   description: string;
   file_path: string;
   image_date: string;
-  notes: string;
   rank: number;
   rotate: number;
-  thumbnail: string | null;
-  plan_x_px: number | null;
-  plan_y_px: number | null;
   plan_x_norm: number | null;
   plan_y_norm: number | null;
   photographer: string | null;
   default_priority: number;
-  assignment_questionable: boolean;
   assignment_notes: string | null;
   coordinates_questionable: boolean;
   hide_plan_xy: boolean;
   best_id: number | null;
   cloudflare_image_id: string | null;
-  cloudflare_thumbnail_id: string | null;
   created_at: string;
   updated_at: string;
 }

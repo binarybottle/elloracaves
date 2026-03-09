@@ -15,8 +15,6 @@ interface ImageRow {
   subject: string;
   description: string;
   cloudflare_image_id: string | null;
-  cloudflare_thumbnail_id: string | null;
-  thumbnail: string | null;
   archival: boolean | null;
   book_page: number | null;
   book_figure: string | null;
@@ -86,7 +84,7 @@ export default function CuratedImageCollectionPage({
       while (hasMore) {
         const { data, error: pageError } = await supabase
           .from('images')
-          .select('image_id, cave_id, plan_id, rank, file_path, subject, description, cloudflare_image_id, cloudflare_thumbnail_id, thumbnail, archival, book_page, book_figure, medium')
+          .select('image_id, cave_id, plan_id, rank, file_path, subject, description, cloudflare_image_id, archival, book_page, book_figure, medium')
           .order('cave_id')
           .order('default_priority', { ascending: false })
           .order('file_path')
@@ -228,7 +226,7 @@ export default function CuratedImageCollectionPage({
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
             {collectionImages.map((img) => {
-              const thumbUrl = getThumbnailUrl(img.cloudflare_image_id, img.cloudflare_thumbnail_id, img.file_path, img.thumbnail);
+              const thumbUrl = getThumbnailUrl(img.cloudflare_image_id, img.file_path);
               const floor = floorForImage(img);
 
               return (

@@ -198,11 +198,7 @@ The `images` table contains ~8,400 rows. Each row represents a photograph with i
 | `default_priority` | int | Sort order (descending): higher values appear first in image galleries. `0` (default) = no special priority |
 | `hide_plan_xy` | int | `1` = hide this image's marker on the floor plan even though coordinates exist; `0` = show marker |
 | `cloudflare_image_id` | uuid | Cloudflare Images ID for the full-size image. Used to construct `image_url` |
-| `cloudflare_thumbnail_id` | uuid | Cloudflare Images ID for a dedicated thumbnail. Falls back to `cloudflare_image_id` with `thumb` variant |
-| `thumbnail` | text | Local thumbnail file path override. Last-resort fallback for thumbnail URL generation |
 | `search_vector` | tsvector | Pre-computed PostgreSQL full-text search index (built from subject, motifs, description, medium) |
-| `plan_x_px` | int | X coordinate in pixels. Only used to check if coordinates exist; not used for rendering |
-| `plan_y_px` | int | Y coordinate in pixels. Not used for rendering |
 
 ### Columns Not Used by the Frontend
 
@@ -211,8 +207,6 @@ The `images` table contains ~8,400 rows. Each row represents a photograph with i
 | `master_id` | int | Grouping/parent ID (usually null). Intended to link variant shots of the same subject |
 | `rotate` | int | Rotation value. Not applied by the frontend |
 | `image_date` | text | Date the photo was taken (often empty) |
-| `notes` | text | Internal/editorial notes |
-| `assignment_questionable` | bool | Flags uncertain cave/plan assignments |
 | `assignment_notes` | text | Notes about questionable assignments |
 | `coordinates_questionable` | bool | Flags uncertain floor plan coordinates |
 | `created_at` | timestamp | Row creation timestamp |

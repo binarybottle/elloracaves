@@ -16,8 +16,6 @@ interface ImageRow {
   description: string;
   photographer: string | null;
   cloudflare_image_id: string | null;
-  cloudflare_thumbnail_id: string | null;
-  thumbnail: string | null;
   plan_x_norm: number | null;
   plan_y_norm: number | null;
   hide_plan_xy: boolean;
@@ -26,6 +24,7 @@ interface ImageRow {
   book_figure: string | null;
   archival_ids: number[] | null;
   model3d_ids: number[] | null;
+  medium: string | null;
 }
 
 interface CaveOption { cave_id: number; cave_name: string | null; }
@@ -55,7 +54,7 @@ export default function ImagesReviewPage() {
   const [comparing, setComparing] = useState(false);
   const [compareRankEditing, setCompareRankEditing] = useState<number | null>(null);
   const [compareRankInput, setCompareRankInput] = useState('');
-  const [expandedCard, setExpandedCard] = useState<number | null>(null);
+  const [expandedCards, setExpandedCards] = useState<Set<number>>(new Set());
 
   const caveNameMap = useMemo(() => new Map(caves.map(c => [c.cave_id, c.cave_name])), [caves]);
 
@@ -167,7 +166,25 @@ export default function ImagesReviewPage() {
     setEditingField(null);
   }
 
-  async function updateTextField(imageId: number, field: 'book_figure' | 'subject' | 'description' | 'photographer', value: string | null) {
+  async function updateFloatField(imageId: number, field: 'plan_x_norm' | 'plan_y_norm', value: number | null) {
+    setSaving(imageId);
+    const { error } = await supabase
+      .from('images')
+      .update({ [field]: value })
+      .eq('image_id', imageId);
+
+    if (error) {
+      alert(`Failed to update ${field}: ${error.message}`);
+    } else {
+      setImages(prev => prev.map(img =>
+        img.image_id === imageId ? { ...img, [field]: value } : img
+      ));
+    }
+    setSaving(null);
+    setEditingField(null);
+  }
+
+  async function updateTextField(imageId: number, field: 'book_figure' | 'subject' | 'description' | 'photographer' | 'medium', value: string | null) {
     setSaving(imageId);
     const { error } = await supabase
       .from('images')
@@ -216,7 +233,7 @@ export default function ImagesReviewPage() {
       while (hasMore) {
         const { data, error } = await supabase
           .from('images')
-          .select('image_id, cave_id, plan_id, rank, file_path, subject, description, photographer, cloudflare_image_id, cloudflare_thumbnail_id, thumbnail, plan_x_norm, plan_y_norm, hide_plan_xy, best_id, book_page, book_figure, archival_ids, model3d_ids')
+          .select('image_id, cave_id, plan_id, rank, file_path, subject, description, photographer, cloudflare_image_id, plan_x_norm, plan_y_norm, hide_plan_xy, best_id, book_page, book_figure, archival_ids, model3d_ids, medium')
           .order('cave_id')
           .order('file_path')
           .range(from, from + PAGE_SIZE - 1);
@@ -495,7 +512,7 @@ export default function ImagesReviewPage() {
             {sortedImages.map((img) => {
               const hasCloudflare = !!img.cloudflare_image_id;
               const thumbUrl = hasCloudflare
-                ? getThumbnailUrl(img.cloudflare_image_id, img.cloudflare_thumbnail_id, img.file_path, img.thumbnail)
+                ? getThumbnailUrl(img.cloudflare_image_id, img.file_path)
                 : '';
               const fullUrl = hasCloudflare
                 ? getImageUrl(img.cloudflare_image_id, img.file_path, 'large')
@@ -645,14 +662,19 @@ export default function ImagesReviewPage() {
                     </div>
                     {/* Expand toggle */}
                     <button
-                      onClick={() => setExpandedCard(expandedCard === img.image_id ? null : img.image_id)}
+                      onClick={() => setExpandedCards(prev => {
+                        const next = new Set(prev);
+                        if (next.has(img.image_id)) next.delete(img.image_id);
+                        else next.add(img.image_id);
+                        return next;
+                      })}
                       className="text-xs text-gray-500 hover:text-gray-300 w-full text-left truncate pt-0.5"
                       title="Click to edit annotations"
                     >
-                      <span className="text-gray-600">{expandedCard === img.image_id ? '▾' : '▸'}</span>
+                      <span className="text-gray-600">{expandedCards.has(img.image_id) ? '▾' : '▸'}</span>
                       <span className="ml-1">{img.subject || img.description || 'annotations...'}</span>
                     </button>
-                    {expandedCard === img.image_id && (
+                    {expandedCards.has(img.image_id) && (
                       <div className="space-y-1.5 pt-1 border-t border-gray-800">
                         <div>
                           <label className="text-[10px] text-gray-600 block">Subject</label>
@@ -692,6 +714,49 @@ export default function ImagesReviewPage() {
                             className="w-full bg-gray-800 text-white text-xs rounded border border-gray-700 px-1.5 py-1"
                             placeholder="Photographer..."
                           />
+                        </div>
+                        <div>
+                          <label className="text-[10px] text-gray-600 block">Medium</label>
+                          <input
+                            type="text"
+                            defaultValue={img.medium || ''}
+                            onBlur={(e) => {
+                              const val = e.target.value.trim();
+                              if (val !== (img.medium || '')) updateTextField(img.image_id, 'medium', val || null);
+                            }}
+                            className="w-full bg-gray-800 text-white text-xs rounded border border-gray-700 px-1.5 py-1"
+                            placeholder="e.g. photo, etching..."
+                          />
+                        </div>
+                        <div className="flex gap-2">
+                          <div className="flex-1">
+                            <label className="text-[10px] text-gray-600 block">plan_x_norm</label>
+                            <input
+                              type="text"
+                              defaultValue={img.plan_x_norm != null ? String(img.plan_x_norm) : ''}
+                              onBlur={(e) => {
+                                const raw = e.target.value.trim();
+                                const val = raw === '' ? null : parseFloat(raw);
+                                if (val !== img.plan_x_norm && (val === null || !isNaN(val))) updateFloatField(img.image_id, 'plan_x_norm', val);
+                              }}
+                              className="w-full bg-gray-800 text-white text-xs rounded border border-gray-700 px-1.5 py-1"
+                              placeholder="0.0–1.0"
+                            />
+                          </div>
+                          <div className="flex-1">
+                            <label className="text-[10px] text-gray-600 block">plan_y_norm</label>
+                            <input
+                              type="text"
+                              defaultValue={img.plan_y_norm != null ? String(img.plan_y_norm) : ''}
+                              onBlur={(e) => {
+                                const raw = e.target.value.trim();
+                                const val = raw === '' ? null : parseFloat(raw);
+                                if (val !== img.plan_y_norm && (val === null || !isNaN(val))) updateFloatField(img.image_id, 'plan_y_norm', val);
+                              }}
+                              className="w-full bg-gray-800 text-white text-xs rounded border border-gray-700 px-1.5 py-1"
+                              placeholder="0.0–1.0"
+                            />
+                          </div>
                         </div>
                         <div className="text-[10px] font-mono text-gray-600 break-all pt-1 border-t border-gray-800">{img.file_path}</div>
                       </div>

@@ -31,8 +31,6 @@ import {
 // ============================================
 
 export interface Coordinates {
-  plan_x_px?: number;
-  plan_y_px?: number;
   plan_x_norm?: number;
   plan_y_norm?: number;
 }
@@ -132,10 +130,8 @@ function transformImage(dbImage: DbImage): Image {
     subject: dbImage.subject || undefined,
     description: dbImage.description || undefined,
     cave_id: dbImage.cave_id,
-    coordinates: dbImage.plan_x_px ? {
-      plan_x_px: dbImage.plan_x_px,
-      plan_y_px: dbImage.plan_y_px || undefined,
-      plan_x_norm: dbImage.plan_x_norm || undefined,
+    coordinates: dbImage.plan_x_norm ? {
+      plan_x_norm: dbImage.plan_x_norm,
       plan_y_norm: dbImage.plan_y_norm || undefined,
     } : undefined,
     hide_plan_xy: dbImage.hide_plan_xy || false,
@@ -145,12 +141,7 @@ function transformImage(dbImage: DbImage): Image {
     medium: (dbImage as any).medium || undefined,
     archival: (dbImage as any).archival || false,
     image_url: getImageUrl(dbImage.cloudflare_image_id, dbImage.file_path, 'large'),
-    thumbnail_url: getThumbnailUrl(
-      dbImage.cloudflare_image_id,
-      dbImage.cloudflare_thumbnail_id,
-      dbImage.file_path,
-      dbImage.thumbnail
-    ),
+    thumbnail_url: getThumbnailUrl(dbImage.cloudflare_image_id, dbImage.file_path),
   };
 }
 

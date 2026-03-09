@@ -10,9 +10,7 @@ const RIGHT_LION_URL = 'https://pub-97ab8e2d08bd421f948bc770a086ecb0.r2.dev/3d/c
 
 interface SampleImage {
   cloudflare_image_id: string | null;
-  cloudflare_thumbnail_id: string | null;
   file_path: string;
-  thumbnail: string | null;
 }
 
 export default function MorePage() {
@@ -21,11 +19,11 @@ export default function MorePage() {
   useEffect(() => {
     async function fetchSamples() {
       const toThumb = (row: SampleImage) =>
-        getThumbnailUrl(row.cloudflare_image_id, row.cloudflare_thumbnail_id, row.file_path, row.thumbnail);
+        getThumbnailUrl(row.cloudflare_image_id, row.file_path);
 
       const imgQuery = (caveId: number) =>
         supabase.from('images')
-          .select('cloudflare_image_id, cloudflare_thumbnail_id, file_path, thumbnail')
+          .select('cloudflare_image_id, file_path')
           .eq('cave_id', caveId).eq('rank', 1)
           .not('cloudflare_image_id', 'is', null)
           .order('default_priority', { ascending: false })
@@ -33,9 +31,9 @@ export default function MorePage() {
 
       const [bookCaveResult, archivalResult, imagesResult] = await Promise.all([
         imgQuery(16),
-        supabase.from('images').select('cloudflare_image_id, cloudflare_thumbnail_id, file_path, thumbnail')
+        supabase.from('images').select('cloudflare_image_id, file_path')
           .eq('archival', true).not('cloudflare_image_id', 'is', null).limit(1),
-        supabase.from('images').select('cloudflare_image_id, cloudflare_thumbnail_id, file_path, thumbnail')
+        supabase.from('images').select('cloudflare_image_id, file_path')
           .eq('rank', 1).not('cloudflare_image_id', 'is', null)
           .order('default_priority', { ascending: false }).limit(1),
       ]);

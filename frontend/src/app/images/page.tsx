@@ -16,8 +16,6 @@ interface ImageRow {
   subject: string;
   description: string;
   cloudflare_image_id: string | null;
-  cloudflare_thumbnail_id: string | null;
-  thumbnail: string | null;
   plan_x_norm: number | null;
   plan_y_norm: number | null;
   best_id: number | null;
@@ -86,7 +84,7 @@ export default function ImagesPage() {
       while (hasMore) {
         const { data, error } = await supabase
           .from('images')
-          .select('image_id, cave_id, plan_id, rank, file_path, subject, description, cloudflare_image_id, cloudflare_thumbnail_id, thumbnail, plan_x_norm, plan_y_norm, best_id')
+          .select('image_id, cave_id, plan_id, rank, file_path, subject, description, cloudflare_image_id, plan_x_norm, plan_y_norm, best_id')
           .order('cave_id')
           .order('default_priority', { ascending: false })
           .order('file_path')
@@ -288,7 +286,7 @@ export default function ImagesPage() {
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
             {filteredImages.map((img) => {
-              const thumbUrl = getThumbnailUrl(img.cloudflare_image_id, img.cloudflare_thumbnail_id, img.file_path, img.thumbnail);
+              const thumbUrl = getThumbnailUrl(img.cloudflare_image_id, img.file_path);
               const floor = floorForImage(img);
 
               return (

@@ -181,14 +181,14 @@ function ExploreContent() {
       if (archIds.length > 0) {
         const { data } = await supabase
           .from('images')
-          .select('image_id, subject, cloudflare_image_id, cloudflare_thumbnail_id, file_path, thumbnail')
+          .select('image_id, subject, cloudflare_image_id, file_path')
           .in('image_id', archIds);
         if (data) {
           setArchivalImages(data.map((r: any) => ({
             id: r.image_id,
             subject: r.subject || undefined,
             image_url: getImageUrl(r.cloudflare_image_id, r.file_path, 'large'),
-            thumbnail_url: getThumbnailUrl(r.cloudflare_image_id, r.cloudflare_thumbnail_id, r.file_path, r.thumbnail),
+            thumbnail_url: getThumbnailUrl(r.cloudflare_image_id, r.file_path),
           })));
         }
       } else {

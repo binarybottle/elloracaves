@@ -85,28 +85,16 @@ export function getImageUrl(
  */
 export function getThumbnailUrl(
   cloudflareId: string | null,
-  cloudflareThumbId: string | null,
   localPath: string,
-  localThumbPath: string | null,
   baseUrl?: string
 ): string {
-  // Prefer dedicated thumbnail Cloudflare ID
-  if (cloudflareThumbId) {
-    const cfUrl = getCloudflareUrl(cloudflareThumbId, 'thumb');
-    if (cfUrl) return cfUrl;
-  }
-  
-  // Fall back to main image thumbnail variant
   if (cloudflareId) {
     const cfUrl = getCloudflareUrl(cloudflareId, 'thumb');
     if (cfUrl) return cfUrl;
   }
   
-  // Fall back to local thumbnail
   const apiUrl = baseUrl || process.env.NEXT_PUBLIC_API_URL || '';
-  const thumbPath = localThumbPath || localPath;
-  
-  return `${apiUrl}/caves_thumbs/${thumbPath}`;
+  return `${apiUrl}/caves_thumbs/${localPath}`;
 }
 
 /**
