@@ -523,8 +523,6 @@ export default function ImagesReviewPage() {
               const isEditingBestId = editingField?.imageId === img.image_id && editingField?.field === 'best_id';
               const isEditingCave = editingField?.imageId === img.image_id && editingField?.field === 'cave_id';
               const isEditingPlan = editingField?.imageId === img.image_id && editingField?.field === 'plan_id';
-              const isEditingBookPage = editingField?.imageId === img.image_id && editingField?.field === 'book_page';
-              const isEditingBookFigure = editingField?.imageId === img.image_id && editingField?.field === 'book_figure';
 
               return (
                 <div key={img.image_id} className="bg-gray-900 rounded-lg overflow-hidden border border-gray-800">
@@ -634,29 +632,6 @@ export default function ImagesReviewPage() {
                       ) : (
                         <button onClick={() => { setEditingField({ imageId: img.image_id, field: 'model3d_ids' }); setFieldInput((img.model3d_ids ?? []).join(',')); }} className="text-gray-300 hover:text-white underline decoration-dotted" title="3D model IDs (comma-separated)">
                           {img.model3d_ids?.length ? img.model3d_ids.join(',') : '—'}
-                        </button>
-                      )}
-                    </div>
-                    {/* Line 4: p., fig. */}
-                    <div className="text-xs text-gray-500 flex items-center gap-0.5">
-                      <span>p.</span>
-                      {isEditingBookPage ? (
-                        <form className="inline-flex" onSubmit={(e) => { e.preventDefault(); const raw = fieldInput.trim(); if (raw === '') { updateField(img.image_id, 'book_page', null); } else { const val = parseInt(raw, 10); if (!isNaN(val)) updateField(img.image_id, 'book_page', val); } }}>
-                          <input type="text" value={fieldInput} onChange={(e) => setFieldInput(e.target.value)} placeholder="—" className="w-10 bg-gray-800 text-white text-xs text-center rounded border border-gray-600 px-0.5 py-0" autoFocus onBlur={() => setEditingField(null)} />
-                        </form>
-                      ) : (
-                        <button onClick={() => { setEditingField({ imageId: img.image_id, field: 'book_page' }); setFieldInput(img.book_page != null ? String(img.book_page) : ''); }} className="text-gray-300 hover:text-white underline decoration-dotted" title="Click to set book page number">
-                          {img.book_page ?? '—'}
-                        </button>
-                      )}
-                      <span>| fig.</span>
-                      {isEditingBookFigure ? (
-                        <form className="inline-flex" onSubmit={(e) => { e.preventDefault(); updateTextField(img.image_id, 'book_figure', fieldInput.trim()); }}>
-                          <input type="text" value={fieldInput} onChange={(e) => setFieldInput(e.target.value)} placeholder="—" className="w-14 bg-gray-800 text-white text-xs text-center rounded border border-gray-600 px-0.5 py-0" autoFocus onBlur={() => setEditingField(null)} />
-                        </form>
-                      ) : (
-                        <button onClick={() => { setEditingField({ imageId: img.image_id, field: 'book_figure' }); setFieldInput(img.book_figure ?? ''); }} className="text-gray-300 hover:text-white underline decoration-dotted" title="Click to set book figure number">
-                          {img.book_figure ?? '—'}
                         </button>
                       )}
                     </div>
