@@ -22,18 +22,25 @@ export default function InteractiveFloorPlan({
 }: InteractiveFloorPlanProps) {
   const [planLoaded, setPlanLoaded] = useState(false);
 
-  const planTransforms: Record<number, { sx: number; sy: number; tx: number; ty: number }> = {
-    // Add per-plan image transforms here (plan.id -> { scale, translate }).
-    // Example: 12: { sx: 1.02, sy: 1.02, tx: -8, ty: -6 }
-    // TODO: Tune these values as needed.
-    2: { sx: 1, sy: 1, tx: 0, ty: 0 }, // Cave 2
-    30: { sx: 1, sy: 1, tx: 0, ty: 0 }, // Cave 30
-    130: { sx: 1, sy: 1, tx: 0, ty: 0 }, // Cave 30a
-    32: { sx: 1, sy: 1, tx: 0, ty: 0 }, // Cave 32 floor 1
-    232: { sx: 1, sy: 1, tx: 0, ty: 0 }, // Cave 32 floor 2
-    34: { sx: 1, sy: 1, tx: 0, ty: 0 }, // Cave 34
+  // Per-plan transforms.
+  // sx/sy: scale the floor plan image. tx/ty: translate the image in px (origin: top-left).
+  // mx/my: shift ALL markers for this plan, in normalized units (0–1).
+  //   Positive mx moves markers right; positive my moves markers down.
+  //   Example: mx: 0.05 shifts every marker 5% to the right.
+  // spx/spy: scale marker positions from the top-left corner (origin 0,0).
+  //   1.0 = no change; >1 stretches markers outward; <1 compresses them inward.
+  //   Applied before mx/my: final_x = plan_x_norm * spx + mx
+  const planTransforms: Record<number, { sx: number; sy: number; tx: number; ty: number; mx?: number; my?: number; spx?: number; spy?: number }> = {
+    2:   { sx: 1, sy: 1, tx: 0, ty: 0, mx: 0, my: 0, spx: .7, spy: .71 }, // Cave 2
+    124: { sx: 1, sy: 1, tx: 0, ty: 0, mx: 0.13, my: 0, spx: .6, spy: .9 }, // Cave 24 A1 (shrine 1)
+    224: { sx: 1, sy: 1, tx: 0, ty: 0, mx: 0, my: 0, spx: .94, spy: .93 }, // Cave 24 A2 (shrine 2)
+    30:  { sx: 1, sy: 1, tx: 0, ty: 0, mx: 0, my: 0, spx: .79, spy: .79 }, // Cave 30
+    130: { sx: 1, sy: 1, tx: 0, ty: 0, mx: 0, my: 0, spx: .75, spy: .75 }, // Cave 30a
+    32:  { sx: 1, sy: 1, tx: 0, ty: 0, mx: 0, my: 0, spx: .71, spy: .71 }, // Cave 32 floor 1
+    232: { sx: 1, sy: 1, tx: 0, ty: 0, mx: 0, my: 0, spx: .97, spy: .96 }, // Cave 32 floor 2
+    34:  { sx: 1, sy: 1, tx: 0, ty: 0, mx: 0, my: 0, spx: .72, spy: .72 }, // Cave 34
   };
-  const transform = planTransforms[plan.id] || { sx: 1, sy: 1, tx: 0, ty: 0 };
+  const transform = planTransforms[plan.id] || { sx: 1, sy: 1, tx: 0, ty: 0, mx: 0, my: 0, spx: 1, spy: 1 };
 
   const imagesWithCoords = images.filter(
     (img) =>
@@ -77,8 +84,8 @@ export default function InteractiveFloorPlan({
         {/* Image Markers */}
         {planLoaded &&
           imagesWithCoords.map((img) => {
-            const x = (img.coordinates!.plan_x_norm! * 100);
-            const y = (img.coordinates!.plan_y_norm! * 100);
+            const x = (img.coordinates!.plan_x_norm! * (transform.spx ?? 1) + (transform.mx ?? 0)) * 100;
+            const y = (img.coordinates!.plan_y_norm! * (transform.spy ?? 1) + (transform.my ?? 0)) * 100;
             const isHovered = false; // We track hover via onImageHover callback now
             const isSelected = selectedImageId === img.id;
 
