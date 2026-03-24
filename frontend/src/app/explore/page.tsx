@@ -11,7 +11,7 @@ import ImageDisplay from '@/components/cave/ImageDisplay';
 import ImageInfoPanel from '@/components/cave/ImageInfoPanel';
 import ImageGalleryStrip from '@/components/cave/ImageGalleryStrip';
 import SearchOverlay from '@/components/search/SearchOverlay';
-import { fetchCaveDetail, fetchCaveFloorImages, fetchImageDetail, fetchCaveArchivalImages, fetchImageSiblingGroup, Cave, Image } from '@/lib/api';
+import { fetchCaveDetail, fetchCaveFloorImages, fetchCaveImages, fetchImageDetail, fetchCaveArchivalImages, fetchImageSiblingGroup, Cave, Image } from '@/lib/api';
 import { supabase } from '@/lib/supabase';
 import { getThumbnailUrl, getImageUrl } from '@/lib/cloudflare-images';
 import { getDropdownLabel } from '@/components/cave/CaveMap';
@@ -23,6 +23,8 @@ function ExploreContent() {
   const caveId = searchParams.get('cave') || '10';
   const floorNumberParam = searchParams.get('floor');
   const imageId = searchParams.get('image');
+  const editMode = searchParams.has('plan_edit');
+  const editSuffix = editMode ? '&plan_edit' : '';
   
   const [cave, setCave] = useState<Cave | null>(null);
   const [floorNumber, setFloorNumber] = useState<number>(1);
@@ -54,17 +56,17 @@ function ExploreContent() {
     if (currentIndex > 0) {
       const prevImage = floorImages[currentIndex - 1];
       setSelectedImage(prevImage);
-      router.push(`/explore?cave=${caveId}&floor=${floorNumber}&image=${prevImage.id}`, { scroll: false });
+      router.push(`/explore?cave=${caveId}&floor=${floorNumber}&image=${prevImage.id}${editSuffix}`, { scroll: false });
     }
-  }, [currentIndex, floorImages, caveId, floorNumber, router]);
+  }, [currentIndex, floorImages, caveId, floorNumber, editSuffix, router]);
 
   const goToNextImage = useCallback(() => {
     if (currentIndex < floorImages.length - 1) {
       const nextImage = floorImages[currentIndex + 1];
       setSelectedImage(nextImage);
-      router.push(`/explore?cave=${caveId}&floor=${floorNumber}&image=${nextImage.id}`, { scroll: false });
+      router.push(`/explore?cave=${caveId}&floor=${floorNumber}&image=${nextImage.id}${editSuffix}`, { scroll: false });
     }
-  }, [currentIndex, floorImages, caveId, floorNumber, router]);
+  }, [currentIndex, floorImages, caveId, floorNumber, editSuffix, router]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -108,7 +110,7 @@ function ExploreContent() {
           const lowestFloor = Math.min(...data.plans.map(p => p.floor_number));
           setFloorNumber(lowestFloor);
           // Update URL to include the default floor
-          router.replace(`/explore?cave=${caveId}&floor=${lowestFloor}`, { scroll: false });
+          router.replace(`/explore?cave=${caveId}&floor=${lowestFloor}${editSuffix}`, { scroll: false });
         }
       } catch (error) {
         console.error('Error fetching cave:', error);
@@ -121,10 +123,15 @@ function ExploreContent() {
     async function loadFloorImages() {
       if (!cave) return;
       try {
-        const [data, archival] = await Promise.all([
+        const hasPlanForFloor = cave.plans?.some(p => p.floor_number === floorNumber);
+        const [floorData, archival] = await Promise.all([
           fetchCaveFloorImages(caveId, floorNumber),
           fetchCaveArchivalImages(caveId),
         ]);
+        // Caves without a floor plan still have images — fetch them all
+        const data = floorData.length === 0 && !hasPlanForFloor
+          ? await fetchCaveImages(caveId, 200)
+          : floorData;
         setFloorImages(data);
         setCaveArchivalImages(archival);
         
@@ -209,23 +216,39 @@ function ExploreContent() {
   }, [selectedImage]);
 
   const handleCaveSelect = (newCaveId: number) => {
-    router.push(`/explore?cave=${newCaveId}`);
+    router.push(`/explore?cave=${newCaveId}${editSuffix}`);
   };
 
   const handleFloorSelect = (newFloor: number) => {
-    router.push(`/explore?cave=${caveId}&floor=${newFloor}`);
+    router.push(`/explore?cave=${caveId}&floor=${newFloor}${editSuffix}`);
   };
 
   const handleImageSelect = (image: Image) => {
     setSelectedImage(image);
-    router.push(`/explore?cave=${caveId}&floor=${floorNumber}&image=${image.id}`);
-    // Scroll to top when selecting from gallery
+    router.push(`/explore?cave=${caveId}&floor=${floorNumber}&image=${image.id}${editSuffix}`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleImageHover = (image: Image | null) => {
     setHoveredImage(image);
   };
+
+  const handleSaveMarkerPosition = useCallback(async (imageId: number, x: number, y: number) => {
+    // Optimistic update so the marker moves immediately
+    setFloorImages(prev => prev.map(img =>
+      img.id === imageId ? { ...img, mx: x, my: y } : img
+    ));
+    if (selectedImage?.id === imageId) {
+      setSelectedImage(prev => prev ? { ...prev, mx: x, my: y } : prev);
+    }
+    const { error } = await supabase
+      .from('images')
+      .update({ mx: x, my: y })
+      .eq('image_id', imageId);
+    if (error) {
+      console.error('Failed to save marker position:', error);
+    }
+  }, [selectedImage?.id]);
 
   const handleSearchSelect = (searchCaveId: number, searchFloorNumber: number, searchImageId: number) => {
     router.push(`/explore?cave=${searchCaveId}&floor=${searchFloorNumber}&image=${searchImageId}`);
@@ -336,6 +359,8 @@ function ExploreContent() {
                   selectedImageId={selectedImage?.id}
                   onImageSelect={handleImageSelect}
                   onImageHover={handleImageHover}
+                  editMode={editMode}
+                  onSaveMarkerPosition={handleSaveMarkerPosition}
                 />
               </div>
 
@@ -421,6 +446,8 @@ function ExploreContent() {
                 selectedImageId={selectedImage?.id}
                 onImageSelect={handleImageSelect}
                 onImageHover={handleImageHover}
+                editMode={editMode}
+                onSaveMarkerPosition={handleSaveMarkerPosition}
               />
             )}
             <ImageDisplay
@@ -514,6 +541,8 @@ function ExploreContent() {
                   selectedImageId={selectedImage?.id}
                   onImageSelect={handleImageSelect}
                   onImageHover={handleImageHover}
+                  editMode={editMode}
+                  onSaveMarkerPosition={handleSaveMarkerPosition}
                 />
               </div>
             </details>

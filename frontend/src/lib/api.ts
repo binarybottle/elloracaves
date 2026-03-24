@@ -50,6 +50,8 @@ export interface Image {
   archival?: boolean;
   image_url: string;
   thumbnail_url: string;
+  mx?: number | null;
+  my?: number | null;
 }
 
 export interface ImageDetail extends Image {
@@ -142,6 +144,8 @@ function transformImage(dbImage: DbImage): Image {
     archival: (dbImage as any).archival || false,
     image_url: getImageUrl(dbImage.cloudflare_image_id, dbImage.file_path, 'large'),
     thumbnail_url: getThumbnailUrl(dbImage.cloudflare_image_id, dbImage.file_path),
+    mx: dbImage.mx ?? null,
+    my: dbImage.my ?? null,
   };
 }
 

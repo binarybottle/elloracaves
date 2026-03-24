@@ -30,13 +30,14 @@ Users → Cloudflare DNS/CDN
 | `/` | Landing page |
 | `/explore` | Main exploration interface — interactive floor plans, image display with similar-image groups, gallery strip, info panel |
 | `/about` | About the project, contributors, and bibliography |
+| `/search` | Full-text search results |
+| `/more` | Link hub for Archives, Book, Images, and 3D pages |
 | `/archives` | Archival image collection with expandable image viewer |
 | `/book` | Book information + all images tagged with `book_figure` and `book_page` |
-| `/3d` | 3D photogrammetry models (GLB) with interactive `<model-viewer>` |
-| `/more` | Link hub for About, Images, Archives, Book, and 3D pages |
-| `/search` | Full-text search results |
 | `/images` | Image browsing page — filterable by cave, floor, and rank; inline search by subject/description |
-| `/admin` | Admin/review page — bulk image management with inline editing of `rank`, `cave_id`, `plan_id`, `best_id`, `book_page`, `book_figure`; multi-select comparison; images clustered by `best_id` tree |
+| `/3d` | 3D photogrammetry models (GLB) with interactive `<model-viewer>` |
+| `/admin` | Admin/review page — bulk image management with inline editing of `rank`, `cave_id`, `plan_id`, `best_id`; multi-select comparison; images clustered by `best_id` tree |
+| `/caves/[caveNumber]` | Individual cave detail page |
 
 ## Features
 
@@ -57,7 +58,30 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000)
+Open [http://localhost:3000](http://localhost:3000).  
+This uses the standard Next.js dev server with hot reload. SVG floor plans in `public/plans/` are served directly.
+
+### Local build test
+
+To catch build errors before deploying, run the standard Next.js build:
+
+```bash
+cd frontend
+npm run build   # compile only — no server started
+npm run start   # serve the build at http://localhost:3000
+```
+
+### Cloudflare Pages preview (local)
+
+To test the exact Cloudflare Pages build locally (including Worker/Edge runtime compatibility):
+
+```bash
+cd frontend
+npm run pages:build   # builds with @cloudflare/next-on-pages → .vercel/output/static
+npm run preview       # runs wrangler pages dev on that output
+```
+
+Open [http://localhost:8788](http://localhost:8788). Use this before deploying if you've changed anything that might behave differently on Cloudflare's runtime (middleware, edge routes, etc.).
 
 ### Environment Variables
 
@@ -149,7 +173,12 @@ frontend/
 │   │   ├── explore/                  # Main exploration interface
 │   │   ├── images/                   # Image browsing page
 │   │   ├── admin/                    # Admin/review page (editing)
-│   │   └── search/                   # Search results page
+│   │   ├── search/                   # Search results page
+│   │   ├── archives/                 # Archival image collection
+│   │   ├── book/                     # Book page
+│   │   ├── more/                     # Link hub (Archives, Book, Images, 3D)
+│   │   ├── 3d/                       # 3D photogrammetry models
+│   │   └── caves/[caveNumber]/       # Individual cave detail
 │   ├── components/
 │   │   ├── cave/                     # CaveMap, FloorPlanSidebar, InteractiveFloorPlan,
 │   │   │                             #   ImageDisplay, ImageGalleryStrip, ImageInfoPanel
@@ -162,8 +191,13 @@ frontend/
 │       └── cloudflare-images.ts      # Cloudflare Images URL helpers
 ├── public/
 │   ├── images/                       # Static images (book cover, contributors, maps)
-│   └── plans/                        # Floor plan images
+│   └── plans/                        # Floor plan images (.svg preferred; .jpg fallback)
 └── package.json
+
+dev/
+├── process_svgs.py                   # Bakes planTransforms into SVG viewBoxes + sets width/height
+├── image_scripts/                    # Upload/sync scripts for Cloudflare Images
+└── elloracaves_*.sql                 # Database dump
 ```
 
 ## Database Schema: `images` Table
@@ -186,8 +220,8 @@ The `images` table contains ~8,400 rows. Each row represents a photograph with i
 | `plan_x_norm` | float | X coordinate normalized (0.0–1.0) on the floor plan. Used to position markers on interactive floor plans |
 | `plan_y_norm` | float | Y coordinate normalized (0.0–1.0) on the floor plan. Used to position markers on interactive floor plans |
 | `archival` | bool | Marks archival/legacy source images. Used by `/archives` |
-| `book_page` | int | Book page reference used by `/book` |
-| `book_figure` | text | Book figure reference used by `/book` |
+| `book_page` | int | Book page reference. Displayed by `/book`; not editable in `/admin` |
+| `book_figure` | text | Book figure reference. Displayed by `/book`; not editable in `/admin` |
 
 ### Columns Used Behind the Scenes
 
@@ -306,6 +340,73 @@ WHERE file_path LIKE 'c16sw/%';
 
 This is cosmetic — the website doesn't use `file_path` for serving images — but keeps things consistent for your records and for the `/admin` page display.
 
+## Floor Plan SVGs
+
+Floor plans are stored in `frontend/public/plans/`. Each plan has a `.jpg` (original raster export) and, for most caves, a `.svg` (Illustrator source). The frontend prefers the SVG when available and falls back to the JPG.
+
+SVGs are displayed inverted (`filter: invert(1)`) so they appear as white lines on a black background, matching the site's dark theme.
+
+### Baking coordinate transforms into SVGs
+
+Some floor plan SVGs have a mismatch between the SVG's internal coordinate space and the stored `plan_x_norm`/`plan_y_norm` marker coordinates. The `dev/process_svgs.py` script corrects this by adjusting each SVG's `viewBox` (and adding explicit `width`/`height` attributes) using the per-plan transform values defined in `InteractiveFloorPlan.tsx`.
+
+Run it after adding or modifying SVGs:
+
+```bash
+python3 dev/process_svgs.py
+```
+
+For plans that still only have a JPG (caves 2, 32 floor 1, 32 floor 2), the transforms are applied in code at render time via the `planTransforms` table in `InteractiveFloorPlan.tsx`.
+
+### Interactively correcting marker positions
+
+Markers can be dragged to their correct positions directly in the browser and saved to the database. This uses two new columns, `mx` and `my`, on the `images` table.
+
+**One-time DB setup** (run once in Supabase SQL editor):
+
+```sql
+ALTER TABLE images ADD COLUMN mx double precision;
+ALTER TABLE images ADD COLUMN my double precision;
+```
+
+**Enabling writes** (Supabase requires the anon write policy to be enabled):
+
+```sql
+-- Enable before editing
+CREATE POLICY "Allow anon update" ON images FOR UPDATE TO anon USING (true) WITH CHECK (true);
+-- Disable when done
+DROP POLICY "Allow anon update" ON images;
+```
+
+**Workflow:**
+
+1. Run `npm run dev` (hot-reload dev server).
+2. Open `http://localhost:3000/explore?cave=10&plan_edit` (add `&plan_edit` to any `/explore` URL).
+3. An amber **EDIT MODE** banner appears above each floor plan.
+4. Drag any marker to its correct position — it saves automatically to `mx`/`my` in the database.
+5. Repositioned markers turn **cyan**; untouched markers stay green.
+6. To reset a marker to its original position, set `mx`/`my` to NULL:
+   ```sql
+   UPDATE images SET mx = NULL, my = NULL WHERE image_id = 1234;
+   ```
+
+**Display logic:**
+
+- **Locally** (with this code): if `mx`/`my` are set for a marker, they replace `plan_x_norm`/`plan_y_norm` entirely. No `planTransforms` are applied to corrected markers.
+- **Live site** (deployed code without `mx`/`my` support): continues to use `plan_x_norm`/`plan_y_norm` unchanged, so visitors see no changes until you're ready to migrate.
+
+**Migrating corrected coordinates** (when all markers are correct):
+
+```sql
+-- Copy mx/my → plan_x_norm/plan_y_norm for all corrected images
+UPDATE images
+SET plan_x_norm = mx, plan_y_norm = my
+WHERE mx IS NOT NULL AND my IS NOT NULL;
+
+-- Then clear the correction columns
+UPDATE images SET mx = NULL, my = NULL WHERE mx IS NOT NULL;
+```
+
 ### Setting a cave's default image
 
 The image with the highest `default_priority` appears first in galleries and becomes the default on the About page:
@@ -322,4 +423,5 @@ UPDATE images SET default_priority = 10 WHERE image_id = 1234;
 
 ## License
 
-Photographs copyright Arno Klein. All other content copyright Deepanjana Klein.
+Photographs copyright Arno Klein except where noted. 
+Text annotations of Arno's photographs are copyright Deepanjana Klein.

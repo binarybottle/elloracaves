@@ -72,6 +72,8 @@ export interface DbImage {
   rotate: number;
   plan_x_norm: number | null;
   plan_y_norm: number | null;
+  mx: number | null;
+  my: number | null;
   photographer: string | null;
   default_priority: number;
   assignment_notes: string | null;
