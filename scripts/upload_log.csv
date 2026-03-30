@@ -1,0 +1,239 @@
+timestamp,status,file,image_id,error
+2026-03-15T00:46:58.904286,SUCCESS,book_Ch1_Fig.1.1 c21 PXL_20230315_063303514.jpg,da9b5a7e-d883-4b5d-4eef-0cdb575e0000,
+2026-03-15T00:47:03.073356,SUCCESS,book_Ch1_Fig.1.10A c21 _CAV2071 crop_levels_4000K.jpg,9a462b9c-751f-46cd-38dd-6fd6d9b03900,
+2026-03-15T00:47:08.288085,SUCCESS,book_Ch1_Fig.1.10B c21 A0004794.3FR.jpg,38bc7a44-72cd-4345-327b-c6b0ecfc2200,
+2026-03-15T00:47:14.738641,SUCCESS,book_Ch1_Fig.1.11 c14 A0004913.3FR crop_levels_4500K.jpg,b416219d-c0c4-4fe9-620d-fb3d55d48100,
+2026-03-15T00:47:18.220561,SUCCESS,book_Ch1_Fig.1.12 c14 PXL_20230310_53935651.dng midlevel.jpg,34d75974-f353-4609-d1d2-b2e7b767a800,
+2026-03-15T00:47:21.360791,SUCCESS,book_Ch1_Fig.1.13 c14 _CAV2690 crop.jpg,b261a666-9cac-4cb0-00ef-a79062bbe200,
+2026-03-15T00:47:24.946032,SUCCESS,book_Ch1_Fig.1.14 c14 _CAV2691 gimp-rotate_crop.jpg,6b2b6ed2-0963-4374-3c76-461ab5ad2a00,
+2026-03-15T00:47:29.727874,SUCCESS,book_Ch1_Fig.1.15A c14 PXL_20230310_062950975.NIGHT rotate gimp-shadows.jpg,f0ea43a3-cfc4-459e-e4cf-ab74410cfd00,
+2026-03-15T00:47:34.881164,SUCCESS,book_Ch1_Fig.1.15B c14 PXL_20230310_063530929.NIGHT.dng levels_4500K.jpg,1be4b73c-7e86-462c-fa73-1764f0a46300,
+2026-03-15T00:47:39.517484,SUCCESS,book_Ch1_Fig.1.16 c21 PXL_20230309_040920915 levels_4000K gimp-shadows crop_midlevel gimp-shadows.jpg,095aad99-3ef8-4398-7900-f3b3236bc400,
+2026-03-15T00:47:44.096700,SUCCESS,book_Ch1_Fig.1.17 c29 PXL_20230313_022539948.dng levels gimp-shadows-highlights levels.jpg,76ad147b-1ca6-4b16-9d25-4b6e1727ac00,
+2026-03-15T00:47:47.477185,SUCCESS,book_Ch1_Fig.1.18 c14 _CAV2702 gimp-rotate_crop2.jpg,9cd65eda-89c9-4566-58df-3990beda5a00,
+2026-03-15T00:47:52.714113,SUCCESS,book_Ch1_Fig.1.19 c29 PXL_20230313_022753666.NIGHT levels gimp-shadows-highlights_crop.jpg,e1478b99-f65c-4bf1-a291-2779985a7100,
+2026-03-15T00:48:02.178877,FAILED,book_Ch1_Fig.1.2 c21 A0004721.3FR_0009 levels_6000K gimp-shadows levels crop.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:48:05.500424,SUCCESS,book_Ch1_Fig.1.20 c14 _CAV2700 crop2.jpg,b5ac8a35-7d9d-4bbe-5feb-afc293b0a700,
+2026-03-15T00:48:09.142370,SUCCESS,book_Ch1_Fig.1.21 c21 _CSH5416.jpg,1aa605c6-c7c6-4438-cc15-4bb6b815bb00,
+2026-03-15T00:48:15.441357,FAILED,book_Ch1_Fig.1.22 c29 _A0004991.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:48:26.592453,FAILED,book_Ch1_Fig.1.23 c29 A0004994.3FR levels_4000K.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:48:35.987559,FAILED,book_Ch1_Fig.1.24 c21 A0004796.3FR levels_4000K gimp-shadows-highlights levels_4500K.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:48:40.183720,SUCCESS,book_Ch1_Fig.1.25 c14 _CAV2699 crop.jpg,c24f2116-7a17-4917-2e68-c5ae278b6100,
+2026-03-15T00:48:43.797181,SUCCESS,book_Ch1_Fig.1.26 c15-floor2 PXL_20230313_062952275.NIGHT rotate_crop gimp-highlights_midlevel.jpg,2cf19cdb-66db-45f5-1f6e-f4a0e96b7900,
+2026-03-15T00:48:50.067680,SUCCESS,book_Ch1_Fig.1.27 c15 PXL_20230313_063138663.jpg,e5481f75-9cda-4a6f-cbb8-1bdbf58a1a00,
+2026-03-15T00:48:54.688181,SUCCESS,book_Ch1_Fig.1.28 c15-floor2 _CAV2601.jpg,94f8b64d-ccc7-4ee1-fcda-3e75a8795f00,
+2026-03-15T00:49:01.512348,SUCCESS,book_Ch1_Fig.1.29A c15-floor2 PXL_20230313_063255113 crop_levels.jpg,b5334931-3968-410e-3265-b0c5fc774b00,
+2026-03-15T00:49:05.710851,SUCCESS,book_Ch1_Fig.1.29B c15-floor2 PXL_20230313_063113280.NIGHT crop_levels.jpg,70fc5d37-a5a1-4f86-2aa3-c57d05f57c00,
+2026-03-15T00:49:11.076306,SUCCESS,book_Ch1_Fig.1.3 c21 A_4748.jpg,a60fa530-e6dd-4736-d207-3a82e86e5800,
+2026-03-15T00:49:15.100454,SUCCESS,book_Ch1_Fig.1.30 c15-floor2 PXL_20230313_50157606.G.jpg,99d04858-1c9d-4f97-7f3a-4ff4ffbf9f00,
+2026-03-15T00:49:17.892268,SUCCESS,book_Ch1_Fig.1.31 c15-floor2 PXL_20230313_051503686.NIGHT gimp-crop_shadows_midlevel.jpg,1b4b6451-6e86-4354-956a-a2527d6a2a00,
+2026-03-15T00:49:24.464734,SUCCESS,book_Ch1_Fig.1.32A c16 PXL_20230312_013305613 levels gimp-shadows.jpg,3d45443f-2db3-4219-269d-1dda4498dd00,
+2026-03-15T00:49:29.772717,SUCCESS,book_Ch1_Fig.1.32B c16 PXL_20230312_014314105 levels gimp-shadows-highlights_9000K.jpg,5e99feb8-9885-4eff-088f-0fbca5323800,
+2026-03-15T00:49:36.431384,SUCCESS,book_Ch1_Fig.1.32C c16 PXL_20230306_25301509.G.jpg,60d644fe-f856-4d8e-c774-6073a954bf00,
+2026-03-15T00:49:40.317267,SUCCESS,book_Ch1_Fig.1.33 c16 PXL_20230308_052627793 gimp-levels_highlights_rotate_crop.jpg,b1486c82-54c0-48d8-d6ef-3b49f8d1d100,
+2026-03-15T00:49:44.034845,SUCCESS,book_Ch1_Fig.1.34 c16 _CAV4173 gimp-crop_highlights_midlevel copy.jpg,781a94b4-688c-4b29-fec0-6c2db22e0b00,
+2026-03-15T00:49:47.185358,SUCCESS,book_Ch1_Fig.1.35 c16 _CAV4170 gimp-highlights_midlevel.jpg,7f25616d-83e6-4e3e-0ef3-ed342504f100,
+2026-03-15T00:49:55.156203,SUCCESS,book_Ch1_Fig.1.36 c16 PXL_20230308_043412181.NIGHT.jpg,4a751b02-90de-4515-9a1d-a74b82fc0e00,
+2026-03-15T00:50:08.034483,FAILED,book_Ch1_Fig.1.37 c16 A_4652 gimp-levels.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:50:16.466784,FAILED,book_Ch1_Fig.1.38 c16 A0004663.3FR_0020 rotate_crop gimp-shadows-highlights_levels_5000K.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:50:22.470225,SUCCESS,book_Ch1_Fig.1.39 c16 PXL_20230308_035349660 rotate gimp-shadows_level_9000K copy.jpg,99315292-4f2c-4448-84d6-b1d5049ff500,
+2026-03-15T00:50:25.330173,SUCCESS,book_Ch1_Fig.1.4 c21 _CAV2124 gimp-rotate_crop.jpg,24bea6bb-bd12-4a4d-d235-4033f2e93000,
+2026-03-15T00:50:35.703261,FAILED,book_Ch1_Fig.1.40 c16 A0004678.3FR_0011 crop_levels_4500K.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:50:40.453462,SUCCESS,book_Ch1_Fig.1.41 c16-floor2 _CAV4154 crop_levels copy.jpg,4a28e92b-241a-485a-875e-b65d9d217d00,
+2026-03-15T00:50:44.249285,SUCCESS,book_Ch1_Fig.1.42 c16-floor2 _CAV4076 gimp-midlevel_rotate_crop copy.jpg,930d4187-ddc8-4a65-dde1-5de82a363000,
+2026-03-15T00:50:46.917748,SUCCESS,book_Ch1_Fig.1.43 c16-floor2 PXL_20230306_20301220 levels.jpg,e75410f2-b9eb-4a31-c0a6-4ead60ea5c00,
+2026-03-15T00:50:49.556253,SUCCESS,book_Ch1_Fig.1.44 c16-floor2 PXL_20230306_20538451 crop_levels gimp-shadows.jpg,32f914a5-edf6-4f4d-22d6-498d8559c700,
+2026-03-15T00:50:53.371426,SUCCESS,book_Ch1_Fig.1.45A c16 _CAV3838 crop_midlevel copy.jpg,54e02670-2f62-47d5-ae0c-e660b9bcd800,
+2026-03-15T00:50:58.126900,SUCCESS,book_Ch1_Fig.1.45B c16 _CAV3839 crop_midlevel copy.jpg,0fbeaa16-066c-4e12-db3c-cf25501f5d00,
+2026-03-15T00:51:01.565066,SUCCESS,book_Ch1_Fig.1.46 c16 _CAV3825.jpg,c48ea22b-59f8-41ed-b01f-e21b60e40200,
+2026-03-15T00:51:06.473169,SUCCESS,book_Ch1_Fig.1.47 c16 _CAV3832 G copy.jpg,a2005fd7-eef6-4d7d-e1cf-ac4b341f1800,
+2026-03-15T00:51:10.075876,SUCCESS,book_Ch1_Fig.1.48 c16  _CAV3824 crop_midlevel.jpg,cf07f2ab-6836-41a2-0ea6-8d904bd03b00,
+2026-03-15T00:51:13.400497,SUCCESS,book_Ch1_Fig.1.49 c16T-floor3 _CAV3801.jpg,cdecccc6-1af2-431e-93ae-9bdd74ebd000,
+2026-03-15T00:51:18.725906,SUCCESS,book_Ch1_Fig.1.50 c16-floor2 PXL_20230306_030025709.jpg,71a53a58-0918-4ca9-a7e1-84a94a395a00,
+2026-03-15T00:51:22.618663,SUCCESS,book_Ch1_Fig.1.51 c16L-floor2 PXL_20230308_55550015 crop_levels_4500K gimp-shadows-highlights levels_4500K copy.jpg,5be3e0b7-8896-4316-f8de-80be38b14400,
+2026-03-15T00:51:26.152486,SUCCESS,book_Ch1_Fig.1.5A c21 PXL_20230309_050437142.dng gimp-shadows-highlights levels.jpg,900fd468-6395-438b-4d53-8b45e0c02400,
+2026-03-15T00:51:30.659415,SUCCESS,book_Ch1_Fig.1.5B c21 PXL_20230309_50147629 gimp-midlevel_shadows-highlights_5000K.jpg,a515c8fa-68ed-4cef-cf99-6f82be12d200,
+2026-03-15T00:51:34.294633,SUCCESS,book_Ch1_Fig.1.5C c21 PXL_20230309_045833821 gimp-shadows-highlights_midlevel_crop.jpg,b09f162a-a8a5-4ee1-201e-03bcf24fc200,
+2026-03-15T00:51:45.860891,FAILED,book_Ch1_Fig.1.5D c21 A0004799.3FR gimp-crop_shadows-highlights_levels_6000K.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:51:49.229851,SUCCESS,book_Ch1_Fig.1.6 c21  _CAV2062 crop_levels.jpg,f030c104-7f65-4ea6-69d9-34044bd51900,
+2026-03-15T00:51:53.470714,SUCCESS,book_Ch1_Fig.1.7 c21  _CAV2061 gimp-crop_highlights_levels_5000K.jpg,dc4f0931-7af6-4766-b40d-e12f629aa200,
+2026-03-15T00:51:57.019126,SUCCESS,book_Ch1_Fig.1.8A c21 PXL_20230309_051844936 rotate_crop_levels_6000K gimp-shadows-highlights.jpg,da9c5628-396b-426a-eb9e-1765fb730800,
+2026-03-15T00:52:00.740946,SUCCESS,book_Ch1_Fig.1.8B c21 _CAV2155 levels.jpg,d03d0454-1642-4fb1-b59b-344e59566d00,
+2026-03-15T00:52:10.865021,SUCCESS,book_Ch1_Fig.1.9 c21 A0004824.3FR midlevel gimp-shadows-highlights_6000K.jpg,07d55afc-9c7e-4a4c-d4d9-9d7b781c0100,
+2026-03-15T00:52:18.221674,FAILED,book_Ch1__Announcement p26 PXL_20230312_014148853.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:52:28.167786,SUCCESS,book_Ch1__Frontis p28 PXL_20230306_014830489 gimp-shadows-highlights_crop.jpg,4c459948-cd11-4930-74e2-484d0a6cde00,
+2026-03-15T00:52:30.655175,SUCCESS,book_Ch1_table_pillar1_ellora_cave21.jpg,b2718eea-9e78-4a2c-42f5-268f7fc7b900,
+2026-03-15T00:52:31.856250,SUCCESS,book_Ch1_table_pillar2_ellora_cave21.jpg,c6747ce0-f013-4873-009b-807d4b91c300,
+2026-03-15T00:52:33.191205,SUCCESS,book_Ch1_table_pillar3_ellora_cave21.jpg,37ed2e7a-0e09-43c7-d821-e4cf79be7a00,
+2026-03-15T00:52:39.369098,SUCCESS,book_Ch1_table_pillar_badami_cave3.jpg,8584137b-cbaf-4f00-1a2c-99622ca3b000,
+2026-03-15T00:52:40.647071,SUCCESS,book_Ch1_table_pillar_elephanta.jpg,0cb099f1-5b42-4f6e-e553-c4d96b78a300,
+2026-03-15T00:52:41.875693,SUCCESS,book_Ch1_table_pillar_jogeshwari.jpg,20df4068-7f4d-4dd3-9e4a-14e86eece600,
+2026-03-15T00:52:43.115958,SUCCESS,book_Ch1_table_pillar_mandapeshwar1.jpg,d65c312b-7cd2-4308-66cb-60b184c5d000,
+2026-03-15T00:52:44.190829,SUCCESS,book_Ch1_table_pillar_mandapeshwar2.jpg,5c78503d-574c-44bc-afef-1e147bd0d200,
+2026-03-15T00:52:48.880549,SUCCESS,book_Ch2_Fig.2.1 c10 PXL_20230310_021335758 levels gimp-shadows_desaturate-magenta.jpg,99a30a9a-672b-4cf4-98f4-5880288bbd00,
+2026-03-15T00:52:55.580373,SUCCESS,book_Ch2_Fig.2.10 c9 _CAV3566 levels.jpg,3d932ab3-c926-4d0e-b688-45d7dc7afd00,
+2026-03-15T00:53:00.330530,SUCCESS,book_Ch2_Fig.2.11 c6 PXL_20230311_033043482.NIGHT crop gimp-levels_shadows-highlights_midlevel.jpg,367f68e2-8e3a-4442-0ecf-628761c2bf00,
+2026-03-15T00:53:09.094639,SUCCESS,book_Ch2_Fig.2.12 c10-floor2 NeeleshKale_3184 crop_levels_curves gimp-shadows-highlights levels.jpg,4878698d-dd32-4001-e1b6-c50c5e69fd00,
+2026-03-15T00:53:18.435235,FAILED,book_Ch2_Fig.2.13 c10-floor2 NeeleshKale_3271 crop_levels.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:53:24.940109,SUCCESS,book_Ch2_Fig.2.14 c10-floor2 NeeleshKale_3331 rotate_crop_levels.jpg,4b03402e-0a7a-47e0-ac1c-6500ba87c000,
+2026-03-15T00:53:28.452285,SUCCESS,book_Ch2_Fig.2.15 c2 _CAV2808 levels gimp-shadows.jpg,5cee2040-bb4b-4397-8d23-5faf5a3dd800,
+2026-03-15T00:53:31.738760,SUCCESS,book_Ch2_Fig.2.16 c2 _CAV2897.jpg,5c9a92fc-03fd-4f20-5d86-e297e2102600,
+2026-03-15T00:53:35.735569,SUCCESS,book_Ch2_Fig.2.17 c2 PXL_20230311_064927868 gimp-shadows-highlights levels.jpg,3f143716-9aec-45fa-8934-9921902c5300,
+2026-03-15T00:53:39.596959,SUCCESS,book_Ch2_Fig.2.18 c2 NICK _DSC0475 rotate_crop_levels.jpg,569e6e0d-8c65-498e-861c-1eba0e570d00,
+2026-03-15T00:53:49.342640,FAILED,book_Ch2_Fig.2.19A c10 A0004888.3FR_0003 levels_5000K gimp-shadows-highlights.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:53:53.967410,SUCCESS,book_Ch2_Fig.2.19B c10 _CAV3590 gimp-rotate.jpg,dd9d0dc1-f033-4431-1f44-717981e80e00,
+2026-03-15T00:53:59.708077,SUCCESS,book_Ch2_Fig.2.19C c10 PXL_20230310_025757109..jpg,d899897b-a304-4550-62e0-9dbd5e16c100,
+2026-03-15T00:54:12.080158,SUCCESS,book_Ch2_Fig.2.2 c5 PXL_20230311_023421047.NIGHT rotate.jpg,086d60dc-04ac-4860-0174-fd3d81edb400,
+2026-03-15T00:54:19.258128,FAILED,book_Ch2_Fig.2.20 c10 _CAV3530.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:54:23.872986,SUCCESS,book_Ch2_Fig.2.21 c10-floor2 PXL_20230310_032953405 levels gimp-shadows-highlights.jpg,3247dd01-ee44-4fd2-4587-ac2881379b00,
+2026-03-15T00:54:25.619853,SUCCESS,book_Ch2_Fig.2.22  Ajanta-c26 NICK gimp-levels_shadows-highlights.jpg,305eaf11-aa52-468c-806c-eeb84b8d4100,
+2026-03-15T00:54:28.395584,SUCCESS,book_Ch2_Fig.2.23  Ajanta-c26 NICK gimp-shadows-highlights.jpg,591308d8-2f38-4084-fa70-d23ce486f800,
+2026-03-15T00:54:30.795912,SUCCESS,book_Ch2_Fig.2.24 Ajanta-c10 shrinelets Google Maps Jan 2014 rotate-crop.jpg,de8419aa-ecdd-4b9a-fb80-a2666ec8b400,
+2026-03-15T00:54:34.198025,SUCCESS,book_Ch2_Fig.2.25 Ajanta-c22 NICK gimp-rotate_crop_midlevel.jpg,769ceff7-6eaf-4529-ef70-31f5494b2500,
+2026-03-15T00:54:37.232510,SUCCESS,book_Ch2_Fig.2.26 Ajanta-c10 NICK gimp-levels_crop.jpg,d245fc28-9667-4c3a-0cf3-38cf67ff1b00,
+2026-03-15T00:54:44.960495,FAILED,book_Ch2_Fig.2.27 Kanheri-c67G NICK.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:54:48.753746,SUCCESS,book_Ch2_Fig.2.3 c12 _CAV2954 gimp-shadows_5500K.jpg,60855cfa-fd22-4ce9-fb46-3c184c14cc00,
+2026-03-15T00:54:55.183283,FAILED,book_Ch2_Fig.2.4 c12-floor3 PXL_20230312_063618581.NIGHT_0000.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:54:57.048455,SUCCESS,book_Ch2_Fig.2.5 c4 NICK _DSC0480 gimp-levels_shadows-highlights_midlevel_crop.jpg,92503427-9a19-42de-5158-b3aa9b6dff00,
+2026-03-15T00:55:02.724001,SUCCESS,book_Ch2_Fig.2.6 c10-floor2 PXL_20230310_033422262 rotate gimp_crop_highlights_midlevel.jpg,724afd24-4aa4-4e10-c141-d313b0284100,
+2026-03-15T00:55:08.538136,SUCCESS,book_Ch2_Fig.2.7 c12-floor3 PXL_20230312_060750066.NIGHT gimp-shadows-highlights levels.jpg,c75e7af0-d269-4a4b-ffa9-898f6e639d00,
+2026-03-15T00:55:13.329652,SUCCESS,book_Ch2_Fig.2.8 c8 PXL_20230311_032442782.NIGHT crop gimp-shadows-highlights levels.jpg,4a000f5a-29e1-4ac6-6728-770f9442ca00,
+2026-03-15T00:55:21.287084,SUCCESS,book_Ch2_Fig.2.9 c10-floor2 PXL_20230310_033300159 crop_levels gimp-shadows-highlights.jpg,90e9a37b-a95c-4acd-b2bb-ac9036d98000,
+2026-03-15T00:55:26.329607,SUCCESS,book_Ch2__Announcement p94 C2 _CAV2895.jpg,a6147d99-a1e4-4804-2730-66b780192c00,
+2026-03-15T00:55:33.846032,FAILED,book_Ch2__Frontis p96 C2 A_5077.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:55:37.831945,SUCCESS,book_Ch3_Fig.3.1 c32 PXL_20230313_122109801 NIGHT.jpg,a28dc201-4039-4997-0b5b-e4c4a7b96e00,
+2026-03-15T00:55:41.984106,SUCCESS,book_Ch3_Fig.3.10 c29 PXL_20230310_110621830 NIGHT..jpg,087d48eb-99b3-4691-5e74-22b42d74d000,
+2026-03-15T00:55:46.713763,SUCCESS,book_Ch3_Fig.3.11 c32-floor2 PXL_20230313_115335824..jpg,c5522566-a40a-498a-48a1-12a8029e0500,
+2026-03-15T00:55:50.535354,SUCCESS,book_Ch3_Fig.3.12 c32 _CAV1059 crop_levels gimp-shadows-highlights.jpg,ca1577e2-25eb-4d1d-b15a-45cd201dee00,
+2026-03-15T00:55:57.596505,FAILED,book_Ch3_Fig.3.13 c30 PXL_20230313_103646906.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:56:02.037190,SUCCESS,book_Ch3_Fig.3.14 c16 PXL_20230308_033525697..jpg,4d57e91e-404f-4750-1f93-a5a193e36000,
+2026-03-15T00:56:06.080289,SUCCESS,book_Ch3_Fig.3.15 c30 PXL_20230313_113223923.NIGHT rotate_crop gimp-midlevel_shadows-highlights_midlevel.jpg,81c91ae0-66f7-41fb-689a-d1b3e6151b00,
+2026-03-15T00:56:08.024739,SUCCESS,book_Ch3_Fig.3.16 c16 PXL_20230312_021042158..jpg,eef310f1-c336-4e7a-54c9-6df46a0b0200,
+2026-03-15T00:56:21.251573,FAILED,book_Ch3_Fig.3.17 c30 A0005240G.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:56:33.740478,FAILED,book_Ch3_Fig.3.18 c30 A0005241.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:56:42.815011,FAILED,book_Ch3_Fig.3.19 c30 A0005238.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:56:53.303563,FAILED,book_Ch3_Fig.3.20 c30 A0005234.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:56:57.480826,SUCCESS,book_Ch3_Fig.3.21 c32 _CAV1063 rotate_crop_levels gimp-shadows-highlights.jpg,027c0ae0-33fa-4587-771f-f0e7ad125300,
+2026-03-15T00:57:03.556878,SUCCESS,book_Ch3_Fig.3.22 c32 Ellora c32-floor1_PXL_20230312_123002313.dng  crop_levels gimp-shadows-highlights.jpg,6bcab191-ddbe-41ce-1af5-3024f2213400,
+2026-03-15T00:57:10.354363,SUCCESS,book_Ch3_Fig.3.23 c32 PXL_20230313_114501274 gimp-levels_shadows-highlights.jpg,ef8d7479-4e5f-4b00-bafc-fcc257e18400,
+2026-03-15T00:57:14.091322,SUCCESS,book_Ch3_Fig.3.24 c32-floor2 PXL_20230313_121708020.NIGHT.jpg,c7a44b99-58e9-4348-70b8-3b236ed6e200,
+2026-03-15T00:57:16.837066,SUCCESS,book_Ch3_Fig.3.25 c32-floor2 PXL_20230313_120012865_and_115833880.NIGHT gimp-merge-2-photos_shadows-highlights.jpg,1328d4b0-c281-4ca6-7e3f-f7a555f6c600,
+2026-03-15T00:57:20.172036,SUCCESS,book_Ch3_Fig.3.26 c30 _CAV0923 gimp-rotate_crop_midlevel_levels.jpg,04125158-da65-47b3-c582-9cad2f5ca300,
+2026-03-15T00:57:23.379246,SUCCESS,book_Ch3_Fig.3.27 c30 _CAV0924 gimp_crop_midlevel_levels.jpg,7c13685f-c7e6-452d-1674-618c44f9a700,
+2026-03-15T00:57:27.645109,SUCCESS,book_Ch3_Fig.3.2A c32 _CAV1387 gimp-shadows-highlights_levels.jpg,95bb7858-9c49-4cbf-c42a-4230e57efb00,
+2026-03-15T00:57:32.292381,SUCCESS,book_Ch3_Fig.3.2B c32 PXL_20230313_121119927.NIGHT gimp-midlevel_shadows-highlights.jpg,5075601a-4687-4adb-fe53-7b942a4fb600,
+2026-03-15T00:57:36.511750,SUCCESS,book_Ch3_Fig.3.3 c32-floor2 _CAV1777 gimp-shadows-highlights.jpg,2e6adac7-0614-4854-b5b1-b622f4f8fc00,
+2026-03-15T00:57:39.944876,SUCCESS,book_Ch3_Fig.3.4 c33-floor2 _CAV0708 gimp-crop_shadows-highlights.jpg,c04aafa9-1a46-427d-ac2d-ae8de11eaa00,
+2026-03-15T00:57:43.600646,SUCCESS,book_Ch3_Fig.3.5 c33-floor2 _CAV0709 gimp-levels_shadows-highlights.jpg,b21d8958-62cc-4a78-d8d6-232d87663c00,
+2026-03-15T00:57:49.311496,SUCCESS,book_Ch3_Fig.3.6 c12-floor3 PXL_20230312_061415177..jpg,ec599b26-2341-4d0d-c257-53400705c500,
+2026-03-15T00:57:52.353545,SUCCESS,book_Ch3_Fig.3.7 c16 PXL_20230308_052759868..jpg,949d41c6-d6e8-4ba0-349a-213411b0d700,
+2026-03-15T00:57:56.759720,SUCCESS,book_Ch3_Fig.3.8 c16 PXL_20230308_052828944..jpg,9ce052ab-462b-47fb-2c9d-09ff44a54500,
+2026-03-15T00:58:00.595232,SUCCESS,book_Ch3_Fig.3.9 c33-floor2 _CAV0583 gimp-rotate_crop_levels.jpg,b30775d1-9055-4df6-440d-a20a09bf2f00,
+2026-03-15T00:58:07.444054,SUCCESS,book_Ch3__Announcement p130 c32-floor2 PXL_20230312_113549911.jpg,07cd8540-033a-43f7-5322-d5c903e49800,
+2026-03-15T00:58:13.725484,SUCCESS,book_Ch3__Frontis p132 c32-floor2 PXL_20230312_111628604 gimp-shadows-highlights.jpg,0a81eef6-62b3-475a-3add-41ae0b57e900,
+2026-03-15T00:58:19.637354,SUCCESS,book_Ch4_Fig.4.1 c2 _CAV2931 gimp-shadows-highlights.jpg,d5f624fc-5100-4dfc-12e8-c3e2a42c3600,
+2026-03-15T00:58:30.651700,FAILED,book_Ch4_Fig.4.10 c29 PXL_20230310_120843792 NIGHT.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:58:36.363670,SUCCESS,book_Ch4_Fig.4.11A c29 PXL_20230310_120547055.NIGHT crop gimp-levels.jpg,ee52c972-859c-42be-f952-ee4dd1c76000,
+2026-03-15T00:58:41.776076,SUCCESS,book_Ch4_Fig.4.11B c29 PXL_20230315_060224647.jpg,3b4d0628-6fd6-4f57-ecca-62411ddf0a00,
+2026-03-15T00:58:44.061302,SUCCESS,book_Ch4_Fig.4.12 c29 DSCN5558 gimp-level.jpg,dcd2c716-9bdc-4772-a3e0-af03506ad800,
+2026-03-15T00:58:49.393169,SUCCESS,book_Ch4_Fig.4.13 c30 PXL_20230313_103203175.NIGHT.dng gimp-shadows-highlights.jpg,d1eaca48-029d-4c1e-8da2-ee0e9adc2300,
+2026-03-15T00:59:01.168195,FAILED,book_Ch4_Fig.4.14 c30 _CAV1046.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:59:05.844746,SUCCESS,book_Ch4_Fig.4.15 c30 _CAV0898 gimp-shadows-highlights.jpg,10cb1657-5f9a-41f0-d38a-27d4a5214000,
+2026-03-15T00:59:09.995973,SUCCESS,book_Ch4_Fig.4.16 c30 _CAV0893 rotate_crop_levels_colorcorrect.jpg,3b195f3c-20fc-488c-8067-73413f2f8d00,
+2026-03-15T00:59:14.665553,SUCCESS,book_Ch4_Fig.4.17 c30 PXL_20230313_104617889.dng levels.jpg,55747898-0ece-4a5a-a225-b239e566aa00,
+2026-03-15T00:59:19.428420,SUCCESS,book_Ch4_Fig.4.18 c30 _CAV0915 levels gimp-shadows-highlights.jpg,ed965faa-3dc7-4a8e-1508-27c659d09a00,
+2026-03-15T00:59:25.894830,SUCCESS,book_Ch4_Fig.4.19 c30 PXL_20230313_104536793.dng levels gimp-shadows-highlights.jpg,7e68fc8e-afd7-4215-d61f-3daf538e5100,
+2026-03-15T00:59:30.657594,SUCCESS,book_Ch4_Fig.4.2 c2 PXL_20230311_050207459 NIGHT.jpg,2424a15a-9e55-4cff-e81a-48d806c49600,
+2026-03-15T00:59:33.593759,SUCCESS,book_Ch4_Fig.4.20 c30 _CAV1006 gimp-rotate_crop_shadows-highlights_midlevel.jpg,841703ed-abb5-46d7-1d65-62030d5ef400,
+2026-03-15T00:59:45.578151,FAILED,book_Ch4_Fig.4.3 c2 A0005066.3FR_0024 rotate_crop_shadows-highlights_levels_4000K.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:59:50.112787,SUCCESS,book_Ch4_Fig.4.4 c2 PXL_20230311_054925170 NIGHT.jpg,2174f494-e647-4503-b659-86f46c107e00,
+2026-03-15T00:59:54.630065,SUCCESS,book_Ch4_Fig.4.5 c2 PXL_20230311_055524128 NIGHT.jpg,65383d18-701e-4f31-dc2a-b2474e9db900,
+2026-03-15T00:59:59.402407,SUCCESS,book_Ch4_Fig.4.6 c29 PXL_20230308_120934513.jpg,169afc39-7951-4f20-926d-849a282fd200,
+2026-03-15T01:00:13.364461,FAILED,book_Ch4_Fig.4.7 c29 _CAV2434.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:00:19.479785,SUCCESS,book_Ch4_Fig.4.8 c29 PXL_20230313_022144372.jpg,2e5dc0ea-a9d6-4c04-af65-ef4cfe392e00,
+2026-03-15T01:00:27.342844,FAILED,book_Ch4__Announcement p164 c30A PXL_20230313_102115621.NIGHT.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:00:30.044527,SUCCESS,book_Ch5_Fig.5.1 G8-12 DSCN6442.jpg,b72febe3-5aeb-4011-2d8e-8f28b1c89200,
+2026-03-15T01:00:34.190860,SUCCESS,book_Ch5_Fig.5.10 c29 PXL_20230310_112543146.NIGHT crop_6500K gimp-shadows-highlights.jpg,1452ea67-8952-4177-9ded-ee93610a5a00,
+2026-03-15T01:00:37.754755,SUCCESS,book_Ch5_Fig.5.11 c5 DSCN4332 6000K gimp-rotate.jpg,f7fe60cb-93a4-444c-62a5-5456b4fd8200,
+2026-03-15T01:00:41.750339,SUCCESS,book_Ch5_Fig.5.12 Kanheri_Caves_(3)Wikimedia.jpg,a16007c8-bc2f-4d72-8223-ab02ebaa1400,
+2026-03-15T01:00:43.248337,SUCCESS,book_Ch5_Fig.5.13 c4 gimp-crop2_9000K.jpg,4c5385d2-917d-4123-9d10-653337378300,
+2026-03-15T01:00:52.229081,SUCCESS,book_Ch5_Fig.5.14 c10 PXL_20230310_024046104.NIGHT gimp-shadows-highlights2.jpg,5c4d7866-d623-4779-f273-b900e4343a00,
+2026-03-15T01:00:58.032114,SUCCESS,"book_Ch5_Fig.5.15 c10-floor2 Pia Ellora Cave 10 Upper Balcony, North Wall, Inscription gimp-highlights.jpg",fa2f619e-304c-4c20-85f6-1c4a8cf9f800,
+2026-03-15T01:01:02.720613,SUCCESS,book_Ch5_Fig.5.2 J1-2.jpg,812ba805-42cd-4e27-0082-be83013c7a00,
+2026-03-15T01:01:04.068942,SUCCESS,book_Ch5_Fig.5.3 plan Buddhist-Caves-at-Aurangabad-Transformations-in-Art-and-Religion Pia Brancaccio Brill_0265.jpg,b9744d55-74f1-4b76-34f3-d61649e02a00,
+2026-03-15T01:01:15.827132,SUCCESS,book_Ch5_Fig.5.4 c29 PXL_20230313_022935786.NIGHT gimp-shadows-highlights.jpg,c35a6f72-a80a-4fcd-add3-315b73279300,
+2026-03-15T01:01:23.617123,SUCCESS,book_Ch5_Fig.5.5 Aurangabad-c2 Anandajoti Bhikkhu Aurangabad-1-Original-00027.jpg,b8d5fac5-e4c3-4012-eede-eea46b6a3300,
+2026-03-15T01:01:27.724659,SUCCESS,book_Ch5_Fig.5.6A Aurangabad Pia crop_levels gimp-shadows-highlights.jpg,2f87cfd3-d9af-4199-81ab-277fe45a8800,
+2026-03-15T01:01:30.545038,SUCCESS,book_Ch5_Fig.5.6B Aurangabad Anandajoti Bhikkhu Aurangabad-2-Original-00035.jpg,8bb99327-f883-465a-e391-c6a71801a900,
+2026-03-15T01:01:35.052553,SUCCESS,book_Ch5_Fig.5.7 c21 PXL_20230309_014634258 crop_levels gimp-shadows-highlights levels.jpg,434b7ce4-62be-4a90-9542-e6397973d200,
+2026-03-15T01:01:38.175698,SUCCESS,book_Ch5_Fig.5.8 c29 CAV2430 gimp-crop_levels_shadows-highlights_exposure.jpg,36de26de-dc39-4fc9-9ca5-4bb428538e00,
+2026-03-15T01:01:50.433235,SUCCESS,book_Ch5_Fig.5.9 Aurangabad-c6 Pia gimp-shadows-highlights levels.jpg,006abb8a-3b51-468f-1826-c4051cec4500,
+2026-03-15T01:02:14.912849,FAILED,book_Ch5__Announcement p194 c21 PXL_20230315_063221124 gimp-midlevel.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:02:18.389658,SUCCESS,book_Ch5__Frontis p196 c29 PXL_20230313_024539678.NIGHT.jpg,415735fc-7323-4cbb-f1f4-03466dde6e00,
+2026-03-15T01:02:20.481536,SUCCESS,book__p14 Fig.Preface c15-floor2 PXL_20230310_065627378.NIGHT.dng.jpg,8d95a02f-6e31-4e7a-e1cc-ef705ee3ed00,
+2026-03-15T01:02:23.214140,SUCCESS,book__p16 Tribute 20031112_WalterSpink_DSCN4085.jpg,fdb7e1e2-029a-496e-dc84-c0a7bec1a300,
+2026-03-15T01:02:41.790063,FAILED,book__p20 Introduction c17 A0005198 gimp-shadows-highlights.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:02:52.645103,FAILED,book__p23_map-empty iStock-1482181781.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:02:55.303479,SUCCESS,book__p25 Intro_close c15 _CAV2469.jpg,568241f7-3678-49b4-9ead-f37a45c8f500,
+2026-03-15T01:02:59.044220,SUCCESS,book__p268_Glossary c15-floor2 PXL_20230310_065350119.NIGHT.jpg,f1d261c4-3638-4aca-ea11-6df02a9f9b00,
+2026-03-15T01:03:04.745000,SUCCESS,book__p276 Bibliography_Biographies c29 _CAV2436.jpg,c63e7e4e-dda3-43ed-692c-aaf5f1c9be00,
+2026-03-15T01:03:09.226440,SUCCESS,book__p279 Exit_image c15-floor2.jpg,e377a1c7-5ad6-449d-fdf8-bec22f8af300,
+2026-03-15T01:03:21.299983,FAILED,book__p4 Fig.Dedication c33-floor2 _CAV4421 gimp-shadows-highlights_levels.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:03:27.461449,SUCCESS,book__p6 Fig.Contents c16 PXL_20230306_021409858 gimp-levels_shadows-highlights.jpg,f3536eaf-65e3-4ee6-7576-dc9f14f02400,
+2026-03-15T01:03:30.352105,SUCCESS,book_plan Cave 10 from Christophe Hioco without cross hatch.jpg,33822951-07ef-4bd7-ccf8-d1a361f85b00,
+2026-03-15T01:03:31.974240,SUCCESS,book_plan Cave 14 from Christophe Hioco_without cross hatch.jpg,ef58ed49-d0cc-4b6a-917d-c73755260400,
+2026-03-15T01:03:33.986264,SUCCESS,book_plan Cave 16 from Christophe Hioco_without cross hatch.jpg,e86d9e9f-2707-4de7-16a8-7ad40ede3d00,
+2026-03-15T01:03:35.507556,SUCCESS,book_plan Cave 2 IMG_1975 without cross hatch crop.jpg,571d4cf8-3c75-4540-33fd-8d24d3939d00,
+2026-03-15T01:03:38.666785,SUCCESS,book_plan Cave 21 from Christophe Hioco_without cross hatch.jpg,a4615928-7206-4d3d-7c3a-b758cdf01f00,
+2026-03-15T01:03:39.658354,SUCCESS,book_plan Cave 29.jpg,ff6b6e8c-ef0f-4bc9-1266-597bf4029c00,
+2026-03-15T01:03:41.818444,SUCCESS,book_plan Cave 32  from Christophe Hioco no cross hatch.jpg,92dd02b9-5a3a-4fd3-6e01-146710ab1600,
+2026-03-15T01:03:43.690224,SUCCESS,book_plan Cave 33 2nd floor from Christophe Hioco no cross hatch.jpg,063b1205-413d-48fb-f6ed-c93766fdf200,
+2026-03-15T01:03:50.662294,SUCCESS,book_post_Archive10_p252_C16_ArchivalOverview_22_11_000222.jpg,ec1129ac-e8a4-4917-82ae-811d76000200,
+2026-03-15T01:03:56.113738,SUCCESS,book_post_Archive11_p253_C16_Archival_22_11_001113.jpg,c52a2dc3-925c-483a-0731-0b1700e70500,
+2026-03-15T01:04:08.811541,FAILED,book_post_Archive12_p254_C21_d9a6cfe1-df94-4366-82cb-ee90535df996_4792.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:04:20.455586,SUCCESS,book_post_Archive13_p255_C21_d78b969f-0cae-4b5e-abd3-c5b88df48faf_4455.jpg,25b69f78-8e5e-4151-2657-150c748e0400,
+2026-03-15T01:04:25.110777,SUCCESS,book_post_Archive14_p256_C29_Archival_22_11_000658.jpg,1a827591-9b68-46f0-eaa6-5a5837191d00,
+2026-03-15T01:04:30.899653,SUCCESS,book_post_Archive15_p257_C29_Archival_22_11_000661.jpg,a875a8d4-fc35-4f3b-ac4f-172a4dbddb00,
+2026-03-15T01:04:35.692739,SUCCESS,book_post_Archive16_p258_C32_Archival_22_11_000150.jpg,d77ac2d8-4eca-426d-b415-7ddbc8830900,
+2026-03-15T01:04:41.559033,SUCCESS,book_post_Archive17_p259_C32_Archival_22_11_000148.jpg,fba1df5e-6f43-482f-90e7-deb145d41600,
+2026-03-15T01:04:46.193249,SUCCESS,book_post_Archive18_p260_C32_Archival_22_11_000693.jpg,72e1304a-14e1-4731-3489-da122e0c0500,
+2026-03-15T01:04:52.134143,FAILED,book_post_Archive19_p261_C32_dc240a41-7c71-443c-b6cd-5551cc148da7_5976.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:04:57.461618,SUCCESS,book_post_Archive1_p246_BuddhistNE_Archival_22_11_000914.jpg,bc618361-a0fa-4160-6818-d67e12cc7900,
+2026-03-15T01:05:05.212347,FAILED,book_post_Archive20_p262_C16_Pithawalla_painting_DAG000050727.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:05:14.010426,FAILED,book_post_Archive21_p263_C16_Pithawalla_painting_DAG000050728.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:05:20.910171,SUCCESS,book_post_Archive22_p264_C16_Pithawalla_painting_DAG000050726.jpg,016e1e52-b3a6-4393-537b-330ca2cf3c00,
+2026-03-15T01:05:31.498465,FAILED,book_post_Archive23_p265_C33_Pithawalla_painting_DAG000050737.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:05:38.456444,SUCCESS,book_post_Archive24a_p266_C33_Pithawalla_painting_DAG000050735.jpg,dd6703d1-07e9-4361-5248-5accaa292100,
+2026-03-15T01:05:44.712323,SUCCESS,book_post_Archive24b_p266_C33_CAV4422.jpg,22ebd127-3d43-4797-2452-43f7aea96f00,
+2026-03-15T01:05:53.987828,FAILED,book_post_Archive2_p246_Buddhist_DeenDayal_Getty_2ad3cc3c-4f05-4c7a-b5d6-2824f0dc9646_6693.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:06:00.238863,SUCCESS,book_post_Archive3_p247_BuddhistSE_Archival_22_11_000918.jpg,401ea821-d6df-4e11-8947-1fa79184f600,
+2026-03-15T01:06:06.960578,SUCCESS,book_post_Archive4_p247_C2_Archival_22_11_000916.jpg,23e2ba70-84f8-4fed-5b2a-4bfe4f610200,
+2026-03-15T01:06:13.409796,SUCCESS,book_post_Archive5_p248_C10_Archival_DAG02876.jpg,881a88c8-bf13-4895-93d5-ef52ab352800,
+2026-03-15T01:06:18.045492,SUCCESS,book_post_Archive6_p248_C10_Archival_22_11_000349.jpg,e5853899-3382-4dc4-4a6e-18035e842c00,
+2026-03-15T01:06:21.137533,SUCCESS,book_post_Archive7_p249_C10_DAG000089954.jpg,633089a7-62b2-428b-bab7-54a916393800,
+2026-03-15T01:06:27.562714,SUCCESS,book_post_Archive8_p249_C10_DAG000087543.jpg,d9d86979-b255-4f37-cf4b-c206db386200,
+2026-03-15T01:06:31.020018,SUCCESS,book_post_Archive9a_p250_C16_Archival_Stereograph_1_06_11_003842.jpg,1ee0e0ee-cf69-459a-f652-de929f5a6d00,
+2026-03-15T01:06:34.996779,SUCCESS,book_post_Archive9b_p251_C16_Archival_Stereograph_verso_2_06_11_003842a.jpg,eddc671f-227d-445d-2a36-54da47241100,
+2026-03-15T01:06:42.698731,FAILED,book_post_Archive_Daniells_Plate0_Frontispiece.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:07:09.745189,FAILED,book_post_Archive_Daniells_Plate1-2_The_Mountain_of_Ellora_1st-2nd_View.jpg,,HTTP 413: Request entity is too large
+2026-03-15T01:07:25.944742,FAILED,book_post_Archive_Daniells_Plate10_Junwassa.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:07:38.969216,FAILED,book_post_Archive_Daniells_Plate11_Rameswara.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:07:52.606167,FAILED,book_post_Archive_Daniells_Plate12_The_Entrance_to_Kailasa.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:08:05.785667,FAILED,book_post_Archive_Daniells_Plate13_S.W._View_of_Kailasa.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:08:21.219970,FAILED,book_post_Archive_Daniells_Plate14_N.E._View_of_Kailasa.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:08:48.389150,FAILED,book_post_Archive_Daniells_Plate15-16_The_Upper_Part_of_Kailasa.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:09:03.692468,FAILED,book_post_Archive_Daniells_Plate17_Das_Avatara.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:09:16.547600,FAILED,book_post_Archive_Daniells_Plate18_The_Ashes_of_Ravana.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:09:30.722650,FAILED,book_post_Archive_Daniells_Plate19_The_Ashes_of_Ravana_Interior_View.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:09:43.972278,FAILED,book_post_Archive_Daniells_Plate20_Tin-Tali.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:09:58.788607,FAILED,book_post_Archive_Daniells_Plate21_Do-Tali.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:10:11.896124,FAILED,book_post_Archive_Daniells_Plate22_Viswakarma_Exterior_View.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:10:15.980006,SUCCESS,book_post_Archive_Daniells_Plate23_Viswakarma.jpg,e22e6545-5d2b-4798-7692-eebe418e2b00,
+2026-03-15T01:10:37.774584,FAILED,book_post_Archive_Daniells_Plate24_Dehr_Warra.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:10:48.343878,FAILED,book_post_Archive_Daniells_Plate3_The_Mountain_of_Ellora_3rd_View.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:10:53.608109,SUCCESS,book_post_Archive_Daniells_Plate4_Jagannnath_Sabha.jpg,0c4746d8-5664-4ef7-42f6-d3b32a536a00,
+2026-03-15T01:11:08.872042,FAILED,book_post_Archive_Daniells_Plate5_Paraswa_Rama_Sabha.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:11:21.577053,FAILED,book_post_Archive_Daniells_Plate6_The_Entrance_of_Indra_Sabha.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:11:25.052570,SUCCESS,book_post_Archive_Daniells_Plate7_Indra_Sabha_Looking_Outward.jpg,71680aa3-5242-4ae4-9ada-084f84fac400,
+2026-03-15T01:11:37.222177,FAILED,book_post_Archive_Daniells_Plate8_Indra_Sabha.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:11:52.123440,FAILED,book_post_Archive_Daniells_Plate9_Doomar_Leyna.jpg,,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.

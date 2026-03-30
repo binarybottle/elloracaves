@@ -1,0 +1,1889 @@
+======================================================================
+DEDUPLICATION PLAN
+Generated: 2026-03-07T20:09:56.178008+00:00
+Duplicate groups: 456
+======================================================================
+
+Group 1: AUTO — 7 DB records, 7 CF images
+  [KEEP  ] image_id= 2322  cave= 30  score= 30  c30/_CAV0947.jpg
+  [DELETE] image_id= 8013  cave= 30  score= 30  c30/_CAV0947.jpg
+  [DELETE] image_id= 8792  cave= 30  score= 30  c30/_CAV0947.jpg
+  [DELETE] image_id= 8793  cave= 30  score= 30  c30/_CAV0947.jpg
+  [DELETE] image_id= 8794  cave= 30  score= 30  c30/_CAV0947.jpg
+  [DELETE] image_id= 8795  cave= 30  score= 30  c30/_CAV0947.jpg
+  [DELETE] image_id= 8796  cave= 30  score= 30  c30/_CAV0947.jpg
+
+Group 2: AUTO — 3 DB records, 3 CF images
+  [KEEP  ] image_id= 4365  cave=  8  score= 60  c8/c8le2.jpg has_plan_xy
+  [DELETE] image_id= 4346  cave=  8  score= 20  c8/c8_eI2.jpg
+  [DELETE] image_id= 7608  cave=  8  score= 20  c8/DSCN4417.jpg
+
+Group 3: AUTO — 3 DB records, 3 CF images
+  [KEEP  ] image_id= 4338  cave=  8  score= 50  c8/c8_4a.jpg has_plan_xy
+  [DELETE] image_id= 4360  cave=  8  score= 20  c8/c8aSI1.jpg
+  [DELETE] image_id= 7602  cave=  8  score= 20  c8/DSCN4424.jpg
+
+Group 4: AUTO — 3 DB records, 3 CF images
+  [KEEP  ] image_id= 4279  cave=  8  score= 60  c6/C6and9passageway_rename.jpg has_plan_xy
+  [DELETE] image_id= 4282  cave=  8  score= 20  c6/c6-9_passage2.jpg
+  [DELETE] image_id= 7587  cave=  8  score= 20  c9/DSCN4401.jpg
+
+Group 5: AUTO — 4 DB records, 3 CF images
+  [KEEP  ] image_id= 3676  cave= 10  score= 60  c10/c10_F3.jpg has_plan_xy
+  [DELETE] image_id=  119  cave= 10  score= 50  c10/c10_F3.jpg has_plan_xy
+  [DELETE] image_id= 3794  cave= 10  score= 20  c10/c10F2.jpg
+  [DELETE] image_id= 8729  cave= 10  score= 20  c10/DSCN4440.jpg
+
+Group 6: AUTO — 3 DB records, 3 CF images
+  [KEEP  ] image_id= 4337  cave=  8  score= 60  c8/c8_4.jpg has_plan_xy
+  [DELETE] image_id= 4358  cave=  8  score= 20  c8/c8aS.jpg
+  [DELETE] image_id= 7605  cave=  8  score= 20  c8/DSCN4421.jpg
+
+Group 7: AUTO — 3 DB records, 3 CF images
+  [KEEP  ] image_id= 4340  cave=  8  score= 30  c8/c8_4c.jpg
+  [DELETE] image_id= 4361  cave=  8  score= 20  c8/c8aSI2.jpg
+  [DELETE] image_id= 7601  cave=  8  score= 20  c8/DSCN4425.jpg
+
+Group 8: AUTO — 3 DB records, 3 CF images
+  [KEEP  ] image_id= 7600  cave=  8  score= 30  c8/DSCN4426.jpg
+  [DELETE] image_id= 4339  cave=  8  score= 20  c8/c8_4b.jpg
+  [DELETE] image_id= 4362  cave=  8  score= 20  c8/c8aSI3.jpg
+
+Group 9: AUTO — 3 DB records, 3 CF images
+  [KEEP  ] image_id= 4348  cave=  8  score= 60  c8/c8_H.jpg has_plan_xy
+  [DELETE] image_id= 4356  cave=  8  score= 50  c8/c8AlW.jpg has_plan_xy
+  [DELETE] image_id= 7598  cave=  8  score= 20  c8/DSCN4428.jpg
+
+Group 10: AUTO — 3 DB records, 3 CF images
+  [KEEP  ] image_id= 4352  cave=  8  score= 60  c8/c8_SD.jpg has_plan_xy
+  [DELETE] image_id= 4369  cave=  8  score= 50  c8/c8SD.jpg has_plan_xy
+  [DELETE] image_id= 7590  cave=  8  score= 20  c8/DSCN4437.jpg
+
+Group 11: AUTO — 3 DB records, 3 CF images
+  [KEEP  ] image_id= 4367  cave=  8  score= 60  c8/c8RW2.jpg has_plan_xy
+  [DELETE] image_id= 4350  cave=  8  score= 20  c8/c8_H2.jpg
+  [DELETE] image_id= 7596  cave=  8  score= 20  c8/DSCN4430.jpg
+
+Group 12: REVIEW — 3 DB records, 3 CF images
+  [KEEP  ] image_id= 4347  cave=  8  score= 60  c8/c8_F.jpg has_plan_xy
+  [DELETE] image_id= 4382  cave=  9  score= 60  c9/c9F1.jpg has_plan_xy
+  [DELETE] image_id= 7578  cave=  9  score= 20  c9/DSCN4418.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=8 vs image_id=4382 cave_id=9
+  ⚠ CONFLICT: cave_id mismatch: keeper=8 vs image_id=7578 cave_id=9
+
+Group 13: AUTO — 3 DB records, 3 CF images
+  [KEEP  ] image_id= 4368  cave=  8  score= 60  c8/c8RW3.jpg has_plan_xy
+  [DELETE] image_id= 4344  cave=  8  score= 50  c8/c8_circumambulatory.jpg has_plan_xy
+  [DELETE] image_id= 7595  cave=  8  score= 20  c8/DSCN4431.jpg
+
+Group 14: AUTO — 3 DB records, 3 CF images
+  [KEEP  ] image_id= 4366  cave=  8  score= 60  c8/c8RW1.jpg has_plan_xy
+  [DELETE] image_id= 4349  cave=  8  score= 20  c8/c8_H1.jpg
+  [DELETE] image_id= 7597  cave=  8  score= 20  c8/DSCN4429.jpg
+
+Group 15: AUTO — 3 DB records, 3 CF images
+  [KEEP  ] image_id= 4278  cave=  8  score= 60  c6/c6and9passage_rename.jpg has_plan_xy
+  [DELETE] image_id= 4281  cave=  8  score= 20  c6/c6-9_passage.jpg
+  [DELETE] image_id= 7607  cave=  8  score= 20  c8/DSCN4419.jpg
+
+Group 16: AUTO — 3 DB records, 3 CF images
+  [KEEP  ] image_id= 4379  cave=  9  score= 60  c9/c9_SI1.jpg has_plan_xy
+  [DELETE] image_id= 4384  cave=  9  score= 20  c9/c9SI.jpg
+  [DELETE] image_id= 7585  cave=  9  score= 20  c9/DSCN4404.jpg
+
+Group 17: AUTO — 1 DB records, 3 CF images
+  [KEEP  ] image_id= 9445  cave= 21  score=180  book_archival_A12_C21_d9a6cfe1-df94-4366-82cb-ee90535df996_4792.jpg book_fig=A12 book_page=254
+
+Group 18: AUTO — 3 DB records, 3 CF images
+  [KEEP  ] image_id= 4345  cave=  8  score= 60  c8/c8_eI1.jpg has_plan_xy
+  [DELETE] image_id= 4364  cave=  8  score= 20  c8/c8le1.jpg
+  [DELETE] image_id= 7609  cave=  8  score= 20  c8/DSCN4416.jpg
+
+Group 19: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3847  cave= 11  score= 60  c11/c11_3rdfloorV.jpg has_plan_xy
+  [DELETE] image_id= 8553  cave= 11  score= 30  c11/DSCN4624.jpg
+
+Group 20: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4197  cave=  3  score= 60  c3/c3_H3.jpg has_plan_xy
+  [DELETE] image_id= 8023  cave=  3  score= 30  c3/DSCN4283.jpg
+
+Group 21: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4176  cave=  2  score= 60  c2/cave2facade.jpg has_plan_xy
+  [DELETE] image_id= 8087  cave=  2  score= 20  c2/DSCN4264.jpg
+
+Group 22: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3759  cave= 10  score= 50  c10/c10_S4stupad6.jpg has_plan_xy
+  [DELETE] image_id= 8626  cave= 10  score= 20  c10/DSCN4544.jpg
+
+Group 23: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3680  cave= 10  score= 60  c10/c10_Fentrance.jpg has_plan_xy
+  [DELETE] image_id= 8723  cave= 10  score= 30  c10/DSCN4446.jpg
+
+Group 24: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 9490  cave= 15  score=180  book_Fig.1.28 c15-floor2 _CAV2601.jpg book_fig=1.28 book_page=60
+  [DELETE] image_id= 1099  cave= 15  score= 60  c15/_CAV2601.jpg has_plan_xy
+
+Group 25: AUTO — 1 DB records, 2 CF images
+  [KEEP  ] image_id= 2410  cave= 30  score= 60  c-?/_CAV1036.jpg has_plan_xy
+
+Group 26: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3711  cave= 10  score= 60  c10/c10_S2-1.jpg has_plan_xy
+  [DELETE] image_id= 7577  cave= 10  score= 20  c10/c10_S2-1-0.jpg
+
+Group 27: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 5426  cave= 24  score= 60  c24/c24_S5rW.jpg has_plan_xy
+  [DELETE] image_id= 8074  cave= 24  score= 30  c24/DSCN5499.jpg
+
+Group 28: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4202  cave=  3  score= 60  c3/c3_HPd1.jpg has_plan_xy
+  [DELETE] image_id= 7692  cave=  5  score= 30  c5/DSCN4312.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=3 vs image_id=7692 cave_id=5
+
+Group 29: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4290  cave=  6  score= 60  c6/c6_lsubSH.jpg has_plan_xy
+  [DELETE] image_id= 7652  cave=  6  score= 20  c6/DSCN4358.jpg
+
+Group 30: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3669  cave= 10  score= 60  c10/c10_C6.jpg has_plan_xy
+  [DELETE] image_id= 8656  cave= 10  score= 30  c10/DSCN4514.jpg
+
+Group 31: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4385  cave=  9  score= 60  c9/c9SlI1.jpg has_plan_xy
+  [DELETE] image_id= 7582  cave=  9  score= 20  c9/DSCN4408.jpg
+
+Group 32: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4444  cave= 14  score= 50  c14/c14ravananugrahamurti1.jpg has_plan_xy
+  [DELETE] image_id= 8250  cave= 14  score= 20  c14/DSCN4966.jpg
+
+Group 33: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4251  cave=  5  score= 60  c5/c5_H9.jpg has_plan_xy
+  [DELETE] image_id= 7672  cave=  5  score= 20  c5/DSCN4335.jpg
+
+Group 34: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3882  cave= 11  score= 60  c11/c11_S13D.jpg has_plan_xy
+  [DELETE] image_id= 8519  cave= 11  score= 30  c11/DSCN4662.jpg
+
+Group 35: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4222  cave=  4  score= 30  c4/c4lWSd.jpg
+  [DELETE] image_id= 7695  cave=  4  score= 20  c4/DSCN4307.jpg
+
+Group 36: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3800  cave= 11  score= 60  c11/c11_10.jpg has_plan_xy
+  [DELETE] image_id= 8558  cave= 11  score= 30  c11/DSCN4619.jpg
+
+Group 37: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4080  cave= 12  score= 60  c12/c12_3rdflS5mainI4.jpg has_plan_xy
+  [DELETE] image_id= 8402  cave= 12  score= 30  c12/DSCN4788.jpg
+
+Group 38: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4457  cave= 14  score= 60  c14/c14Sentranced.jpg has_plan_xy
+  [DELETE] image_id= 8238  cave= 14  score= 20  c14/DSCN4978.jpg
+
+Group 39: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4241  cave=  5  score= 60  c5/c5_H1.jpg has_plan_xy
+  [DELETE] image_id= 7682  cave=  5  score= 20  c5/DSCN4324.jpg
+
+Group 40: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3735  cave= 10  score= 60  c10/c10_S4linteld20.jpg has_plan_xy
+  [DELETE] image_id= 8601  cave= 10  score= 30  c10/DSCN4602.jpg
+
+Group 41: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id=  661  cave= 14  score= 50  c14/_CAV2721.jpg has_plan_xy
+  [DELETE] image_id= 8220  cave= 14  score= 30  c14/_CAV2721 (# Name Clash 2025-03-29 f4rWhl2 #).jpg
+
+Group 42: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3739  cave= 10  score= 50  c10/c10_S4linteld4.jpg has_plan_xy
+  [DELETE] image_id= 8668  cave= 10  score= 30  c10/DSCN4502.jpg
+
+Group 43: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3757  cave= 10  score= 60  c10/c10_S4stupad4.jpg has_plan_xy
+  [DELETE] image_id= 8628  cave= 10  score= 20  c10/DSCN4542.jpg
+
+Group 44: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4596  cave= 15  score= 60  c15/c15_S3entranceP.jpg has_plan_xy
+  [DELETE] image_id= 8158  cave= 15  score= 30  c15/DSCN5047.jpg
+
+Group 45: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4412  cave= 14  score= 60  c14/c14FPd_rename.jpg has_plan_xy
+  [DELETE] image_id= 8285  cave= 14  score= 30  c14/DSCN4919.jpg
+
+Group 46: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 7529  cave=  5  score= 20  Ellora c1-7_PXL_20230310_015200592.dng.jpg
+  [DELETE] image_id= 7531  cave=  4  score= 20  Ellora c1-7 copy_PXL_20230310_015200592.dng.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=5 vs image_id=7531 cave_id=4
+
+Group 47: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4585  cave= 15  score= 60  c15/c15_S2a.jpg has_plan_xy
+  [DELETE] image_id= 8193  cave= 15  score= 30  c15/DSCN5006.jpg
+
+Group 48: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4432  cave= 14  score= 60  c14/c14Linteld1.jpg has_plan_xy
+  [DELETE] image_id= 8229  cave= 14  score= 30  c14/DSCN5127.jpg
+
+Group 49: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4210  cave=  4  score= 60  c4/c4_3a.jpg has_plan_xy
+  [DELETE] image_id= 7693  cave=  4  score= 20  c4/DSCN4311.jpg
+
+Group 50: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4558  cave= 15  score= 60  c15/c15_rp.jpg has_plan_xy
+  [DELETE] image_id= 8208  cave= 15  score= 30  c15/DSCN4990.jpg
+
+Group 51: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3996  cave= 12  score= 30  c12/c12_3rdfl-12.jpg
+  [DELETE] image_id= 8458  cave= 12  score= 30  c12/DSCN4731.jpg
+
+Group 52: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 5324  cave= 21  score= 60  c21/c21FSr_kartikeya2.jpg has_plan_xy
+  [DELETE] image_id= 7569  cave= 21  score= 30  c21/c21FSr_visnu2.jpg
+
+Group 53: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4494  cave= 15  score= 30  c15/c15-2floorH.jpg
+  [DELETE] image_id= 8156  cave= 15  score= 30  c15/DSCN5049.jpg
+
+Group 54: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3924  cave= 11  score= 60  c11/c11_S9mainI-14c.jpg has_plan_xy
+  [DELETE] image_id= 8545  cave= 11  score= 30  c11/DSCN4634.jpg
+
+Group 55: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 7604  cave=  8  score= 30  c8/DSCN4422.jpg
+  [DELETE] image_id= 4335  cave=  8  score= 20  c8/c8.jpg
+
+Group 56: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4492  cave= 15  score= 60  c15/c15-28.jpg has_plan_xy
+  [DELETE] image_id= 8159  cave= 15  score= 30  c15/DSCN5046.jpg
+
+Group 57: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4500  cave= 15  score= 60  c15/c15-2floornandi1.jpg has_plan_xy
+  [DELETE] image_id= 8129  cave= 15  score= 30  c15/DSCN5078.jpg
+
+Group 58: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3736  cave= 10  score= 50  c10/c10_S4linteld21.jpg has_plan_xy
+  [DELETE] image_id= 8600  cave= 10  score= 30  c10/DSCN4603.jpg
+
+Group 59: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4233  cave=  5  score= 50  c5/c5_4b.jpg has_plan_xy
+  [DELETE] image_id= 7661  cave=  5  score= 20  c5/DSCN4346.jpg
+
+Group 60: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3737  cave= 10  score= 50  c10/c10_S4linteld22.jpg has_plan_xy
+  [DELETE] image_id= 8599  cave= 10  score= 30  c10/DSCN4604.jpg
+
+Group 61: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4286  cave=  6  score= 60  c6/c6_Dd1.jpg has_plan_xy
+  [DELETE] image_id= 7638  cave=  6  score= 20  c6/DSCN4373.jpg
+
+Group 62: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3740  cave= 10  score= 60  c10/c10_S4linteld5.jpg has_plan_xy
+  [DELETE] image_id= 8667  cave= 10  score= 30  c10/DSCN4503.jpg
+
+Group 63: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3915  cave= 11  score= 30  c11/c11_S9-d15.jpg
+  [DELETE] image_id= 8521  cave= 11  score= 30  c11/DSCN4660.jpg
+
+Group 64: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4264  cave=  5  score= 30  c5/c5_VWd.jpg
+  [DELETE] image_id= 7686  cave=  5  score= 30  c5/DSCN4318.jpg
+
+Group 65: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4534  cave= 15  score= 60  c15/c15-S3D.jpg has_plan_xy
+  [DELETE] image_id= 8134  cave= 15  score= 30  c15/DSCN5073.jpg
+
+Group 66: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4094  cave= 12  score= 30  c12/c12_cisternWstairwellI.jpg
+  [DELETE] image_id= 8289  cave= 12  score= 30  c12/DSCN4911.jpg
+
+Group 67: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3744  cave= 10  score= 60  c10/c10_S4linteld9.jpg has_plan_xy
+  [DELETE] image_id= 8645  cave= 10  score= 30  c10/DSCN4525.jpg
+
+Group 68: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3671  cave= 10  score= 50  c10/c10_C8.jpg has_plan_xy
+  [DELETE] image_id= 8638  cave= 10  score= 20  c10/DSCN4532.jpg
+
+Group 69: ORPHAN (2 CF images, no DB records)
+  Keep CF: 6b11fc25-138e-430a-6f46-8c918903f800
+  Delete CF: 74974be9-368f-4e67-c318-759b45eeaf00
+
+Group 70: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4249  cave=  5  score= 70  c5/c5_H7.jpg has_plan_xy
+  [DELETE] image_id= 7675  cave=  5  score= 20  c5/DSCN4332.jpg
+
+Group 71: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4429  cave= 14  score= 60  c14/c14lingapitha.jpg has_plan_xy
+  [DELETE] image_id= 8236  cave= 14  score= 30  c14/DSCN4980.jpg
+
+Group 72: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 8739  cave=  1  score= 30  c1/DSCN4263.jpg
+  [DELETE] image_id= 3645  cave=  1  score= 20  c1/cave1facade2.jpg
+
+Group 73: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3830  cave= 11  score= 30  c11/c11_3rdfloor-3d.jpg
+  [DELETE] image_id= 8493  cave= 11  score= 30  c11/DSCN4694.jpg
+
+Group 74: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3918  cave= 11  score= 60  c11/c11_S9-drI14b.jpg has_plan_xy
+  [DELETE] image_id= 8551  cave= 11  score= 30  c11/DSCN4626.jpg
+
+Group 75: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3840  cave= 11  score= 30  c11/c11_3rdfloorH1.jpg
+  [DELETE] image_id= 8513  cave= 11  score= 30  c11/DSCN4668.jpg
+
+Group 76: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4438  cave= 14  score= 50  c14/c14nataraja2.jpg has_plan_xy
+  [DELETE] image_id= 8248  cave= 14  score= 20  c14/DSCN4968.jpg
+
+Group 77: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 9514  cave= 16  score=180  book_Fig.1.46 c16-floor2 _CAV3825.jpg book_fig=1.46 book_page=83
+  [DELETE] image_id= 1435  cave= 16  score= 70  c16/_CAV3825.jpg has_plan_xy
+
+Group 78: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 7575  cave= 15  score= 30  c15/c15_S2D.jpg
+  [DELETE] image_id= 8204  cave= 15  score= 30  c15/DSCN4994.jpg
+
+Group 79: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 8524  cave= 11  score= 30  c11/DSCN4657.jpg
+  [DELETE] image_id= 3913  cave= 11  score= 20  c11/c11_S9-d13.jpg
+
+Group 80: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4297  cave=  6  score= 60  c6/c6_Pd3.jpg has_plan_xy
+  [DELETE] image_id= 7641  cave=  6  score= 20  c6/DSCN4370.jpg
+
+Group 81: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 8379  cave= 12  score= 30  c12/DSCN4817.jpg
+  [DELETE] image_id= 4045  cave= 12  score= 20  c12/c12_3rdflH8.jpg
+
+Group 82: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4032  cave= 12  score= 30  c12/c12_3rdflH.jpg
+  [DELETE] image_id= 8450  cave= 12  score= 30  c12/DSCN4740.jpg
+
+Group 83: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3666  cave= 10  score= 60  c10/c10_C3.jpg has_plan_xy
+  [DELETE] image_id= 8665  cave= 10  score= 30  c10/DSCN4505.jpg
+
+Group 84: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4541  cave= 15  score= 60  c15/c15_1floor_Wr1.jpg has_plan_xy
+  [DELETE] image_id= 8192  cave= 15  score= 30  c15/DSCN5007.jpg
+
+Group 85: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3828  cave= 11  score= 60  c11/c11_3rdfloor-3b.jpg has_plan_xy
+  [DELETE] image_id= 8496  cave= 11  score= 30  c11/DSCN4691.jpg
+
+Group 86: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4293  cave=  6  score= 70  c6/c6_lsubSH3.jpg has_plan_xy
+  [DELETE] image_id= 7649  cave=  6  score= 20  c6/DSCN4361.jpg
+
+Group 87: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4491  cave= 15  score= 30  c15/c15-27.jpg
+  [DELETE] image_id= 8160  cave= 15  score= 30  c15/DSCN5045.jpg
+
+Group 88: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3699  cave= 10  score= 60  c10/c10_S11F.jpg has_plan_xy
+  [DELETE] image_id= 8681  cave= 10  score= 20  c10/DSCN4489.jpg
+
+Group 89: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3729  cave= 10  score= 60  c10/c10_S4linteld15.jpg has_plan_xy
+  [DELETE] image_id= 8636  cave= 10  score= 20  c10/DSCN4534.jpg
+
+Group 90: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4309  cave=  6  score= 60  c6/c6SD.jpg has_plan_xy
+  [DELETE] image_id= 7615  cave=  6  score= 20  c6/DSCN4397.jpg
+
+Group 91: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 5436  cave=224  score= 60  c24/c24A_S2trimurti.jpg has_plan_xy
+  [DELETE] image_id= 7553  cave= 23  score= 30  c23/c23BS_trimurti.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=224 vs image_id=7553 cave_id=23
+
+Group 92: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3732  cave= 10  score= 50  c10/c10_S4linteld18.jpg has_plan_xy
+  [DELETE] image_id= 8633  cave= 10  score= 20  c10/DSCN4537.jpg
+
+Group 93: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4253  cave=  5  score= 60  c5/c5_HPd.jpg has_plan_xy
+  [DELETE] image_id= 7676  cave=  5  score= 30  c5/DSCN4331.jpg
+
+Group 94: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4235  cave=  5  score= 60  c5/c5_entranceTIF.jpg has_plan_xy
+  [DELETE] image_id= 7685  cave=  5  score= 20  c5/DSCN4320.jpg
+
+Group 95: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3751  cave= 10  score= 60  c10/c10_S4stupad10.jpg has_plan_xy
+  [DELETE] image_id= 8622  cave= 10  score= 20  c10/DSCN4548.jpg
+
+Group 96: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3691  cave= 10  score= 60  c10/c10_Imaind1.jpg has_plan_xy
+  [DELETE] image_id= 8648  cave= 10  score= 30  c10/DSCN4522.jpg
+
+Group 97: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3810  cave= 11  score= 60  c11/c11_3rdfloor-1.jpg has_plan_xy
+  [DELETE] image_id= 8504  cave= 11  score= 30  c11/DSCN4683.jpg
+
+Group 98: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4505  cave= 15  score= 60  c15/c15-2floorPd1.jpg has_plan_xy
+  [DELETE] image_id= 8136  cave= 15  score= 30  c15/DSCN5071.jpg
+
+Group 99: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3988  cave= 12  score= 60  c12/c12_2ndfloor-S4-26.jpg has_plan_xy
+  [DELETE] image_id= 8336  cave= 12  score= 30  c12/DSCN4862.jpg
+
+Group 100: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4195  cave=  3  score= 60  c3/c3_H1.jpg has_plan_xy
+  [DELETE] image_id= 8026  cave=  3  score= 20  c3/DSCN4280.jpg
+
+Group 101: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4109  cave= 12  score= 30  c12/c12_S2.jpg
+  [DELETE] image_id= 8327  cave= 12  score= 30  c12/DSCN4872.jpg
+
+Group 102: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 7538  cave=  4  score= 20  Ellora c1-7_PXL_20230310_015906720.dng.jpg
+  [DELETE] image_id= 7543  cave=  5  score= 20  Ellora c1-7 copy_PXL_20230310_015906720.dng.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=4 vs image_id=7543 cave_id=5
+
+Group 103: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3846  cave= 11  score= 60  c11/c11_3rdfloorpr-11.jpg has_plan_xy
+  [DELETE] image_id= 8500  cave= 11  score= 30  c11/DSCN4687.jpg
+
+Group 104: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3987  cave= 12  score= 30  c12/c12_2ndfloor-S4-24a.jpg
+  [DELETE] image_id= 8340  cave= 12  score= 30  c12/DSCN4858.jpg
+
+Group 105: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4602  cave= 15  score= 60  c15/c15_stairwell3.jpg has_plan_xy
+  [DELETE] image_id= 8119  cave= 15  score= 30  c15/DSCN5088.jpg
+
+Group 106: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3943  cave= 12  score= 30  c12/c12_1stfloorPd.jpg
+  [DELETE] image_id= 8318  cave= 12  score= 30  c12/DSCN4882.jpg
+
+Group 107: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3854  cave= 11  score= 50  c11/c11_F.jpg has_plan_xy
+  [DELETE] image_id= 8584  cave= 11  score= 30  c11/DSCN4569.jpg
+
+Group 108: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4041  cave= 12  score= 30  c12/c12_3rdflH4.jpg
+  [DELETE] image_id= 8440  cave= 12  score= 30  c12/DSCN4750.jpg
+
+Group 109: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4548  cave= 15  score= 60  c15/c15_cellsreW1.jpg has_plan_xy
+  [DELETE] image_id= 8117  cave= 15  score= 30  c15/DSCN5092.jpg
+
+Group 110: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3707  cave= 10  score= 60  c10/c10_S14c.jpg has_plan_xy
+  [DELETE] image_id= 8607  cave= 10  score= 30  c10/DSCN4563.jpg
+
+Group 111: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4595  cave= 15  score= 60  c15/c15_S3.jpg has_plan_xy
+  [DELETE] image_id= 8161  cave= 15  score= 30  c15/DSCN5044.jpg
+
+Group 112: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4192  cave=  3  score= 50  c3/c3_F2.jpg has_plan_xy
+  [DELETE] image_id= 8036  cave=  3  score= 20  c3/DSCN4266.jpg
+
+Group 113: AUTO — 1 DB records, 2 CF images
+  [KEEP  ] image_id= 5440  cave=124  score= 60  c24/c24B_F.jpg has_plan_xy
+
+Group 114: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4563  cave= 15  score= 30  c15/c15_S1-7.jpg
+  [DELETE] image_id= 8096  cave= 15  score= 30  c15/DSCN5113.jpg
+
+Group 115: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4217  cave=  4  score= 70  c4/c4_F.jpg has_plan_xy
+  [DELETE] image_id= 7708  cave=  4  score= 20  c4/DSCN4294.jpg
+
+Group 116: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id=  648  cave= 14  score= 50  c14/_CAV2708.jpg has_plan_xy
+  [DELETE] image_id= 8221  cave= 14  score= 30  c14/_CAV2708 (# Name Clash 2025-03-29 v4l7Iuv #).jpg
+
+Group 117: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3839  cave= 11  score= 30  c11/c11_3rdfloorH.jpg
+  [DELETE] image_id= 8514  cave= 11  score= 30  c11/DSCN4667.jpg
+
+Group 118: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4546  cave= 15  score= 60  c15/c15_2floorlcell.jpg has_plan_xy
+  [DELETE] image_id= 8125  cave= 15  score= 30  c15/DSCN5082.jpg
+
+Group 119: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4044  cave= 12  score= 30  c12/c12_3rdflH7.jpg
+  [DELETE] image_id= 8380  cave= 12  score= 30  c12/DSCN4816.jpg
+
+Group 120: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4504  cave= 15  score= 60  c15/c15-2floorPd.jpg has_plan_xy
+  [DELETE] image_id= 8138  cave= 15  score= 30  c15/DSCN5069.jpg
+
+Group 121: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4544  cave= 15  score= 30  c15/c15_2floor-15.jpg
+  [DELETE] image_id= 8123  cave= 15  score= 30  c15/DSCN5084.jpg
+
+Group 122: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3727  cave= 10  score= 60  c10/c10_S4linteld13.jpg has_plan_xy
+  [DELETE] image_id= 8642  cave= 10  score= 30  c10/DSCN4528.jpg
+
+Group 123: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 5439  cave=224  score= 60  c24/c24A_Wr.jpg has_plan_xy
+  [DELETE] image_id= 7557  cave= 23  score= 30  c23/c23BHWr.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=224 vs image_id=7557 cave_id=23
+
+Group 124: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4547  cave= 15  score= 60  c15/c15_cellsreW.jpg has_plan_xy
+  [DELETE] image_id= 8205  cave= 15  score= 30  c15/DSCN4993.jpg
+
+Group 125: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3997  cave= 12  score= 30  c12/c12_3rdfl-12a.jpg
+  [DELETE] image_id= 8443  cave= 12  score= 30  c12/DSCN4747.jpg
+
+Group 126: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4465  cave= 14  score= 60  c14/c14Vishnu.jpg has_plan_xy
+  [DELETE] image_id= 8258  cave= 14  score= 30  c14/DSCN4958.jpg
+
+Group 127: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3819  cave= 11  score= 60  c11/c11_3rdfloor-1a.jpg has_plan_xy
+  [DELETE] image_id= 8502  cave= 11  score= 30  c11/DSCN4685.jpg
+
+Group 128: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3912  cave= 11  score= 60  c11/c11_S9-d12b.jpg has_plan_xy
+  [DELETE] image_id= 8522  cave= 11  score= 20  c11/DSCN4659.jpg
+
+Group 129: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3802  cave= 11  score= 60  c11/c11_11a.jpg has_plan_xy
+  [DELETE] image_id= 8569  cave= 11  score= 30  c11/DSCN4585.jpg
+
+Group 130: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4097  cave= 12  score= 60  c12/c12_S1-9b.jpg has_plan_xy
+  [DELETE] image_id= 8294  cave= 12  score= 30  c12/DSCN4906.jpg
+
+Group 131: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4298  cave=  6  score= 60  c6/c6_Pd4.jpg has_plan_xy
+  [DELETE] image_id= 7636  cave=  6  score= 20  c6/DSCN4375.jpg
+
+Group 132: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3704  cave= 10  score= 60  c10/c10_S14.jpg has_plan_xy
+  [DELETE] image_id= 8606  cave= 10  score= 30  c10/DSCN4564.jpg
+
+Group 133: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3700  cave= 10  score= 60  c10/c10_S14-27.jpg has_plan_xy
+  [DELETE] image_id= 8608  cave= 10  score= 20  c10/DSCN4562.jpg
+
+Group 134: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3762  cave= 10  score= 60  c10/c10_S4stupad9.jpg has_plan_xy
+  [DELETE] image_id= 8623  cave= 10  score= 20  c10/DSCN4547.jpg
+
+Group 135: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4026  cave= 12  score= 30  c12/c12_3rdfl-5b.jpg
+  [DELETE] image_id= 8445  cave= 12  score= 30  c12/DSCN4745.jpg
+
+Group 136: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4517  cave= 15  score= 60  c15/c15-37a.jpg has_plan_xy
+  [DELETE] image_id= 8139  cave= 15  score= 30  c15/DSCN5067.jpg
+
+Group 137: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4448  cave= 14  score= 50  c14/c14Saptamatrika3.jpg has_plan_xy
+  [DELETE] image_id= 8228  cave= 14  score= 20  c14/DSCN5129.jpg
+
+Group 138: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4497  cave= 15  score= 60  c15/c15-2floorHc.jpg has_plan_xy
+  [DELETE] image_id= 8137  cave= 15  score= 30  c15/DSCN5070.jpg
+
+Group 139: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4579  cave= 15  score= 60  c15/c15_S2-d12.jpg has_plan_xy
+  [DELETE] image_id= 8113  cave= 15  score= 30  c15/DSCN5096.jpg
+
+Group 140: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3991  cave= 12  score= 60  c12/c12_2ndfloorS3D.jpg has_plan_xy
+  [DELETE] image_id= 8333  cave= 12  score= 30  c12/DSCN4865.jpg
+
+Group 141: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 5220  cave= 17  score= 60  c17/c17_rW-kubera.jpg has_plan_xy
+  [DELETE] image_id= 7561  cave= 23  score= 30  c23/c23AWr_visnu2.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=17 vs image_id=7561 cave_id=23
+
+Group 142: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4461  cave= 14  score= 50  c14/c14sivaparvatiplayingchaupat2.jpg has_plan_xy
+  [DELETE] image_id= 8245  cave= 14  score= 20  c14/DSCN4971.jpg
+
+Group 143: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4489  cave= 15  score= 60  c15/c15-24a.jpg has_plan_xy
+  [DELETE] image_id= 8163  cave= 15  score= 30  c15/DSCN5041.jpg
+
+Group 144: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4300  cave=  6  score= 60  c6/c6_Se.jpg has_plan_xy
+  [DELETE] image_id= 7647  cave=  6  score= 20  c6/DSCN4363.jpg
+
+Group 145: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3698  cave= 10  score= 50  c10/c10_S10F.jpg has_plan_xy
+  [DELETE] image_id= 8682  cave= 10  score= 20  c10/DSCN4488.jpg
+
+Group 146: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3821  cave= 11  score= 30  c11/c11_3rdfloor-1c.jpg
+  [DELETE] image_id= 8497  cave= 11  score= 30  c11/DSCN4690.jpg
+
+Group 147: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4196  cave=  3  score= 50  c3/c3_H2.jpg has_plan_xy
+  [DELETE] image_id= 8025  cave=  3  score= 20  c3/DSCN4281.jpg
+
+Group 148: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3687  cave= 10  score= 60  c10/c10_Frd1.jpg has_plan_xy
+  [DELETE] image_id= 8695  cave= 10  score= 20  c10/DSCN4475.jpg
+
+Group 149: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4263  cave=  5  score= 60  c5/c5_subSD.jpg has_plan_xy
+  [DELETE] image_id= 7664  cave=  5  score= 20  c5/DSCN4343.jpg
+
+Group 150: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 5430  cave=124  score= 60  c24/c24A_S1Wl_brahma.jpg has_plan_xy
+  [DELETE] image_id= 7563  cave= 23  score= 30  c23/c23AWl_brahma.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=124 vs image_id=7563 cave_id=23
+
+Group 151: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4447  cave= 14  score= 50  c14/c14Saptamatrika2.jpg has_plan_xy
+  [DELETE] image_id= 8232  cave= 14  score= 20  c14/DSCN4984.jpg
+
+Group 152: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 8530  cave= 11  score= 30  c11/DSCN4651.jpg
+  [DELETE] image_id= 3874  cave= 11  score= 20  c11/c11_S11-d18a.jpg
+
+Group 153: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4234  cave=  5  score= 60  c5/c5_cistern.jpg has_plan_xy
+  [DELETE] image_id= 7687  cave=  5  score= 20  c5/DSCN4317.jpg
+
+Group 154: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3843  cave= 11  score= 60  c11/c11_3rdfloorp-l3-9.jpg has_plan_xy
+  [DELETE] image_id= 8501  cave= 11  score= 30  c11/DSCN4686.jpg
+
+Group 155: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 7536  cave=  4  score= 30  Ellora c1-7 copy_PXL_20230310_015830927.dng.jpg
+  [DELETE] image_id= 7534  cave=  7  score= 20  Ellora c1-7_PXL_20230310_015830927.dng.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=4 vs image_id=7534 cave_id=7
+
+Group 156: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 5437  cave=224  score= 60  c24/c24A_S2Wbl_ganesa.jpg has_plan_xy
+  [DELETE] image_id= 7559  cave= 23  score= 30  c23/c23BHWbl_ganesa.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=224 vs image_id=7559 cave_id=23
+
+Group 157: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4535  cave= 15  score= 60  c15/c15-S3D1.jpg has_plan_xy
+  [DELETE] image_id= 8133  cave= 15  score= 30  c15/DSCN5074.jpg
+
+Group 158: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3942  cave= 12  score= 30  c12/c12_1stfloorH2.jpg
+  [DELETE] image_id= 8305  cave= 12  score= 30  c12/DSCN4895.jpg
+
+Group 159: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 8571  cave= 11  score= 30  c11/DSCN4583.jpg
+  [DELETE] image_id= 3901  cave= 11  score= 20  c11/c11_S5-10.jpg
+
+Group 160: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3897  cave= 11  score= 60  c11/c11_S2-4.jpg has_plan_xy
+  [DELETE] image_id= 8575  cave= 11  score= 30  c11/DSCN4579.jpg
+
+Group 161: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4445  cave= 14  score= 60  c14/c14S.jpg has_plan_xy
+  [DELETE] image_id= 8284  cave= 14  score= 20  c14/DSCN4920.jpg
+
+Group 162: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4025  cave= 12  score= 30  c12/c12_3rdfl-5a.jpg
+  [DELETE] image_id= 8446  cave= 12  score= 30  c12/DSCN4744.jpg
+
+Group 163: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3911  cave= 11  score= 20  c11/c11_S9-d12.jpg
+  [DELETE] image_id= 8523  cave= 11  score= 20  c11/DSCN4658.jpg
+
+Group 164: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4318  cave=  6  score= 60  c6/c6Slf.jpg has_plan_xy
+  [DELETE] image_id= 7627  cave=  6  score= 20  c6/DSCN4385.jpg
+
+Group 165: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3832  cave= 11  score= 30  c11/c11_3rdfloor-7.jpg
+  [DELETE] image_id= 8491  cave= 11  score= 30  c11/DSCN4696.jpg
+
+Group 166: AUTO — 3 DB records, 2 CF images
+  [KEEP  ] image_id= 3677  cave= 10  score= 60  c10/c10_Fd1.jpg has_plan_xy
+  [DELETE] image_id=  120  cave= 10  score= 50  c10/c10_Fd1.jpg has_plan_xy
+  [DELETE] image_id= 8696  cave= 10  score= 20  c10/DSCN4474.jpg
+
+Group 167: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4236  cave=  5  score= 60  c5/c5_F.jpg has_plan_xy
+  [DELETE] image_id= 7689  cave=  5  score= 30  c5/DSCN4315.jpg
+
+Group 168: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 7542  cave=  5  score= 20  Ellora c1-7_PXL_20230310_020632081.dng.jpg
+  [DELETE] image_id= 7545  cave=  5  score= 20  Ellora c1-7 copy_PXL_20230310_020632081.dng.jpg
+
+Group 169: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4446  cave= 14  score= 50  c14/c14Saptamatrika1.jpg has_plan_xy
+  [DELETE] image_id= 8233  cave= 14  score= 30  c14/DSCN4983.jpg
+
+Group 170: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4043  cave= 12  score= 30  c12/c12_3rdflH6.jpg
+  [DELETE] image_id= 8381  cave= 12  score= 30  c12/DSCN4815.jpg
+
+Group 171: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4449  cave= 14  score= 50  c14/c14Saptamatrika4.jpg has_plan_xy
+  [DELETE] image_id= 8227  cave= 14  score= 20  c14/DSCN5130.jpg
+
+Group 172: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4240  cave=  5  score= 50  c5/c5_H.jpg has_plan_xy
+  [DELETE] image_id= 7683  cave=  5  score= 20  c5/DSCN4323.jpg
+
+Group 173: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3883  cave= 11  score= 60  c11/c11_S13mainI-22.jpg has_plan_xy
+  [DELETE] image_id= 8518  cave= 11  score= 30  c11/DSCN4663.jpg
+
+Group 174: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4498  cave= 15  score= 60  c15/c15-2floorHe.jpg has_plan_xy
+  [DELETE] image_id= 8135  cave= 15  score= 30  c15/DSCN5072.jpg
+
+Group 175: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4463  cave= 14  score= 50  c14/c14Varaha1.jpg has_plan_xy
+  [DELETE] image_id= 8259  cave= 14  score= 20  c14/DSCN4957.jpg
+
+Group 176: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4589  cave= 15  score= 30  c15/c15_S2c.jpg
+  [DELETE] image_id= 8187  cave= 15  score= 30  c15/DSCN5015.jpg
+
+Group 177: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 5432  cave= 24  score= 60  c24/c24A_S2_lakulisa.jpg has_plan_xy
+  [DELETE] image_id= 7555  cave= 23  score= 30  c23/c23BS_lakulisa.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=24 vs image_id=7555 cave_id=23
+
+Group 178: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3782  cave= 10  score= 50  c10/c10_S9F2.jpg has_plan_xy
+  [DELETE] image_id= 8595  cave= 10  score= 20  c10/DSCN4608.jpg
+
+Group 179: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4419  cave= 14  score= 60  c14/c14HPd.jpg has_plan_xy
+  [DELETE] image_id= 8276  cave= 14  score= 30  c14/DSCN4940.jpg
+
+Group 180: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3954  cave= 12  score= 60  c12/c12_2ndfloor-35.jpg has_plan_xy
+  [DELETE] image_id= 8368  cave= 12  score= 30  c12/DSCN4828.jpg
+
+Group 181: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4090  cave= 12  score= 30  c12/c12_6.jpg
+  [DELETE] image_id= 8303  cave= 12  score= 30  c12/DSCN4897.jpg
+
+Group 182: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4586  cave= 15  score= 60  c15/c15_S2b.jpg has_plan_xy
+  [DELETE] image_id= 8190  cave= 15  score= 30  c15/DSCN5010.jpg
+
+Group 183: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3827  cave= 11  score= 60  c11/c11_3rdfloor-3a.jpg has_plan_xy
+  [DELETE] image_id= 8503  cave= 11  score= 30  c11/DSCN4684.jpg
+
+Group 184: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4573  cave= 15  score= 60  c15/c15_S2-13.jpg has_plan_xy
+  [DELETE] image_id= 8209  cave= 15  score= 30  c15/DSCN4989.jpg
+
+Group 185: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4605  cave= 15  score= 60  c15/c15F.jpg has_plan_xy
+  [DELETE] image_id= 8207  cave= 15  score= 30  c15/DSCN4991.jpg
+
+Group 186: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3701  cave= 10  score= 60  c10/c10_S14-27a.jpg has_plan_xy
+  [DELETE] image_id= 8604  cave= 10  score= 30  c10/DSCN4567.jpg
+
+Group 187: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4326  cave=  6  score= 50  c6/c6SrW2.jpg has_plan_xy
+  [DELETE] image_id= 7629  cave=  6  score= 20  c6/DSCN4383.jpg
+
+Group 188: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3998  cave= 12  score= 30  c12/c12_3rdfl-12b.jpg
+  [DELETE] image_id= 8442  cave= 12  score= 30  c12/DSCN4748.jpg
+
+Group 189: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4059  cave= 12  score= 60  c12/c12_3rdflS5-21a.jpg has_plan_xy
+  [DELETE] image_id= 8422  cave= 12  score= 30  c12/DSCN4768.jpg
+
+Group 190: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4291  cave=  6  score= 60  c6/c6_lsubSH1.jpg has_plan_xy
+  [DELETE] image_id= 7651  cave=  6  score= 20  c6/DSCN4359.jpg
+
+Group 191: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3686  cave= 10  score= 60  c10/c10_Frd.jpg has_plan_xy
+  [DELETE] image_id= 8722  cave= 10  score= 30  c10/DSCN4447.jpg
+
+Group 192: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4039  cave= 12  score= 30  c12/c12_3rdflH2.jpg
+  [DELETE] image_id= 8447  cave= 12  score= 30  c12/DSCN4743.jpg
+
+Group 193: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3935  cave= 12  score= 30  c12/c12_16.jpg
+  [DELETE] image_id= 8309  cave= 12  score= 30  c12/DSCN4891.jpg
+
+Group 194: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 8288  cave= 12  score= 30  c12/DSCN4912.jpg
+  [DELETE] image_id= 4093  cave= 12  score= 20  c12/c12_cistern.jpg
+
+Group 195: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4250  cave=  5  score= 60  c5/c5_H8.jpg has_plan_xy
+  [DELETE] image_id= 7674  cave=  5  score= 20  c5/DSCN4333.jpg
+
+Group 196: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4599  cave= 15  score= 60  c15/c15_stairwell.jpg has_plan_xy
+  [DELETE] image_id= 8122  cave= 15  score= 30  c15/DSCN5085.jpg
+
+Group 197: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4555  cave= 15  score= 30  c15/c15_lstairscells1.jpg
+  [DELETE] image_id= 8196  cave= 15  score= 30  c15/DSCN5002.jpg
+
+Group 198: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3724  cave= 10  score= 60  c10/c10_S4linteld1.jpg has_plan_xy
+  [DELETE] image_id= 8671  cave= 10  score= 30  c10/DSCN4499.jpg
+
+Group 199: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 8399  cave= 12  score= 30  c12/DSCN4791.jpg
+  [DELETE] image_id= 4083  cave= 12  score= 20  c12/c12_3rdflS5mainId2.jpg
+
+Group 200: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 5438  cave=224  score= 60  c24/c24A_S2Wbr_parvati.jpg has_plan_xy
+  [DELETE] image_id= 7558  cave= 23  score= 30  c23/c23BHWbr_parvati.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=224 vs image_id=7558 cave_id=23
+
+Group 201: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 7547  cave=  5  score= 30  Ellora c1-7 copy_PXL_20230310_020613864.dng.jpg
+  [DELETE] image_id= 7546  cave=  4  score= 20  Ellora c1-7_PXL_20230310_020613864.dng.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=5 vs image_id=7546 cave_id=4
+
+Group 202: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3857  cave= 11  score= 60  c11/c11_landscape.jpg has_plan_xy
+  [DELETE] image_id= 8214  cave= 15  score= 30  c15/DSCN4671.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=11 vs image_id=8214 cave_id=15
+
+Group 203: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 7532  cave=  2  score= 30  Ellora c1-7_PXL_20230310_014901708.dng.jpg
+  [DELETE] image_id= 7535  cave=  4  score= 30  Ellora c1-7 copy_PXL_20230310_014901708.dng.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=2 vs image_id=7535 cave_id=4
+
+Group 204: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3873  cave= 11  score= 30  c11/c11_S11-d18.jpg
+  [DELETE] image_id= 8531  cave= 11  score= 30  c11/DSCN4650.jpg
+
+Group 205: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3745  cave= 10  score= 60  c10/c10_S4lW.jpg has_plan_xy
+  [DELETE] image_id= 8655  cave= 10  score= 30  c10/DSCN4515.jpg
+
+Group 206: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3894  cave= 11  score= 50  c11/c11_S1cistern.jpg has_plan_xy
+  [DELETE] image_id= 8580  cave= 11  score= 30  c11/DSCN4573.jpg
+
+Group 207: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3792  cave= 10  score= 60  c10/c10F.jpg has_plan_xy
+  [DELETE] image_id= 8730  cave= 10  score= 20  c10/DSCN4439.jpg
+
+Group 208: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4420  cave= 14  score= 50  c14/c14HPd2.jpg has_plan_xy
+  [DELETE] image_id= 8275  cave= 14  score= 30  c14/DSCN4941.jpg
+
+Group 209: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3706  cave= 10  score= 60  c10/c10_S14b.jpg has_plan_xy
+  [DELETE] image_id= 8701  cave= 10  score= 30  c10/DSCN4469.jpg
+
+Group 210: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4069  cave= 12  score= 60  c12/c12_3rdflS5C1.jpg has_plan_xy
+  [DELETE] image_id= 8415  cave= 12  score= 30  c12/DSCN4775.jpg
+
+Group 211: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3917  cave= 11  score= 60  c11/c11_S9-dlI14a.jpg has_plan_xy
+  [DELETE] image_id= 8552  cave= 11  score= 30  c11/DSCN4625.jpg
+
+Group 212: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4490  cave= 15  score= 30  c15/c15-25.jpg
+  [DELETE] image_id= 8162  cave= 15  score= 30  c15/DSCN5043.jpg
+
+Group 213: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3923  cave= 11  score= 60  c11/c11_S9mainI-14b.jpg has_plan_xy
+  [DELETE] image_id= 8546  cave= 11  score= 30  c11/DSCN4633.jpg
+
+Group 214: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4054  cave= 12  score= 30  c12/c12_3rdflS5-19a.jpg
+  [DELETE] image_id= 8426  cave= 12  score= 30  c12/DSCN4764.jpg
+
+Group 215: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3741  cave= 10  score= 60  c10/c10_S4linteld6.jpg has_plan_xy
+  [DELETE] image_id= 8666  cave= 10  score= 20  c10/DSCN4504.jpg
+
+Group 216: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3814  cave= 11  score= 60  c11/c11_3rdfloor-14.jpg has_plan_xy
+  [DELETE] image_id= 8511  cave= 11  score= 30  c11/DSCN4670.jpg
+
+Group 217: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4439  cave= 14  score= 50  c14/c14nataraja3.jpg has_plan_xy
+  [DELETE] image_id= 8247  cave= 14  score= 20  c14/DSCN4969.jpg
+
+Group 218: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4502  cave= 15  score= 60  c15/c15-2floornandi3.jpg has_plan_xy
+  [DELETE] image_id= 8127  cave= 15  score= 30  c15/DSCN5080.jpg
+
+Group 219: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4221  cave=  4  score= 60  c4/c4_S1.jpg has_plan_xy
+  [DELETE] image_id= 7698  cave=  4  score= 20  c4/DSCN4304.jpg
+
+Group 220: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3866  cave= 11  score= 30  c11/c11_S10rw.jpg
+  [DELETE] image_id= 8541  cave= 11  score= 30  c11/DSCN4639.jpg
+
+Group 221: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4201  cave=  3  score= 20  c3/c3_HPd.jpg
+  [DELETE] image_id= 7691  cave=  5  score= 20  c5/DSCN4313.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=3 vs image_id=7691 cave_id=5
+
+Group 222: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4431  cave= 14  score= 60  c14/c14Linteld.jpg has_plan_xy
+  [DELETE] image_id= 8231  cave= 14  score= 30  c14/DSCN5119.jpg
+
+Group 223: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3841  cave= 11  score= 30  c11/c11_3rdfloorH2.jpg
+  [DELETE] image_id= 8512  cave= 11  score= 30  c11/DSCN4669.jpg
+
+Group 224: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 5323  cave= 21  score= 30  c21/c21FSr_kartikeya.jpg
+  [DELETE] image_id= 7570  cave= 21  score= 30  c21/c21FSr_visnu.jpg
+
+Group 225: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3779  cave= 10  score= 30  c10/c10_S8a.jpg
+  [DELETE] image_id= 8697  cave= 10  score= 30  c10/DSCN4473.jpg
+
+Group 226: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3716  cave= 10  score= 30  c10/c10_S4c.jpg
+  [DELETE] image_id= 8672  cave= 10  score= 20  c10/DSCN4498.jpg
+
+Group 227: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4082  cave= 12  score= 60  c12/c12_3rdflS5mainId1.jpg has_plan_xy
+  [DELETE] image_id= 8400  cave= 12  score= 30  c12/DSCN4790.jpg
+
+Group 228: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3903  cave= 11  score= 30  c11/c11_S5-9a.jpg
+  [DELETE] image_id= 8556  cave= 11  score= 30  c11/DSCN4621.jpg
+
+Group 229: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4024  cave= 12  score= 30  c12/c12_3rdfl-5.jpg
+  [DELETE] image_id= 8459  cave= 12  score= 30  c12/DSCN4730.jpg
+
+Group 230: AUTO — 1 DB records, 2 CF images
+  [KEEP  ] image_id= 9446  cave= 21  score=180  book_archival_A13_C21_d78b969f-0cae-4b5e-abd3-c5b88df48faf_4455.jpg book_fig=A13 book_page=255
+
+Group 231: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3694  cave= 10  score= 60  c10/c10_plinth1.jpg has_plan_xy
+  [DELETE] image_id= 8674  cave= 10  score= 30  c10/DSCN4496.jpg
+
+Group 232: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3789  cave= 10  score= 60  c10/c10_upperlV.jpg has_plan_xy
+  [DELETE] image_id= 8591  cave= 10  score= 20  c10/DSCN4612.jpg
+
+Group 233: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4580  cave= 15  score= 60  c15/c15_S2-d12a.jpg has_plan_xy
+  [DELETE] image_id= 8112  cave= 15  score= 30  c15/DSCN5097.jpg
+
+Group 234: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4057  cave= 12  score= 60  c12/c12_3rdflS5-19d.jpg has_plan_xy
+  [DELETE] image_id= 8407  cave= 12  score= 30  c12/DSCN4783.jpg
+
+Group 235: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4523  cave= 15  score= 60  c15/c15-d18.jpg has_plan_xy
+  [DELETE] image_id= 8181  cave= 15  score= 30  c15/DSCN5022.jpg
+
+Group 236: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4561  cave= 15  score= 60  c15/c15_S1-3-6.jpg has_plan_xy
+  [DELETE] image_id= 8095  cave= 15  score= 30  c15/DSCN5114.jpg
+
+Group 237: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3655  cave= 10  score= 50  c10/c10_18a.jpg has_plan_xy
+  [DELETE] image_id= 8594  cave= 10  score= 20  c10/DSCN4609.jpg
+
+Group 238: AUTO — 1 DB records, 2 CF images
+  [KEEP  ] image_id= 5269  cave= 18  score= 60  c18/c18_lingam.jpg has_plan_xy
+
+Group 239: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4537  cave= 15  score= 30  c15/c15-S3dP.jpg
+  [DELETE] image_id= 8131  cave= 15  score= 30  c15/DSCN5076.jpg
+
+Group 240: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4116  cave= 13  score= 20  c13/c13F.jpg
+  [DELETE] image_id= 8287  cave= 13  score= 20  c13/DSCN4917.jpg
+
+Group 241: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4470  cave= 14  score= 50  c14/c14vishnulakshmi.jpg has_plan_xy
+  [DELETE] image_id= 8255  cave= 14  score= 20  c14/DSCN4961.jpg
+
+Group 242: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4452  cave= 14  score= 60  c14/c14Saptamatrikad1.jpg has_plan_xy
+  [DELETE] image_id= 8225  cave= 14  score= 30  c14/DSCN5132.jpg
+
+Group 243: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3788  cave= 10  score= 60  c10/c10_upperiV2.jpg has_plan_xy
+  [DELETE] image_id= 8660  cave= 10  score= 20  c10/DSCN4510.jpg
+
+Group 244: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3978  cave= 12  score= 60  c12/c12_2ndfloor-S3D.jpg has_plan_xy
+  [DELETE] image_id= 8369  cave= 12  score= 30  c12/DSCN4827.jpg
+
+Group 245: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3733  cave= 10  score= 60  c10/c10_S4linteld19.jpg has_plan_xy
+  [DELETE] image_id= 8602  cave= 10  score= 30  c10/DSCN4601.jpg
+
+Group 246: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4477  cave= 14  score= 50  c14/c14VrlMahishamardini1.jpg has_plan_xy
+  [DELETE] image_id= 8261  cave= 14  score= 20  c14/DSCN4955.jpg
+
+Group 247: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3758  cave= 10  score= 30  c10/c10_S4stupad5.jpg
+  [DELETE] image_id= 8627  cave= 10  score= 20  c10/DSCN4543.jpg
+
+Group 248: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4224  cave=  5  score= 60  c1-9/c345_F.jpg has_plan_xy
+  [DELETE] image_id= 8735  cave=  4  score= 30  c1-9/DSCN4325.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=5 vs image_id=8735 cave_id=4
+
+Group 249: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4411  cave= 14  score= 60  c14/c14F.jpg has_plan_xy
+  [DELETE] image_id= 8286  cave= 14  score= 20  c14/DSCN4918.jpg
+
+Group 250: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4553  cave= 15  score= 60  c15/c15_lp.jpg has_plan_xy
+  [DELETE] image_id= 8210  cave= 15  score= 30  c15/DSCN4988.jpg
+
+Group 251: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3763  cave= 10  score= 60  c10/c10_S6-10.jpg has_plan_xy
+  [DELETE] image_id= 8707  cave= 10  score= 30  c10/DSCN4463.jpg
+
+Group 252: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4503  cave= 15  score= 60  c15/c15-2floornandi5.jpg has_plan_xy
+  [DELETE] image_id= 8126  cave= 15  score= 30  c15/DSCN5081.jpg
+
+Group 253: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4204  cave=  3  score= 60  c3/c3_S1.jpg has_plan_xy
+  [DELETE] image_id= 8021  cave=  3  score= 30  c3/DSCN4285.jpg
+
+Group 254: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3818  cave= 11  score= 30  c11/c11_3rdfloor-18.jpg
+  [DELETE] image_id= 8472  cave= 11  score= 30  c11/DSCN4715.jpg
+
+Group 255: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4466  cave= 14  score= 50  c14/c14Vishnu1.jpg has_plan_xy
+  [DELETE] image_id= 8257  cave= 14  score= 20  c14/DSCN4959.jpg
+
+Group 256: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 8526  cave= 11  score= 30  c11/DSCN4655.jpg
+  [DELETE] image_id= 3879  cave= 11  score= 20  c11/c11_S11mainIdlowerl.jpg
+
+Group 257: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 5429  cave=124  score= 60  c24/c24A_S1F.jpg has_plan_xy
+  [DELETE] image_id= 7566  cave= 23  score= 30  c23/c23A.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=124 vs image_id=7566 cave_id=23
+
+Group 258: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4244  cave=  5  score= 60  c5/c5_H2.jpg has_plan_xy
+  [DELETE] image_id= 7681  cave=  5  score= 20  c5/DSCN4326.jpg
+
+Group 259: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3644  cave=  1  score= 60  c1/cave1facade.jpg has_plan_xy
+  [DELETE] image_id= 8740  cave=  1  score= 20  c1/DSCN4262.jpg
+
+Group 260: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4499  cave= 15  score= 60  c15/c15-2flooring.jpg has_plan_xy
+  [DELETE] image_id= 8155  cave= 15  score= 30  c15/DSCN5051.jpg
+
+Group 261: AUTO — 1 DB records, 2 CF images
+  [KEEP  ] image_id= 9460  cave=  9  score=180  book_archival_A3_CBuddhist_DeenDayal_Getty_2ad3cc3c-4f05-4c7a-b5d6-2824f0dc9646_6693 c9.jpg book_fig=A3 book_page=246
+
+Group 262: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3670  cave= 10  score= 60  c10/c10_C7.jpg has_plan_xy
+  [DELETE] image_id= 8639  cave= 10  score= 20  c10/DSCN4531.jpg
+
+Group 263: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3822  cave= 11  score= 30  c11/c11_3rdfloor-2.jpg
+  [DELETE] image_id= 8492  cave= 11  score= 30  c11/DSCN4695.jpg
+
+Group 264: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 5275  cave= 19  score= 60  c19/c19F3.jpg has_plan_xy
+  [DELETE] image_id= 7571  cave= 18  score= 30  c18/c18F3.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=19 vs image_id=7571 cave_id=18
+
+Group 265: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4501  cave= 15  score= 60  c15/c15-2floornandi2.jpg has_plan_xy
+  [DELETE] image_id= 8128  cave= 15  score= 30  c15/DSCN5079.jpg
+
+Group 266: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3668  cave= 10  score= 60  c10/c10_C5.jpg has_plan_xy
+  [DELETE] image_id= 8659  cave= 10  score= 30  c10/DSCN4511.jpg
+
+Group 267: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4321  cave=  6  score= 60  c6/c6SlW3.jpg has_plan_xy
+  [DELETE] image_id= 7631  cave=  6  score= 20  c6/DSCN4381.jpg
+
+Group 268: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4246  cave=  5  score= 60  c5/c5_H4.jpg has_plan_xy
+  [DELETE] image_id= 7679  cave=  5  score= 20  c5/DSCN4328.jpg
+
+Group 269: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4569  cave= 15  score= 60  c15/c15_S2-11w.jpg has_plan_xy
+  [DELETE] image_id= 8104  cave= 15  score= 30  c15/DSCN5105.jpg
+
+Group 270: AUTO — 1 DB records, 2 CF images
+  [KEEP  ] image_id= 2398  cave= 30  score= 20  c-?/_CAV1024.jpg
+
+Group 271: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4047  cave= 12  score= 30  c12/c12_3rdflp.jpg
+  [DELETE] image_id= 8451  cave= 12  score= 30  c12/DSCN4739.jpg
+
+Group 272: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3848  cave= 11  score= 30  c11/c11_8.jpg
+  [DELETE] image_id= 8559  cave= 11  score= 30  c11/DSCN4618.jpg
+
+Group 273: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 8517  cave= 11  score= 30  c11/DSCN4664.jpg
+  [DELETE] image_id= 3880  cave= 11  score= 20  c11/c11_S13-21.jpg
+
+Group 274: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 5435  cave=224  score= 60  c24/c24A_S2linga.jpg has_plan_xy
+  [DELETE] image_id= 7554  cave= 23  score= 30  c23/c23BS_linga.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=224 vs image_id=7554 cave_id=23
+
+Group 275: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4496  cave= 15  score= 30  c15/c15-2floorHb.jpg
+  [DELETE] image_id= 8154  cave= 15  score= 30  c15/DSCN5052.jpg
+
+Group 276: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3867  cave= 11  score= 30  c11/c11_S10V.jpg
+  [DELETE] image_id= 8540  cave= 11  score= 30  c11/DSCN4640.jpg
+
+Group 277: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 5427  cave=124  score= 60  c24/c24A_S1-linga.jpg has_plan_xy
+  [DELETE] image_id= 7564  cave= 23  score= 30  c23/c23AS_linga.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=124 vs image_id=7564 cave_id=23
+
+Group 278: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4299  cave=  6  score= 60  c6/c6_rsubS.jpg has_plan_xy
+  [DELETE] image_id= 7645  cave=  6  score= 20  c6/DSCN4366.jpg
+
+Group 279: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4292  cave=  6  score= 60  c6/c6_lsubSH2.jpg has_plan_xy
+  [DELETE] image_id= 7650  cave=  6  score= 20  c6/DSCN4360.jpg
+
+Group 280: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4046  cave= 12  score= 30  c12/c12_3rdflH9.jpg
+  [DELETE] image_id= 8378  cave= 12  score= 30  c12/DSCN4818.jpg
+
+Group 281: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4218  cave=  4  score= 60  c4/c4_F1.jpg has_plan_xy
+  [DELETE] image_id= 7707  cave=  4  score= 20  c4/DSCN4295.jpg
+
+Group 282: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3766  cave= 10  score= 60  c10/c10_S6-3b.jpg has_plan_xy
+  [DELETE] image_id= 8618  cave= 10  score= 30  c10/DSCN4552.jpg
+
+Group 283: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4287  cave=  6  score= 60  c6/c6_Dd3.jpg has_plan_xy
+  [DELETE] image_id= 7637  cave=  6  score= 30  c6/DSCN4374.jpg
+
+Group 284: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3957  cave= 12  score= 30  c12/c12_2ndfloor-38.jpg
+  [DELETE] image_id= 8374  cave= 12  score= 30  c12/DSCN4822.jpg
+
+Group 285: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4100  cave= 12  score= 30  c12/c12_S1D.jpg
+  [DELETE] image_id= 8299  cave= 12  score= 30  c12/DSCN4901.jpg
+
+Group 286: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4443  cave= 14  score= 50  c14/c14ravananugrahamurti.jpg has_plan_xy
+  [DELETE] image_id= 8251  cave= 14  score= 20  c14/DSCN4965.jpg
+
+Group 287: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3865  cave= 11  score= 30  c11/c11_S10mainI-17a.jpg
+  [DELETE] image_id= 8538  cave= 11  score= 30  c11/DSCN4642.jpg
+
+Group 288: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4075  cave= 12  score= 30  c12/c12_3rdflS5e.jpg
+  [DELETE] image_id= 8444  cave= 12  score= 30  c12/DSCN4746.jpg
+
+Group 289: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3667  cave= 10  score= 60  c10/c10_C4.jpg has_plan_xy
+  [DELETE] image_id= 8662  cave= 10  score= 30  c10/DSCN4508.jpg
+
+Group 290: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3808  cave= 11  score= 30  c11/c11_2ndfloorV4.jpg
+  [DELETE] image_id= 8561  cave= 11  score= 30  c11/DSCN4593.jpg
+
+Group 291: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3790  cave= 10  score= 60  c10/c10_upperrV.jpg has_plan_xy
+  [DELETE] image_id= 8590  cave= 10  score= 20  c10/DSCN4613.jpg
+
+Group 292: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3931  cave= 12  score= 30  c12/c12_12.jpg
+  [DELETE] image_id= 8297  cave= 12  score= 30  c12/DSCN4903.jpg
+
+Group 293: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4450  cave= 14  score= 50  c14/c14Saptamatrika5.jpg has_plan_xy
+  [DELETE] image_id= 8222  cave= 14  score= 20  c14/DSCN5135.jpg
+
+Group 294: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4565  cave= 15  score= 60  c15/c15_S1lingam.jpg has_plan_xy
+  [DELETE] image_id= 8091  cave= 15  score= 30  c15/DSCN5118.jpg
+
+Group 295: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4213  cave=  4  score= 60  c4/c4_A.jpg has_plan_xy
+  [DELETE] image_id= 7706  cave=  4  score= 20  c4/DSCN4296.jpg
+
+Group 296: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 5428  cave=124  score= 60  c24/c24A_S1D.jpg has_plan_xy
+  [DELETE] image_id= 7565  cave= 23  score= 30  c23/c23AS.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=124 vs image_id=7565 cave_id=23
+
+Group 297: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4327  cave=  6  score= 60  c6/c6SrW3.jpg has_plan_xy
+  [DELETE] image_id= 7628  cave=  6  score= 20  c6/DSCN4384.jpg
+
+Group 298: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4467  cave= 14  score= 50  c14/c14vishnu2.jpg has_plan_xy
+  [DELETE] image_id= 8256  cave= 14  score= 20  c14/DSCN4960.jpg
+
+Group 299: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4512  cave= 15  score= 60  c15/c15-34a.jpg has_plan_xy
+  [DELETE] image_id= 8144  cave= 15  score= 30  c15/DSCN5062.jpg
+
+Group 300: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 8549  cave= 11  score= 30  c11/DSCN4629.jpg
+  [DELETE] image_id= 3907  cave= 11  score= 20  c11/c11_S9-15.jpg
+
+Group 301: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4417  cave= 14  score= 60  c14/c14H1.jpg has_plan_xy
+  [DELETE] image_id= 8242  cave= 14  score= 20  c14/DSCN4974.jpg
+
+Group 302: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3778  cave= 10  score= 50  c10/c10_S8.jpg has_plan_xy
+  [DELETE] image_id= 8699  cave= 10  score= 30  c10/DSCN4471.jpg
+
+Group 303: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4322  cave=  6  score= 60  c6/c6SlW4.jpg has_plan_xy
+  [DELETE] image_id= 7630  cave=  6  score= 20  c6/DSCN4382.jpg
+
+Group 304: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3980  cave= 12  score= 60  c12/c12_2ndfloor-S3d46c.jpg has_plan_xy
+  [DELETE] image_id= 8341  cave= 12  score= 30  c12/DSCN4857.jpg
+
+Group 305: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3833  cave= 11  score= 30  c11/c11_3rdfloor-8.jpg
+  [DELETE] image_id= 8487  cave= 11  score= 30  c11/DSCN4700.jpg
+
+Group 306: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4105  cave= 12  score= 30  c12/c12_S2-24.jpg
+  [DELETE] image_id= 8323  cave= 12  score= 30  c12/DSCN4876.jpg
+
+Group 307: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3682  cave= 10  score= 60  c10/c10_Fld.jpg has_plan_xy
+  [DELETE] image_id= 8700  cave= 10  score= 30  c10/DSCN4470.jpg
+
+Group 308: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 8321  cave= 12  score= 30  c12/DSCN4879.jpg
+  [DELETE] image_id= 4107  cave= 12  score= 20  c12/c12_S2-26.jpg
+
+Group 309: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4464  cave= 14  score= 50  c14/c14Varaha2.jpg has_plan_xy
+  [DELETE] image_id= 8253  cave= 14  score= 20  c14/DSCN4963.jpg
+
+Group 310: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4193  cave=  3  score= 50  c3/c3_F3.jpg has_plan_xy
+  [DELETE] image_id= 8035  cave=  3  score= 20  c3/DSCN4267.jpg
+
+Group 311: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 5431  cave=124  score= 60  c24/c24A_S1Wr_visnu.jpg has_plan_xy
+  [DELETE] image_id= 7562  cave= 23  score= 30  c23/c23AWr_visnu.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=124 vs image_id=7562 cave_id=23
+
+Group 312: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4507  cave= 15  score= 30  c15/c15-30.jpg
+  [DELETE] image_id= 8152  cave= 15  score= 30  c15/DSCN5054.jpg
+
+Group 313: AUTO — 3 DB records, 2 CF images
+  [KEEP  ] image_id=  121  cave= 10  score= 50  c10/c10_Fd4.jpg has_plan_xy
+  [DELETE] image_id= 3678  cave= 10  score= 50  c10/c10_Fd4.jpg has_plan_xy
+  [DELETE] image_id= 8725  cave= 10  score= 30  c10/DSCN4444.jpg
+
+Group 314: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3708  cave= 10  score= 60  c10/c10_S14d.jpg has_plan_xy
+  [DELETE] image_id= 8703  cave= 10  score= 30  c10/DSCN4467.jpg
+
+Group 315: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3726  cave= 10  score= 60  c10/c10_S4linteld12.jpg has_plan_xy
+  [DELETE] image_id= 8643  cave= 10  score= 30  c10/DSCN4527.jpg
+
+Group 316: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 5274  cave= 19  score= 60  c19/c19F2.jpg has_plan_xy
+  [DELETE] image_id= 7572  cave= 18  score= 30  c18/c18F2.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=19 vs image_id=7572 cave_id=18
+
+Group 317: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3941  cave= 12  score= 30  c12/c12_1stfloorH.jpg
+  [DELETE] image_id= 8290  cave= 12  score= 30  c12/DSCN4910.jpg
+
+Group 318: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4471  cave= 14  score= 50  c14/c14vishnulakshmi1.jpg has_plan_xy
+  [DELETE] image_id= 8254  cave= 14  score= 20  c14/DSCN4962.jpg
+
+Group 319: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3755  cave= 10  score= 60  c10/c10_S4stupad2.jpg has_plan_xy
+  [DELETE] image_id= 8630  cave= 10  score= 20  c10/DSCN4540.jpg
+
+Group 320: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4288  cave=  6  score= 60  c6/c6_H.jpg has_plan_xy
+  [DELETE] image_id= 7648  cave=  6  score= 20  c6/DSCN4362.jpg
+
+Group 321: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4564  cave= 15  score= 30  c15/c15_S1.jpg
+  [DELETE] image_id= 8201  cave= 15  score= 30  c15/DSCN4997.jpg
+
+Group 322: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4033  cave= 12  score= 30  c12/c12_3rdflH1.jpg
+  [DELETE] image_id= 8448  cave= 12  score= 30  c12/DSCN4742.jpg
+
+Group 323: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3875  cave= 11  score= 30  c11/c11_S11-d20.jpg
+  [DELETE] image_id= 8529  cave= 11  score= 30  c11/DSCN4652.jpg
+
+Group 324: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4048  cave= 12  score= 30  c12/c12_3rdflp1.jpg
+  [DELETE] image_id= 8449  cave= 12  score= 30  c12/DSCN4741.jpg
+
+Group 325: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4220  cave=  4  score= 60  c4/c4_H1.jpg has_plan_xy
+  [DELETE] image_id= 7697  cave=  4  score= 20  c4/DSCN4305.jpg
+
+Group 326: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3683  cave= 10  score= 60  c10/c10_Flintel.jpg has_plan_xy
+  [DELETE] image_id= 8724  cave= 10  score= 30  c10/DSCN4445.jpg
+
+Group 327: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3922  cave= 11  score= 60  c11/c11_S9mainI-14a.jpg has_plan_xy
+  [DELETE] image_id= 8566  cave= 11  score= 30  c11/DSCN4588.jpg
+
+Group 328: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3926  cave= 11  score= 60  c11/c11_stairway-1stfloor.jpg has_plan_xy
+  [DELETE] image_id= 8468  cave= 11  score= 30  c11/DSCN4721.jpg
+
+Group 329: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3855  cave= 11  score= 50  c11/c11_F1.jpg has_plan_xy
+  [DELETE] image_id= 8579  cave= 11  score= 30  c11/DSCN4574.jpg
+
+Group 330: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4108  cave= 12  score= 30  c12/c12_S2-26a.jpg
+  [DELETE] image_id= 8326  cave= 12  score= 30  c12/DSCN4873.jpg
+
+Group 331: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3864  cave= 11  score= 60  c11/c11_S10mainI-17.jpg has_plan_xy
+  [DELETE] image_id= 8539  cave= 11  score= 30  c11/DSCN4641.jpg
+
+Group 332: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3960  cave= 12  score= 30  c12/c12_2ndfloor-41.jpg
+  [DELETE] image_id= 8371  cave= 12  score= 30  c12/DSCN4825.jpg
+
+Group 333: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3825  cave= 11  score= 60  c11/c11_3rdfloor-23.jpg has_plan_xy
+  [DELETE] image_id= 8509  cave= 11  score= 30  c11/DSCN4674.jpg
+
+Group 334: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4581  cave= 15  score= 60  c15/c15_S2-d13.jpg has_plan_xy
+  [DELETE] image_id= 8108  cave= 15  score= 30  c15/DSCN5101.jpg
+
+Group 335: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 5408  cave= 24  score= 60  c23/c23-24F.jpg has_plan_xy
+  [DELETE] image_id= 8075  cave= 24  score= 30  c24/DSCN5483.jpg
+
+Group 336: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4216  cave=  4  score= 60  c4/c4_C2.jpg has_plan_xy
+  [DELETE] image_id= 7696  cave=  4  score= 20  c4/DSCN4306.jpg
+
+Group 337: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4601  cave= 15  score= 60  c15/c15_stairwell2.jpg has_plan_xy
+  [DELETE] image_id= 8120  cave= 15  score= 30  c15/DSCN5087.jpg
+
+Group 338: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4437  cave= 14  score= 50  c14/c14nataraja1.jpg has_plan_xy
+  [DELETE] image_id= 8249  cave= 14  score= 20  c14/DSCN4967.jpg
+
+Group 339: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4506  cave= 15  score= 60  c15/c15-2floorPd2.jpg has_plan_xy
+  [DELETE] image_id= 8115  cave= 15  score= 30  c15/DSCN5094.jpg
+
+Group 340: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3858  cave= 11  score= 60  c11/c11_lWentrance-1.jpg has_plan_xy
+  [DELETE] image_id= 8583  cave= 11  score= 20  c11/DSCN4570.jpg
+
+Group 341: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4549  cave= 15  score= 60  c15/c15_dS1.jpg has_plan_xy
+  [DELETE] image_id= 8093  cave= 15  score= 30  c15/DSCN5116.jpg
+
+Group 342: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4538  cave= 15  score= 60  c15/c15-S3lingam.jpg has_plan_xy
+  [DELETE] image_id= 8132  cave= 15  score= 30  c15/DSCN5075.jpg
+
+Group 343: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4219  cave=  4  score= 60  c4/c4_H.jpg has_plan_xy
+  [DELETE] image_id= 7703  cave=  4  score= 20  c4/DSCN4299.jpg
+
+Group 344: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4540  cave= 15  score= 30  c15/c15_1floor.jpg
+  [DELETE] image_id= 8191  cave= 15  score= 30  c15/DSCN5008.jpg
+
+Group 345: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4556  cave= 15  score= 30  c15/c15_mainentrance.jpg
+  [DELETE] image_id= 8202  cave= 15  score= 30  c15/DSCN4996.jpg
+
+Group 346: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4324  cave=  6  score= 60  c6/c6Srf.jpg has_plan_xy
+  [DELETE] image_id= 7626  cave=  6  score= 20  c6/DSCN4386.jpg
+
+Group 347: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4435  cave= 14  score= 60  c14/c14misc1.jpg has_plan_xy
+  [DELETE] image_id= 8278  cave= 14  score= 30  c14/DSCN4938.jpg
+
+Group 348: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4458  cave= 14  score= 60  c14/c14Sentranced1.jpg has_plan_xy
+  [DELETE] image_id= 8237  cave= 14  score= 20  c14/DSCN4979.jpg
+
+Group 349: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4194  cave=  3  score= 60  c3/c3_F4.jpg has_plan_xy
+  [DELETE] image_id= 8034  cave=  3  score= 20  c3/DSCN4268.jpg
+
+Group 350: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4584  cave= 15  score= 60  c15/c15_S2.jpg has_plan_xy
+  [DELETE] image_id= 8212  cave= 15  score= 30  c15/DSCN4985.jpg
+
+Group 351: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3836  cave= 11  score= 30  c11/c11_3rdfloor-d7.jpg
+  [DELETE] image_id= 8490  cave= 11  score= 30  c11/DSCN4697.jpg
+
+Group 352: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4331  cave=  7  score= 60  c7/c7HlW.jpg has_plan_xy
+  [DELETE] image_id= 7612  cave=  7  score= 20  c7/DSCN4412.jpg
+
+Group 353: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4203  cave=  3  score= 60  c3/c3_HPd3.jpg has_plan_xy
+  [DELETE] image_id= 7690  cave=  5  score= 30  c5/DSCN4314.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=3 vs image_id=7690 cave_id=5
+
+Group 354: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3803  cave= 11  score= 60  c11/c11_1stfloorV.jpg has_plan_xy
+  [DELETE] image_id= 8560  cave= 11  score= 30  c11/DSCN4617.jpg
+
+Group 355: AUTO — 3 DB records, 2 CF images
+  [KEEP  ] image_id=  123  cave= 10  score= 60  c10/c10_railingi.jpg has_plan_xy
+  [DELETE] image_id= 3695  cave= 10  score= 50  c10/c10_railingi.jpg has_plan_xy
+  [DELETE] image_id= 8658  cave= 10  score= 30  c10/DSCN4512.jpg
+
+Group 356: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 7678  cave=  5  score= 30  c5/DSCN4329.jpg
+  [DELETE] image_id= 4247  cave=  5  score= 20  c5/c5_H5.jpg
+
+Group 357: AUTO — 1 DB records, 2 CF images
+  [KEEP  ] image_id= 9452  cave= 32  score=180  book_archival_A19_C32_dc240a41-7c71-443c-b6cd-5551cc148da7_5976 c32-floor2.jpg book_fig=A19 book_page=261
+
+Group 358: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3845  cave= 11  score= 60  c11/c11_3rdfloorPd.jpg has_plan_xy
+  [DELETE] image_id= 8508  cave= 11  score= 30  c11/DSCN4675.jpg
+
+Group 359: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 8570  cave= 11  score= 30  c11/DSCN4584.jpg
+  [DELETE] image_id= 3801  cave= 11  score= 20  c11/c11_11.jpg
+
+Group 360: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4473  cave= 14  score= 50  c14/c14VlIMahishamardini.jpg has_plan_xy
+  [DELETE] image_id= 8244  cave= 14  score= 20  c14/DSCN4972.jpg
+
+Group 361: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4086  cave= 12  score= 30  c12/c12_3rdlWcell.jpg
+  [DELETE] image_id= 8377  cave= 12  score= 30  c12/DSCN4819.jpg
+
+Group 362: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4095  cave= 12  score= 60  c12/c12_F.jpg has_plan_xy
+  [DELETE] image_id= 8319  cave= 12  score= 30  c12/DSCN4881.jpg
+
+Group 363: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3805  cave= 11  score= 60  c11/c11_2ndfloorV.jpg has_plan_xy
+  [DELETE] image_id= 8554  cave= 11  score= 30  c11/DSCN4623.jpg
+
+Group 364: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4567  cave= 15  score= 60  c15/c15_S2-11a.jpg has_plan_xy
+  [DELETE] image_id= 8103  cave= 15  score= 30  c15/DSCN5106.jpg
+
+Group 365: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4545  cave= 15  score= 60  c15/c15_2floor-nandi.jpg has_plan_xy
+  [DELETE] image_id= 8185  cave= 15  score= 30  c15/DSCN5017.jpg
+
+Group 366: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4550  cave= 15  score= 60  c15/c15_dS1a.jpg has_plan_xy
+  [DELETE] image_id= 8092  cave= 15  score= 30  c15/DSCN5117.jpg
+
+Group 367: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3772  cave= 10  score= 60  c10/c10_S6F.jpg has_plan_xy
+  [DELETE] image_id= 8613  cave= 10  score= 30  c10/DSCN4557.jpg
+
+Group 368: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3956  cave= 12  score= 60  c12/c12_2ndfloor-37.jpg has_plan_xy
+  [DELETE] image_id= 8370  cave= 12  score= 30  c12/DSCN4826.jpg
+
+Group 369: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3675  cave= 10  score= 60  c10/c10_ePcenter.jpg has_plan_xy
+  [DELETE] image_id= 8718  cave= 10  score= 30  c10/DSCN4451.jpg
+
+Group 370: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3692  cave= 10  score= 60  c10/c10_lsubSentrance.jpg has_plan_xy
+  [DELETE] image_id= 8704  cave= 10  score= 30  c10/DSCN4466.jpg
+
+Group 371: AUTO — 3 DB records, 2 CF images
+  [KEEP  ] image_id= 9535  cave=  2  score=180  book_Fig.2.16 c2 _CAV2897.jpg book_fig=2.16 book_page=106
+  [DELETE] image_id=  837  cave=  2  score= 20  c2/_CAV2897.jpg
+  [DELETE] image_id= 9346  cave=  2  score= 20  book_Fig.2.16 c2 _CAV2897.jpg
+
+Group 372: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3989  cave= 12  score= 60  c12/c12_2ndfloor-S4-26a.jpg has_plan_xy
+  [DELETE] image_id= 8338  cave= 12  score= 30  c12/DSCN4860.jpg
+
+Group 373: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3835  cave= 11  score= 30  c11/c11_3rdfloor-d7-8.jpg
+  [DELETE] image_id= 8488  cave= 11  score= 30  c11/DSCN4699.jpg
+
+Group 374: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3654  cave= 10  score= 20  c10/c10_18.jpg
+  [DELETE] image_id= 8689  cave= 10  score= 20  c10/DSCN4481.jpg
+
+Group 375: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4058  cave= 12  score= 30  c12/c12_3rdflS5-21.jpg
+  [DELETE] image_id= 8423  cave= 12  score= 30  c12/DSCN4767.jpg
+
+Group 376: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4600  cave= 15  score= 60  c15/c15_stairwell1.jpg has_plan_xy
+  [DELETE] image_id= 8121  cave= 15  score= 30  c15/DSCN5086.jpg
+
+Group 377: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 5434  cave=224  score= 70  c24/c24A_S2F.jpg has_plan_xy
+  [DELETE] image_id= 7560  cave= 23  score= 30  c23/c23B.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=224 vs image_id=7560 cave_id=23
+
+Group 378: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3881  cave= 11  score= 60  c11/c11_S13-23.jpg has_plan_xy
+  [DELETE] image_id= 8516  cave= 11  score= 30  c11/DSCN4665.jpg
+
+Group 379: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4330  cave=  7  score= 60  c7/c7HbrW.jpg has_plan_xy
+  [DELETE] image_id= 7611  cave=  7  score= 20  c7/DSCN4413.jpg
+
+Group 380: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4214  cave=  4  score= 60  c4/c4_B.jpg has_plan_xy
+  [DELETE] image_id= 7704  cave=  4  score= 20  c4/DSCN4298.jpg
+
+Group 381: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 8441  cave= 12  score= 30  c12/DSCN4749.jpg
+  [DELETE] image_id= 4040  cave= 12  score= 20  c12/c12_3rdflH3.jpg
+
+Group 382: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3664  cave= 10  score= 60  c10/c10_C.jpg has_plan_xy
+  [DELETE] image_id= 8664  cave= 10  score= 20  c10/DSCN4506.jpg
+
+Group 383: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3697  cave= 10  score= 60  c10/c10_S10-11-12.jpg has_plan_xy
+  [DELETE] image_id= 8683  cave= 10  score= 20  c10/DSCN4487.jpg
+
+Group 384: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3831  cave= 11  score= 30  c11/c11_3rdfloor-7-8.jpg
+  [DELETE] image_id= 8489  cave= 11  score= 30  c11/DSCN4698.jpg
+
+Group 385: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4238  cave=  5  score= 60  c5/c5_F2.jpg has_plan_xy
+  [DELETE] image_id= 7684  cave=  5  score= 20  c5/DSCN4321.jpg
+
+Group 386: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3665  cave= 10  score= 60  c10/c10_C2.jpg has_plan_xy
+  [DELETE] image_id= 8663  cave= 10  score= 20  c10/DSCN4507.jpg
+
+Group 387: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4077  cave= 12  score= 30  c12/c12_3rdflS5mainI1.jpg
+  [DELETE] image_id= 8418  cave= 12  score= 30  c12/DSCN4772.jpg
+
+Group 388: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4102  cave= 12  score= 30  c12/c12_S2-21.jpg
+  [DELETE] image_id= 8320  cave= 12  score= 30  c12/DSCN4880.jpg
+
+Group 389: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3885  cave= 11  score= 30  c11/c11_S14D.jpg
+  [DELETE] image_id= 8484  cave= 11  score= 30  c11/DSCN4703.jpg
+
+Group 390: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3734  cave= 10  score= 50  c10/c10_S4linteld2.jpg has_plan_xy
+  [DELETE] image_id= 8670  cave= 10  score= 20  c10/DSCN4500.jpg
+
+Group 391: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4552  cave= 15  score= 30  c15/c15_lcellstairway.jpg
+  [DELETE] image_id= 8195  cave= 15  score= 30  c15/DSCN5003.jpg
+
+Group 392: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3780  cave= 10  score= 60  c10/c10_S8rW.jpg has_plan_xy
+  [DELETE] image_id= 8698  cave= 10  score= 30  c10/DSCN4472.jpg
+
+Group 393: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4410  cave= 14  score= 60  c14/c14andhakasura.jpg has_plan_xy
+  [DELETE] image_id= 8252  cave= 14  score= 20  c14/DSCN4964.jpg
+
+Group 394: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 5433  cave=224  score= 60  c24/c24A_S2D.jpg has_plan_xy
+  [DELETE] image_id= 7556  cave= 23  score= 30  c23/c23BSD.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=224 vs image_id=7556 cave_id=23
+
+Group 395: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4571  cave= 15  score= 60  c15/c15_S2-12a.jpg has_plan_xy
+  [DELETE] image_id= 8114  cave= 15  score= 30  c15/DSCN5095.jpg
+
+Group 396: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4416  cave= 14  score= 60  c14/c14H.jpg has_plan_xy
+  [DELETE] image_id= 8243  cave= 14  score= 20  c14/DSCN4973.jpg
+
+Group 397: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4460  cave= 14  score= 50  c14/c14sivaparvatiplayingchaupat1.jpg has_plan_xy
+  [DELETE] image_id= 8246  cave= 14  score= 20  c14/DSCN4970.jpg
+
+Group 398: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3730  cave= 10  score= 60  c10/c10_S4linteld16.jpg has_plan_xy
+  [DELETE] image_id= 8635  cave= 10  score= 20  c10/DSCN4535.jpg
+
+Group 399: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4071  cave= 12  score= 60  c12/c12_3rdflS5C3.jpg has_plan_xy
+  [DELETE] image_id= 8411  cave= 12  score= 30  c12/DSCN4779.jpg
+
+Group 400: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4428  cave= 14  score= 60  c14/c14HS.jpg has_plan_xy
+  [DELETE] image_id= 8274  cave= 14  score= 30  c14/DSCN4942.jpg
+
+Group 401: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4081  cave= 12  score= 30  c12/c12_3rdflS5mainId.jpg
+  [DELETE] image_id= 8401  cave= 12  score= 30  c12/DSCN4789.jpg
+
+Group 402: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4560  cave= 15  score= 60  c15/c15_S1-2.jpg has_plan_xy
+  [DELETE] image_id= 8199  cave= 15  score= 30  c15/DSCN4999.jpg
+
+Group 403: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3820  cave= 11  score= 60  c11/c11_3rdfloor-1b.jpg has_plan_xy
+  [DELETE] image_id= 8498  cave= 11  score= 30  c11/DSCN4689.jpg
+
+Group 404: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4103  cave= 12  score= 30  c12/c12_S2-22.jpg
+  [DELETE] image_id= 8325  cave= 12  score= 30  c12/DSCN4874.jpg
+
+Group 405: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 7552  cave= 23  score= 30  c23/c23S1.jpg
+  [DELETE] image_id= 7568  cave= 22  score= 30  c22/c22a_F1.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=23 vs image_id=7568 cave_id=22
+
+Group 406: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4187  cave=  3  score= 50  c3/c3_8.jpg has_plan_xy
+  [DELETE] image_id= 8017  cave=  3  score= 30  c3/DSCN4290.jpg
+
+Group 407: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4178  cave=  3  score= 50  c3/c3_1-2.jpg has_plan_xy
+  [DELETE] image_id= 8031  cave=  3  score= 20  c3/DSCN4275.jpg
+
+Group 408: AUTO — 1 DB records, 2 CF images
+  [KEEP  ] image_id= 5271  cave= 18  score= 60  c18/c18SD.jpg has_plan_xy
+
+Group 409: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3693  cave= 10  score= 60  c10/c10_plinth.jpg has_plan_xy
+  [DELETE] image_id= 8675  cave= 10  score= 30  c10/DSCN4495.jpg
+
+Group 410: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4430  cave= 14  score= 60  c14/c14Lintel1.jpg has_plan_xy
+  [DELETE] image_id= 8230  cave= 14  score= 30  c14/DSCN5126.jpg
+
+Group 411: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4554  cave= 15  score= 30  c15/c15_lstairscells.jpg
+  [DELETE] image_id= 8211  cave= 15  score= 30  c15/DSCN4986.jpg
+
+Group 412: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4451  cave= 14  score= 60  c14/c14Saptamatrikad.jpg has_plan_xy
+  [DELETE] image_id= 8226  cave= 14  score= 20  c14/DSCN5131.jpg
+
+Group 413: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4074  cave= 12  score= 30  c12/c12_3rdflS5D.jpg
+  [DELETE] image_id= 8385  cave= 12  score= 30  c12/DSCN4811.jpg
+
+Group 414: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4603  cave= 15  score= 60  c15/c15_stairwell4.jpg has_plan_xy
+  [DELETE] image_id= 8118  cave= 15  score= 30  c15/DSCN5090.jpg
+
+Group 415: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 5277  cave= 19  score= 60  c19/c19Hl.jpg has_plan_xy
+  [DELETE] image_id= 8077  cave=120  score= 20  c20AB/c20BHl.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=19 vs image_id=8077 cave_id=120
+
+Group 416: AUTO — 1 DB records, 2 CF images
+  [KEEP  ] image_id= 2411  cave= 30  score= 60  c-?/_CAV1037.jpg has_plan_xy
+
+Group 417: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3738  cave= 10  score= 60  c10/c10_S4linteld3.jpg has_plan_xy
+  [DELETE] image_id= 8669  cave= 10  score= 30  c10/DSCN4501.jpg
+
+Group 418: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3986  cave= 12  score= 30  c12/c12_2ndfloor-S4-24.jpg
+  [DELETE] image_id= 8339  cave= 12  score= 30  c12/DSCN4859.jpg
+
+Group 419: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3761  cave= 10  score= 20  c10/c10_S4stupad8.jpg
+  [DELETE] image_id= 8624  cave= 10  score= 20  c10/DSCN4546.jpg
+
+Group 420: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4542  cave= 15  score= 60  c15/c15_1floorentrance.jpg has_plan_xy
+  [DELETE] image_id= 8098  cave= 15  score= 30  c15/DSCN5111.jpg
+
+Group 421: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3886  cave= 11  score= 60  c11/c11_S14Da.jpg has_plan_xy
+  [DELETE] image_id= 8483  cave= 11  score= 30  c11/DSCN4704.jpg
+
+Group 422: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3829  cave= 11  score= 60  c11/c11_3rdfloor-3c.jpg has_plan_xy
+  [DELETE] image_id= 8495  cave= 11  score= 30  c11/DSCN4692.jpg
+
+Group 423: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3760  cave= 10  score= 60  c10/c10_S4stupad7.jpg has_plan_xy
+  [DELETE] image_id= 8625  cave= 10  score= 20  c10/DSCN4545.jpg
+
+Group 424: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4245  cave=  5  score= 60  c5/c5_H3.jpg has_plan_xy
+  [DELETE] image_id= 7680  cave=  5  score= 20  c5/DSCN4327.jpg
+
+Group 425: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4087  cave= 12  score= 30  c12/c12_4-3-2.jpg
+  [DELETE] image_id= 8314  cave= 12  score= 30  c12/DSCN4886.jpg
+
+Group 426: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4493  cave= 15  score= 60  c15/c15-29.jpg has_plan_xy
+  [DELETE] image_id= 8153  cave= 15  score= 30  c15/DSCN5053.jpg
+
+Group 427: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 8582  cave= 11  score= 30  c11/DSCN4571.jpg
+  [DELETE] image_id= 3896  cave= 11  score= 20  c11/c11_S1P.jpg
+
+Group 428: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3702  cave= 10  score= 50  c10/c10_S14-27b.jpg has_plan_xy
+  [DELETE] image_id= 8603  cave= 10  score= 20  c10/DSCN4568.jpg
+
+Group 429: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4606  cave= 15  score= 60  c15/c15F1.jpg has_plan_xy
+  [DELETE] image_id= 8206  cave= 15  score= 30  c15/DSCN4992.jpg
+
+Group 430: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4255  cave=  5  score= 60  c5/c5_Se.jpg has_plan_xy
+  [DELETE] image_id= 7673  cave=  5  score= 30  c5/DSCN4334.jpg
+
+Group 431: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 7434  cave=  2  score= 20  c2/Ellora c2_A_5073.jpg
+  [DELETE] image_id= 7435  cave=  2  score= 20  c2/Ellora c2_A_5073 (# Name Clash 2025-03-30 2k9S9q1 #).jpg
+
+Group 432: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4042  cave= 12  score= 30  c12/c12_3rdflH5.jpg
+  [DELETE] image_id= 8439  cave= 12  score= 30  c12/DSCN4751.jpg
+
+Group 433: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3781  cave= 10  score= 60  c10/c10_S9F.jpg has_plan_xy
+  [DELETE] image_id= 8694  cave= 10  score= 20  c10/DSCN4476.jpg
+
+Group 434: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4532  cave= 15  score= 60  c15/c15-S1D.jpg has_plan_xy
+  [DELETE] image_id= 8198  cave= 15  score= 30  c15/DSCN5000.jpg
+
+Group 435: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4455  cave= 14  score= 50  c14/c14Saptamtrika.jpg has_plan_xy
+  [DELETE] image_id= 8234  cave= 14  score= 20  c14/DSCN4982.jpg
+
+Group 436: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3816  cave= 11  score= 30  c11/c11_3rdfloor-16-17.jpg
+  [DELETE] image_id= 8474  cave= 11  score= 30  c11/DSCN4713.jpg
+
+Group 437: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3916  cave= 11  score= 30  c11/c11_S9-d15a.jpg
+  [DELETE] image_id= 8520  cave= 11  score= 30  c11/DSCN4661.jpg
+
+Group 438: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3731  cave= 10  score= 60  c10/c10_S4linteld17.jpg has_plan_xy
+  [DELETE] image_id= 8634  cave= 10  score= 20  c10/DSCN4536.jpg
+
+Group 439: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3725  cave= 10  score= 60  c10/c10_S4linteld10.jpg has_plan_xy
+  [DELETE] image_id= 8644  cave= 10  score= 30  c10/DSCN4526.jpg
+
+Group 440: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4098  cave= 12  score= 60  c12/c12_S1-9c.jpg has_plan_xy
+  [DELETE] image_id= 8293  cave= 12  score= 30  c12/DSCN4907.jpg
+
+Group 441: AUTO — 1 DB records, 2 CF images
+  [KEEP  ] image_id= 7567  cave= 22  score= 30  c22/c22a_lingam.jpg
+
+Group 442: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4068  cave= 12  score= 30  c12/c12_3rdflS5C.jpg
+  [DELETE] image_id= 8416  cave= 12  score= 30  c12/DSCN4774.jpg
+
+Group 443: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3856  cave= 11  score= 50  c11/c11_F2.jpg has_plan_xy
+  [DELETE] image_id= 8555  cave= 11  score= 30  c11/DSCN4622.jpg
+
+Group 444: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3787  cave= 10  score= 60  c10/c10_upperiV.jpg has_plan_xy
+  [DELETE] image_id= 8661  cave= 10  score= 20  c10/DSCN4509.jpg
+
+Group 445: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4590  cave= 15  score= 60  c15/c15_S2d_rename.jpg has_plan_xy
+  [DELETE] image_id= 8186  cave= 15  score= 30  c15/DSCN5016.jpg
+
+Group 446: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3813  cave= 11  score= 60  c11/c11_3rdfloor-13.jpg has_plan_xy
+  [DELETE] image_id= 8485  cave= 11  score= 30  c11/DSCN4702.jpg
+
+Group 447: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4415  cave= 14  score= 60  c14/c14Gajalakshmi1.jpg has_plan_xy
+  [DELETE] image_id= 8260  cave= 14  score= 20  c14/DSCN4956.jpg
+
+Group 448: REVIEW — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 7540  cave=  4  score= 20  Ellora c1-7_PXL_20230310_015853321.dng.jpg
+  [DELETE] image_id= 7544  cave=  5  score= 20  Ellora c1-7 copy_PXL_20230310_015853321.dng.jpg
+  ⚠ CONFLICT: cave_id mismatch: keeper=4 vs image_id=7544 cave_id=5
+
+Group 449: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3650  cave= 10  score= 50  c10/c10_12.jpg has_plan_xy
+  [DELETE] image_id= 8588  cave= 10  score= 30  c10/DSCN4615.jpg
+
+Group 450: AUTO — 3 DB records, 2 CF images
+  [KEEP  ] image_id= 3679  cave= 10  score= 60  c10/c10_Fd5.jpg has_plan_xy
+  [DELETE] image_id=  122  cave= 10  score= 50  c10/c10_Fd5.jpg has_plan_xy
+  [DELETE] image_id= 8686  cave= 10  score= 30  c10/DSCN4484.jpg
+
+Group 451: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3765  cave= 10  score= 50  c10/c10_S6-3a.jpg has_plan_xy
+  [DELETE] image_id= 8709  cave= 10  score= 30  c10/DSCN4461.jpg
+
+Group 452: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3712  cave= 10  score= 60  c10/c10_S2-d1.jpg has_plan_xy
+  [DELETE] image_id= 8713  cave= 10  score= 30  c10/DSCN4457.jpg
+
+Group 453: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3817  cave= 11  score= 60  c11/c11_3rdfloor-16-17a.jpg has_plan_xy
+  [DELETE] image_id= 8473  cave= 11  score= 30  c11/DSCN4714.jpg
+
+Group 454: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4285  cave=  6  score= 60  c6/c6_Dd.jpg has_plan_xy
+  [DELETE] image_id= 7639  cave=  6  score= 20  c6/DSCN4372.jpg
+
+Group 455: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 4593  cave= 15  score= 60  c15/c15_S2e.jpg has_plan_xy
+  [DELETE] image_id= 8116  cave= 15  score= 30  c15/DSCN5093.jpg
+
+Group 456: AUTO — 2 DB records, 2 CF images
+  [KEEP  ] image_id= 3944  cave= 12  score= 30  c12/c12_2.jpg
+  [DELETE] image_id= 8316  cave= 12  score= 30  c12/DSCN4884.jpg
+
+
+======================================================================
+SUMMARY
+======================================================================
+  Total duplicate groups:    456
+  Safe to auto-merge:        426
+  Needs manual review:       30
+  CF images to delete:       478
+  DB records to delete:      440 (auto-merge groups only)
+
+Review groups marked REVIEW before running execute.
+To approve a REVIEW group, edit dedup_plan.json and change its status to 'auto'.

@@ -1,0 +1,661 @@
+Upload log: 183 successful uploads
+
+Fetching images from Supabase...
+  Fetched 8255 DB rows
+  WARNING: duplicate DB key ('fig', 'fig.3.17') for image_ids 9558 and 9365 ('book_Fig.3.17 c30-floor2 A0005240.3FR levels_4500K.jpg' vs 'book_Fig.3.17 c30 A0005240G.jpg')
+  WARNING: duplicate DB key ('fig', 'fig.3.18') for image_ids 9559 and 9366 ('book_Fig.3.18 c30-floor2 A0005241.3FR levels_5500K.jpg' vs 'book_Fig.3.18 c30 A0005241 G.jpg')
+  WARNING: duplicate DB key ('fig', 'fig.3.19') for image_ids 9560 and 9367 ('book_Fig.3.19 c30-floor2 A0005238.3FR levels_4000K gimp-shadows-highlights 5000K.jpg' vs 'book_Fig.3.19 c30 A0005238 G.jpg')
+  WARNING: duplicate DB key ('fig', 'fig.3.13') for image_ids 9554 and 9361 ('book_Fig.3.13 c30 PXL_20230313_103646906 crop_levels.dng gimp-shadows-highlighhts.jpg' vs 'book_Fig.3.13 c30 PXL_20230313_103646906 G.jpg')
+  WARNING: duplicate DB key ('fig', 'fig.3.20') for image_ids 9561 and 9368 ('book_Fig.3.20 c30-floor2 A0005234.3FR rotate_crop gimp-levels_5500K.jpg' vs 'book_Fig.3.20 c30 A0005234 G.jpg')
+  WARNING: duplicate DB key ('fig', 'fig.4.3') for image_ids 9592 and 9399 ('book_Fig.4.3 c2 A0005066.3FR_0024 rotate_crop_shadows-highlights_levels_4000K.jpg' vs 'book_Fig.4.3 c2 A0005066.3FR_0024 rotate_crop_shadows-highlights_levels_4000K.jpg')
+  WARNING: duplicate DB key ('fig', 'fig.4.7') for image_ids 9596 and 9403 ('book_Fig.4.7 c29 _CAV2434 gimp-highlights_5000K.jpg' vs 'book_Fig.4.7 c29 _CAV2434 G.jpg')
+  WARNING: duplicate DB key ('fig', 'fig.4.14') for image_ids 9584 and 9391 ('book_Fig.4.14 c30 _CAV1046 gimp-shadows-highlights.jpg' vs 'book_Fig.4.14 c30 _CAV1046 G.jpg')
+  WARNING: duplicate DB key ('fig', 'fig.4.10') for image_ids 9579 and 9386 ('book_Fig.4.10 c29 PXL_20230310_120843792.NIGHT levels.dng gimp-highlights.jpg' vs 'book_Fig.4.10 c29 west-entrance PXL_20230310_120843792 NIGHT G.jpg')
+  Built index with 190 Fig/Archive/Plate DB entries
+
+[DRY RUN] Plan:
+  UPDATE (replace existing):        136
+  INSERT (new rows):                47
+  UNMATCHED (key, no DB row):       0
+
+  --- Would UPDATE ---
+    image_id= 9468  p.32 fig.1.1
+      OLD: book_Fig.1.1 c21 PXL_20230315_063303514 levels gimp-shadows.jpg
+      NEW: book_Ch1_Fig.1.1 c21 PXL_20230315_063303514.jpg
+      CF:  da9b5a7e-d883-4b5d-4eef-0cdb575e0000
+    image_id= 9469  p.40 fig.1.10A
+      OLD: book_Fig.1.10A c21 _CAV2071 crop_levels_4000K.jpg
+      NEW: book_Ch1_Fig.1.10A c21 _CAV2071 crop_levels_4000K.jpg
+      CF:  9a462b9c-751f-46cd-38dd-6fd6d9b03900
+    image_id= 9470  p.40 fig.1.10B
+      OLD: book_Fig.1.10B c21 A0004794.3FR crop_levels_4000K.jpg
+      NEW: book_Ch1_Fig.1.10B c21 A0004794.3FR.jpg
+      CF:  38bc7a44-72cd-4345-327b-c6b0ecfc2200
+    image_id= 9471  p.40 fig.1.11
+      OLD: book_Fig.1.11 c14 A0004913.3FR crop_levels_4500K.jpg
+      NEW: book_Ch1_Fig.1.11 c14 A0004913.3FR crop_levels_4500K.jpg
+      CF:  b416219d-c0c4-4fe9-620d-fb3d55d48100
+    image_id= 9472  p.41 fig.1.12
+      OLD: book_Fig.1.12 c14 PXL_20230310_53935651.dng midlevel.jpg
+      NEW: book_Ch1_Fig.1.12 c14 PXL_20230310_53935651.dng midlevel.jpg
+      CF:  34d75974-f353-4609-d1d2-b2e7b767a800
+    image_id= 9473  p.41 fig.1.13
+      OLD: book_Fig.1.13 c14 _CAV2690 crop.jpg
+      NEW: book_Ch1_Fig.1.13 c14 _CAV2690 crop.jpg
+      CF:  b261a666-9cac-4cb0-00ef-a79062bbe200
+    image_id= 9474  p.41 fig.1.14
+      OLD: book_Fig.1.14 c14 _CAV2691 gimp-rotate_crop.jpg
+      NEW: book_Ch1_Fig.1.14 c14 _CAV2691 gimp-rotate_crop.jpg
+      CF:  6b2b6ed2-0963-4374-3c76-461ab5ad2a00
+    image_id= 9475  p.42 fig.1.15A
+      OLD: book_Fig.1.15A c14 PXL_20230310_062950975.NIGHT rotate gimp-shadows.jpg
+      NEW: book_Ch1_Fig.1.15A c14 PXL_20230310_062950975.NIGHT rotate gimp-shadows.jpg
+      CF:  f0ea43a3-cfc4-459e-e4cf-ab74410cfd00
+    image_id= 9476  p.44 fig.1.15B
+      OLD: book_Fig.1.15B c14 PXL_20230310_063530929.NIGHT.dng levels_4500K.jpg
+      NEW: book_Ch1_Fig.1.15B c14 PXL_20230310_063530929.NIGHT.dng levels_4500K.jpg
+      CF:  1be4b73c-7e86-462c-fa73-1764f0a46300
+    image_id= 9477  p.46 fig.1.16
+      OLD: book_Fig.1.16 c21 PXL_20230309_040920915 levels_4000K gimp-shadows crop_midlevel gimp-shadows.jpg
+      NEW: book_Ch1_Fig.1.16 c21 PXL_20230309_040920915 levels_4000K gimp-shadows crop_midlevel gimp-shadows.jpg
+      CF:  095aad99-3ef8-4398-7900-f3b3236bc400
+    image_id= 9478  p.47 fig.1.17
+      OLD: book_Fig.1.17 c29 PXL_20230313_022539948.dng levels gimp-shadows-highlights levels.jpg
+      NEW: book_Ch1_Fig.1.17 c29 PXL_20230313_022539948.dng levels gimp-shadows-highlights levels.jpg
+      CF:  76ad147b-1ca6-4b16-9d25-4b6e1727ac00
+    image_id= 9479  p.47 fig.1.18
+      OLD: book_Fig.1.18 c14 _CAV2702 gimp-rotate_crop2.jpg
+      NEW: book_Ch1_Fig.1.18 c14 _CAV2702 gimp-rotate_crop2.jpg
+      CF:  9cd65eda-89c9-4566-58df-3990beda5a00
+    image_id= 9480  p.48 fig.1.19
+      OLD: book_Fig.1.19 c29 PXL_20230313_022753666.NIGHT levels gimp-shadows-highlights_crop.jpg
+      NEW: book_Ch1_Fig.1.19 c29 PXL_20230313_022753666.NIGHT levels gimp-shadows-highlights_crop.jpg
+      CF:  e1478b99-f65c-4bf1-a291-2779985a7100
+    image_id= 9482  p.49 fig.1.20
+      OLD: book_Fig.1.20 c14 _CAV2700 crop2.jpg
+      NEW: book_Ch1_Fig.1.20 c14 _CAV2700 crop2.jpg
+      CF:  b5ac8a35-7d9d-4bbe-5feb-afc293b0a700
+    image_id= 9483  p.50 fig.1.21
+      OLD: book_Fig.1.21 c21 _CSH5416 gimp-rotate_crop_5000K_highlights.jpg
+      NEW: book_Ch1_Fig.1.21 c21 _CSH5416.jpg
+      CF:  1aa605c6-c7c6-4438-cc15-4bb6b815bb00
+    image_id= 9487  p.55 fig.1.25
+      OLD: book_Fig.1.25 c14 _CAV2699 crop.jpg
+      NEW: book_Ch1_Fig.1.25 c14 _CAV2699 crop.jpg
+      CF:  c24f2116-7a17-4917-2e68-c5ae278b6100
+    image_id= 9488  p.57 fig.1.26
+      OLD: book_Fig.1.26 c15-floor2 PXL_20230313_062952275.NIGHT rotate_crop gimp-highlights_midlevel.jpg
+      NEW: book_Ch1_Fig.1.26 c15-floor2 PXL_20230313_062952275.NIGHT rotate_crop gimp-highlights_midlevel.jpg
+      CF:  2cf19cdb-66db-45f5-1f6e-f4a0e96b7900
+    image_id= 9489  p.58 fig.1.27
+      OLD: book_Fig.1.27 c15 PXL_20230313_063138663 crop_levels.jpg
+      NEW: book_Ch1_Fig.1.27 c15 PXL_20230313_063138663.jpg
+      CF:  e5481f75-9cda-4a6f-cbb8-1bdbf58a1a00
+    image_id= 9490  p.60 fig.1.28
+      OLD: book_Fig.1.28 c15-floor2 _CAV2601.jpg
+      NEW: book_Ch1_Fig.1.28 c15-floor2 _CAV2601.jpg
+      CF:  94f8b64d-ccc7-4ee1-fcda-3e75a8795f00
+    image_id= 9491  p.None fig.1.29A
+      OLD: book_Fig.1.29A c15-floor2 PXL_20230313_063255113 crop_levels.jpg
+      NEW: book_Ch1_Fig.1.29A c15-floor2 PXL_20230313_063255113 crop_levels.jpg
+      CF:  b5334931-3968-410e-3265-b0c5fc774b00
+    image_id= 9492  p.None fig.1.29B
+      OLD: book_Fig.1.29B c15-floor2 PXL_20230313_063113280.NIGHT crop_levels.jpg
+      NEW: book_Ch1_Fig.1.29B c15-floor2 PXL_20230313_063113280.NIGHT crop_levels.jpg
+      CF:  70fc5d37-a5a1-4f86-2aa3-c57d05f57c00
+    image_id= 9493  p.33 fig.1.3
+      OLD: book_Fig.1.3 c21 A0004743.3FR_0015 crop_levels.jpg
+      NEW: book_Ch1_Fig.1.3 c21 A_4748.jpg
+      CF:  a60fa530-e6dd-4736-d207-3a82e86e5800
+    image_id= 9494  p.62 fig.1.30
+      OLD: book_Fig.1.30 c15-floor2 PXL_20230313_50157606.dng gimp-shadows-highlights_midlevel_5000K_exposure.jpg
+      NEW: book_Ch1_Fig.1.30 c15-floor2 PXL_20230313_50157606.G.jpg
+      CF:  99d04858-1c9d-4f97-7f3a-4ff4ffbf9f00
+    image_id= 9495  p.None fig.1.31
+      OLD: book_Fig.1.31 c15-floor2 PXL_20230313_051503686.NIGHT gimp-crop_shadows_midlevel.jpg
+      NEW: book_Ch1_Fig.1.31 c15-floor2 PXL_20230313_051503686.NIGHT gimp-crop_shadows_midlevel.jpg
+      CF:  1b4b6451-6e86-4354-956a-a2527d6a2a00
+    image_id= 9496  p.64 fig.1.32A
+      OLD: book_Fig.1.32A c16 PXL_20230312_013305613 levels gimp-shadows.jpg
+      NEW: book_Ch1_Fig.1.32A c16 PXL_20230312_013305613 levels gimp-shadows.jpg
+      CF:  3d45443f-2db3-4219-269d-1dda4498dd00
+    image_id= 9497  p.65 fig.1.32B
+      OLD: book_Fig.1.32B c16 PXL_20230312_014314105 levels gimp-shadows-highlights_9000K.jpg
+      NEW: book_Ch1_Fig.1.32B c16 PXL_20230312_014314105 levels gimp-shadows-highlights_9000K.jpg
+      CF:  5e99feb8-9885-4eff-088f-0fbca5323800
+    image_id= 9498  p.66 fig.1.32C
+      OLD: book_Fig.1.32C c16 PXL_20230306_25301509.dng gimp-shadows-highlights.jpg
+      NEW: book_Ch1_Fig.1.32C c16 PXL_20230306_25301509.G.jpg
+      CF:  60d644fe-f856-4d8e-c774-6073a954bf00
+    image_id= 9499  p.69 fig.1.33
+      OLD: book_Fig.1.33 c16 PXL_20230308_052627793 gimp-levels_highlights_rotate_crop.jpg
+      NEW: book_Ch1_Fig.1.33 c16 PXL_20230308_052627793 gimp-levels_highlights_rotate_crop.jpg
+      CF:  b1486c82-54c0-48d8-d6ef-3b49f8d1d100
+    image_id= 9500  p.70 fig.1.34
+      OLD: book_Fig.1.34 c16 _CAV4173 gimp-crop_highlights_midlevel.jpg
+      NEW: book_Ch1_Fig.1.34 c16 _CAV4173 gimp-crop_highlights_midlevel copy.jpg
+      CF:  781a94b4-688c-4b29-fec0-6c2db22e0b00
+    image_id= 9501  p.71 fig.1.35
+      OLD: book_Fig.1.35 c16 _CAV4170 gimp-highlights_midlevel.jpg
+      NEW: book_Ch1_Fig.1.35 c16 _CAV4170 gimp-highlights_midlevel.jpg
+      CF:  7f25616d-83e6-4e3e-0ef3-ed342504f100
+    image_id= 9502  p.72 fig.1.36
+      OLD: book_Fig.1.36 c16 PXL_20230308_043412181.NIGHT_gimp-desaturate-blue_shadows-highlights.jpg
+      NEW: book_Ch1_Fig.1.36 c16 PXL_20230308_043412181.NIGHT.jpg
+      CF:  4a751b02-90de-4515-9a1d-a74b82fc0e00
+    image_id= 9505  p.76 fig.1.39
+      OLD: book_Fig.1.39 c16 PXL_20230308_035349660 rotate gimp-shadows_level_9000K.jpg
+      NEW: book_Ch1_Fig.1.39 c16 PXL_20230308_035349660 rotate gimp-shadows_level_9000K copy.jpg
+      CF:  99315292-4f2c-4448-84d6-b1d5049ff500
+    image_id= 9506  p.34 fig.1.4
+      OLD: book_Fig.1.4 c21 _CAV2124 gimp-rotate_crop.jpg
+      NEW: book_Ch1_Fig.1.4 c21 _CAV2124 gimp-rotate_crop.jpg
+      CF:  24bea6bb-bd12-4a4d-d235-4033f2e93000
+    image_id= 9508  p.78 fig.1.41
+      OLD: book_Fig.1.41 c16-floor2 _CAV4154 crop_levels.jpg
+      NEW: book_Ch1_Fig.1.41 c16-floor2 _CAV4154 crop_levels copy.jpg
+      CF:  4a28e92b-241a-485a-875e-b65d9d217d00
+    image_id= 9509  p.79 fig.1.42
+      OLD: book_Fig.1.42 c16-floor2 _CAV4076 gimp-midlevel_rotate_crop.jpg
+      NEW: book_Ch1_Fig.1.42 c16-floor2 _CAV4076 gimp-midlevel_rotate_crop copy.jpg
+      CF:  930d4187-ddc8-4a65-dde1-5de82a363000
+    image_id= 9340  p.80 fig.1.43
+      OLD: book_Fig.1.43 c16-floor2 PXL_20230306_20301220 levels.jpg
+      NEW: book_Ch1_Fig.1.43 c16-floor2 PXL_20230306_20301220 levels.jpg
+      CF:  e75410f2-b9eb-4a31-c0a6-4ead60ea5c00
+    image_id= 9341  p.81 fig.1.44
+      OLD: book_Fig.1.44 c16-floor2 PXL_20230306_20538451 crop_levels gimp-shadows.jpg
+      NEW: book_Ch1_Fig.1.44 c16-floor2 PXL_20230306_20538451 crop_levels gimp-shadows.jpg
+      CF:  32f914a5-edf6-4f4d-22d6-498d8559c700
+    image_id= 9512  p.82 fig.1.45A
+      OLD: book_Fig.1.45A c16-floor2 _CAV3838 crop_midlevel.jpg
+      NEW: book_Ch1_Fig.1.45A c16 _CAV3838 crop_midlevel copy.jpg
+      CF:  54e02670-2f62-47d5-ae0c-e660b9bcd800
+    image_id= 9513  p.82 fig.1.45B
+      OLD: book_Fig.1.45B c16-floor2 _CAV3839 crop_midlevel.jpg
+      NEW: book_Ch1_Fig.1.45B c16 _CAV3839 crop_midlevel copy.jpg
+      CF:  0fbeaa16-066c-4e12-db3c-cf25501f5d00
+    image_id= 9514  p.83 fig.1.46
+      OLD: book_Fig.1.46 c16-floor2 _CAV3825.jpg
+      NEW: book_Ch1_Fig.1.46 c16 _CAV3825.jpg
+      CF:  c48ea22b-59f8-41ed-b01f-e21b60e40200
+    image_id= 9515  p.84 fig.1.47
+      OLD: book_Fig.1.47 c16-floor2 _CAV3832 levels.jpg
+      NEW: book_Ch1_Fig.1.47 c16 _CAV3832 G copy.jpg
+      CF:  a2005fd7-eef6-4d7d-e1cf-ac4b341f1800
+    image_id= 9516  p.86 fig.1.48
+      OLD: book_Fig.1.48 c16-floor2 _CAV3824 crop_midlevel.jpg
+      NEW: book_Ch1_Fig.1.48 c16  _CAV3824 crop_midlevel.jpg
+      CF:  cf07f2ab-6836-41a2-0ea6-8d904bd03b00
+    image_id= 9517  p.88 fig.1.50
+      OLD: book_Fig.1.49 c16-floor2 PXL_20230306_030025709 rotate2 gimp-shadows.jpg
+      NEW: book_Ch1_Fig.1.49 c16T-floor3 _CAV3801.jpg
+      CF:  cdecccc6-1af2-431e-93ae-9bdd74ebd000
+    image_id= 9342  p.90 fig.1.51
+      OLD: book_Fig.1.51 c16L-floor2 PXL_20230308_55550015 crop_levels_4500K gimp-shadows-highlights levels_4500K.jpg
+      NEW: book_Ch1_Fig.1.51 c16L-floor2 PXL_20230308_55550015 crop_levels_4500K gimp-shadows-highlights levels_4500K copy.jpg
+      CF:  5be3e0b7-8896-4316-f8de-80be38b14400
+    image_id= 9519  p.35 fig.1.5A
+      OLD: book_Fig.1.5A c21 PXL_20230309_050437142.dng gimp-shadows-highlights levels.jpg
+      NEW: book_Ch1_Fig.1.5A c21 PXL_20230309_050437142.dng gimp-shadows-highlights levels.jpg
+      CF:  900fd468-6395-438b-4d53-8b45e0c02400
+    image_id= 9520  p.35 fig.1.5B
+      OLD: book_Fig.1.5B c21 PXL_20230309_50147629 gimp-midlevel_shadows-highlights_5000K.jpg
+      NEW: book_Ch1_Fig.1.5B c21 PXL_20230309_50147629 gimp-midlevel_shadows-highlights_5000K.jpg
+      CF:  a515c8fa-68ed-4cef-cf99-6f82be12d200
+    image_id= 9521  p.35 fig.1.5C
+      OLD: book_Fig.1.5C c21 PXL_20230309_045833821 gimp-shadows-highlights_midlevel_crop.jpg
+      NEW: book_Ch1_Fig.1.5C c21 PXL_20230309_045833821 gimp-shadows-highlights_midlevel_crop.jpg
+      CF:  b09f162a-a8a5-4ee1-201e-03bcf24fc200
+    image_id= 9523  p.36 fig.1.6
+      OLD: book_Fig.1.6 c21 _CAV2062 crop_levels.jpg
+      NEW: book_Ch1_Fig.1.6 c21  _CAV2062 crop_levels.jpg
+      CF:  f030c104-7f65-4ea6-69d9-34044bd51900
+    image_id= 9524  p.37 fig.1.7
+      OLD: book_Fig.1.7 c21 _CAV2061 gimp-crop_highlights_levels_5000K.jpg
+      NEW: book_Ch1_Fig.1.7 c21  _CAV2061 gimp-crop_highlights_levels_5000K.jpg
+      CF:  dc4f0931-7af6-4766-b40d-e12f629aa200
+    image_id= 9525  p.38 fig.1.8A
+      OLD: book_Fig.1.8A c21 PXL_20230309_051844936 rotate_crop_levels_6000K gimp-shadows-highlights.jpg
+      NEW: book_Ch1_Fig.1.8A c21 PXL_20230309_051844936 rotate_crop_levels_6000K gimp-shadows-highlights.jpg
+      CF:  da9c5628-396b-426a-eb9e-1765fb730800
+    image_id= 9526  p.38 fig.1.8B
+      OLD: book_Fig.1.8B c21 _CAV2155 levels.jpg
+      NEW: book_Ch1_Fig.1.8B c21 _CAV2155 levels.jpg
+      CF:  d03d0454-1642-4fb1-b59b-344e59566d00
+    image_id= 9527  p.39 fig.1.9
+      OLD: book_Fig.1.9 c21 A0004824.3FR midlevel gimp-shadows-highlights_6000K.jpg
+      NEW: book_Ch1_Fig.1.9 c21 A0004824.3FR midlevel gimp-shadows-highlights_6000K.jpg
+      CF:  07d55afc-9c7e-4a4c-d4d9-9d7b781c0100
+    image_id= 9343  p.98 fig.2.1
+      OLD: book_Fig.2.1 c10 PXL_20230310_021335758 levels gimp-shadows_desaturate-magenta.jpg
+      NEW: book_Ch2_Fig.2.1 c10 PXL_20230310_021335758 levels gimp-shadows_desaturate-magenta.jpg
+      CF:  99a30a9a-672b-4cf4-98f4-5880288bbd00
+    image_id= 9344  p.103 fig.2.10
+      OLD: book_Fig.2.10 c9 _CAV3566 levels.jpg
+      NEW: book_Ch2_Fig.2.10 c9 _CAV3566 levels.jpg
+      CF:  3d932ab3-c926-4d0e-b688-45d7dc7afd00
+    image_id= 9345  p.106 fig.2.15
+      OLD: book_Fig.2.15 c2 _CAV2808 levels gimp-shadows.jpg
+      NEW: book_Ch2_Fig.2.15 c2 _CAV2808 levels gimp-shadows.jpg
+      CF:  5cee2040-bb4b-4397-8d23-5faf5a3dd800
+    image_id= 9347  p.106 fig.2.17
+      OLD: book_Fig.2.17 c2 PXL_20230311_064927868 gimp-shadows-highlights levels.jpg
+      NEW: book_Ch2_Fig.2.17 c2 PXL_20230311_064927868 gimp-shadows-highlights levels.jpg
+      CF:  3f143716-9aec-45fa-8934-9921902c5300
+    image_id= 9348  p.107 fig.2.18
+      OLD: book_Fig.2.18 c2 NICK _DSC0475 rotate_crop_levels.jpg
+      NEW: book_Ch2_Fig.2.18 c2 NICK _DSC0475 rotate_crop_levels.jpg
+      CF:  569e6e0d-8c65-498e-861c-1eba0e570d00
+    image_id= 9349  p.109 fig.2.19B
+      OLD: book_Fig.2.19B c10 _CAV3590 gimp-rotate.jpg
+      NEW: book_Ch2_Fig.2.19B c10 _CAV3590 gimp-rotate.jpg
+      CF:  dd9d0dc1-f033-4431-1f44-717981e80e00
+    image_id= 9350  p.98 fig.2.2
+      OLD: book_Fig.2.2 c5 PXL_20230311_023421047.NIGHT rotate.jpg
+      NEW: book_Ch2_Fig.2.2 c5 PXL_20230311_023421047.NIGHT rotate.jpg
+      CF:  086d60dc-04ac-4860-0174-fd3d81edb400
+    image_id= 9351  p.114 fig.2.21
+      OLD: book_Fig.2.21 c10-floor2 PXL_20230310_032953405 levels gimp-shadows-highlights.jpg
+      NEW: book_Ch2_Fig.2.21 c10-floor2 PXL_20230310_032953405 levels gimp-shadows-highlights.jpg
+      CF:  3247dd01-ee44-4fd2-4587-ac2881379b00
+    image_id= 9352  p.102 fig.2.5
+      OLD: book_Fig.2.5 c4 NICK _DSC0480 gimp-levels_shadows-highlights_midlevel_crop.jpg
+      NEW: book_Ch2_Fig.2.5 c4 NICK _DSC0480 gimp-levels_shadows-highlights_midlevel_crop.jpg
+      CF:  92503427-9a19-42de-5158-b3aa9b6dff00
+    image_id= 9353  p.102 fig.2.6
+      OLD: book_Fig.2.6 c10-floor2 PXL_20230310_033422262 rotate gimp_crop_highlights_midlevel.jpg
+      NEW: book_Ch2_Fig.2.6 c10-floor2 PXL_20230310_033422262 rotate gimp_crop_highlights_midlevel.jpg
+      CF:  724afd24-4aa4-4e10-c141-d313b0284100
+    image_id= 9354  p.102 fig.2.7
+      OLD: book_Fig.2.7 c12-floor3 PXL_20230312_060750066.NIGHT gimp-shadows-highlights levels.jpg
+      NEW: book_Ch2_Fig.2.7 c12-floor3 PXL_20230312_060750066.NIGHT gimp-shadows-highlights levels.jpg
+      CF:  c75e7af0-d269-4a4b-ffa9-898f6e639d00
+    image_id= 9355  p.103 fig.2.8
+      OLD: book_Fig.2.8 c8 PXL_20230311_032442782.NIGHT crop gimp-shadows-highlights levels.jpg
+      NEW: book_Ch2_Fig.2.8 c8 PXL_20230311_032442782.NIGHT crop gimp-shadows-highlights levels.jpg
+      CF:  4a000f5a-29e1-4ac6-6728-770f9442ca00
+    image_id= 9356  p.103 fig.2.9
+      OLD: book_Fig.2.9 c10-floor2 PXL_20230310_033300159 crop_levels gimp-shadows-highlights.jpg
+      NEW: book_Ch2_Fig.2.9 c10-floor2 PXL_20230310_033300159 crop_levels gimp-shadows-highlights.jpg
+      CF:  90e9a37b-a95c-4acd-b2bb-ac9036d98000
+    image_id= 9357  p.134 fig.3.1
+      OLD: book_Fig.3.1 c32 PXL_20230313_122109801 NIGHT G.jpg
+      NEW: book_Ch3_Fig.3.1 c32 PXL_20230313_122109801 NIGHT.jpg
+      CF:  a28dc201-4039-4997-0b5b-e4c4a7b96e00
+    image_id= 9358  p.142 fig.3.10
+      OLD: book_Fig.3.10 c29 PXL_20230310_110621830 NIGHT G..jpg
+      NEW: book_Ch3_Fig.3.10 c29 PXL_20230310_110621830 NIGHT..jpg
+      CF:  087d48eb-99b3-4691-5e74-22b42d74d000
+    image_id= 9359  p.143 fig.3.11
+      OLD: book_Fig.3.11 c32-floor2 PXL_20230313_115335824 G..jpg
+      NEW: book_Ch3_Fig.3.11 c32-floor2 PXL_20230313_115335824..jpg
+      CF:  c5522566-a40a-498a-48a1-12a8029e0500
+    image_id= 9360  p.145 fig.3.12
+      OLD: book_Fig.3.12 c32 _CAV1059 crop_levels gimp-shadows-highlights.jpg
+      NEW: book_Ch3_Fig.3.12 c32 _CAV1059 crop_levels gimp-shadows-highlights.jpg
+      CF:  ca1577e2-25eb-4d1d-b15a-45cd201dee00
+    image_id= 9362  p.148 fig.3.14
+      OLD: book_Fig.3.14 c16 PXL_20230308_033525697 G..jpg
+      NEW: book_Ch3_Fig.3.14 c16 PXL_20230308_033525697..jpg
+      CF:  4d57e91e-404f-4750-1f93-a5a193e36000
+    image_id= 9363  p.150 fig.3.15
+      OLD: book_Fig.3.15 c30 PXL_20230313_113223923.NIGHT rotate_crop gimp-midlevel_shadows-highlights_midlevel.jpg
+      NEW: book_Ch3_Fig.3.15 c30 PXL_20230313_113223923.NIGHT rotate_crop gimp-midlevel_shadows-highlights_midlevel.jpg
+      CF:  81c91ae0-66f7-41fb-689a-d1b3e6151b00
+    image_id= 9364  p.152 fig.3.16
+      OLD: book_Fig.3.16 c16 PXL_20230312_021042158 G..jpg
+      NEW: book_Ch3_Fig.3.16 c16 PXL_20230312_021042158..jpg
+      CF:  eef310f1-c336-4e7a-54c9-6df46a0b0200
+    image_id= 9369  p.156 fig.3.21
+      OLD: book_Fig.3.21 c32 _CAV1063 rotate_crop_levels gimp-shadows-highlights.jpg
+      NEW: book_Ch3_Fig.3.21 c32 _CAV1063 rotate_crop_levels gimp-shadows-highlights.jpg
+      CF:  027c0ae0-33fa-4587-771f-f0e7ad125300
+    image_id= 9370  p.157 fig.3.22
+      OLD: book_Fig.3.22 c32 PXL_20230312_123002313.dng  crop_levels gimp-shadows-highlights.jpg
+      NEW: book_Ch3_Fig.3.22 c32 Ellora c32-floor1_PXL_20230312_123002313.dng  crop_levels gimp-shadows-highlights.jpg
+      CF:  6bcab191-ddbe-41ce-1af5-3024f2213400
+    image_id= 9371  p.158 fig.3.23
+      OLD: book_Fig.3.23 c32 PXL_20230313_114501274 gimp-levels_shadows-highlights.jpg
+      NEW: book_Ch3_Fig.3.23 c32 PXL_20230313_114501274 gimp-levels_shadows-highlights.jpg
+      CF:  ef8d7479-4e5f-4b00-bafc-fcc257e18400
+    image_id= 9372  p.160 fig.3.24
+      OLD: book_Fig.3.24 c32-floor2 PXL_20230313_121708020.NIGHT G.jpg
+      NEW: book_Ch3_Fig.3.24 c32-floor2 PXL_20230313_121708020.NIGHT.jpg
+      CF:  c7a44b99-58e9-4348-70b8-3b236ed6e200
+    image_id= 9373  p.161 fig.3.25
+      OLD: book_Fig.3.25 c32-floor2 PXL_20230313_120012865_and_115833880.NIGHT gimp-merge-2-photos_shadows-highlights.jpg
+      NEW: book_Ch3_Fig.3.25 c32-floor2 PXL_20230313_120012865_and_115833880.NIGHT gimp-merge-2-photos_shadows-highlights.jpg
+      CF:  1328d4b0-c281-4ca6-7e3f-f7a555f6c600
+    image_id= 9374  p.162 fig.3.26
+      OLD: book_Fig.3.26 c30 _CAV0923 gimp-rotate_crop_midlevel_levels.jpg
+      NEW: book_Ch3_Fig.3.26 c30 _CAV0923 gimp-rotate_crop_midlevel_levels.jpg
+      CF:  04125158-da65-47b3-c582-9cad2f5ca300
+    image_id= 9375  p.162 fig.3.27
+      OLD: book_Fig.3.27 c30 _CAV0924 gimp_crop_midlevel_levels.jpg
+      NEW: book_Ch3_Fig.3.27 c30 _CAV0924 gimp_crop_midlevel_levels.jpg
+      CF:  7c13685f-c7e6-452d-1674-618c44f9a700
+    image_id= 9376  p.135 fig.3.2A
+      OLD: book_Fig.3.2A c32 _CAV1387 gimp-shadows-highlights_levels.jpg
+      NEW: book_Ch3_Fig.3.2A c32 _CAV1387 gimp-shadows-highlights_levels.jpg
+      CF:  95bb7858-9c49-4cbf-c42a-4230e57efb00
+    image_id= 9377  p.135 fig.3.2B
+      OLD: book_Fig.3.2B c32 PXL_20230313_121119927.NIGHT gimp-midlevel_shadows-highlights.jpg
+      NEW: book_Ch3_Fig.3.2B c32 PXL_20230313_121119927.NIGHT gimp-midlevel_shadows-highlights.jpg
+      CF:  5075601a-4687-4adb-fe53-7b942a4fb600
+    image_id= 9378  p.137 fig.3.3
+      OLD: book_Fig.3.3 c32-floor2 _CAV1777 gimp-shadows-highlights.jpg
+      NEW: book_Ch3_Fig.3.3 c32-floor2 _CAV1777 gimp-shadows-highlights.jpg
+      CF:  2e6adac7-0614-4854-b5b1-b622f4f8fc00
+    image_id= 9379  p.138 fig.3.4
+      OLD: book_Fig.3.4 c33-floor2 _CAV0708 gimp-crop_shadows-highlights.jpg
+      NEW: book_Ch3_Fig.3.4 c33-floor2 _CAV0708 gimp-crop_shadows-highlights.jpg
+      CF:  c04aafa9-1a46-427d-ac2d-ae8de11eaa00
+    image_id= 9380  p.139 fig.3.5
+      OLD: book_Fig.3.5 c33-floor2 _CAV0709 gimp-levels_shadows-highlights.jpg
+      NEW: book_Ch3_Fig.3.5 c33-floor2 _CAV0709 gimp-levels_shadows-highlights.jpg
+      CF:  b21d8958-62cc-4a78-d8d6-232d87663c00
+    image_id= 9381  p.140 fig.3.6
+      OLD: book_Fig.3.6 c12-floor3 PXL_20230312_061415177 G..jpg
+      NEW: book_Ch3_Fig.3.6 c12-floor3 PXL_20230312_061415177..jpg
+      CF:  ec599b26-2341-4d0d-c257-53400705c500
+    image_id= 9382  p.141 fig.3.7
+      OLD: book_Fig.3.7 c16 PXL_20230308_052759868 G..jpg
+      NEW: book_Ch3_Fig.3.7 c16 PXL_20230308_052759868..jpg
+      CF:  949d41c6-d6e8-4ba0-349a-213411b0d700
+    image_id= 9383  p.141 fig.3.8
+      OLD: book_Fig.3.8 c16 PXL_20230308_052828944 G..jpg
+      NEW: book_Ch3_Fig.3.8 c16 PXL_20230308_052828944..jpg
+      CF:  9ce052ab-462b-47fb-2c9d-09ff44a54500
+    image_id= 9384  p.141 fig.3.9
+      OLD: book_Fig.3.9 c33-floor2 _CAV0583 gimp-rotate_crop_levels.jpg
+      NEW: book_Ch3_Fig.3.9 c33-floor2 _CAV0583 gimp-rotate_crop_levels.jpg
+      CF:  b30775d1-9055-4df6-440d-a20a09bf2f00
+    image_id= 9385  p.170 fig.4.1
+      OLD: book_Fig.4.1 c2 _CAV2931 gimp-shadows-highlights.jpg
+      NEW: book_Ch4_Fig.4.1 c2 _CAV2931 gimp-shadows-highlights.jpg
+      CF:  d5f624fc-5100-4dfc-12e8-c3e2a42c3600
+    image_id= 9387  p.182 fig.4.11A
+      OLD: book_Fig.4.11A c29 north-entrance PXL_20230310_120547055.NIGHT crop gimp-levels.jpg
+      NEW: book_Ch4_Fig.4.11A c29 PXL_20230310_120547055.NIGHT crop gimp-levels.jpg
+      CF:  ee52c972-859c-42be-f952-ee4dd1c76000
+    image_id= 9388  p.182 fig.4.11B
+      OLD: book_Fig.4.11B c29 north-entrance PXL_20230315_060224647.jpg
+      NEW: book_Ch4_Fig.4.11B c29 PXL_20230315_060224647.jpg
+      CF:  3b4d0628-6fd6-4f57-ecca-62411ddf0a00
+    image_id= 9389  p.183 fig.4.12
+      OLD: book_Fig.4.12 c29 south-entrance DSCN5558 gimp-level.jpg
+      NEW: book_Ch4_Fig.4.12 c29 DSCN5558 gimp-level.jpg
+      CF:  dcd2c716-9bdc-4772-a3e0-af03506ad800
+    image_id= 9390  p.184 fig.4.13
+      OLD: book_Fig.4.13 c30 gatehouse PXL_20230313_103203175.NIGHT.dng gimp-shadows-highlights.jpg
+      NEW: book_Ch4_Fig.4.13 c30 PXL_20230313_103203175.NIGHT.dng gimp-shadows-highlights.jpg
+      CF:  d1eaca48-029d-4c1e-8da2-ee0e9adc2300
+    image_id= 9392  p.188 fig.4.15
+      OLD: book_Fig.4.15 c30 _CAV0898 gimp-shadows-highlights.jpg
+      NEW: book_Ch4_Fig.4.15 c30 _CAV0898 gimp-shadows-highlights.jpg
+      CF:  10cb1657-5f9a-41f0-d38a-27d4a5214000
+    image_id= 9393  p.188 fig.4.16
+      OLD: book_Fig.4.16 c30 _CAV0893 rotate_crop_levels_colorcorrect.jpg
+      NEW: book_Ch4_Fig.4.16 c30 _CAV0893 rotate_crop_levels_colorcorrect.jpg
+      CF:  3b195f3c-20fc-488c-8067-73413f2f8d00
+    image_id= 9394  p.189 fig.4.17
+      OLD: book_Fig.4.17 c30 PXL_20230313_104617889.dng levels.jpg
+      NEW: book_Ch4_Fig.4.17 c30 PXL_20230313_104617889.dng levels.jpg
+      CF:  55747898-0ece-4a5a-a225-b239e566aa00
+    image_id= 9395  p.190 fig.4.18
+      OLD: book_Fig.4.18 c30 _CAV0915 levels gimp-shadows-highlights.jpg
+      NEW: book_Ch4_Fig.4.18 c30 _CAV0915 levels gimp-shadows-highlights.jpg
+      CF:  ed965faa-3dc7-4a8e-1508-27c659d09a00
+    image_id= 9396  p.191 fig.4.19
+      OLD: book_Fig.4.19 c30 PXL_20230313_104536793.dng levels gimp-shadows-highlights.jpg
+      NEW: book_Ch4_Fig.4.19 c30 PXL_20230313_104536793.dng levels gimp-shadows-highlights.jpg
+      CF:  7e68fc8e-afd7-4215-d61f-3daf538e5100
+    image_id= 9397  p.171 fig.4.3
+      OLD: book_Fig.4.2 c2 PXL_20230311_050207459 NIGHT G.jpg
+      NEW: book_Ch4_Fig.4.2 c2 PXL_20230311_050207459 NIGHT.jpg
+      CF:  2424a15a-9e55-4cff-e81a-48d806c49600
+    image_id= 9398  p.192 fig.4.20
+      OLD: book_Fig.4.20 c30 _CAV1006 gimp-rotate_crop_shadows-highlights_midlevel.jpg
+      NEW: book_Ch4_Fig.4.20 c30 _CAV1006 gimp-rotate_crop_shadows-highlights_midlevel.jpg
+      CF:  841703ed-abb5-46d7-1d65-62030d5ef400
+    image_id= 9400  p.172 fig.4.4
+      OLD: book_Fig.4.4 c2 PXL_20230311_054925170 NIGHT G.jpg
+      NEW: book_Ch4_Fig.4.4 c2 PXL_20230311_054925170 NIGHT.jpg
+      CF:  2174f494-e647-4503-b659-86f46c107e00
+    image_id= 9401  p.173 fig.4.5
+      OLD: book_Fig.4.5 c2 PXL_20230311_055524128 NIGHT G.jpg
+      NEW: book_Ch4_Fig.4.5 c2 PXL_20230311_055524128 NIGHT.jpg
+      CF:  65383d18-701e-4f31-dc2a-b2474e9db900
+    image_id= 9402  p.174 fig.4.6
+      OLD: book_Fig.4.6 c29 PXL_20230308_120934513 G.jpg
+      NEW: book_Ch4_Fig.4.6 c29 PXL_20230308_120934513.jpg
+      CF:  169afc39-7951-4f20-926d-849a282fd200
+    image_id= 9404  p.179 fig.4.8
+      OLD: book_Fig.4.8 c29 PXL_20230313_022144372 G.jpg
+      NEW: book_Ch4_Fig.4.8 c29 PXL_20230313_022144372.jpg
+      CF:  2e5dc0ea-a9d6-4c04-af65-ef4cfe392e00
+    image_id= 9599  p.198 fig.5.1
+      OLD: book_Fig.5.1 g6-7 DSCN6442 crop_levels.jpg
+      NEW: book_Ch5_Fig.5.1 G8-12 DSCN6442.jpg
+      CF:  b72febe3-5aeb-4011-2d8e-8f28b1c89200
+    image_id= 9405  p.207 fig.5.10
+      OLD: book_Fig.5.10 c29 PXL_20230310_112543146.NIGHT crop_6500K gimp-shadows-highlights.jpg
+      NEW: book_Ch5_Fig.5.10 c29 PXL_20230310_112543146.NIGHT crop_6500K gimp-shadows-highlights.jpg
+      CF:  1452ea67-8952-4177-9ded-ee93610a5a00
+    image_id= 9406  p.208 fig.5.11
+      OLD: book_Fig.5.11 c5 DSCN4332 6000K gimp-rotate.jpg
+      NEW: book_Ch5_Fig.5.11 c5 DSCN4332 6000K gimp-rotate.jpg
+      CF:  f7fe60cb-93a4-444c-62a5-5456b4fd8200
+    image_id= 9407  p.210 fig.5.13
+      OLD: book_Fig.5.13 c4 gimp-crop2_9000K.jpg
+      NEW: book_Ch5_Fig.5.13 c4 gimp-crop2_9000K.jpg
+      CF:  4c5385d2-917d-4123-9d10-653337378300
+    image_id= 9408  p.211 fig.5.14
+      OLD: book_Fig.5.14 c10 PXL_20230310_024046104.NIGHT gimp-shadows-highlights2.jpg
+      NEW: book_Ch5_Fig.5.14 c10 PXL_20230310_024046104.NIGHT gimp-shadows-highlights2.jpg
+      CF:  5c4d7866-d623-4779-f273-b900e4343a00
+    image_id= 9409  p.212 fig.5.15
+      OLD: book_Fig.5.15 c10-floor2 Pia gimp-highlights.jpg
+      NEW: book_Ch5_Fig.5.15 c10-floor2 Pia Ellora Cave 10 Upper Balcony, North Wall, Inscription gimp-highlights.jpg
+      CF:  fa2f619e-304c-4c20-85f6-1c4a8cf9f800
+    image_id= 9605  p.199 fig.5.2
+      OLD: book_Fig.5.2 g8-12.jpg
+      NEW: book_Ch5_Fig.5.2 J1-2.jpg
+      CF:  812ba805-42cd-4e27-0082-be83013c7a00
+    image_id= 9412  p.202 fig.5.4
+      OLD: book_Fig.5.4 c29 PXL_20230313_022935786.NIGHT gimp-shadows-highlights.jpg
+      NEW: book_Ch5_Fig.5.4 c29 PXL_20230313_022935786.NIGHT gimp-shadows-highlights.jpg
+      CF:  c35a6f72-a80a-4fcd-add3-315b73279300
+    image_id= 9413  p.204 fig.5.7
+      OLD: book_Fig.5.7 c21 PXL_20230309_014634258 crop_levels gimp-shadows-highlights levels.jpg
+      NEW: book_Ch5_Fig.5.7 c21 PXL_20230309_014634258 crop_levels gimp-shadows-highlights levels.jpg
+      CF:  434b7ce4-62be-4a90-9542-e6397973d200
+    image_id= 9414  p.205 fig.5.8
+      OLD: book_Fig.5.8 c29 CAV2430 gimp-crop_levels_shadows-highlights_exposure.jpg
+      NEW: book_Ch5_Fig.5.8 c29 CAV2430 gimp-crop_levels_shadows-highlights_exposure.jpg
+      CF:  36de26de-dc39-4fc9-9ca5-4bb428538e00
+    image_id= 9443  p.252 fig.A10
+      OLD: book_archival_A10_C16_ArchivalOverview_22_11_000222.jpg
+      NEW: book_post_Archive10_p252_C16_ArchivalOverview_22_11_000222.jpg
+      CF:  ec1129ac-e8a4-4917-82ae-811d76000200
+    image_id= 9444  p.253 fig.A11
+      OLD: book_archival_A11_C16_Archival_22_11_001113.jpg
+      NEW: book_post_Archive11_p253_C16_Archival_22_11_001113.jpg
+      CF:  c52a2dc3-925c-483a-0731-0b1700e70500
+    image_id= 9446  p.255 fig.A13
+      OLD: book_archival_A13_C21_d78b969f-0cae-4b5e-abd3-c5b88df48faf_4455.jpg
+      NEW: book_post_Archive13_p255_C21_d78b969f-0cae-4b5e-abd3-c5b88df48faf_4455.jpg
+      CF:  25b69f78-8e5e-4151-2657-150c748e0400
+    image_id= 9447  p.256 fig.A14
+      OLD: book_archival_A14_C29_Archival_22_11_000658.jpg
+      NEW: book_post_Archive14_p256_C29_Archival_22_11_000658.jpg
+      CF:  1a827591-9b68-46f0-eaa6-5a5837191d00
+    image_id= 9448  p.257 fig.A15
+      OLD: book_archival_A15_C29_Archival2_22_11_000661.jpg
+      NEW: book_post_Archive15_p257_C29_Archival_22_11_000661.jpg
+      CF:  a875a8d4-fc35-4f3b-ac4f-172a4dbddb00
+    image_id= 9449  p.258 fig.A16
+      OLD: book_archival_A16_C32_Archival3_22_11_000150.jpg
+      NEW: book_post_Archive16_p258_C32_Archival_22_11_000150.jpg
+      CF:  d77ac2d8-4eca-426d-b415-7ddbc8830900
+    image_id= 9450  p.259 fig.A17
+      OLD: book_archival_A17_C32_Archival_22_11_000148.jpg
+      NEW: book_post_Archive17_p259_C32_Archival_22_11_000148.jpg
+      CF:  fba1df5e-6f43-482f-90e7-deb145d41600
+    image_id= 9451  p.260 fig.A18
+      OLD: book_archival_A18_C32_Archival2_22_11_000693 c32-floor2.jpg
+      NEW: book_post_Archive18_p260_C32_Archival_22_11_000693.jpg
+      CF:  72e1304a-14e1-4731-3489-da122e0c0500
+    image_id= 9453  p.247 fig.A1
+      OLD: book_archival_A1_CBuddhistSE_Archival_22_11_000918 c1-9 c2.jpg
+      NEW: book_post_Archive1_p246_BuddhistNE_Archival_22_11_000914.jpg
+      CF:  bc618361-a0fa-4160-6818-d67e12cc7900
+    image_id= 9456  p.264 fig.A22
+      OLD: book_archival_A22_DAG000050726 Pithawalla-painting c16-floor2.jpg
+      NEW: book_post_Archive22_p264_C16_Pithawalla_painting_DAG000050726.jpg
+      CF:  016e1e52-b3a6-4393-537b-330ca2cf3c00
+    image_id= 9458  p.266 fig.A24
+      OLD: book_archival_A24_DAG000050735 Pithawalla-painting c33-floor2.jpg
+      NEW: book_post_Archive24a_p266_C33_Pithawalla_painting_DAG000050735.jpg
+      CF:  dd6703d1-07e9-4361-5248-5accaa292100
+    image_id= 9460  p.246 fig.A3
+      OLD: book_archival_A3_CBuddhist_DeenDayal_Getty_2ad3cc3c-4f05-4c7a-b5d6-2824f0dc9646_6693 c9.jpg
+      NEW: book_post_Archive3_p247_BuddhistSE_Archival_22_11_000918.jpg
+      CF:  401ea821-d6df-4e11-8947-1fa79184f600
+    image_id= 9461  p.247 fig.A4
+      OLD: book_archival_A4_C2_Archival_22_11_000916.jpg
+      NEW: book_post_Archive4_p247_C2_Archival_22_11_000916.jpg
+      CF:  23e2ba70-84f8-4fed-5b2a-4bfe4f610200
+    image_id= 9462  p.248 fig.A5
+      OLD: book_archival_A5_engraving_DAG02876 c10.jpg
+      NEW: book_post_Archive5_p248_C10_Archival_DAG02876.jpg
+      CF:  881a88c8-bf13-4895-93d5-ef52ab352800
+    image_id= 9463  p.None fig.None
+      OLD: book_archival_A6_C10_ArchivalFacade_22_11_000861.jpg
+      NEW: book_post_Archive6_p248_C10_Archival_22_11_000349.jpg
+      CF:  e5853899-3382-4dc4-4a6e-18035e842c00
+    image_id= 9464  p.248 fig.A7
+      OLD: book_archival_A7_C10_Archival_22_11_000349.jpg
+      NEW: book_post_Archive7_p249_C10_DAG000089954.jpg
+      CF:  633089a7-62b2-428b-bab7-54a916393800
+    image_id= 9465  p.249 fig.A8
+      OLD: book_archival_A8_DAG000087543 c10.jpg
+      NEW: book_post_Archive8_p249_C10_DAG000087543.jpg
+      CF:  d9d86979-b255-4f37-cf4b-c206db386200
+    image_id= 9466  p.250 fig.A9a
+      OLD: book_archival_A9a_C16_Archival_Steriograph_1_06_11_003842.jpg
+      NEW: book_post_Archive9a_p250_C16_Archival_Stereograph_1_06_11_003842.jpg
+      CF:  1ee0e0ee-cf69-459a-f652-de929f5a6d00
+    image_id= 9467  p.251 fig.A9b
+      OLD: book_archival_A9b_C16_Archival_Steriograph2_2_06_11_003842a.jpg
+      NEW: book_post_Archive9b_p251_C16_Archival_Stereograph_verso_2_06_11_003842a.jpg
+      CF:  eddc671f-227d-445d-2a36-54da47241100
+    image_id= 9429  p.242 fig.Pl.23
+      OLD: book_Pl.23_Viswakarma c10.jpg
+      NEW: book_post_Archive_Daniells_Plate23_Viswakarma.jpg
+      CF:  e22e6545-5d2b-4798-7692-eebe418e2b00
+    image_id= 9432  p.220 fig.Pl.4
+      OLD: book_Pl.4_Jagannnath_Sabha c33.jpg
+      NEW: book_post_Archive_Daniells_Plate4_Jagannnath_Sabha.jpg
+      CF:  0c4746d8-5664-4ef7-42f6-d3b32a536a00
+    image_id= 9435  p.224 fig.Pl.7
+      OLD: book_Pl.7_Indra_Sabha_Looking_Outward c32.jpg
+      NEW: book_post_Archive_Daniells_Plate7_Indra_Sabha_Looking_Outward.jpg
+      CF:  71680aa3-5242-4ae4-9ada-084f84fac400
+
+  --- Would INSERT ---
+    book_Ch1_Fig.1.50 c16-floor2 PXL_20230306_030025709.jpg
+      cf_id: 71a53a58-0918-4ca9-a7e1-84a94a395a00  meta: {'book_page': 88, 'book_figure': '1.50', 'cave_id': 16}
+    book_Ch1__Frontis p28 PXL_20230306_014830489 gimp-shadows-highlights_crop.jpg
+      cf_id: 4c459948-cd11-4930-74e2-484d0a6cde00
+    book_Ch1_table_pillar1_ellora_cave21.jpg
+      cf_id: b2718eea-9e78-4a2c-42f5-268f7fc7b900
+    book_Ch1_table_pillar2_ellora_cave21.jpg
+      cf_id: c6747ce0-f013-4873-009b-807d4b91c300
+    book_Ch1_table_pillar3_ellora_cave21.jpg
+      cf_id: 37ed2e7a-0e09-43c7-d821-e4cf79be7a00
+    book_Ch1_table_pillar_badami_cave3.jpg
+      cf_id: 8584137b-cbaf-4f00-1a2c-99622ca3b000
+    book_Ch1_table_pillar_elephanta.jpg
+      cf_id: 0cb099f1-5b42-4f6e-e553-c4d96b78a300
+    book_Ch1_table_pillar_jogeshwari.jpg
+      cf_id: 20df4068-7f4d-4dd3-9e4a-14e86eece600
+    book_Ch1_table_pillar_mandapeshwar1.jpg
+      cf_id: d65c312b-7cd2-4308-66cb-60b184c5d000
+    book_Ch1_table_pillar_mandapeshwar2.jpg
+      cf_id: 5c78503d-574c-44bc-afef-1e147bd0d200
+    book_Ch2_Fig.2.11 c6 PXL_20230311_033043482.NIGHT crop gimp-levels_shadows-highlights_midlevel.jpg
+      cf_id: 367f68e2-8e3a-4442-0ecf-628761c2bf00  meta: {'book_page': 104, 'book_figure': '2.11', 'cave_id': 6}
+    book_Ch2_Fig.2.12 c10-floor2 NeeleshKale_3184 crop_levels_curves gimp-shadows-highlights levels.jpg
+      cf_id: 4878698d-dd32-4001-e1b6-c50c5e69fd00  meta: {'book_page': 105, 'book_figure': '2.12', 'cave_id': 10}
+    book_Ch2_Fig.2.14 c10-floor2 NeeleshKale_3331 rotate_crop_levels.jpg
+      cf_id: 4b03402e-0a7a-47e0-ac1c-6500ba87c000  meta: {'book_page': 105, 'book_figure': '2.14', 'cave_id': 10}
+    book_Ch2_Fig.2.16 c2 _CAV2897.jpg
+      cf_id: 5c9a92fc-03fd-4f20-5d86-e297e2102600  meta: {'book_page': 106, 'book_figure': '2.16', 'cave_id': 2}
+    book_Ch2_Fig.2.19C c10 PXL_20230310_025757109..jpg
+      cf_id: d899897b-a304-4550-62e0-9dbd5e16c100  meta: {'book_page': 110, 'book_figure': '2.19C', 'cave_id': 10}
+    book_Ch2_Fig.2.22  Ajanta-c26 NICK gimp-levels_shadows-highlights.jpg
+      cf_id: 305eaf11-aa52-468c-806c-eeb84b8d4100  meta: {'book_figure': '2.22', 'book_page': None}
+    book_Ch2_Fig.2.23  Ajanta-c26 NICK gimp-shadows-highlights.jpg
+      cf_id: 591308d8-2f38-4084-fa70-d23ce486f800  meta: {'book_figure': '2.23', 'book_page': None}
+    book_Ch2_Fig.2.24 Ajanta-c10 shrinelets Google Maps Jan 2014 rotate-crop.jpg
+      cf_id: de8419aa-ecdd-4b9a-fb80-a2666ec8b400  meta: {'book_figure': '2.24', 'book_page': None}
+    book_Ch2_Fig.2.25 Ajanta-c22 NICK gimp-rotate_crop_midlevel.jpg
+      cf_id: 769ceff7-6eaf-4529-ef70-31f5494b2500  meta: {'book_figure': '2.25', 'book_page': None}
+    book_Ch2_Fig.2.26 Ajanta-c10 NICK gimp-levels_crop.jpg
+      cf_id: d245fc28-9667-4c3a-0cf3-38cf67ff1b00  meta: {'book_figure': '2.26', 'book_page': None}
+    book_Ch2_Fig.2.3 c12 _CAV2954 gimp-shadows_5500K.jpg
+      cf_id: 60855cfa-fd22-4ce9-fb46-3c184c14cc00  meta: {'book_page': 99, 'book_figure': '2.3', 'cave_id': 12}
+    book_Ch2__Announcement p94 C2 _CAV2895.jpg
+      cf_id: a6147d99-a1e4-4804-2730-66b780192c00
+    book_Ch3__Announcement p130 c32-floor2 PXL_20230312_113549911.jpg
+      cf_id: 07cd8540-033a-43f7-5322-d5c903e49800
+    book_Ch3__Frontis p132 c32-floor2 PXL_20230312_111628604 gimp-shadows-highlights.jpg
+      cf_id: 0a81eef6-62b3-475a-3add-41ae0b57e900
+    book_Ch5_Fig.5.12 Kanheri_Caves_(3)Wikimedia.jpg
+      cf_id: a16007c8-bc2f-4d72-8223-ab02ebaa1400  meta: {'book_figure': '5.12', 'book_page': None}
+    book_Ch5_Fig.5.3 plan Buddhist-Caves-at-Aurangabad-Transformations-in-Art-and-Religion Pia Brancaccio Brill_0265.jpg
+      cf_id: b9744d55-74f1-4b76-34f3-d61649e02a00  meta: {'book_figure': '5.3', 'book_page': None}
+    book_Ch5_Fig.5.5 Aurangabad-c2 Anandajoti Bhikkhu Aurangabad-1-Original-00027.jpg
+      cf_id: b8d5fac5-e4c3-4012-eede-eea46b6a3300  meta: {'book_figure': '5.5', 'book_page': None}
+    book_Ch5_Fig.5.6A Aurangabad Pia crop_levels gimp-shadows-highlights.jpg
+      cf_id: 2f87cfd3-d9af-4199-81ab-277fe45a8800  meta: {'book_figure': '5.6A', 'book_page': None}
+    book_Ch5_Fig.5.6B Aurangabad Anandajoti Bhikkhu Aurangabad-2-Original-00035.jpg
+      cf_id: 8bb99327-f883-465a-e391-c6a71801a900  meta: {'book_figure': '5.6B', 'book_page': None}
+    book_Ch5_Fig.5.9 Aurangabad-c6 Pia gimp-shadows-highlights levels.jpg
+      cf_id: 006abb8a-3b51-468f-1826-c4051cec4500  meta: {'book_figure': '5.9', 'book_page': None}
+    book_Ch5__Frontis p196 c29 PXL_20230313_024539678.NIGHT.jpg
+      cf_id: 415735fc-7323-4cbb-f1f4-03466dde6e00
+    book__p14 Fig.Preface c15-floor2 PXL_20230310_065627378.NIGHT.dng.jpg
+      cf_id: 8d95a02f-6e31-4e7a-e1cc-ef705ee3ed00  meta: {'book_page': 14, 'book_figure': 'Preface', 'cave_id': 15}
+    book__p16 Tribute 20031112_WalterSpink_DSCN4085.jpg
+      cf_id: fdb7e1e2-029a-496e-dc84-c0a7bec1a300
+    book__p25 Intro_close c15 _CAV2469.jpg
+      cf_id: 568241f7-3678-49b4-9ead-f37a45c8f500
+    book__p268_Glossary c15-floor2 PXL_20230310_065350119.NIGHT.jpg
+      cf_id: f1d261c4-3638-4aca-ea11-6df02a9f9b00
+    book__p276 Bibliography_Biographies c29 _CAV2436.jpg
+      cf_id: c63e7e4e-dda3-43ed-692c-aaf5f1c9be00
+    book__p279 Exit_image c15-floor2.jpg
+      cf_id: e377a1c7-5ad6-449d-fdf8-bec22f8af300
+    book__p6 Fig.Contents c16 PXL_20230306_021409858 gimp-levels_shadows-highlights.jpg
+      cf_id: f3536eaf-65e3-4ee6-7576-dc9f14f02400  meta: {'book_page': 6, 'book_figure': 'Contents', 'cave_id': 16}
+    book_plan Cave 10 from Christophe Hioco without cross hatch.jpg
+      cf_id: 33822951-07ef-4bd7-ccf8-d1a361f85b00
+    book_plan Cave 14 from Christophe Hioco_without cross hatch.jpg
+      cf_id: ef58ed49-d0cc-4b6a-917d-c73755260400
+    book_plan Cave 16 from Christophe Hioco_without cross hatch.jpg
+      cf_id: e86d9e9f-2707-4de7-16a8-7ad40ede3d00
+    book_plan Cave 2 IMG_1975 without cross hatch crop.jpg
+      cf_id: 571d4cf8-3c75-4540-33fd-8d24d3939d00
+    book_plan Cave 21 from Christophe Hioco_without cross hatch.jpg
+      cf_id: a4615928-7206-4d3d-7c3a-b758cdf01f00
+    book_plan Cave 29.jpg
+      cf_id: ff6b6e8c-ef0f-4bc9-1266-597bf4029c00
+    book_plan Cave 32  from Christophe Hioco no cross hatch.jpg
+      cf_id: 92dd02b9-5a3a-4fd3-6e01-146710ab1600
+    book_plan Cave 33 2nd floor from Christophe Hioco no cross hatch.jpg
+      cf_id: 063b1205-413d-48fb-f6ed-c93766fdf200
+    book_post_Archive24b_p266_C33_CAV4422.jpg
+      cf_id: 22ebd127-3d43-4797-2452-43f7aea96f00  meta: {'book_page': 266, 'book_figure': 'A24b', 'cave_id': 33, 'plan_id': 233, 'archival': True, 'rank': 1}

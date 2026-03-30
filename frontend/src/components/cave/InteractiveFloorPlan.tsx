@@ -32,12 +32,9 @@ export default function InteractiveFloorPlan({
 }: InteractiveFloorPlanProps) {
   const jpgUrl = plan.plan_url || getPlanImageUrl(plan.plan_image);
   const svgUrl = jpgUrl.replace(/\.(jpg|png)$/, '.svg');
-  // Cloudflare Images URL takes priority when set (SVG uploaded directly to CF Images)
-  const cfUrl = plan.plan_cloudflare_url ?? null;
 
-  const [planSrc, setPlanSrc] = useState(cfUrl || svgUrl);
-  // CF Images URLs and .svg paths should be inverted; plain JPGs should not
-  const [isInverted, setIsInverted] = useState(!!cfUrl || svgUrl.endsWith('.svg'));
+  const [planSrc, setPlanSrc] = useState(svgUrl);
+  const [isSvg, setIsSvg] = useState(true);
   const [planLoaded, setPlanLoaded] = useState(false);
   const [planDimensions, setPlanDimensions] = useState({ w: plan.plan_width, h: plan.plan_height });
   const [dragging, setDragging] = useState<DragState | null>(null);
@@ -47,7 +44,6 @@ export default function InteractiveFloorPlan({
   const wasDraggingRef = useRef(false);
 
   // Catch cached images whose onLoad fires before React hydrates.
-  // requestAnimationFrame ensures this runs after all useEffect flushes.
   const imgRefCallback = useCallback((node: HTMLImageElement | null) => {
     if (node && node.complete && node.naturalWidth > 0) {
       requestAnimationFrame(() => {
@@ -58,14 +54,12 @@ export default function InteractiveFloorPlan({
   }, []);
 
   useEffect(() => {
-    const newJpg = plan.plan_url || getPlanImageUrl(plan.plan_image);
-    const newSvg = newJpg.replace(/\.(jpg|png)$/, '.svg');
-    const newCf = plan.plan_cloudflare_url ?? null;
-    setPlanSrc(newCf || newSvg);
-    setIsInverted(!!newCf || newSvg.endsWith('.svg'));
+    const newSvg = (plan.plan_url || getPlanImageUrl(plan.plan_image)).replace(/\.(jpg|png)$/, '.svg');
+    setPlanSrc(newSvg);
+    setIsSvg(true);
     setPlanLoaded(false);
     setPlanDimensions({ w: plan.plan_width, h: plan.plan_height });
-  }, [plan.id, plan.plan_url, plan.plan_image, plan.plan_width, plan.plan_height, plan.plan_cloudflare_url]);
+  }, [plan.id, plan.plan_url, plan.plan_image, plan.plan_width, plan.plan_height]);
 
   // Per-plan marker transforms for images without corrected mx/my coordinates.
   // mx/my: translate all markers in normalized units (0–1). Positive = right/down.
@@ -227,18 +221,15 @@ export default function InteractiveFloorPlan({
           alt={`Floor ${plan.floor_number} plan`}
           className="absolute inset-0 w-full h-full object-contain"
           style={{
-            filter: isInverted ? 'invert(1)' : undefined,
+            filter: isSvg ? 'invert(1)' : undefined,
           }}
           onError={() => {
-            // Fallback chain: CF URL → static SVG → static JPG → give up (show markers on black)
-            if (planSrc === cfUrl) {
-              setPlanSrc(svgUrl);
-              setIsInverted(true);
-            } else if (planSrc === svgUrl) {
+            if (isSvg) {
+              // SVG not found — fall back to JPG
               setPlanSrc(jpgUrl);
-              setIsInverted(false);
+              setIsSvg(false);
             } else {
-              // All sources failed (e.g. blocked by ad blocker) — still show markers
+              // All sources failed — still show markers on black background
               setPlanLoaded(true);
             }
           }}

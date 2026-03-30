@@ -52,7 +52,6 @@ export interface DbPlan {
   plan_image: string | null;
   plan_width: number | null;
   plan_height: number | null;
-  cloudflare_image_id: string | null;
   created_at: string;
   updated_at: string;
 }

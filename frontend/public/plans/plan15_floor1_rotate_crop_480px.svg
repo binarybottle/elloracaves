@@ -11,8 +11,8 @@
 	<!ENTITY ns_adobe_xpath "http://ns.adobe.com/XPath/1.0/">
 ]>
 <svg version="1.1" id="Box" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="364" height="473" viewBox="23.1925 51.9658 363.723 472.684"
-	 style="enable-background:new 23.1925 51.9658 363.723 472.684;" xml:space="preserve">
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="364" height="473" viewBox="-0 -0 364.268 472.684"
+	 style="enable-background:new -0 -0 364.268 472.684;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:none;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;}
 	.st1{fill:none;stroke:#000000;stroke-miterlimit:10;}
@@ -33,7 +33,7 @@
 		<rect x="187.55" y="119.58" class="st0"/>
 		<rect x="189.84" y="121.91" class="st1"/>
 		<rect x="151.56" y="118.8" class="st0"/>
-		<rect x="153.85" y="121.13" class="st1" width="9.97" height="10.15"/>
+		<rect x="153.85" y="121.13" class="st1"/>
 		<rect x="262.85" y="119.58" class="st0" width="14.56" height="14.81"/>
 		<rect x="265.14" y="121.91" class="st1" width="9.97" height="10.15"/>
 		<rect x="298.79" y="120.38" class="st0" width="14.56" height="14.81"/>

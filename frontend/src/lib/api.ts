@@ -23,7 +23,6 @@ import {
   getImageUrl, 
   getThumbnailUrl, 
   getPlanImageUrl,
-  getCloudflareUrl,
   ImageVariant 
 } from './cloudflare-images';
 
@@ -68,7 +67,6 @@ export interface FloorPlan {
   floor_number: number;
   plan_image: string;
   plan_url: string;
-  plan_cloudflare_url: string | null;
   plan_width: number;
   plan_height: number;
   image_count: number;
@@ -121,7 +119,6 @@ function transformPlan(dbPlan: DbPlan & { image_count?: number }): FloorPlan {
     floor_number: dbPlan.plan_floor,
     plan_image: dbPlan.plan_image || '',
     plan_url: getPlanImageUrl(dbPlan.plan_image),
-    plan_cloudflare_url: getCloudflareUrl(dbPlan.cloudflare_image_id, 'public'),
     plan_width: dbPlan.plan_width || 0,
     plan_height: dbPlan.plan_height || 0,
     image_count: dbPlan.image_count || 0,

@@ -1,0 +1,56 @@
+timestamp,file,error
+2026-03-15T00:48:02.178877,book_Ch1_Fig.1.2 c21 A0004721.3FR_0009 levels_6000K gimp-shadows levels crop.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:48:15.441357,book_Ch1_Fig.1.22 c29 _A0004991.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:48:26.592453,book_Ch1_Fig.1.23 c29 A0004994.3FR levels_4000K.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:48:35.987559,book_Ch1_Fig.1.24 c21 A0004796.3FR levels_4000K gimp-shadows-highlights levels_4500K.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:50:08.034483,book_Ch1_Fig.1.37 c16 A_4652 gimp-levels.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:50:16.466784,book_Ch1_Fig.1.38 c16 A0004663.3FR_0020 rotate_crop gimp-shadows-highlights_levels_5000K.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:50:35.703261,book_Ch1_Fig.1.40 c16 A0004678.3FR_0011 crop_levels_4500K.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:51:45.860891,book_Ch1_Fig.1.5D c21 A0004799.3FR gimp-crop_shadows-highlights_levels_6000K.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:52:18.221674,book_Ch1__Announcement p26 PXL_20230312_014148853.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:53:18.435235,book_Ch2_Fig.2.13 c10-floor2 NeeleshKale_3271 crop_levels.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:53:49.342640,book_Ch2_Fig.2.19A c10 A0004888.3FR_0003 levels_5000K gimp-shadows-highlights.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:54:19.258128,book_Ch2_Fig.2.20 c10 _CAV3530.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:54:44.960495,book_Ch2_Fig.2.27 Kanheri-c67G NICK.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:54:55.183283,book_Ch2_Fig.2.4 c12-floor3 PXL_20230312_063618581.NIGHT_0000.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:55:33.846032,book_Ch2__Frontis p96 C2 A_5077.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:55:57.596505,book_Ch3_Fig.3.13 c30 PXL_20230313_103646906.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:56:21.251573,book_Ch3_Fig.3.17 c30 A0005240G.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:56:33.740478,book_Ch3_Fig.3.18 c30 A0005241.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:56:42.815011,book_Ch3_Fig.3.19 c30 A0005238.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:56:53.303563,book_Ch3_Fig.3.20 c30 A0005234.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:58:30.651700,book_Ch4_Fig.4.10 c29 PXL_20230310_120843792 NIGHT.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:59:01.168195,book_Ch4_Fig.4.14 c30 _CAV1046.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T00:59:45.578151,book_Ch4_Fig.4.3 c2 A0005066.3FR_0024 rotate_crop_shadows-highlights_levels_4000K.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:00:13.364461,book_Ch4_Fig.4.7 c29 _CAV2434.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:00:27.342844,book_Ch4__Announcement p164 c30A PXL_20230313_102115621.NIGHT.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:02:14.912849,book_Ch5__Announcement p194 c21 PXL_20230315_063221124 gimp-midlevel.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:02:41.790063,book__p20 Introduction c17 A0005198 gimp-shadows-highlights.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:02:52.645103,book__p23_map-empty iStock-1482181781.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:03:21.299983,book__p4 Fig.Dedication c33-floor2 _CAV4421 gimp-shadows-highlights_levels.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:04:08.811541,book_post_Archive12_p254_C21_d9a6cfe1-df94-4366-82cb-ee90535df996_4792.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:04:52.134143,book_post_Archive19_p261_C32_dc240a41-7c71-443c-b6cd-5551cc148da7_5976.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:05:05.212347,book_post_Archive20_p262_C16_Pithawalla_painting_DAG000050727.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:05:14.010426,book_post_Archive21_p263_C16_Pithawalla_painting_DAG000050728.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:05:31.498465,book_post_Archive23_p265_C33_Pithawalla_painting_DAG000050737.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:05:53.987828,book_post_Archive2_p246_Buddhist_DeenDayal_Getty_2ad3cc3c-4f05-4c7a-b5d6-2824f0dc9646_6693.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:06:42.698731,book_post_Archive_Daniells_Plate0_Frontispiece.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:07:09.745189,book_post_Archive_Daniells_Plate1-2_The_Mountain_of_Ellora_1st-2nd_View.jpg,HTTP 413: Request entity is too large
+2026-03-15T01:07:25.944742,book_post_Archive_Daniells_Plate10_Junwassa.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:07:38.969216,book_post_Archive_Daniells_Plate11_Rameswara.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:07:52.606167,book_post_Archive_Daniells_Plate12_The_Entrance_to_Kailasa.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:08:05.785667,book_post_Archive_Daniells_Plate13_S.W._View_of_Kailasa.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:08:21.219970,book_post_Archive_Daniells_Plate14_N.E._View_of_Kailasa.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:08:48.389150,book_post_Archive_Daniells_Plate15-16_The_Upper_Part_of_Kailasa.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:09:03.692468,book_post_Archive_Daniells_Plate17_Das_Avatara.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:09:16.547600,book_post_Archive_Daniells_Plate18_The_Ashes_of_Ravana.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:09:30.722650,book_post_Archive_Daniells_Plate19_The_Ashes_of_Ravana_Interior_View.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:09:43.972278,book_post_Archive_Daniells_Plate20_Tin-Tali.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:09:58.788607,book_post_Archive_Daniells_Plate21_Do-Tali.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:10:11.896124,book_post_Archive_Daniells_Plate22_Viswakarma_Exterior_View.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:10:37.774584,book_post_Archive_Daniells_Plate24_Dehr_Warra.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:10:48.343878,book_post_Archive_Daniells_Plate3_The_Mountain_of_Ellora_3rd_View.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:11:08.872042,book_post_Archive_Daniells_Plate5_Paraswa_Rama_Sabha.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:11:21.577053,book_post_Archive_Daniells_Plate6_The_Entrance_of_Indra_Sabha.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:11:37.222177,book_post_Archive_Daniells_Plate8_Indra_Sabha.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.
+2026-03-15T01:11:52.123440,book_post_Archive_Daniells_Plate9_Doomar_Leyna.jpg,HTTP 413: The image exceeded the size limit of 20000000 bytes. Try again by uploading a smaller image.

@@ -11,7 +11,7 @@ A comprehensive photographic documentation of the Ellora cave temples, a UNESCO 
 ```
 Users → Cloudflare DNS/CDN
          ├─→ Cloudflare Pages (Next.js)
-         │    └─→ Cloudflare Images (8,400+ photos + floor plan SVGs)
+         │    └─→ Cloudflare Images (8,400+ photos)
          └─→ Supabase PostgreSQL (database)
 ```
 
@@ -191,14 +191,11 @@ frontend/
 │       └── cloudflare-images.ts      # Cloudflare Images URL helpers
 ├── public/
 │   ├── images/                       # Static images (book cover, contributors, maps)
-│   └── plans/                        # Floor plan images (SVGs now in Cloudflare Images)
+│   └── plans/                        # Floor plan images (.svg preferred, .jpg fallback)
 └── package.json
-
-dev/
-├── process_svgs.py                   # Crops SVG floor plans to tight bounding box (Inkscape)
-├── sync_plan_cf_ids.py               # Matches uploaded SVG plans to plans table, generates SQL
-├── image_scripts/                    # Upload/sync scripts for Cloudflare Images
-└── elloracaves_*.sql                 # Database dump
+│
+scripts/                              # Upload/sync scripts for Cloudflare Images
+└── process_svgs.py                   # Crops SVG floor plans to tight bounding box (Inkscape)
 ```
 
 ## Database Schema: `images` Table
@@ -262,12 +259,6 @@ The `plans` table has one row per floor plan (one per cave floor).
 | `plan_image` | text | Filename of the floor plan image (e.g. `plan10_floor1_rotate_crop_480px.jpg`). Used as static fallback URL (`/plans/<filename>`) |
 | `plan_width` | int | Width of the plan image in pixels. Sets the container aspect ratio before the image loads |
 | `plan_height` | int | Height of the plan image in pixels |
-| `cloudflare_image_id` | text | Cloudflare Images ID for the SVG floor plan. When set, takes priority over the static file. See [Floor Plan SVGs](#floor-plan-svgs) |
-
-**One-time DB setup:**
-```sql
-ALTER TABLE plans ADD COLUMN cloudflare_image_id text;
-```
 
 ## Database Schema: `models_3d` Table
 
@@ -364,42 +355,25 @@ This is cosmetic — the website doesn't use `file_path` for serving images — 
 
 ## Floor Plan SVGs
 
-Floor plan SVGs are uploaded to Cloudflare Images and linked via `cloudflare_image_id` on the `plans` table. The frontend loads them in priority order:
+Floor plan SVGs are served as static files from `frontend/public/plans/`, deployed with the Cloudflare Pages build. The frontend tries the SVG first and falls back to the JPG:
 
-1. **Cloudflare Images** — `https://imagedelivery.net/{hash}/{cloudflare_image_id}/public` (when `cloudflare_image_id` is set)
-2. **Static SVG** — `/plans/<plan_image>.svg` (fallback if no CF ID, or CF load fails)
-3. **Static JPG** — `/plans/<plan_image>` (final fallback)
+1. **Static SVG** — `/plans/<plan_image_basename>.svg` (inverted via `filter: invert(1)` for white-on-black)
+2. **Static JPG** — `/plans/<plan_image>` (final fallback, not inverted)
 
-SVGs are displayed inverted (`filter: invert(1)`) so they appear as white lines on a black background, matching the site's dark theme. JPG fallbacks are not inverted.
+### Adding or updating SVG plans
 
-### Uploading a new or updated SVG plan
+1. Place the `.svg` file in `frontend/public/plans/` with the same base name as the `.jpg` (e.g. `plan34_rotate_crop_480px.svg` alongside `plan34_rotate_crop_480px.jpg`).
 
-1. Crop the SVG to its drawing bounds (removes whitespace, stabilises coordinate space):
+2. Crop all SVGs to their drawing bounds (removes whitespace, stabilises the coordinate space for markers). Safe to re-run — produces identical output on already-cropped files:
    ```bash
    python3 dev/process_svgs.py
    ```
-   This uses Inkscape to compute the tight bounding box and updates the SVG's `viewBox`, `width`, and `height` in place.
+   Requires Inkscape (`/Applications/Inkscape.app`).
 
-2. Upload the cropped SVG to Cloudflare Images (via the dashboard or any upload script).
-
-3. Link the Cloudflare ID to the plan in Supabase:
-   ```sql
-   UPDATE plans SET cloudflare_image_id = '<cf_id>' WHERE plan_image = 'plan34_rotate_crop_480px.jpg';
+3. Deploy:
+   ```bash
+   cd frontend && npm run pages:build && npm run deploy
    ```
-
-### Syncing all plan SVG IDs at once
-
-If you've uploaded many SVGs to Cloudflare Images, run `dev/sync_plan_cf_ids.py` to generate the SQL for all of them automatically. It lists every `.svg` in your Cloudflare Images account and matches by filename:
-
-```bash
-CF_ACCOUNT_ID=<account_id> CF_API_TOKEN=<read-images token> python3 dev/sync_plan_cf_ids.py
-```
-
-Paste the printed SQL into the Supabase SQL editor. Safe to run multiple times (idempotent).
-
-**Credentials:**
-- `CF_ACCOUNT_ID`: Cloudflare dashboard → top-right account menu → "Account ID"
-- `CF_API_TOKEN`: My Profile → API Tokens → use the `read-images` token (requires `Account.Cloudflare Images` read permission)
 
 ### Interactively correcting marker positions
 
