@@ -46,6 +46,17 @@ export default function InteractiveFloorPlan({
   const containerRef = useRef<HTMLDivElement>(null);
   const wasDraggingRef = useRef(false);
 
+  // Catch cached images whose onLoad fires before React hydrates.
+  // requestAnimationFrame ensures this runs after all useEffect flushes.
+  const imgRefCallback = useCallback((node: HTMLImageElement | null) => {
+    if (node && node.complete && node.naturalWidth > 0) {
+      requestAnimationFrame(() => {
+        setPlanDimensions({ w: node.naturalWidth, h: node.naturalHeight });
+        setPlanLoaded(true);
+      });
+    }
+  }, []);
+
   useEffect(() => {
     const newJpg = plan.plan_url || getPlanImageUrl(plan.plan_image);
     const newSvg = newJpg.replace(/\.(jpg|png)$/, '.svg');
@@ -211,6 +222,7 @@ export default function InteractiveFloorPlan({
 
         {/* Floor Plan Image */}
         <img
+          ref={imgRefCallback}
           src={planSrc}
           alt={`Floor ${plan.floor_number} plan`}
           className="absolute inset-0 w-full h-full object-contain"
@@ -218,13 +230,16 @@ export default function InteractiveFloorPlan({
             filter: isInverted ? 'invert(1)' : undefined,
           }}
           onError={() => {
-            // Fallback chain: CF URL → static SVG → static JPG
+            // Fallback chain: CF URL → static SVG → static JPG → give up (show markers on black)
             if (planSrc === cfUrl) {
               setPlanSrc(svgUrl);
               setIsInverted(true);
-            } else {
+            } else if (planSrc === svgUrl) {
               setPlanSrc(jpgUrl);
               setIsInverted(false);
+            } else {
+              // All sources failed (e.g. blocked by ad blocker) — still show markers
+              setPlanLoaded(true);
             }
           }}
           onLoad={(e) => {
@@ -236,8 +251,11 @@ export default function InteractiveFloorPlan({
           }}
         />
 
-        {/* Image Markers */}
-        {planLoaded &&
+        {/* Image Markers — not gated on planLoaded; the container has the correct
+           aspect ratio from DB dimensions, so markers position correctly before the
+           image finishes loading. This avoids hydration timing bugs where a cached
+           image's onLoad fires before React attaches the handler. */}
+        {
           imagesWithCoords.map((img) => {
             const hasCustomPos = img.mx !== null && img.mx !== undefined;
             const isDraggingThis = dragging?.imageId === img.id;

@@ -11,7 +11,7 @@ A comprehensive photographic documentation of the Ellora cave temples, a UNESCO 
 ```
 Users → Cloudflare DNS/CDN
          ├─→ Cloudflare Pages (Next.js)
-         │    └─→ Cloudflare Images (8,400+ photos)
+         │    └─→ Cloudflare Images (8,400+ photos + floor plan SVGs)
          └─→ Supabase PostgreSQL (database)
 ```
 
@@ -191,11 +191,12 @@ frontend/
 │       └── cloudflare-images.ts      # Cloudflare Images URL helpers
 ├── public/
 │   ├── images/                       # Static images (book cover, contributors, maps)
-│   └── plans/                        # Floor plan images (.svg preferred; .jpg fallback)
+│   └── plans/                        # Floor plan images (SVGs now in Cloudflare Images)
 └── package.json
 
 dev/
-├── process_svgs.py                   # Bakes planTransforms into SVG viewBoxes + sets width/height
+├── process_svgs.py                   # Crops SVG floor plans to tight bounding box (Inkscape)
+├── sync_plan_cf_ids.py               # Matches uploaded SVG plans to plans table, generates SQL
 ├── image_scripts/                    # Upload/sync scripts for Cloudflare Images
 └── elloracaves_*.sql                 # Database dump
 ```
@@ -230,7 +231,9 @@ The `images` table contains ~8,400 rows. Each row represents a photograph with i
 | `rank` | int | `1` = shown in explore UI; `2` = shown only as alternate to a `best_id` parent; `> 2` = hidden entirely |
 | `best_id` | int | Points to a "better" image of the same subject. Forms a tree: root has no `best_id`, children point to parent. Used to group similar images in explore view and cluster images in the review page |
 | `default_priority` | int | Sort order (descending): higher values appear first in image galleries. `0` (default) = no special priority |
-| `hide_plan_xy` | int | `1` = hide this image's marker on the floor plan even though coordinates exist; `0` = show marker |
+| `hide_plan_xy` | bool | `true` = hide this image's marker on the floor plan even though coordinates exist |
+| `mx` | float | Corrected X marker position (0.0–1.0). Overrides `plan_x_norm` when set. Set via drag-to-reposition edit mode |
+| `my` | float | Corrected Y marker position (0.0–1.0). Overrides `plan_y_norm` when set |
 | `cloudflare_image_id` | uuid | Cloudflare Images ID for the full-size image. Used to construct `image_url` |
 | `search_vector` | tsvector | Pre-computed PostgreSQL full-text search index (built from subject, motifs, description, medium) |
 
@@ -246,6 +249,25 @@ The `images` table contains ~8,400 rows. Each row represents a photograph with i
 | `created_at` | timestamp | Row creation timestamp |
 | `updated_at` | timestamp | Row last-updated timestamp |
 
+
+## Database Schema: `plans` Table
+
+The `plans` table has one row per floor plan (one per cave floor).
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `plan_id` | int | Primary key. Used in `InteractiveFloorPlan` and `planTransforms` |
+| `cave_id` | int | Foreign key to `caves` |
+| `plan_floor` | int | Floor number (1, 2, 3, …). Used for floor-selector tabs |
+| `plan_image` | text | Filename of the floor plan image (e.g. `plan10_floor1_rotate_crop_480px.jpg`). Used as static fallback URL (`/plans/<filename>`) |
+| `plan_width` | int | Width of the plan image in pixels. Sets the container aspect ratio before the image loads |
+| `plan_height` | int | Height of the plan image in pixels |
+| `cloudflare_image_id` | text | Cloudflare Images ID for the SVG floor plan. When set, takes priority over the static file. See [Floor Plan SVGs](#floor-plan-svgs) |
+
+**One-time DB setup:**
+```sql
+ALTER TABLE plans ADD COLUMN cloudflare_image_id text;
+```
 
 ## Database Schema: `models_3d` Table
 
@@ -342,21 +364,42 @@ This is cosmetic — the website doesn't use `file_path` for serving images — 
 
 ## Floor Plan SVGs
 
-Floor plans are stored in `frontend/public/plans/`. Each plan has a `.jpg` (original raster export) and, for most caves, a `.svg` (Illustrator source). The frontend prefers the SVG when available and falls back to the JPG.
+Floor plan SVGs are uploaded to Cloudflare Images and linked via `cloudflare_image_id` on the `plans` table. The frontend loads them in priority order:
 
-SVGs are displayed inverted (`filter: invert(1)`) so they appear as white lines on a black background, matching the site's dark theme.
+1. **Cloudflare Images** — `https://imagedelivery.net/{hash}/{cloudflare_image_id}/public` (when `cloudflare_image_id` is set)
+2. **Static SVG** — `/plans/<plan_image>.svg` (fallback if no CF ID, or CF load fails)
+3. **Static JPG** — `/plans/<plan_image>` (final fallback)
 
-### Baking coordinate transforms into SVGs
+SVGs are displayed inverted (`filter: invert(1)`) so they appear as white lines on a black background, matching the site's dark theme. JPG fallbacks are not inverted.
 
-Some floor plan SVGs have a mismatch between the SVG's internal coordinate space and the stored `plan_x_norm`/`plan_y_norm` marker coordinates. The `dev/process_svgs.py` script corrects this by adjusting each SVG's `viewBox` (and adding explicit `width`/`height` attributes) using the per-plan transform values defined in `InteractiveFloorPlan.tsx`.
+### Uploading a new or updated SVG plan
 
-Run it after adding or modifying SVGs:
+1. Crop the SVG to its drawing bounds (removes whitespace, stabilises coordinate space):
+   ```bash
+   python3 dev/process_svgs.py
+   ```
+   This uses Inkscape to compute the tight bounding box and updates the SVG's `viewBox`, `width`, and `height` in place.
+
+2. Upload the cropped SVG to Cloudflare Images (via the dashboard or any upload script).
+
+3. Link the Cloudflare ID to the plan in Supabase:
+   ```sql
+   UPDATE plans SET cloudflare_image_id = '<cf_id>' WHERE plan_image = 'plan34_rotate_crop_480px.jpg';
+   ```
+
+### Syncing all plan SVG IDs at once
+
+If you've uploaded many SVGs to Cloudflare Images, run `dev/sync_plan_cf_ids.py` to generate the SQL for all of them automatically. It lists every `.svg` in your Cloudflare Images account and matches by filename:
 
 ```bash
-python3 dev/process_svgs.py
+CF_ACCOUNT_ID=<account_id> CF_API_TOKEN=<read-images token> python3 dev/sync_plan_cf_ids.py
 ```
 
-For plans that still only have a JPG (caves 2, 32 floor 1, 32 floor 2), the transforms are applied in code at render time via the `planTransforms` table in `InteractiveFloorPlan.tsx`.
+Paste the printed SQL into the Supabase SQL editor. Safe to run multiple times (idempotent).
+
+**Credentials:**
+- `CF_ACCOUNT_ID`: Cloudflare dashboard → top-right account menu → "Account ID"
+- `CF_API_TOKEN`: My Profile → API Tokens → use the `read-images` token (requires `Account.Cloudflare Images` read permission)
 
 ### Interactively correcting marker positions
 
@@ -392,8 +435,8 @@ DROP POLICY "Allow anon update" ON images;
 
 **Display logic:**
 
-- **Locally** (with this code): if `mx`/`my` are set for a marker, they replace `plan_x_norm`/`plan_y_norm` entirely. No `planTransforms` are applied to corrected markers.
-- **Live site** (deployed code without `mx`/`my` support): continues to use `plan_x_norm`/`plan_y_norm` unchanged, so visitors see no changes until you're ready to migrate.
+- If `mx`/`my` are set, they replace `plan_x_norm`/`plan_y_norm` entirely. No `planTransforms` are applied to corrected markers.
+- If `mx`/`my` are not set, the original `plan_x_norm`/`plan_y_norm` coordinates are used, with any per-plan `planTransforms` applied.
 
 **Migrating corrected coordinates** (when all markers are correct):
 
@@ -406,6 +449,22 @@ WHERE mx IS NOT NULL AND my IS NOT NULL;
 -- Then clear the correction columns
 UPDATE images SET mx = NULL, my = NULL WHERE mx IS NOT NULL;
 ```
+
+### Hiding all markers for a plan
+
+To hide every marker on a given floor plan without deleting coordinates:
+
+```sql
+-- Hide all markers on plan 30 (cave 30)
+UPDATE images SET hide_plan_xy = true WHERE plan_id = 30;
+
+-- Restore
+UPDATE images SET hide_plan_xy = false WHERE plan_id = 30;
+```
+
+### Caves without a floor plan
+
+If a cave has no entry in `plans` (e.g. cave 13), the `/explore` page still shows images for that cave — it falls back to fetching all rank-1, non-archival images for the cave directly. No plan or markers are shown, just the image display and gallery strip.
 
 ### Setting a cave's default image
 
