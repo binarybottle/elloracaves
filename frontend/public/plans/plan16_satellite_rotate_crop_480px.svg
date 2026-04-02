@@ -11,8 +11,8 @@
 	<!ENTITY ns_adobe_xpath "http://ns.adobe.com/XPath/1.0/">
 ]>
 <svg version="1.1" id="Inside" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="385" height="484" viewBox="-0.322386 0.0860906 384.698 483.822"
-	 style="enable-background:new -0.333817 0.157683 384.721 483.506;" xml:space="preserve">
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="385" height="484" viewBox="17.904 31.328 384.56 483.822"
+	 style="enable-background:new 17.904 31.328 384.56 483.822;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:none;stroke:#000000;stroke-width:0.75;stroke-miterlimit:10;}
 	.st1{fill:none;stroke:#000000;stroke-width:3;stroke-miterlimit:10;}
