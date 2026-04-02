@@ -11,10 +11,12 @@ import ImageDisplay from '@/components/cave/ImageDisplay';
 import ImageInfoPanel from '@/components/cave/ImageInfoPanel';
 import ImageGalleryStrip from '@/components/cave/ImageGalleryStrip';
 import SearchOverlay from '@/components/search/SearchOverlay';
+import GroupEditToolbar from '@/components/cave/GroupEditToolbar';
 import { fetchCaveDetail, fetchCaveFloorImages, fetchCaveImages, fetchImageDetail, fetchCaveArchivalImages, fetchImageSiblingGroup, Cave, Image } from '@/lib/api';
-import { supabase } from '@/lib/supabase';
+import { supabase, batchUpdateBestId } from '@/lib/supabase';
 import { getThumbnailUrl, getImageUrl } from '@/lib/cloudflare-images';
 import { getDropdownLabel } from '@/components/cave/CaveMap';
+import { buildGroupColorMap } from '@/lib/group-colors';
 
 function ExploreContent() {
   const searchParams = useSearchParams();
@@ -24,7 +26,8 @@ function ExploreContent() {
   const floorNumberParam = searchParams.get('floor');
   const imageId = searchParams.get('image');
   const editMode = searchParams.has('plan_edit');
-  const editSuffix = editMode ? '&plan_edit' : '';
+  const groupEditMode = searchParams.has('group_edit');
+  const editSuffix = editMode ? '&plan_edit' : groupEditMode ? '&group_edit' : '';
   
   const [cave, setCave] = useState<Cave | null>(null);
   const [floorNumber, setFloorNumber] = useState<number>(1);
@@ -42,6 +45,60 @@ function ExploreContent() {
   const [caveArchivalImages, setCaveArchivalImages] = useState<Image[]>([]);
   const [selectedArchival, setSelectedArchival] = useState<ArchivalImage | null>(null);
   const [selectedModel3d, setSelectedModel3d] = useState<Model3DItem | null>(null);
+
+  // Group edit state
+  const [multiSelectedIds, setMultiSelectedIds] = useState<Set<number>>(new Set());
+  const [placingImageId, setPlacingImageId] = useState<number | null>(null);
+
+  const groupColorMap = useMemo(
+    () => groupEditMode ? buildGroupColorMap(floorImages) : undefined,
+    [groupEditMode, floorImages]
+  );
+
+  const handleToggleSelect = useCallback((id: number) => {
+    setMultiSelectedIds(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }, []);
+
+  const handleGroup = useCallback(async (bestId: number) => {
+    const updates = Array.from(multiSelectedIds)
+      .filter(id => id !== bestId)
+      .map(id => ({ imageId: id, bestId }));
+    // Optimistic update
+    setFloorImages(prev => prev.map(img =>
+      multiSelectedIds.has(img.id) && img.id !== bestId
+        ? { ...img, best_id: bestId }
+        : img
+    ));
+    setMultiSelectedIds(new Set());
+    await batchUpdateBestId(updates);
+  }, [multiSelectedIds]);
+
+  const handleUngroup = useCallback(async () => {
+    const updates = Array.from(multiSelectedIds).map(id => ({ imageId: id, bestId: null }));
+    setFloorImages(prev => prev.map(img =>
+      multiSelectedIds.has(img.id) ? { ...img, best_id: null } : img
+    ));
+    setMultiSelectedIds(new Set());
+    await batchUpdateBestId(updates);
+  }, [multiSelectedIds]);
+
+  const handlePlaceMarker = useCallback(async (imageId: number, x: number, y: number) => {
+    setFloorImages(prev => prev.map(img =>
+      img.id === imageId ? { ...img, mx: x, my: y } : img
+    ));
+    setPlacingImageId(null);
+    setMultiSelectedIds(new Set());
+    const { error } = await supabase
+      .from('images')
+      .update({ mx: x, my: y })
+      .eq('image_id', imageId);
+    if (error) console.error('Failed to place marker:', error);
+  }, []);
 
   // The image to display - hovered takes precedence over selected
   const displayedImage = hoveredImage || selectedImage;
@@ -125,7 +182,7 @@ function ExploreContent() {
       try {
         const hasPlanForFloor = cave.plans?.some(p => p.floor_number === floorNumber);
         const [floorData, archival] = await Promise.all([
-          fetchCaveFloorImages(caveId, floorNumber),
+          fetchCaveFloorImages(caveId, floorNumber, groupEditMode),
           fetchCaveArchivalImages(caveId),
         ]);
         // Caves without a floor plan still have images — fetch them all
@@ -146,7 +203,7 @@ function ExploreContent() {
       }
     }
     loadFloorImages();
-  }, [cave, caveId, floorNumber, imageId]);
+  }, [cave, caveId, floorNumber, imageId, groupEditMode]);
 
   // Fetch specific image if imageId is in URL
   useEffect(() => {
@@ -361,6 +418,8 @@ function ExploreContent() {
                   onImageHover={handleImageHover}
                   editMode={editMode}
                   onSaveMarkerPosition={handleSaveMarkerPosition}
+                  placingImageId={groupEditMode ? placingImageId : undefined}
+                  onPlaceMarker={groupEditMode ? handlePlaceMarker : undefined}
                 />
               </div>
 
@@ -448,6 +507,8 @@ function ExploreContent() {
                 onImageHover={handleImageHover}
                 editMode={editMode}
                 onSaveMarkerPosition={handleSaveMarkerPosition}
+                placingImageId={groupEditMode ? placingImageId : undefined}
+                onPlaceMarker={groupEditMode ? handlePlaceMarker : undefined}
               />
             )}
             <ImageDisplay
@@ -543,6 +604,8 @@ function ExploreContent() {
                   onImageHover={handleImageHover}
                   editMode={editMode}
                   onSaveMarkerPosition={handleSaveMarkerPosition}
+                  placingImageId={groupEditMode ? placingImageId : undefined}
+                  onPlaceMarker={groupEditMode ? handlePlaceMarker : undefined}
                 />
               </div>
             </details>
@@ -558,8 +621,26 @@ function ExploreContent() {
             onImageSelect={handleImageSelect}
             cave={cave}
             floorNumber={floorNumber}
+            groupEditMode={groupEditMode}
+            multiSelectedIds={groupEditMode ? multiSelectedIds : undefined}
+            onToggleSelect={groupEditMode ? handleToggleSelect : undefined}
+            groupColorMap={groupColorMap}
           />
         </div>
+
+        {/* Group edit toolbar */}
+        {groupEditMode && (
+          <GroupEditToolbar
+            selectedIds={multiSelectedIds}
+            images={floorImages}
+            placingImageId={placingImageId}
+            onGroup={handleGroup}
+            onUngroup={handleUngroup}
+            onClearSelection={() => setMultiSelectedIds(new Set())}
+            onStartPlacing={(id) => { setPlacingImageId(id); setMultiSelectedIds(new Set()); }}
+            onCancelPlacing={() => setPlacingImageId(null)}
+          />
+        )}
       </main>
 
       {/* Archival Image Lightbox */}

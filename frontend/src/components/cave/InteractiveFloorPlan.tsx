@@ -13,6 +13,8 @@ interface InteractiveFloorPlanProps {
   onImageHover?: (image: ImageType | null) => void;
   editMode?: boolean;
   onSaveMarkerPosition?: (imageId: number, x: number, y: number) => void;
+  placingImageId?: number | null;
+  onPlaceMarker?: (imageId: number, x: number, y: number) => void;
 }
 
 interface DragState {
@@ -29,6 +31,8 @@ export default function InteractiveFloorPlan({
   onImageHover,
   editMode = false,
   onSaveMarkerPosition,
+  placingImageId,
+  onPlaceMarker,
 }: InteractiveFloorPlanProps) {
   const jpgUrl = plan.plan_url || getPlanImageUrl(plan.plan_image);
   const svgUrl = jpgUrl.replace(/\.(jpg|png)$/, '.svg');
@@ -175,6 +179,12 @@ export default function InteractiveFloorPlan({
     }, 500);
   }, [dragging, getRelativePosition, onSaveMarkerPosition]);
 
+  const handlePlaceClick = useCallback((e: React.MouseEvent) => {
+    if (!placingImageId || !onPlaceMarker) return;
+    const { x, y } = getRelativePosition(e.clientX, e.clientY);
+    onPlaceMarker(placingImageId, x, y);
+  }, [placingImageId, onPlaceMarker, getRelativePosition]);
+
   const imagesWithCoords = images.filter(
     (img) =>
       img.image_url &&
@@ -193,8 +203,9 @@ export default function InteractiveFloorPlan({
         className="relative bg-black rounded-lg overflow-hidden max-h-[calc(100vh-10rem)]"
         style={{
           aspectRatio: `${planDimensions.w}/${planDimensions.h}`,
-          cursor: dragging ? 'grabbing' : editMode ? 'default' : undefined,
+          cursor: placingImageId ? 'crosshair' : dragging ? 'grabbing' : editMode ? 'default' : undefined,
         }}
+        onClick={placingImageId ? handlePlaceClick : undefined}
         onPointerMove={editMode ? handleContainerPointerMove : undefined}
         onPointerUp={editMode ? handleContainerPointerUp : undefined}
         onPointerLeave={editMode ? handleContainerPointerUp : undefined}
@@ -203,6 +214,11 @@ export default function InteractiveFloorPlan({
         {editMode && (
           <div className="absolute top-1 left-1 z-40 px-1.5 py-0.5 bg-amber-900/80 rounded text-[10px] font-semibold text-amber-400 pointer-events-none">
             EDIT MODE
+          </div>
+        )}
+        {placingImageId && (
+          <div className="absolute top-1 left-1 z-40 px-1.5 py-0.5 bg-purple-900/80 rounded text-[10px] font-semibold text-purple-300 pointer-events-none">
+            CLICK TO PLACE #{placingImageId}
           </div>
         )}
 

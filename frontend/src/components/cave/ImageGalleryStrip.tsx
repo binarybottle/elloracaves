@@ -1,8 +1,9 @@
 // components/cave/ImageGalleryStrip.tsx
 'use client';
 
-import { History, Box } from 'lucide-react';
+import { History, Box, Star } from 'lucide-react';
 import { Image as ImageType } from '@/lib/api';
+import { getTreeOrderedImages, GroupInfo } from '@/lib/group-colors';
 
 const MEDIUM_ORDER: Record<string, number> = {
   photograph: 0, photo: 0,
@@ -27,6 +28,10 @@ interface ImageGalleryStripProps {
   onImageSelect: (image: ImageType) => void;
   cave: any;
   floorNumber: number;
+  groupEditMode?: boolean;
+  multiSelectedIds?: Set<number>;
+  onToggleSelect?: (id: number) => void;
+  groupColorMap?: Map<number, GroupInfo>;
 }
 
 export default function ImageGalleryStrip({
@@ -35,39 +40,15 @@ export default function ImageGalleryStrip({
   selectedImageId,
   onImageSelect,
   cave,
-  floorNumber
+  floorNumber,
+  groupEditMode = false,
+  multiSelectedIds,
+  onToggleSelect,
+  groupColorMap,
 }: ImageGalleryStripProps) {
   const validImages = images.filter(img => img.image_url && img.image_url.trim() !== '');
 
-  const groupedImages = (() => {
-    const bestIdMap = new Map<number, ImageType[]>();
-    const placed = new Set<number>();
-
-    for (const img of validImages) {
-      if (img.best_id) {
-        const group = bestIdMap.get(img.best_id) || [];
-        group.push(img);
-        bestIdMap.set(img.best_id, group);
-      }
-    }
-
-    const result: ImageType[] = [];
-    for (const img of validImages) {
-      if (placed.has(img.id)) continue;
-      placed.add(img.id);
-      result.push(img);
-      const group = bestIdMap.get(img.id);
-      if (group) {
-        for (const g of group) {
-          if (!placed.has(g.id)) {
-            placed.add(g.id);
-            result.push(g);
-          }
-        }
-      }
-    }
-    return result;
-  })();
+  const groupedImages = getTreeOrderedImages(validImages);
 
   const sortedArchival = archivalImages
     .filter(img => !img.best_id && img.image_url && img.image_url.trim() !== '')
@@ -88,7 +69,12 @@ export default function ImageGalleryStrip({
         )}
         {sortedArchival.length > 0 && (
           <span className="text-sm text-gray-500">
-            {' '}· {sortedArchival.length} archival
+            {' '}&middot; {sortedArchival.length} archival
+          </span>
+        )}
+        {groupEditMode && (
+          <span className="text-sm text-purple-400 ml-2">
+            GROUP EDIT
           </span>
         )}
       </div>
@@ -105,18 +91,33 @@ export default function ImageGalleryStrip({
           const prevIsRegular = idx > 0 && !allImages[idx - 1].archival;
           const showSeparator = isArchival && (idx === 0 || prevIsRegular);
 
+          const isMultiSelected = groupEditMode && multiSelectedIds?.has(image.id);
+          const groupInfo = groupEditMode ? groupColorMap?.get(image.id) : undefined;
+          const isGroupRoot = groupInfo && groupInfo.rootId === image.id;
+
+          const handleClick = () => {
+            if (groupEditMode && onToggleSelect) {
+              onToggleSelect(image.id);
+            } else {
+              onImageSelect(image);
+            }
+          };
+
           return (
             <div key={image.id} className="flex items-start gap-2">
               {showSeparator && (
                 <div className="self-stretch w-px bg-gray-700 mx-1" />
               )}
               <button
-                onClick={() => onImageSelect(image)}
+                onClick={handleClick}
                 className="relative block h-24 flex-shrink-0"
               >
                 <div className={`relative h-full rounded ${
+                  isMultiSelected ? 'ring-2 ring-purple-400' :
                   selectedImageId === image.id ? 'ring-2 ring-red-600' : ''
-                } ${isArchival ? 'opacity-75 hover:opacity-100' : ''}`}>
+                } ${isArchival ? 'opacity-75 hover:opacity-100' : ''}`}
+                  style={groupEditMode && groupInfo ? { borderBottom: `3px solid ${groupInfo.color}` } : undefined}
+                >
                   <img
                     src={thumbnailUrl}
                     alt={image.subject || `Image ${image.id}`}
@@ -134,6 +135,19 @@ export default function ImageGalleryStrip({
                   {image.model3d_ids && image.model3d_ids.length > 0 && (
                     <div className="absolute bottom-1 left-1 bg-black/60 rounded-sm p-px">
                       <Box className="w-2.5 h-2.5 text-cyan-400" />
+                    </div>
+                  )}
+                  {groupEditMode && isGroupRoot && (
+                    <div className="absolute top-1 left-1 bg-black/60 rounded-sm p-px">
+                      <Star className="w-2.5 h-2.5 text-yellow-400 fill-yellow-400" />
+                    </div>
+                  )}
+                  {groupEditMode && groupInfo && (
+                    <div
+                      className="absolute bottom-0 left-0 text-[8px] font-bold px-1 rounded-tr-sm text-white leading-tight"
+                      style={{ backgroundColor: groupInfo.color }}
+                    >
+                      {groupInfo.groupNumber}
                     </div>
                   )}
                 </div>

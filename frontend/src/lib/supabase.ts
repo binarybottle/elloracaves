@@ -330,6 +330,26 @@ export async function getImageSiblingGroup(imageId: number, bestId: number | nul
   return { bestImage: rootImage, siblings, targetBestId: rootId };
 }
 
+/**
+ * Batch-update best_id for multiple images.
+ * Each entry sets best_id on the given image_id.
+ */
+export async function batchUpdateBestId(updates: { imageId: number; bestId: number | null }[]) {
+  const results = await Promise.all(
+    updates.map(({ imageId, bestId }) =>
+      supabase
+        .from('images')
+        .update({ best_id: bestId })
+        .eq('image_id', imageId)
+    )
+  );
+  const errors = results.filter(r => r.error);
+  if (errors.length > 0) {
+    console.error('Errors in batchUpdateBestId:', errors.map(e => e.error));
+  }
+  return errors.length === 0;
+}
+
 // Synonym mapping for variant spellings (Indian names, Sanskrit transliterations)
 const SYNONYM_MAP: Record<string, string[]> = {
   'siva': ['siva', 'shiva'],
