@@ -11,8 +11,8 @@
 	<!ENTITY ns_adobe_xpath "http://ns.adobe.com/XPath/1.0/">
 ]>
 <svg version="1.1" id="A1" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="398" height="364" viewBox="-0 -0.320938 397.535 364.102"
-	 style="enable-background:new -0 -0.320938 397.535 364.102;" xml:space="preserve">
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 595.28 419.53"
+	 style="enable-background:new 0 0 595.28 419.53;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:none;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;}
 	.st1{fill:none;stroke:#000000;stroke-width:1.25;stroke-miterlimit:10;}
@@ -21,20 +21,20 @@
 	.st4{font-size:12px;}
 </style>
 <switch>
-	<foreignObject requiredExtensions="&ns_ai;" x="0" y="0">
+	<foreignObject requiredExtensions="&ns_ai;" x="0" y="0" width="1" height="1">
 		<i:aipgfRef  xlink:href="#adobe_illustrator_pgf">
 		</i:aipgfRef>
 	</foreignObject>
 	<g i:extraneous="self">
-		<rect x="257.99" y="199.47" class="st0"/>
-		<rect x="261.52" y="202.82" class="st0"/>
-		<rect x="257.99" y="280.13" class="st0"/>
-		<rect x="261.52" y="283.18" class="st0"/>
+		<rect x="257.99" y="199.47" class="st0" width="33" height="31.25"/>
+		<rect x="261.52" y="202.82" class="st0" width="25.94" height="25.15"/>
+		<rect x="257.99" y="280.13" class="st0" width="33" height="31.25"/>
+		<rect x="261.52" y="283.18" class="st0" width="25.94" height="25.15"/>
 		<polyline class="st0" points="363.17,40.04 290.99,40.04 290.99,140.13 359.01,140.13 		"/>
-		<rect x="257.99" y="48.81" class="st0"/>
-		<rect x="260.96" y="51.98" class="st0"/>
-		<rect x="257.99" y="109.45" class="st0"/>
-		<rect x="260.96" y="112.62" class="st0"/>
+		<rect x="257.99" y="48.81" class="st0" width="23.74" height="25.38"/>
+		<rect x="260.96" y="51.98" class="st0" width="17.81" height="19.04"/>
+		<rect x="257.99" y="109.45" class="st0" width="23.74" height="25.38"/>
+		<rect x="260.96" y="112.62" class="st0" width="17.81" height="19.04"/>
 		<polyline class="st0" points="363.01,26.73 363.01,40.42 366.59,40.42 366.59,42.53 370.06,42.53 370.06,45 395.02,45 
 			395.02,36.25 		"/>
 		<polyline class="st0" points="365.43,26.99 365.43,36.76 368.61,36.76 368.61,39.09 373.02,39.09 373.02,41.72 392.35,41.72 
