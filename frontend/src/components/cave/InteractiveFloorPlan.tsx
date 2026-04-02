@@ -201,9 +201,8 @@ export default function InteractiveFloorPlan({
       >
         {/* Edit mode banner — overlaid so it doesn't shift the container */}
         {editMode && (
-          <div className="absolute top-0 inset-x-0 z-40 px-3 py-1 bg-amber-900/85 text-amber-200 text-xs flex items-center gap-2 pointer-events-none">
-            <span className="font-semibold text-amber-400">EDIT MODE</span>
-            <span>Drag markers to reposition. Saves automatically.</span>
+          <div className="absolute top-1 left-1 z-40 px-1.5 py-0.5 bg-amber-900/80 rounded text-[10px] font-semibold text-amber-400 pointer-events-none">
+            EDIT MODE
           </div>
         )}
 
