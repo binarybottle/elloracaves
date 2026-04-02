@@ -11,8 +11,8 @@
 	<!ENTITY ns_adobe_xpath "http://ns.adobe.com/XPath/1.0/">
 ]>
 <svg version="1.1" id="Layer_2" xmlns:x="&ns_extend;" xmlns:i="&ns_ai;" xmlns:graph="&ns_graphs;"
-	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 419.53 595.28"
-	 style="enable-background:new 0 0 419.53 595.28;" xml:space="preserve">
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="387" height="496" viewBox="15.55 49.72 387.18 496.5"
+	 style="enable-background:new 15.55 49.72 387.18 496.5;" xml:space="preserve">
 <style type="text/css">
 	.st0{fill:none;stroke:#000000;stroke-width:0.5;stroke-miterlimit:10;}
 	.st1{stroke:#000000;stroke-width:0.25;}
@@ -20,7 +20,7 @@
 	.st3{font-size:12px;}
 </style>
 <switch>
-	<foreignObject requiredExtensions="&ns_ai;" x="0" y="0" width="1" height="1">
+	<foreignObject requiredExtensions="&ns_ai;" x="0" y="0">
 		<i:aipgfRef  xlink:href="#adobe_illustrator_pgf">
 		</i:aipgfRef>
 	</foreignObject>
