@@ -86,6 +86,21 @@ export function buildGroupColorMap(images: Image[]): Map<number, GroupInfo> {
 }
 
 /**
+ * Given a groupColorMap, return the set of all image IDs that share the
+ * same root as the given imageId.
+ */
+export function getGroupMemberIds(imageId: number, groupColorMap: Map<number, GroupInfo>): Set<number> {
+  const info = groupColorMap.get(imageId);
+  if (!info) return new Set([imageId]);
+  const rootId = info.rootId;
+  const members = new Set<number>();
+  groupColorMap.forEach((gi, id) => {
+    if (gi.rootId === rootId) members.add(id);
+  });
+  return members;
+}
+
+/**
  * Build a hierarchical ordering of images using full best_id tree walk.
  * Returns a flat array: root first, then its descendants DFS, then next root, etc.
  * Used for visitor-facing thumbnail ordering.

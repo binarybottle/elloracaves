@@ -189,11 +189,9 @@ export default function InteractiveFloorPlan({
     (img) =>
       img.image_url &&
       img.image_url.trim() !== '' &&
-      img.coordinates?.plan_x_norm !== null &&
-      img.coordinates?.plan_x_norm !== undefined &&
-      img.coordinates?.plan_y_norm !== null &&
-      img.coordinates?.plan_y_norm !== undefined &&
-      !img.hide_plan_xy
+      !img.hide_plan_xy &&
+      ((img.coordinates?.plan_x_norm != null && img.coordinates?.plan_y_norm != null) ||
+       (img.mx != null && img.my != null))
   );
 
   return (

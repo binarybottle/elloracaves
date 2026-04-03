@@ -82,10 +82,9 @@ export default function ImageGalleryStrip({
       <div className="flex flex-wrap gap-2">
         {allImages.map((image, idx) => {
           const isArchival = image.archival === true;
-          const hasCoordinates = image.coordinates?.plan_x_norm !== null && 
-                                 image.coordinates?.plan_x_norm !== undefined &&
-                                 image.coordinates?.plan_y_norm !== null && 
-                                 image.coordinates?.plan_y_norm !== undefined;
+          const hasCoordinates =
+            (image.coordinates?.plan_x_norm != null && image.coordinates?.plan_y_norm != null) ||
+            (image.mx != null && image.my != null);
           
           const thumbnailUrl = image.thumbnail_url || image.image_url;
           const prevIsRegular = idx > 0 && !allImages[idx - 1].archival;

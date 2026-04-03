@@ -16,7 +16,7 @@ import { fetchCaveDetail, fetchCaveFloorImages, fetchCaveImages, fetchImageDetai
 import { supabase, batchUpdateBestId } from '@/lib/supabase';
 import { getThumbnailUrl, getImageUrl } from '@/lib/cloudflare-images';
 import { getDropdownLabel } from '@/components/cave/CaveMap';
-import { buildGroupColorMap } from '@/lib/group-colors';
+import { buildGroupColorMap, getGroupMemberIds } from '@/lib/group-colors';
 
 function ExploreContent() {
   const searchParams = useSearchParams();
@@ -86,6 +86,43 @@ function ExploreContent() {
     setMultiSelectedIds(new Set());
     await batchUpdateBestId(updates);
   }, [multiSelectedIds]);
+
+  const handleSelectGroup = useCallback((imageId: number) => {
+    if (!groupColorMap) return;
+    const members = getGroupMemberIds(imageId, groupColorMap);
+    setMultiSelectedIds(members);
+  }, [groupColorMap]);
+
+  const handleChangeBest = useCallback(async (newBestId: number) => {
+    if (!groupColorMap) return;
+    const info = groupColorMap.get(newBestId);
+    if (!info) return;
+    const oldRootId = info.rootId;
+    // The new best becomes the root: clear its best_id,
+    // and point the old root to the new best.
+    const updates: { imageId: number; bestId: number | null }[] = [
+      { imageId: newBestId, bestId: null },
+    ];
+    if (oldRootId !== newBestId) {
+      updates.push({ imageId: oldRootId, bestId: newBestId });
+    }
+    // Any image that pointed to newBestId should now point to oldRootId
+    // (since newBestId is becoming the root, its former parent chain is intact
+    //  except the old root now points down). But for images that had
+    // best_id === newBestId (children of the new best), re-point them to
+    // oldRootId so they stay one level deep under the new root via oldRootId.
+    // Actually, the simplest correct approach: swap the root.
+    // - newBestId.best_id = null (it's the new root)
+    // - oldRootId.best_id = newBestId (old root becomes child of new root)
+    // - Everything else stays the same (their best_id pointers still form a valid tree)
+    setFloorImages(prev => prev.map(img => {
+      if (img.id === newBestId) return { ...img, best_id: null };
+      if (img.id === oldRootId && oldRootId !== newBestId) return { ...img, best_id: newBestId };
+      return img;
+    }));
+    setMultiSelectedIds(new Set());
+    await batchUpdateBestId(updates);
+  }, [groupColorMap]);
 
   const handlePlaceMarker = useCallback(async (imageId: number, x: number, y: number) => {
     setFloorImages(prev => prev.map(img =>
@@ -634,8 +671,11 @@ function ExploreContent() {
             selectedIds={multiSelectedIds}
             images={floorImages}
             placingImageId={placingImageId}
+            groupColorMap={groupColorMap}
             onGroup={handleGroup}
             onUngroup={handleUngroup}
+            onSelectGroup={handleSelectGroup}
+            onChangeBest={handleChangeBest}
             onClearSelection={() => setMultiSelectedIds(new Set())}
             onStartPlacing={(id) => { setPlacingImageId(id); setMultiSelectedIds(new Set()); }}
             onCancelPlacing={() => setPlacingImageId(null)}
