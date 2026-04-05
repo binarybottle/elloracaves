@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { X, Group, Unlink, MapPin, Users, Star } from 'lucide-react';
+import { X, Group, Unlink, MapPin, Users, Star, Eye } from 'lucide-react';
 import { Image as ImageType } from '@/lib/api';
 import { GroupInfo } from '@/lib/group-colors';
 
@@ -14,6 +14,7 @@ interface GroupEditToolbarProps {
   onUngroup: () => void;
   onSelectGroup: (imageId: number) => void;
   onChangeBest: (newBestId: number) => void;
+  onReview: () => void;
   onClearSelection: () => void;
   onStartPlacing: (imageId: number) => void;
   onCancelPlacing: () => void;
@@ -28,6 +29,7 @@ export default function GroupEditToolbar({
   onUngroup,
   onSelectGroup,
   onChangeBest,
+  onReview,
   onClearSelection,
   onStartPlacing,
   onCancelPlacing,
@@ -180,6 +182,17 @@ export default function GroupEditToolbar({
         <Group className="w-3.5 h-3.5" />
         Group
       </button>
+
+      {/* Review -- available with 2+ selected */}
+      {count >= 2 && (
+        <button
+          onClick={onReview}
+          className="flex items-center gap-1.5 px-3 py-1.5 text-sm rounded bg-blue-700 hover:bg-blue-600 text-white transition-colors"
+        >
+          <Eye className="w-3.5 h-3.5" />
+          Review
+        </button>
+      )}
 
       {/* Change best -- available when selection is a single whole group */}
       {isWholeGroup && (

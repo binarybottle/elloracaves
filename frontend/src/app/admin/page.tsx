@@ -148,25 +148,7 @@ export default function ImagesReviewPage() {
     setSaving(null);
   }
 
-  async function updateField(imageId: number, field: 'rank' | 'cave_id' | 'plan_id' | 'best_id' | 'book_page', value: number | null) {
-    setSaving(imageId);
-    const { error } = await supabase
-      .from('images')
-      .update({ [field]: value })
-      .eq('image_id', imageId);
-
-    if (error) {
-      alert(`Failed to update ${field}: ${error.message}`);
-    } else {
-      setImages(prev => prev.map(img =>
-        img.image_id === imageId ? { ...img, [field]: value } : img
-      ));
-    }
-    setSaving(null);
-    setEditingField(null);
-  }
-
-  async function updateFloatField(imageId: number, field: 'plan_x_norm' | 'plan_y_norm', value: number | null) {
+  async function updateField(imageId: number, field: 'rank' | 'cave_id' | 'plan_id' | 'book_page', value: number | null) {
     setSaving(imageId);
     const { error } = await supabase
       .from('images')
@@ -520,7 +502,6 @@ export default function ImagesReviewPage() {
 
               const hasCoords = img.plan_x_norm !== null && img.plan_y_norm !== null;
               const isEditingRank = editingField?.imageId === img.image_id && editingField?.field === 'rank';
-              const isEditingBestId = editingField?.imageId === img.image_id && editingField?.field === 'best_id';
               const isEditingCave = editingField?.imageId === img.image_id && editingField?.field === 'cave_id';
               const isEditingPlan = editingField?.imageId === img.image_id && editingField?.field === 'plan_id';
 
@@ -576,22 +557,13 @@ export default function ImagesReviewPage() {
                     )}
                   </div>
                   <div className="p-2 space-y-0.5">
-                    {/* Line 1: ID, best */}
+                    {/* Line 1: ID */}
                     <div className="text-xs text-gray-500 flex items-center gap-0.5">
                       <span>ID {img.image_id}</span>
-                      <span>| best</span>
-                      {isEditingBestId ? (
-                        <form className="inline-flex" onSubmit={(e) => { e.preventDefault(); const raw = fieldInput.trim(); if (raw === '') { updateField(img.image_id, 'best_id', null); } else { const val = parseInt(raw, 10); if (!isNaN(val)) updateField(img.image_id, 'best_id', val); } }}>
-                          <input type="text" value={fieldInput} onChange={(e) => setFieldInput(e.target.value)} placeholder="—" className="w-12 bg-gray-800 text-white text-xs text-center rounded border border-gray-600 px-0.5 py-0" autoFocus onBlur={() => setEditingField(null)} />
-                        </form>
-                      ) : (
-                        <button onClick={() => { setEditingField({ imageId: img.image_id, field: 'best_id' }); setFieldInput(img.best_id != null ? String(img.best_id) : ''); }} className="text-gray-300 hover:text-white underline decoration-dotted" title="Click to set best image ID">
-                          {img.best_id ?? '—'}
-                        </button>
-                      )}
+                      {img.best_id != null && <span className="text-gray-600">| best {img.best_id}</span>}
                     </div>
-                    {/* Line 2: Cave, Plan */}
-                    <div className="text-xs text-gray-500 flex items-center gap-0.5">
+                    {/* Line 2: Cave, Plan, archive, 3d */}
+                    <div className="text-xs text-gray-500 flex items-center gap-0.5 flex-wrap">
                       <span>Cave</span>
                       {isEditingCave ? (
                         <select value={String(img.cave_id)} onChange={(e) => { const val = parseInt(e.target.value, 10); if (!isNaN(val)) updateField(img.image_id, 'cave_id', val); }} className="bg-gray-800 text-white text-xs rounded border border-gray-600 px-0.5 py-0" autoFocus onBlur={() => setEditingField(null)}>
@@ -611,10 +583,7 @@ export default function ImagesReviewPage() {
                           {img.plan_id != null ? planLabel(img.plan_id) : '—'}
                         </button>
                       )}
-                    </div>
-                    {/* Line 3: arch., 3d. */}
-                    <div className="text-xs text-gray-500 flex items-center gap-0.5">
-                      <span>arch.</span>
+                      <span>| archive</span>
                       {editingField?.imageId === img.image_id && editingField?.field === 'archival_ids' ? (
                         <form className="inline-flex" onSubmit={(e) => { e.preventDefault(); updateArrayField(img.image_id, 'archival_ids', fieldInput); }}>
                           <input type="text" value={fieldInput} onChange={(e) => setFieldInput(e.target.value)} placeholder="e.g. 12,34" className="w-20 bg-gray-800 text-white text-xs text-center rounded border border-gray-600 px-0.5 py-0" autoFocus onBlur={() => setEditingField(null)} />
@@ -702,36 +671,6 @@ export default function ImagesReviewPage() {
                             className="w-full bg-gray-800 text-white text-xs rounded border border-gray-700 px-1.5 py-1"
                             placeholder="e.g. photo, etching..."
                           />
-                        </div>
-                        <div className="flex gap-2">
-                          <div className="flex-1">
-                            <label className="text-[10px] text-gray-600 block">plan_x_norm</label>
-                            <input
-                              type="text"
-                              defaultValue={img.plan_x_norm != null ? String(img.plan_x_norm) : ''}
-                              onBlur={(e) => {
-                                const raw = e.target.value.trim();
-                                const val = raw === '' ? null : parseFloat(raw);
-                                if (val !== img.plan_x_norm && (val === null || !isNaN(val))) updateFloatField(img.image_id, 'plan_x_norm', val);
-                              }}
-                              className="w-full bg-gray-800 text-white text-xs rounded border border-gray-700 px-1.5 py-1"
-                              placeholder="0.0–1.0"
-                            />
-                          </div>
-                          <div className="flex-1">
-                            <label className="text-[10px] text-gray-600 block">plan_y_norm</label>
-                            <input
-                              type="text"
-                              defaultValue={img.plan_y_norm != null ? String(img.plan_y_norm) : ''}
-                              onBlur={(e) => {
-                                const raw = e.target.value.trim();
-                                const val = raw === '' ? null : parseFloat(raw);
-                                if (val !== img.plan_y_norm && (val === null || !isNaN(val))) updateFloatField(img.image_id, 'plan_y_norm', val);
-                              }}
-                              className="w-full bg-gray-800 text-white text-xs rounded border border-gray-700 px-1.5 py-1"
-                              placeholder="0.0–1.0"
-                            />
-                          </div>
                         </div>
                         <div className="text-[10px] font-mono text-gray-600 break-all pt-1 border-t border-gray-800">{img.file_path}</div>
                       </div>

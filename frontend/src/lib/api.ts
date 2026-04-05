@@ -41,6 +41,7 @@ export interface Image {
   subject?: string;
   description?: string;
   cave_id: number;
+  rank: number;
   coordinates?: Coordinates;
   hide_plan_xy?: boolean;
   best_id?: number | null;
@@ -132,6 +133,7 @@ function transformImage(dbImage: DbImage): Image {
     subject: dbImage.subject || undefined,
     description: dbImage.description || undefined,
     cave_id: dbImage.cave_id,
+    rank: dbImage.rank,
     coordinates: dbImage.plan_x_norm ? {
       plan_x_norm: dbImage.plan_x_norm,
       plan_y_norm: dbImage.plan_y_norm || undefined,
