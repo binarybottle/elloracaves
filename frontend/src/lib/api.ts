@@ -41,6 +41,7 @@ export interface Image {
   subject?: string;
   description?: string;
   cave_id: number;
+  plan_id?: number | null;
   rank: number;
   coordinates?: Coordinates;
   hide_plan_xy?: boolean;
@@ -48,6 +49,9 @@ export interface Image {
   archival_ids?: number[] | null;
   model3d_ids?: number[] | null;
   medium?: string;
+  photographer?: string;
+  book_page?: number | null;
+  book_figure?: string | null;
   archival?: boolean;
   image_url: string;
   thumbnail_url: string;
@@ -133,6 +137,7 @@ function transformImage(dbImage: DbImage): Image {
     subject: dbImage.subject || undefined,
     description: dbImage.description || undefined,
     cave_id: dbImage.cave_id,
+    plan_id: dbImage.plan_id || null,
     rank: dbImage.rank,
     coordinates: dbImage.plan_x_norm ? {
       plan_x_norm: dbImage.plan_x_norm,
@@ -143,6 +148,9 @@ function transformImage(dbImage: DbImage): Image {
     archival_ids: (dbImage as any).archival_ids || null,
     model3d_ids: (dbImage as any).model3d_ids || null,
     medium: (dbImage as any).medium || undefined,
+    photographer: dbImage.photographer || undefined,
+    book_page: (dbImage as any).book_page ?? null,
+    book_figure: (dbImage as any).book_figure ?? null,
     archival: (dbImage as any).archival || false,
     image_url: getImageUrl(dbImage.cloudflare_image_id, dbImage.file_path, 'large'),
     thumbnail_url: getThumbnailUrl(dbImage.cloudflare_image_id, dbImage.file_path),

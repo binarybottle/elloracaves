@@ -51,9 +51,29 @@ function ExploreContent() {
   const [placingImageId, setPlacingImageId] = useState<number | null>(null);
   const [reviewing, setReviewing] = useState(false);
 
+  // Archival images filtered to the current floor's plan
+  const currentPlanObj = cave?.plans?.find(p => p.floor_number === floorNumber);
+  const floorArchivalImages = useMemo(
+    () => {
+      const planId = currentPlanObj?.id;
+      return planId != null ? caveArchivalImages.filter(img => img.plan_id === planId) : [];
+    },
+    [caveArchivalImages, currentPlanObj?.id]
+  );
+
+  // Combined list of floor + archival images for grouping operations
+  const allEditableImages = useMemo(
+    () => {
+      const seen = new Set(floorImages.map(img => img.id));
+      const extra = floorArchivalImages.filter(img => !seen.has(img.id));
+      return [...floorImages, ...extra];
+    },
+    [floorImages, floorArchivalImages]
+  );
+
   const groupColorMap = useMemo(
-    () => editMode ? buildGroupColorMap(floorImages) : undefined,
-    [editMode, floorImages]
+    () => editMode ? buildGroupColorMap(allEditableImages) : undefined,
+    [editMode, allEditableImages]
   );
 
   const handleToggleSelect = useCallback((id: number) => {
@@ -66,24 +86,87 @@ function ExploreContent() {
   }, []);
 
   const handleGroup = useCallback(async (bestId: number) => {
-    const updates = Array.from(multiSelectedIds)
+    // Build a lookup of existing groups by walking best_id pointers
+    // across both floor and archival images.
+    const imgById = new Map<number, Image>();
+    const childrenOf = new Map<number, number[]>();
+    allEditableImages.forEach(img => {
+      imgById.set(img.id, img);
+      if (img.best_id != null && img.best_id !== img.id) {
+        const kids = childrenOf.get(img.best_id) || [];
+        kids.push(img.id);
+        childrenOf.set(img.best_id, kids);
+      }
+    });
+
+    function findRoot(id: number): number {
+      const visited = new Set<number>();
+      let cur = id;
+      while (true) {
+        visited.add(cur);
+        const parent = imgById.get(cur)?.best_id;
+        if (parent == null || !imgById.has(parent) || visited.has(parent)) return cur;
+        cur = parent;
+      }
+    }
+
+    function collectDescendants(id: number, out: Set<number>) {
+      out.add(id);
+      (childrenOf.get(id) || []).forEach(kid => {
+        if (!out.has(kid)) collectDescendants(kid, out);
+      });
+    }
+
+    const allMemberIds = new Set<number>();
+    Array.from(multiSelectedIds).forEach(id => {
+      allMemberIds.add(id);
+      const root = findRoot(id);
+      collectDescendants(root, allMemberIds);
+    });
+
+    const memberIds = Array.from(allMemberIds);
+
+    // Merge archival_ids and model3d_ids across ALL group members
+    const mergedArchival = new Set<number>();
+    const merged3d = new Set<number>();
+    memberIds.forEach(id => {
+      const img = imgById.get(id);
+      if (img) {
+        (img.archival_ids || []).forEach(aid => mergedArchival.add(aid));
+        (img.model3d_ids || []).forEach(mid => merged3d.add(mid));
+      }
+    });
+    const archArr = mergedArchival.size > 0 ? Array.from(mergedArchival).sort((a, b) => a - b) : null;
+    const m3dArr = merged3d.size > 0 ? Array.from(merged3d).sort((a, b) => a - b) : null;
+
+    // Optimistic UI update — apply to both floor and archival image lists
+    const applyGroupUpdate = (img: Image) => {
+      if (!allMemberIds.has(img.id)) return img;
+      return { ...img, best_id: img.id === bestId ? null : bestId, archival_ids: archArr, model3d_ids: m3dArr };
+    };
+    setFloorImages(prev => prev.map(applyGroupUpdate));
+    setCaveArchivalImages(prev => prev.map(applyGroupUpdate));
+    setMultiSelectedIds(new Set());
+
+    // Persist
+    const bestIdUpdates = memberIds
       .filter(id => id !== bestId)
       .map(id => ({ imageId: id, bestId }));
-    // Optimistic update
-    setFloorImages(prev => prev.map(img =>
-      multiSelectedIds.has(img.id) && img.id !== bestId
-        ? { ...img, best_id: bestId }
-        : img
-    ));
-    setMultiSelectedIds(new Set());
-    await batchUpdateBestId(updates);
-  }, [multiSelectedIds]);
+
+    await Promise.all([
+      batchUpdateBestId([...bestIdUpdates, { imageId: bestId, bestId: null }]),
+      ...memberIds.map(id =>
+        supabase.from('images').update({ archival_ids: archArr, model3d_ids: m3dArr }).eq('image_id', id)
+      ),
+    ]);
+  }, [multiSelectedIds, allEditableImages]);
 
   const handleUngroup = useCallback(async () => {
     const updates = Array.from(multiSelectedIds).map(id => ({ imageId: id, bestId: null }));
-    setFloorImages(prev => prev.map(img =>
-      multiSelectedIds.has(img.id) ? { ...img, best_id: null } : img
-    ));
+    const applyUngroup = (img: Image) =>
+      multiSelectedIds.has(img.id) ? { ...img, best_id: null } : img;
+    setFloorImages(prev => prev.map(applyUngroup));
+    setCaveArchivalImages(prev => prev.map(applyUngroup));
     setMultiSelectedIds(new Set());
     await batchUpdateBestId(updates);
   }, [multiSelectedIds]);
@@ -116,19 +199,21 @@ function ExploreContent() {
     // - newBestId.best_id = null (it's the new root)
     // - oldRootId.best_id = newBestId (old root becomes child of new root)
     // - Everything else stays the same (their best_id pointers still form a valid tree)
-    setFloorImages(prev => prev.map(img => {
+    const applyChangeBest = (img: Image) => {
       if (img.id === newBestId) return { ...img, best_id: null };
       if (img.id === oldRootId && oldRootId !== newBestId) return { ...img, best_id: newBestId };
       return img;
-    }));
+    };
+    setFloorImages(prev => prev.map(applyChangeBest));
+    setCaveArchivalImages(prev => prev.map(applyChangeBest));
     setMultiSelectedIds(new Set());
     await batchUpdateBestId(updates);
   }, [groupColorMap]);
 
   const handlePlaceMarker = useCallback(async (imageId: number, x: number, y: number) => {
-    setFloorImages(prev => prev.map(img =>
-      img.id === imageId ? { ...img, mx: x, my: y } : img
-    ));
+    const apply = (img: Image) => img.id === imageId ? { ...img, mx: x, my: y } : img;
+    setFloorImages(prev => prev.map(apply));
+    setCaveArchivalImages(prev => prev.map(apply));
     setPlacingImageId(null);
     setMultiSelectedIds(new Set());
     const { error } = await supabase
@@ -139,14 +224,49 @@ function ExploreContent() {
   }, []);
 
   const handleUpdateRank = useCallback(async (imageId: number, rank: number) => {
-    setFloorImages(prev => prev.map(img =>
-      img.id === imageId ? { ...img, rank } : img
-    ));
+    const apply = (img: Image) => img.id === imageId ? { ...img, rank } : img;
+    setFloorImages(prev => prev.map(apply));
+    setCaveArchivalImages(prev => prev.map(apply));
     const { error } = await supabase
       .from('images')
       .update({ rank })
       .eq('image_id', imageId);
     if (error) console.error('Failed to update rank:', error);
+  }, []);
+
+  const handleUpdateArrayField = useCallback(async (imageId: number, field: 'archival_ids' | 'model3d_ids', ids: number[] | null) => {
+    const apply = (img: Image) => img.id === imageId ? { ...img, [field]: ids } : img;
+    setFloorImages(prev => prev.map(apply));
+    setCaveArchivalImages(prev => prev.map(apply));
+    const { error } = await supabase
+      .from('images')
+      .update({ [field]: ids })
+      .eq('image_id', imageId);
+    if (error) console.error(`Failed to update ${field}:`, error);
+  }, []);
+
+  type TextFieldName = 'subject' | 'description' | 'photographer' | 'medium';
+  const handleUpdateTextField = useCallback(async (imageId: number, field: TextFieldName, value: string | null) => {
+    const apply = (img: Image) => img.id === imageId ? { ...img, [field]: value || undefined } : img;
+    setFloorImages(prev => prev.map(apply));
+    setCaveArchivalImages(prev => prev.map(apply));
+    const { error } = await supabase
+      .from('images')
+      .update({ [field]: value })
+      .eq('image_id', imageId);
+    if (error) console.error(`Failed to update ${field}:`, error);
+  }, []);
+
+  const handleToggleHidePlanXY = useCallback(async (imageId: number, currentValue: boolean) => {
+    const newValue = !currentValue;
+    const apply = (img: Image) => img.id === imageId ? { ...img, hide_plan_xy: newValue } : img;
+    setFloorImages(prev => prev.map(apply));
+    setCaveArchivalImages(prev => prev.map(apply));
+    const { error } = await supabase
+      .from('images')
+      .update({ hide_plan_xy: newValue })
+      .eq('image_id', imageId);
+    if (error) console.error('Failed to toggle hide_plan_xy:', error);
   }, []);
 
   // The image to display - hovered takes precedence over selected
@@ -665,7 +785,7 @@ function ExploreContent() {
         <div className="mt-12 max-w-7xl mx-auto">
           <ImageGalleryStrip
             images={floorImages}
-            archivalImages={caveArchivalImages}
+            archivalImages={floorArchivalImages}
             selectedImageId={selectedImage?.id}
             onImageSelect={handleImageSelect}
             cave={cave}
@@ -674,6 +794,8 @@ function ExploreContent() {
             multiSelectedIds={editMode ? multiSelectedIds : undefined}
             onToggleSelect={editMode ? handleToggleSelect : undefined}
             groupColorMap={groupColorMap}
+            onUpdateRank={editMode ? handleUpdateRank : undefined}
+            onToggleHidePlanXY={editMode ? handleToggleHidePlanXY : undefined}
           />
         </div>
 
@@ -681,7 +803,7 @@ function ExploreContent() {
         {editMode && (
           <GroupEditToolbar
             selectedIds={multiSelectedIds}
-            images={floorImages}
+            images={allEditableImages}
             placingImageId={placingImageId}
             groupColorMap={groupColorMap}
             onGroup={handleGroup}
@@ -699,11 +821,14 @@ function ExploreContent() {
       {/* Review overlay */}
       {reviewing && editMode && (
         <GroupReviewOverlay
-          images={floorImages.filter(img => multiSelectedIds.has(img.id))}
+          images={allEditableImages.filter(img => multiSelectedIds.has(img.id))}
           groupColorMap={groupColorMap}
           onClose={() => setReviewing(false)}
           onChangeBest={(id) => { handleChangeBest(id); }}
           onUpdateRank={handleUpdateRank}
+          onToggleHidePlanXY={handleToggleHidePlanXY}
+          onUpdateArrayField={handleUpdateArrayField}
+          onUpdateTextField={handleUpdateTextField}
         />
       )}
 

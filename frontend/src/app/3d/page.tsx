@@ -199,7 +199,7 @@ export default function ThreeDPage() {
                 <div className="p-3 space-y-1">
                   <div className="text-sm text-[#eae2c4] font-medium truncate">{model.title}</div>
                   <div className="text-xs text-gray-500">
-                    {getDropdownLabel(model.cave_id)}
+                    {getDropdownLabel(model.cave_id)} (ID:{model.model_id})
                   </div>
                 </div>
               </div>
@@ -246,7 +246,7 @@ export default function ThreeDPage() {
                   <span className="text-gray-500 text-xs shrink-0">{index + 1} / {filteredModels.length}</span>
                 </div>
                 <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm mt-1">
-                  <span className="text-gray-500">{getDropdownLabel(selectedModel.cave_id)}</span>
+                  <span className="text-gray-500">{getDropdownLabel(selectedModel.cave_id)} (ID:{selectedModel.model_id})</span>
                   {selectedModel.description && <span className="text-gray-400 text-xs">{selectedModel.description}</span>}
                   {selectedModel.photographer && <span className="text-gray-500 text-xs">Photo: {selectedModel.photographer}</span>}
                   <a href={selectedModel.file_url} target="_blank" rel="noopener noreferrer" className="ml-auto text-xs text-blue-400 hover:text-blue-300 underline">Download GLB</a>

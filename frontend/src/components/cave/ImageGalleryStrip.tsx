@@ -1,7 +1,8 @@
 // components/cave/ImageGalleryStrip.tsx
 'use client';
 
-import { History, Box, Star } from 'lucide-react';
+import { useState } from 'react';
+import { History, Box, Star, BookOpen } from 'lucide-react';
 import { Image as ImageType } from '@/lib/api';
 import { getTreeOrderedImages, GroupInfo } from '@/lib/group-colors';
 
@@ -32,6 +33,8 @@ interface ImageGalleryStripProps {
   multiSelectedIds?: Set<number>;
   onToggleSelect?: (id: number) => void;
   groupColorMap?: Map<number, GroupInfo>;
+  onUpdateRank?: (imageId: number, rank: number) => void;
+  onToggleHidePlanXY?: (imageId: number, currentValue: boolean) => void;
 }
 
 export default function ImageGalleryStrip({
@@ -45,16 +48,35 @@ export default function ImageGalleryStrip({
   multiSelectedIds,
   onToggleSelect,
   groupColorMap,
+  onUpdateRank,
+  onToggleHidePlanXY,
 }: ImageGalleryStripProps) {
+  const [editingRankId, setEditingRankId] = useState<number | null>(null);
+  const [rankInput, setRankInput] = useState('');
   const validImages = images.filter(img => img.image_url && img.image_url.trim() !== '');
 
-  const groupedImages = getTreeOrderedImages(validImages);
+  // Combine floor + archival into one list, deduplicating by id
+  const seenIds = new Set(validImages.map(img => img.id));
+  const extraArchival = archivalImages.filter(img => !seenIds.has(img.id) && img.image_url && img.image_url.trim() !== '');
+  const combined = [...validImages, ...extraArchival];
 
-  const sortedArchival = archivalImages
-    .filter(img => !img.best_id && img.image_url && img.image_url.trim() !== '')
-    .sort((a, b) => mediumRank(a.medium) - mediumRank(b.medium));
+  // Tree-order places grouped images together (including grouped archival);
+  // ungrouped archival images end up as roots and land where DFS puts them.
+  const treeOrdered = getTreeOrderedImages(combined);
 
-  const allImages = [...groupedImages, ...sortedArchival];
+  // Split: ungrouped archival at the end, everything else in tree order
+  const mainImages: ImageType[] = [];
+  const ungroupedArchival: ImageType[] = [];
+  treeOrdered.forEach(img => {
+    if (img.archival && !img.best_id) {
+      ungroupedArchival.push(img);
+    } else {
+      mainImages.push(img);
+    }
+  });
+  ungroupedArchival.sort((a, b) => mediumRank(a.medium) - mediumRank(b.medium));
+
+  const allImages = [...mainImages, ...ungroupedArchival];
 
   return (
     <div className="bg-black p-6">
@@ -67,14 +89,14 @@ export default function ImageGalleryStrip({
             {' '}in <strong>{cave.name}</strong>
           </span>
         )}
-        {sortedArchival.length > 0 && (
+        {ungroupedArchival.length > 0 && (
           <span className="text-sm text-gray-500">
-            {' '}&middot; {sortedArchival.length} archival
+            {' '}&middot; {ungroupedArchival.length} archival
           </span>
         )}
         {groupEditMode && (
           <span className="text-sm text-purple-400 ml-2">
-            GROUP EDIT
+            EDIT MODE
           </span>
         )}
       </div>
@@ -87,8 +109,7 @@ export default function ImageGalleryStrip({
             (image.mx != null && image.my != null);
           
           const thumbnailUrl = image.thumbnail_url || image.image_url;
-          const prevIsRegular = idx > 0 && !allImages[idx - 1].archival;
-          const showSeparator = isArchival && (idx === 0 || prevIsRegular);
+          const showSeparator = idx === mainImages.length && ungroupedArchival.length > 0;
 
           const isMultiSelected = groupEditMode && multiSelectedIds?.has(image.id);
           const groupInfo = groupEditMode ? groupColorMap?.get(image.id) : undefined;
@@ -123,22 +144,74 @@ export default function ImageGalleryStrip({
                     className="h-full w-auto object-contain rounded"
                     loading="lazy"
                   />
-                  {hasCoordinates && (
+                  {groupEditMode && hasCoordinates && onToggleHidePlanXY ? (
+                    <button
+                      onClick={(e) => { e.stopPropagation(); onToggleHidePlanXY(image.id, image.hide_plan_xy || false); }}
+                      className={`absolute top-1 right-1 w-3 h-3 rounded-full border-2 border-white shadow-sm transition-colors ${
+                        image.hide_plan_xy ? 'bg-gray-500' : 'bg-[#6ebd20]'
+                      }`}
+                      title={image.hide_plan_xy ? 'Landmark hidden — click to show' : 'Landmark shown — click to hide'}
+                    />
+                  ) : hasCoordinates ? (
                     <div className="absolute top-1 right-1 w-2 h-2 bg-[#6ebd20] rounded-full border border-white shadow-sm" />
+                  ) : null}
+                  {groupEditMode && onUpdateRank && (
+                    editingRankId === image.id ? (
+                      <form
+                        className="absolute top-1 left-1 z-10"
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          const val = parseInt(rankInput, 10);
+                          if (!isNaN(val)) onUpdateRank(image.id, val);
+                          setEditingRankId(null);
+                        }}
+                      >
+                        <input
+                          type="number"
+                          value={rankInput}
+                          onChange={(e) => setRankInput(e.target.value)}
+                          className="w-8 bg-gray-800 text-white text-[10px] text-center rounded border border-gray-600 px-0.5 py-0"
+                          autoFocus
+                          onBlur={() => setEditingRankId(null)}
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                      </form>
+                    ) : (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setEditingRankId(image.id);
+                          setRankInput(String(image.rank));
+                        }}
+                        className={`absolute top-1 left-1 z-10 text-[10px] font-bold px-1 py-0 rounded hover:bg-white transition-colors leading-tight ${
+                          isGroupRoot ? 'bg-yellow-300 text-black' : 'bg-white/90 text-black'
+                        }`}
+                        title={`Rank ${image.rank}${isGroupRoot ? ' (group best)' : ''} — click to edit`}
+                      >
+                        {isGroupRoot && '★'}{image.rank}
+                      </button>
+                    )
                   )}
-                  {image.archival_ids && image.archival_ids.length > 0 && (
-                    <div className="absolute bottom-1 right-1 bg-black/60 rounded-sm p-px">
-                      <History className="w-2.5 h-2.5 text-amber-400" />
+                  {!groupEditMode && isGroupRoot && (
+                    <div className="absolute top-1 left-1 bg-black/60 rounded-sm p-px">
+                      <Star className="w-2.5 h-2.5 text-yellow-400 fill-yellow-400" />
                     </div>
                   )}
+                  <div className="absolute bottom-1 right-1 flex gap-0.5">
+                    {(image.book_page != null || image.book_figure != null) && (
+                      <div className="bg-black/60 rounded-sm p-px">
+                        <BookOpen className="w-2.5 h-2.5 text-orange-300" />
+                      </div>
+                    )}
+                    {image.archival_ids && image.archival_ids.length > 0 && (
+                      <div className="bg-black/60 rounded-sm p-px">
+                        <History className="w-2.5 h-2.5 text-amber-400" />
+                      </div>
+                    )}
+                  </div>
                   {image.model3d_ids && image.model3d_ids.length > 0 && (
                     <div className="absolute bottom-1 left-1 bg-black/60 rounded-sm p-px">
                       <Box className="w-2.5 h-2.5 text-cyan-400" />
-                    </div>
-                  )}
-                  {groupEditMode && isGroupRoot && (
-                    <div className="absolute top-1 left-1 bg-black/60 rounded-sm p-px">
-                      <Star className="w-2.5 h-2.5 text-yellow-400 fill-yellow-400" />
                     </div>
                   )}
                   {groupEditMode && groupInfo && (

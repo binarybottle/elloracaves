@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { History, Box } from 'lucide-react';
+import { History, Box, BookOpen } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { getImageUrl, getThumbnailUrl } from '@/lib/cloudflare-images';
 
@@ -545,11 +545,18 @@ export default function ImagesReviewPage() {
                       onChange={() => toggleChecked(img.image_id)}
                       className="absolute top-1 right-1 w-4 h-4 accent-blue-500 cursor-pointer rounded"
                     />
-                    {img.archival_ids && img.archival_ids.length > 0 && (
-                      <div className="absolute bottom-1 right-1 bg-black/60 rounded-sm p-px">
-                        <History className="w-2.5 h-2.5 text-amber-400" />
-                      </div>
-                    )}
+                    <div className="absolute bottom-1 right-1 flex gap-0.5">
+                      {(img.book_page != null || img.book_figure != null) && (
+                        <div className="bg-black/60 rounded-sm p-px">
+                          <BookOpen className="w-2.5 h-2.5 text-orange-300" />
+                        </div>
+                      )}
+                      {img.archival_ids && img.archival_ids.length > 0 && (
+                        <div className="bg-black/60 rounded-sm p-px">
+                          <History className="w-2.5 h-2.5 text-amber-400" />
+                        </div>
+                      )}
+                    </div>
                     {img.model3d_ids && img.model3d_ids.length > 0 && (
                       <div className="absolute bottom-1 left-1 bg-black/60 rounded-sm p-px">
                         <Box className="w-2.5 h-2.5 text-cyan-400" />
