@@ -34,7 +34,7 @@ export default function BookPage() {
                 <a href="https://bookshop.org/p/books/ellora-cross-fertilization-of-style-in-buddhist-hindu-and-jain-cave-temples-arno-klein/fbc708426bf6bf07?ean=9789385360800&next=t" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-4 py-2 rounded-md bg-white/10 border border-white/20 text-[#eae2c4] hover:bg-white/20 hover:border-white/40 transition-all text-sm">
                   Bookshop.org
                 </a>
-                <a href="https://www.amazon.com/dp/9789385360800" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-4 py-2 rounded-md bg-white/10 border border-white/20 text-[#eae2c4] hover:bg-white/20 hover:border-white/40 transition-all text-sm">
+                <a href="https://www.amazon.com/Ellora-Cross-Fertilization-Style-Buddhist-Temples/dp/9385360809" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-4 py-2 rounded-md bg-white/10 border border-white/20 text-[#eae2c4] hover:bg-white/20 hover:border-white/40 transition-all text-sm">
                   Amazon
                 </a>
                 <a href="https://www.barnesandnoble.com/w/ellora-deepanjana-klein/1147556954?ean=9789385360800" target="_blank" rel="noopener noreferrer" className="inline-flex items-center px-4 py-2 rounded-md bg-white/10 border border-white/20 text-[#eae2c4] hover:bg-white/20 hover:border-white/40 transition-all text-sm">
