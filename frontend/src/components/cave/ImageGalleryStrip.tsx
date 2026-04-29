@@ -43,7 +43,6 @@ export default function ImageGalleryStrip({
   selectedImageId,
   onImageSelect,
   cave,
-  floorNumber,
   groupEditMode = false,
   multiSelectedIds,
   onToggleSelect,
@@ -53,21 +52,37 @@ export default function ImageGalleryStrip({
 }: ImageGalleryStripProps) {
   const [editingRankId, setEditingRankId] = useState<number | null>(null);
   const [rankInput, setRankInput] = useState('');
-  const validImages = images.filter(img => img.image_url && img.image_url.trim() !== '');
+  // In non-edit mode, only display rank-1 images; rank-2 alternates are included
+  // in `combined` below so that idsReferencedAsBest can identify group roots.
+  const validImages = images.filter(img => img.image_url && img.image_url.trim() !== ''
+    && (groupEditMode || img.rank === 1));
 
-  // Combine floor + archival into one list, deduplicating by id
-  const seenIds = new Set(validImages.map(img => img.id));
+  // combined includes rank-2 images too (needed for group-root detection)
+  const allValid = images.filter(img => img.image_url && img.image_url.trim() !== '');
+  const seenIds = new Set(allValid.map(img => img.id));
   const extraArchival = archivalImages.filter(img => !seenIds.has(img.id) && img.image_url && img.image_url.trim() !== '');
-  const combined = [...validImages, ...extraArchival];
+  const combined = [...allValid, ...extraArchival];
 
   // Tree-order places grouped images together (including grouped archival);
   // ungrouped archival images end up as roots and land where DFS puts them.
   const treeOrdered = getTreeOrderedImages(combined);
 
-  // Split: ungrouped archival at the end, everything else in tree order
+  // Which image IDs are referenced as best_id by another image in this set —
+  // used to identify group roots in non-edit mode (groupColorMap isn't built then).
+  const combinedIdSet = new Set(combined.map(img => img.id));
+  const idsReferencedAsBest = new Set<number>();
+  combined.forEach(img => {
+    if (img.best_id && combinedIdSet.has(img.best_id)) {
+      idsReferencedAsBest.add(img.best_id);
+    }
+  });
+
+  // Split: ungrouped archival at the end, everything else in tree order.
+  // In non-edit mode, rank-2 alternates are excluded from display.
   const mainImages: ImageType[] = [];
   const ungroupedArchival: ImageType[] = [];
   treeOrdered.forEach(img => {
+    if (!groupEditMode && img.rank !== 1) return;
     if (img.archival && !img.best_id) {
       ungroupedArchival.push(img);
     } else {
@@ -113,7 +128,9 @@ export default function ImageGalleryStrip({
 
           const isMultiSelected = groupEditMode && multiSelectedIds?.has(image.id);
           const groupInfo = groupEditMode ? groupColorMap?.get(image.id) : undefined;
-          const isGroupRoot = groupInfo && groupInfo.rootId === image.id;
+          const isGroupRoot = groupEditMode
+            ? (groupInfo != null && groupInfo.rootId === image.id)
+            : idsReferencedAsBest.has(image.id);
 
           const handleClick = () => {
             if (groupEditMode && onToggleSelect) {
@@ -131,12 +148,16 @@ export default function ImageGalleryStrip({
               <button
                 onClick={handleClick}
                 className="relative block h-24 flex-shrink-0"
+                style={groupEditMode && groupInfo && !isMultiSelected ? {
+                  outline: `2px solid ${groupInfo.color}`,
+                  outlineOffset: '1px',
+                  borderRadius: '4px',
+                } : undefined}
               >
                 <div className={`relative h-full rounded ${
                   isMultiSelected ? 'ring-2 ring-purple-400' :
                   selectedImageId === image.id ? 'ring-2 ring-red-600' : ''
                 } ${isArchival ? 'opacity-75 hover:opacity-100' : ''}`}
-                  style={groupEditMode && groupInfo ? { borderBottom: `3px solid ${groupInfo.color}` } : undefined}
                 >
                   <img
                     src={thumbnailUrl}

@@ -61,6 +61,12 @@ function ExploreContent() {
     [caveArchivalImages, currentPlanObj?.id]
   );
 
+  // rank-1-only slice — used for the visitor-facing floor plan and navigation
+  const rank1FloorImages = useMemo(
+    () => floorImages.filter(img => img.rank === 1),
+    [floorImages]
+  );
+
   // Combined list of floor + archival images for grouping operations
   const allEditableImages = useMemo(
     () => {
@@ -272,27 +278,30 @@ function ExploreContent() {
   // The image to display - hovered takes precedence over selected
   const displayedImage = hoveredImage || selectedImage;
 
+  // In non-edit mode only rank-1 images are shown/navigable; edit mode uses all.
+  const navImages = editMode ? floorImages : rank1FloorImages;
+
   // Get current image index (based on selected, not hovered)
-  const currentIndex = selectedImage 
-    ? floorImages.findIndex(img => img.id === selectedImage.id)
+  const currentIndex = selectedImage
+    ? navImages.findIndex(img => img.id === selectedImage.id)
     : -1;
 
   // Navigate to previous/next image
   const goToPrevImage = useCallback(() => {
     if (currentIndex > 0) {
-      const prevImage = floorImages[currentIndex - 1];
+      const prevImage = navImages[currentIndex - 1];
       setSelectedImage(prevImage);
       router.push(`/explore?cave=${caveId}&floor=${floorNumber}&image=${prevImage.id}${editSuffix}`, { scroll: false });
     }
-  }, [currentIndex, floorImages, caveId, floorNumber, editSuffix, router]);
+  }, [currentIndex, navImages, caveId, floorNumber, editSuffix, router]);
 
   const goToNextImage = useCallback(() => {
-    if (currentIndex < floorImages.length - 1) {
-      const nextImage = floorImages[currentIndex + 1];
+    if (currentIndex < navImages.length - 1) {
+      const nextImage = navImages[currentIndex + 1];
       setSelectedImage(nextImage);
       router.push(`/explore?cave=${caveId}&floor=${floorNumber}&image=${nextImage.id}${editSuffix}`, { scroll: false });
     }
-  }, [currentIndex, floorImages, caveId, floorNumber, editSuffix, router]);
+  }, [currentIndex, navImages, caveId, floorNumber, editSuffix, router]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -351,7 +360,7 @@ function ExploreContent() {
       try {
         const hasPlanForFloor = cave.plans?.some(p => p.floor_number === floorNumber);
         const [floorData, archival] = await Promise.all([
-          fetchCaveFloorImages(caveId, floorNumber, editMode),
+          fetchCaveFloorImages(caveId, floorNumber, true),
           fetchCaveArchivalImages(caveId),
         ]);
         // Caves without a floor plan still have images — fetch them all
@@ -362,7 +371,7 @@ function ExploreContent() {
         setCaveArchivalImages(archival);
         
         if (!imageId && data.length > 0) {
-          const defaultImage = data[0];
+          const defaultImage = data.find(img => img.rank === 1) || data[0];
           setSelectedImage(defaultImage);
         }
       } catch (error) {
@@ -581,7 +590,7 @@ function ExploreContent() {
                 </div>}
                 <InteractiveFloorPlan
                   plan={currentPlan}
-                  images={floorImages}
+                  images={editMode ? floorImages : rank1FloorImages}
                   selectedImageId={selectedImage?.id}
                   onImageSelect={handleImageSelect}
                   onImageHover={handleImageHover}
@@ -598,9 +607,9 @@ function ExploreContent() {
                 cave={cave}
                 floorNumber={floorNumber}
                 onPrev={currentIndex > 0 ? goToPrevImage : undefined}
-                onNext={currentIndex < floorImages.length - 1 ? goToNextImage : undefined}
+                onNext={currentIndex < navImages.length - 1 ? goToNextImage : undefined}
                 currentIndex={currentIndex}
-                totalImages={floorImages.length}
+                totalImages={navImages.length}
               />
 
               {/* Column 3: Image Info Panel */}
@@ -625,9 +634,9 @@ function ExploreContent() {
               cave={cave}
               floorNumber={floorNumber}
               onPrev={currentIndex > 0 ? goToPrevImage : undefined}
-              onNext={currentIndex < floorImages.length - 1 ? goToNextImage : undefined}
+              onNext={currentIndex < navImages.length - 1 ? goToNextImage : undefined}
               currentIndex={currentIndex}
-              totalImages={floorImages.length}
+              totalImages={navImages.length}
             />
 
             {/* Column 2: Image Info Panel */}
@@ -685,9 +694,9 @@ function ExploreContent() {
               cave={cave}
               floorNumber={floorNumber}
               onPrev={currentIndex > 0 ? goToPrevImage : undefined}
-              onNext={currentIndex < floorImages.length - 1 ? goToNextImage : undefined}
+              onNext={currentIndex < navImages.length - 1 ? goToNextImage : undefined}
               currentIndex={currentIndex}
-              totalImages={floorImages.length}
+              totalImages={navImages.length}
             />
           </div>
 
@@ -741,9 +750,9 @@ function ExploreContent() {
             cave={cave}
             floorNumber={floorNumber}
             onPrev={currentIndex > 0 ? goToPrevImage : undefined}
-            onNext={currentIndex < floorImages.length - 1 ? goToNextImage : undefined}
+            onNext={currentIndex < navImages.length - 1 ? goToNextImage : undefined}
             currentIndex={currentIndex}
-            totalImages={floorImages.length}
+            totalImages={navImages.length}
           />
 
           <ImageInfoPanel
@@ -767,7 +776,7 @@ function ExploreContent() {
               <div className="mt-4">
                 <InteractiveFloorPlan
                   plan={currentPlan}
-                  images={floorImages}
+                  images={editMode ? floorImages : rank1FloorImages}
                   selectedImageId={selectedImage?.id}
                   onImageSelect={handleImageSelect}
                   onImageHover={handleImageHover}
