@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import { History, Box, Star, BookOpen } from 'lucide-react';
+import { History, Box, BookOpen } from 'lucide-react';
 import { Image as ImageType } from '@/lib/api';
 import { getTreeOrderedImages, GroupInfo } from '@/lib/group-colors';
 
@@ -213,18 +213,13 @@ export default function ImageGalleryStrip({
                       </button>
                     )
                   )}
-                  {!groupEditMode && isGroupRoot && (
-                    <div className="absolute top-1 left-1 bg-black/60 rounded-sm p-px">
-                      <Star className="w-2.5 h-2.5 text-yellow-400 fill-yellow-400" />
-                    </div>
-                  )}
                   <div className="absolute bottom-1 right-1 flex gap-0.5">
-                    {(image.book_page != null || image.book_figure != null) && (
+                    {groupEditMode && (image.book_page != null || image.book_figure != null) && (
                       <div className="bg-black/60 rounded-sm p-px">
                         <BookOpen className="w-2.5 h-2.5 text-orange-300" />
                       </div>
                     )}
-                    {image.archival_ids && image.archival_ids.length > 0 && (
+                    {groupEditMode && image.archival_ids && image.archival_ids.length > 0 && (
                       <div className="bg-black/60 rounded-sm p-px">
                         <History className="w-2.5 h-2.5 text-amber-400" />
                       </div>
