@@ -140,16 +140,16 @@ The Admin page lets you bulk-review and edit image metadata: reassign images to 
 - **Writes to**: Supabase `images` table (rank, cave_id, plan_id, best_id)
 - **Requires**: anon write access enabled in Supabase (see below)
 
-### Edit mode (`?edit`)
+### Edit mode (`&edit`)
 
-Adding `?edit` to any Explore or group URL activates Edit mode:
+Adding `&edit` to any Explore or group URL activates Edit mode:
 
 | URL | What you can do |
 |-----|-----------------|
 | `/explore?cave=10&edit` | Drag floor plan markers, set image rank, group images by `best_id`, toggle marker visibility |
 | `/caves/group/ganeshleni?edit` | See sub-group sections with **Edit →** links to each constituent cave's edit page |
 
-Edit mode markers are cyan (repositioned) vs green (original position). All rank images are shown on the floor plan in edit mode; only rank-1 images are shown to visitors.
+Edit mode markers are cyan (repositioned) vs green (original position). All rank images are shown on the floor plan in edit mode; only rank 1 images are shown to visitors.
 
 ### Enabling and disabling write access
 
@@ -190,16 +190,6 @@ To set a single image without running the full script:
 
 ```sql
 UPDATE images SET default_priority = 10 WHERE image_id = 1234;
-```
-
-To find the right image ID for a cave:
-
-```sql
-SELECT image_id, image_subject, image_file, plan_floor
-FROM images i
-LEFT JOIN plans p ON i.image_plan_id = p.plan_id
-WHERE i.image_cave_id = 10  -- replace with your cave_id
-ORDER BY plan_floor, image_id;
 ```
 
 ## Project Structure
@@ -375,24 +365,6 @@ CF_API_TOKEN=your_token python sync_cloudflare_ids.py
 
 If Supabase credentials aren't set, it generates a `.sql` file to run manually.
 
-### Reassigning images to different caves/plans
-
-If you've changed `cave_id` or `plan_id` for images in Supabase (via the `/admin` page or SQL), here's what else needs updating:
-
-**Cloudflare Images**: Nothing. Cloudflare doesn't know about caves or plans — it just stores image blobs by ID. No changes needed.
-
-**Supabase**: Already done if you updated `cave_id`/`plan_id`. The website reads these columns to determine where images appear.
-
-**Local folder tree** (optional): If you want your local archive to mirror the database assignments, move the files to match. For example, if you moved images from cave 4016 (16sw) to 3016 (16 Satellite), you'd move local files from `c16sw/` to `c16S/`. Then update `file_path` in Supabase to match:
-
-```sql
-UPDATE images
-SET file_path = REPLACE(file_path, 'c16sw/', 'c16S/')
-WHERE file_path LIKE 'c16sw/%';
-```
-
-This is cosmetic — the website doesn't use `file_path` for serving images — but keeps things consistent for your records and for the `/admin` page display.
-
 ## Floor Plan SVGs
 
 Floor plan SVGs are served as static files from `frontend/public/plans/`, deployed with the Cloudflare Pages build. The frontend tries the SVG first and falls back to the JPG:
@@ -418,13 +390,6 @@ Floor plan SVGs are served as static files from `frontend/public/plans/`, deploy
 ### Interactively correcting marker positions
 
 Markers can be dragged to their correct positions directly in the browser and saved to the database. This uses two new columns, `mx` and `my`, on the `images` table.
-
-**One-time DB setup** (run once in Supabase SQL editor):
-
-```sql
-ALTER TABLE images ADD COLUMN mx double precision;
-ALTER TABLE images ADD COLUMN my double precision;
-```
 
 **Enabling writes**: enable the anon write policy first (see [Enabling and disabling write access](#enabling-and-disabling-write-access) above), then disable it when done.
 
