@@ -66,8 +66,8 @@ UPDATE images SET default_priority = 10 WHERE "image_ID" IN (
     3307,   -- Cave 31
     2874,   -- Cave 32, Floor 1
     3114,   -- Cave 32, Floor 2
-    6743,   -- Cave 33, Floor 1
-    3550,   -- Cave 33, Floor 2
+    3448,   -- Cave 33, Floor 1
+    7826,   -- Cave 33, Floor 2
     253,    -- Cave 34
 
     -- Other Caves

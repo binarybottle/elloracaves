@@ -33,7 +33,6 @@ function ExploreContent() {
   const [floorNumber, setFloorNumber] = useState<number>(1);
   const [floorImages, setFloorImages] = useState<Image[]>([]);
   const [selectedImage, setSelectedImage] = useState<Image | null>(null);
-  const [hoveredImage, setHoveredImage] = useState<Image | null>(null);
   const [loading, setLoading] = useState(true);
   const [showSearch, setShowSearch] = useState(false);
 
@@ -275,8 +274,7 @@ function ExploreContent() {
     if (error) console.error('Failed to toggle hide_plan_xy:', error);
   }, []);
 
-  // The image to display - hovered takes precedence over selected
-  const displayedImage = hoveredImage || selectedImage;
+  const displayedImage = selectedImage;
 
   // In non-edit mode only rank-1 images are shown/navigable; edit mode uses all.
   const navImages = editMode ? floorImages : rank1FloorImages;
@@ -465,7 +463,7 @@ function ExploreContent() {
   };
 
   const handleImageHover = (image: Image | null) => {
-    setHoveredImage(image);
+    if (image) setSelectedImage(image);
   };
 
   const handleSaveMarkerPosition = useCallback(async (imageId: number, x: number, y: number) => {
@@ -491,6 +489,15 @@ function ExploreContent() {
 
   const currentPlan = cave?.plans?.find((p) => p.floor_number === floorNumber);
   const hasMultipleFloors = (cave?.plans?.length || 0) > 1;
+
+  // Hide the floor plan if no rank-1 images have coordinates on it.
+  const planHasPositions = rank1FloorImages.some(img =>
+    !img.hide_plan_xy && (
+      (img.coordinates?.plan_x_norm != null && img.coordinates?.plan_y_norm != null) ||
+      (img.mx != null && img.my != null)
+    )
+  );
+  const activePlan = planHasPositions ? currentPlan : null;
 
   if (loading) {
     return (
@@ -569,7 +576,7 @@ function ExploreContent() {
       {/* Main Content Area */}
       <main className="px-4 py-8">
         {/* Desktop Layout - changes based on plan availability */}
-        {currentPlan ? (
+        {activePlan ? (
             <div className="hidden lg:grid lg:grid-cols-[1fr_1fr_320px] gap-6 max-w-7xl mx-auto items-start">
               {/* Column 1: Floor tabs + Interactive Floor Plan */}
               <div>
@@ -589,7 +596,7 @@ function ExploreContent() {
                   ))}
                 </div>}
                 <InteractiveFloorPlan
-                  plan={currentPlan}
+                  plan={activePlan}
                   images={editMode ? floorImages : rank1FloorImages}
                   selectedImageId={selectedImage?.id}
                   onImageSelect={handleImageSelect}
@@ -675,11 +682,11 @@ function ExploreContent() {
             </div>
           )}
 
-          <div className={currentPlan ? "grid grid-cols-2 gap-4" : "max-w-md mx-auto"}>
-            {currentPlan && (
+          <div className={activePlan ? "grid grid-cols-2 gap-4" : "max-w-md mx-auto"}>
+            {activePlan && (
               <InteractiveFloorPlan
-                plan={currentPlan}
-                images={floorImages}
+                plan={activePlan}
+                images={editMode ? floorImages : rank1FloorImages}
                 selectedImageId={selectedImage?.id}
                 onImageSelect={handleImageSelect}
                 onImageHover={handleImageHover}
@@ -768,14 +775,14 @@ function ExploreContent() {
             onSelectModel3d={setSelectedModel3d}
           />
 
-          {currentPlan && (
+          {activePlan && (
             <details className="bg-gray-900 rounded-lg p-4" open={!hasMultipleFloors}>
               <summary className="cursor-pointer font-semibold">
                 View Floor Plan
               </summary>
               <div className="mt-4">
                 <InteractiveFloorPlan
-                  plan={currentPlan}
+                  plan={activePlan}
                   images={editMode ? floorImages : rank1FloorImages}
                   selectedImageId={selectedImage?.id}
                   onImageSelect={handleImageSelect}
