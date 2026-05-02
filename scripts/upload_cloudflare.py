@@ -27,6 +27,7 @@ Output:
 
 import argparse
 import csv
+import os
 import sys
 import time
 from datetime import datetime
@@ -36,7 +37,9 @@ from typing import Tuple, List, Set
 import requests
 
 
-ACCOUNT_ID = "4e65b8f97b6c2c3f485dcda82c179275"
+ACCOUNT_ID = os.getenv("CF_ACCOUNT_ID", "")
+if not ACCOUNT_ID:
+    sys.exit("Error: CF_ACCOUNT_ID environment variable is required")
 API_ENDPOINT = f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/images/v1"
 IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".svg"}
 RATE_LIMIT_DELAY = 0.3  # seconds between uploads (1200 per 5 min = 4/sec max)

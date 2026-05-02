@@ -130,36 +130,76 @@ This runs `npx @cloudflare/next-on-pages` (builds to `.vercel/output/static`) th
 2. Add `elloracaves.org` (or your domain)
 3. Follow DNS setup instructions
 
-## Supabase: Enabling/Disabling Anon Write Access
+## Maintaining the Site
 
-The `/images` admin page writes directly to the database using the Supabase anon key. By default Supabase enables Row Level Security (RLS) which blocks anonymous writes. To allow editing from the frontend, you need to add a policy. **Turn this on only when actively editing, and revoke when done.**
+### Admin page (`/admin`)
 
-### Enable anon write access
+The Admin page lets you bulk-review and edit image metadata: reassign images to different caves or plans, set `rank`, group images with `best_id`, and compare similar shots side-by-side.
+
+- **URL**: `/admin` (e.g. `elloracaves.org/admin`)
+- **Writes to**: Supabase `images` table (rank, cave_id, plan_id, best_id)
+- **Requires**: anon write access enabled in Supabase (see below)
+
+### Edit mode (`?edit`)
+
+Adding `?edit` to any Explore or group URL activates Edit mode:
+
+| URL | What you can do |
+|-----|-----------------|
+| `/explore?cave=10&edit` | Drag floor plan markers, set image rank, group images by `best_id`, toggle marker visibility |
+| `/caves/group/ganeshleni?edit` | See sub-group sections with **Edit →** links to each constituent cave's edit page |
+
+Edit mode markers are cyan (repositioned) vs green (original position). All rank images are shown on the floor plan in edit mode; only rank-1 images are shown to visitors.
+
+### Enabling and disabling write access
+
+**The live site uses the Supabase anon key, which is public.** By default, Supabase's Row Level Security (RLS) blocks all writes from that key. You must temporarily enable a policy to allow Admin or Edit mode to save changes, and **disable it when done**.
 
 Run in the [Supabase SQL Editor](https://supabase.com/dashboard/project/_/sql):
 
 ```sql
--- Allow anonymous users to update image metadata
-CREATE POLICY "Allow anon update on images"
-  ON images
-  FOR UPDATE
-  USING (true)
-  WITH CHECK (true);
+-- ENABLE before editing (Admin page or Edit mode)
+CREATE POLICY "Allow anon update"
+  ON images FOR UPDATE TO anon
+  USING (true) WITH CHECK (true);
 ```
 
-### Disable anon write access
-
 ```sql
--- Revoke anonymous update access
-DROP POLICY IF EXISTS "Allow anon update on images" ON images;
+-- DISABLE when done — run this as soon as you finish editing
+DROP POLICY IF EXISTS "Allow anon update" ON images;
 ```
 
-### Check current policies
+```sql
+-- Check whether write access is currently on
+SELECT policyname, cmd FROM pg_policies WHERE tablename = 'images';
+```
+
+> Write access gives anyone who visits the site the ability to modify the database while it is enabled. Keep the window short.
+
+### Updating default images
+
+The default image for each cave (shown first in galleries and on the About page) is controlled by the `default_priority` column. The script `scripts/set_default_images.sql` sets all defaults at once.
+
+**Workflow:**
+
+1. Edit `scripts/set_default_images.sql` — add or change the image IDs listed
+2. Run it in the [Supabase SQL Editor](https://supabase.com/dashboard/project/_/sql) — paste and execute the full file
+3. The verification `SELECT` at the bottom of the script shows what was set
+
+To set a single image without running the full script:
 
 ```sql
-SELECT policyname, cmd, qual, with_check
-FROM pg_policies
-WHERE tablename = 'images';
+UPDATE images SET default_priority = 10 WHERE image_id = 1234;
+```
+
+To find the right image ID for a cave:
+
+```sql
+SELECT image_id, image_subject, image_file, plan_floor
+FROM images i
+LEFT JOIN plans p ON i.image_plan_id = p.plan_id
+WHERE i.image_cave_id = 10  -- replace with your cave_id
+ORDER BY plan_floor, image_id;
 ```
 
 ## Project Structure
@@ -386,19 +426,12 @@ ALTER TABLE images ADD COLUMN mx double precision;
 ALTER TABLE images ADD COLUMN my double precision;
 ```
 
-**Enabling writes** (Supabase requires the anon write policy to be enabled):
-
-```sql
--- Enable before editing
-CREATE POLICY "Allow anon update" ON images FOR UPDATE TO anon USING (true) WITH CHECK (true);
--- Disable when done
-DROP POLICY "Allow anon update" ON images;
-```
+**Enabling writes**: enable the anon write policy first (see [Enabling and disabling write access](#enabling-and-disabling-write-access) above), then disable it when done.
 
 **Workflow:**
 
 1. Run `npm run dev` (hot-reload dev server).
-2. Open `http://localhost:3000/explore?cave=10&plan_edit` (add `&plan_edit` to any `/explore` URL).
+2. Open `http://localhost:3000/explore?cave=10&edit` (add `&edit` to any `/explore` URL).
 3. An amber **EDIT MODE** banner appears above each floor plan.
 4. Drag any marker to its correct position — it saves automatically to `mx`/`my` in the database.
 5. Repositioned markers turn **cyan**; untouched markers stay green.
@@ -439,14 +472,6 @@ UPDATE images SET hide_plan_xy = false WHERE plan_id = 30;
 ### Caves without a floor plan
 
 If a cave has no entry in `plans` (e.g. cave 13), the `/explore` page still shows images for that cave — it falls back to fetching all rank-1, non-archival images for the cave directly. No plan or markers are shown, just the image display and gallery strip.
-
-### Setting a cave's default image
-
-The image with the highest `default_priority` appears first in galleries and becomes the default on the About page:
-
-```sql
-UPDATE images SET default_priority = 10 WHERE image_id = 1234;
-```
 
 ## Credits
 

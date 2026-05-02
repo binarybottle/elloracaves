@@ -20,10 +20,15 @@ import os
 import sys
 import requests
 
-# Cloudflare credentials
-CF_API_TOKEN  = os.getenv('CF_API_TOKEN', 'REDACTED')
+# Cloudflare credentials — set as environment variables, never hardcode
+CF_API_TOKEN  = os.getenv('CF_API_TOKEN', '')
 CF_AUTH_EMAIL = os.getenv('CF_AUTH_EMAIL', '')
-CF_ACCOUNT_ID = os.getenv('CF_ACCOUNT_ID', '4e65b8f97b6c2c3f485dcda82c179275')
+CF_ACCOUNT_ID = os.getenv('CF_ACCOUNT_ID', '')
+
+if not CF_API_TOKEN:
+    sys.exit("Error: CF_API_TOKEN environment variable is required")
+if not CF_ACCOUNT_ID:
+    sys.exit("Error: CF_ACCOUNT_ID environment variable is required")
 
 def cf_headers():
     """Return appropriate Cloudflare auth headers."""

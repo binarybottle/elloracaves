@@ -52,7 +52,7 @@ import boto3
 import requests
 
 
-ACCOUNT_ID = os.getenv("CF_ACCOUNT_ID", "4e65b8f97b6c2c3f485dcda82c179275")
+ACCOUNT_ID = os.getenv("CF_ACCOUNT_ID", "")
 CF_IMAGES_ENDPOINT = f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/images/v1"
 
 FILENAME_PATTERN = re.compile(

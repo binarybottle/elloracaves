@@ -55,7 +55,7 @@ import requests
 
 CF_API_TOKEN = os.getenv("CF_API_TOKEN", "")
 CF_AUTH_EMAIL = os.getenv("CF_AUTH_EMAIL", "")
-CF_ACCOUNT_ID = os.getenv("CF_ACCOUNT_ID", "4e65b8f97b6c2c3f485dcda82c179275")
+CF_ACCOUNT_ID = os.getenv("CF_ACCOUNT_ID", "")
 
 SUPABASE_URL = os.getenv("SUPABASE_URL", "")
 SUPABASE_SERVICE_KEY = os.getenv("SUPABASE_SERVICE_KEY", "")
