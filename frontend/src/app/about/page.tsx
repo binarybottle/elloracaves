@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { CAVE_POSITIONS, getDropdownLabel } from '@/components/cave/CaveMap';
 import { NewsLinksSection } from '@/components/NewsLinksSection';
 import { fetchCaveDetail, fetchCaveFloorImages, fetchCaveImages, Cave, Image } from '@/lib/api';
+import { isGroupVirtualId, CAVE_GROUP_BY_VIRTUAL_ID } from '@/lib/caveGroups';
 
 export default function AboutPage() {
   const [caveData, setCaveData] = useState<Record<number, { caveId: number; cave: Cave; defaultImage: Image | null }>>({});
@@ -16,23 +17,41 @@ export default function AboutPage() {
       const allCaveIds = Object.keys(CAVE_POSITIONS).map(Number);
       const cavePromises = allCaveIds.map(async (caveId) => {
         try {
+          // Group virtual IDs are not in the DB — fetch a representative image from constituent caves
+          if (isGroupVirtualId(caveId)) {
+            const group = CAVE_GROUP_BY_VIRTUAL_ID[caveId];
+            let defaultImage: Image | null = null;
+            for (const constituentId of group.caveIds) {
+              const images = await fetchCaveImages(String(constituentId), 5);
+              defaultImage = images.find((img) => img.image_url && img.image_url.trim() !== '') || null;
+              if (defaultImage) break;
+            }
+            const fakeCave: Cave = {
+              id: caveId,
+              cave_number: String(caveId),
+              name: group.label,
+              tradition: group.tradition,
+            };
+            return { caveId, cave: fakeCave, defaultImage };
+          }
+
           const cave = await fetchCaveDetail(String(caveId));
-          
+
           let defaultImage: Image | null = null;
-          
+
           // Fetch images - try floor-based first, then cave-based fallback
           if (cave.plans && cave.plans.length > 0) {
             const firstFloor = Math.min(...cave.plans.map((p) => p.floor_number));
             const images = await fetchCaveFloorImages(String(caveId), firstFloor);
             defaultImage = images.find((img) => img.image_url && img.image_url.trim() !== '') || null;
           }
-          
+
           // Fallback: if no plans or no images found, fetch images directly by cave_id
           if (!defaultImage) {
             const images = await fetchCaveImages(String(caveId), 5);
             defaultImage = images.find((img) => img.image_url && img.image_url.trim() !== '') || null;
           }
-          
+
           return { caveId, cave, defaultImage };
         } catch (error) {
           console.error(`Error fetching cave ${caveId}:`, error);
@@ -56,6 +75,7 @@ export default function AboutPage() {
 
   // Get tradition for each cave
   const getTradition = (caveId: number): string => {
+    if (isGroupVirtualId(caveId)) return CAVE_GROUP_BY_VIRTUAL_ID[caveId].tradition;
     if ((caveId >= 1 && caveId <= 12) || (caveId >= 10001 && caveId <= 10017) || (caveId >= 20001 && caveId <= 20003)) return 'Buddhist';
     if ((caveId >= 13 && caveId <= 29) || (caveId >= 1016 && caveId <= 4016) || caveId === 120 || caveId === 220 || caveId === 20 || caveId === 124 || caveId === 224) return 'Hindu';
     if ((caveId >= 30 && caveId <= 34) || caveId === 130 || caveId === 132) return 'Jain';
@@ -63,7 +83,7 @@ export default function AboutPage() {
   };
 
   // Sort caves using the same logic as dropdown menus
-  const favoriteOrder = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1016,3016,2016,17,18,19,120,220,21,22,23,24,124,224,25,26,27,28,29,30,130,31,32,33,34,10001,10006,10008,10013,10017,20001,20003];
+  const favoriteOrder = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,1016,3016,2016,17,18,19,120,220,21,22,23,24,124,224,25,26,27,28,29,30,130,31,32,33,34,10000,20000];
   
   const sortedCaves = Object.keys(CAVE_POSITIONS)
     .map(Number)
@@ -204,10 +224,14 @@ export default function AboutPage() {
                 const defaultImage = data?.defaultImage;
                 const description = data?.cave?.description || '';
 
+                const href = isGroupVirtualId(caveId)
+                  ? `/caves/group/${CAVE_GROUP_BY_VIRTUAL_ID[caveId].slug}`
+                  : `/explore?cave=${caveId}`;
+
                 return (
                   <Link
                     key={caveId}
-                    href={`/explore?cave=${caveId}`}
+                    href={href}
                     className={`
                       group relative rounded-lg border-2 transition-all overflow-hidden
                       ${traditionColors[tradition as keyof typeof traditionColors]}

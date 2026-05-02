@@ -1,7 +1,7 @@
 // components/cave/ImageGalleryStrip.tsx
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { History, Box, BookOpen } from 'lucide-react';
 import { Image as ImageType } from '@/lib/api';
 import { getTreeOrderedImages, GroupInfo } from '@/lib/group-colors';
@@ -37,6 +37,17 @@ interface ImageGalleryStripProps {
   onToggleHidePlanXY?: (imageId: number, currentValue: boolean) => void;
 }
 
+type ThumbnailSize = 'sm' | 'md' | 'lg';
+
+// Explicit strings so Tailwind includes all three classes in the bundle
+const HEIGHT_CLASSES: Record<ThumbnailSize, string> = {
+  sm: 'h-14',
+  md: 'h-24',
+  lg: 'h-40',
+};
+
+const SIZE_LABELS: Record<ThumbnailSize, string> = { sm: 'S', md: 'M', lg: 'L' };
+
 export default function ImageGalleryStrip({
   images,
   archivalImages = [],
@@ -52,6 +63,19 @@ export default function ImageGalleryStrip({
 }: ImageGalleryStripProps) {
   const [editingRankId, setEditingRankId] = useState<number | null>(null);
   const [rankInput, setRankInput] = useState('');
+  const [size, setSize] = useState<ThumbnailSize>('md');
+
+  useEffect(() => {
+    const saved = localStorage.getItem('thumbSize') as ThumbnailSize | null;
+    if (saved && saved in HEIGHT_CLASSES) setSize(saved);
+  }, []);
+
+  const handleSetSize = (s: ThumbnailSize) => {
+    setSize(s);
+    localStorage.setItem('thumbSize', s);
+  };
+
+  const heightClass = HEIGHT_CLASSES[size];
   // In non-edit mode, only display rank-1 images; rank-2 alternates are included
   // in `combined` below so that idsReferencedAsBest can identify group roots.
   const validImages = images.filter(img => img.image_url && img.image_url.trim() !== ''
@@ -95,25 +119,42 @@ export default function ImageGalleryStrip({
 
   return (
     <div className="bg-black p-6">
-      <div className="mb-4 text-[#eae2c4]">
-        <span className="text-base">
-          {validImages.length} result{validImages.length !== 1 ? 's' : ''}
-        </span>
-        {cave && (
-          <span className="text-sm">
-            {' '}in <strong>{cave.name}</strong>
+      <div className="mb-4 flex items-center justify-between gap-4 text-[#eae2c4]">
+        <div>
+          <span className="text-base">
+            {validImages.length} result{validImages.length !== 1 ? 's' : ''}
           </span>
-        )}
-        {ungroupedArchival.length > 0 && (
-          <span className="text-sm text-gray-500">
-            {' '}&middot; {ungroupedArchival.length} archival
-          </span>
-        )}
-        {groupEditMode && (
-          <span className="text-sm text-purple-400 ml-2">
-            EDIT MODE
-          </span>
-        )}
+          {cave && (
+            <span className="text-sm">
+              {' '}in <strong>{cave.name}</strong>
+            </span>
+          )}
+          {ungroupedArchival.length > 0 && (
+            <span className="text-sm text-gray-500">
+              {' '}&middot; {ungroupedArchival.length} archival
+            </span>
+          )}
+          {groupEditMode && (
+            <span className="text-sm text-purple-400 ml-2">
+              EDIT MODE
+            </span>
+          )}
+        </div>
+        <div className="flex gap-1 flex-shrink-0">
+          {(['sm', 'md', 'lg'] as ThumbnailSize[]).map((s) => (
+            <button
+              key={s}
+              onClick={() => handleSetSize(s)}
+              className={`w-7 h-7 text-xs font-bold rounded border transition-colors ${
+                size === s
+                  ? 'bg-white text-black border-white'
+                  : 'bg-transparent text-gray-400 border-gray-600 hover:border-gray-400 hover:text-white'
+              }`}
+            >
+              {SIZE_LABELS[s]}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-2">
@@ -147,7 +188,7 @@ export default function ImageGalleryStrip({
               )}
               <button
                 onClick={handleClick}
-                className="relative block h-24 flex-shrink-0"
+                className={`relative block ${heightClass} flex-shrink-0`}
                 style={groupEditMode && groupInfo && !isMultiSelected ? {
                   outline: `2px solid ${groupInfo.color}`,
                   outlineOffset: '1px',

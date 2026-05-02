@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 import CaveNumberMarker from './CaveNumberMarker';
+import { isGroupVirtualId, CAVE_GROUP_BY_VIRTUAL_ID } from '@/lib/caveGroups';
 
 interface CaveMapProps {
   selectedCaveId?: number;
@@ -71,13 +72,8 @@ export function getDropdownLabel(caveId: number): string {
     33: 'Cave 33',
     34: 'Cave 34',
     132: 'Yadavas',
-    10001: 'Ganeshleni 1-5',
-    10006: 'Ganeshleni 6-7',
-    10008: 'Ganeshleni 8-12',
-    10013: 'Ganeshleni 13-16',
-    10017: 'Ganeshleni 17-19',
-    20001: 'Jogeshwari 1-2',
-    20003: 'Jogeshwari 3-4',
+    10000: 'Ganeshleni',
+    20000: 'Jogeshwari',
   };
   return dropdownLabels[caveId] || `${caveId}`;
 }
@@ -127,13 +123,8 @@ export const CAVE_POSITIONS: Record<number, CavePosition> = {
   130: { left: (43 * SCALE_X) + OFFSET_X, top: (99 * SCALE_Y) + OFFSET_Y, label: '30a'},
   // Extra caves (dropdown only) - positioned separately
   132: { left: 1000, top: 55, label: '32 Yadavas', extraCave: true },
-  10001: { left: 1000, top: 70, label: 'Ganeshleni 1-5', extraCave: true },
-  10006: { left: 1000, top: 85, label: 'Ganeshleni 6-7', extraCave: true },
-  10008: { left: 1000, top: 100, label: 'Ganeshleni 8-12', extraCave: true },
-  10013: { left: 1000, top: 115, label: 'Ganeshleni 13-16', extraCave: true },
-  10017: { left: 1000, top: 130, label: 'Ganeshleni 17-19', extraCave: true },
-  20001: { left: 1000, top: 145, label: 'Jogeshwari 1-2', extraCave: true },
-  20003: { left: 1000, top: 160, label: 'Jogeshwari 3-4', extraCave: true },
+  10000: { left: 1000, top: 70, label: 'Ganeshleni', extraCave: true },
+  20000: { left: 1000, top: 85, label: 'Jogeshwari', extraCave: true },
 };
 
 export default function CaveMap({ selectedCaveId, className = '' }: CaveMapProps) {
@@ -227,8 +218,12 @@ export default function CaveMap({ selectedCaveId, className = '' }: CaveMapProps
           <select
             value={selectedCaveId}
             onChange={(e) => {
-              const caveId = e.target.value;
-              window.location.href = `/explore?cave=${caveId}`;
+              const val = e.target.value;
+              if (val.startsWith('group:')) {
+                window.location.href = `/caves/group/${val.slice(6)}`;
+              } else {
+                window.location.href = `/explore?cave=${val}`;
+              }
             }}
             className="
               bg-black text-white border-2 border-gray-600 
@@ -242,11 +237,17 @@ export default function CaveMap({ selectedCaveId, className = '' }: CaveMapProps
             <option value="" disabled className="bg-black text-gray-500">
               Select a cave...
             </option>
-            {allCaves.map(([caveId]) => (
-              <option key={caveId} value={caveId} className="bg-black text-white py-2">
-                {getDropdownLabel(Number(caveId))}
-              </option>
-            ))}
+            {allCaves.map(([caveId]) => {
+              const id = Number(caveId);
+              const value = isGroupVirtualId(id)
+                ? `group:${CAVE_GROUP_BY_VIRTUAL_ID[id].slug}`
+                : caveId;
+              return (
+                <option key={caveId} value={value} className="bg-black text-white py-2">
+                  {getDropdownLabel(id)}
+                </option>
+              );
+            })}
           </select>
         </div>
       </div>

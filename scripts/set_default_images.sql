@@ -14,15 +14,15 @@ UPDATE images SET default_priority = 0;
 UPDATE images SET default_priority = 10 WHERE "image_ID" IN (
     -- Buddhist Caves
     727,     -- Cave 1
-    4128,     -- Cave 2
-    881,     -- Cave 3
+    9674,     -- Cave 2
+    4193,     -- Cave 3
     4217,    -- Cave 4
     4249,    -- Cave 5
     4293,    -- Cave 6
     4329,    -- Cave 7
-    1236,    -- Cave 8
+    4280,    -- Cave 8
     4377,    -- Cave 9
-    4128,       -- Cave 10, Floor 1
+    9349,       -- Cave 10, Floor 1
     77,    -- Cave 10, Floor 2
     884,    -- Cave 11, Floor 1
     314,  -- Cave 11, Floor 2
@@ -57,8 +57,8 @@ UPDATE images SET default_priority = 10 WHERE "image_ID" IN (
     2083,   -- Cave 25
     2103,   -- Cave 26
     2054,   -- Cave 27
-    5502,   -- Cave 28
-    2131,   -- Cave 29
+    8933,   -- Cave 28
+    9596,   -- Cave 29
     
     -- Jain Caves
     2420,   -- Cave 30
