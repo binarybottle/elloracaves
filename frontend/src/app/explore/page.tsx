@@ -548,7 +548,7 @@ function ExploreContent() {
       {/* Mobile Header */}
       <header className="md:hidden p-4 bg-gray-900 border-b border-gray-800">
         <div className="flex items-center justify-between mb-3">
-          <h1 className="text-xl">The Ellora caves</h1>
+          <h1 className="text-xl">The Ellora Caves</h1>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowSearch(true)}
