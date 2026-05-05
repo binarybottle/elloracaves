@@ -16,7 +16,7 @@ export function NewsLinksSection() {
             >
               {item.label}{' '}
               <span className="text-gray-600">{item.date}</span>
-              {item.print && <span className="text-gray-600"> · print</span>}
+              {item.tag && <span className="text-gray-600"> · {item.tag}</span>}
             </a>
           </li>
         ))}

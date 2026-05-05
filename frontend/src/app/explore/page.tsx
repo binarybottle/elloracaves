@@ -513,7 +513,7 @@ function ExploreContent() {
       <header className="relative w-full overflow-hidden hidden md:block">
         {/* Title, About, and Search Button */}
         <div className="absolute left-5 top-4 z-20 flex items-center gap-4">
-          <h1 className="text-3xl">The Ellora caves</h1>
+          <h1 className="text-3xl">The Ellora Caves</h1>
           <Link
             href="/about"
             className="px-4 py-2 bg-black/90 hover:bg-black border-2 border-gray-600 hover:border-gray-400 rounded-lg text-white transition-all text-sm font-semibold"

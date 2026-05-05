@@ -4,6 +4,7 @@ export type NewsLinkItem = {
   href: string;
   title: string;
   print?: boolean;
+  tag?: string;
 };
 
 export const NEWS_LINKS: NewsLinkItem[] = [
@@ -12,6 +13,14 @@ export const NEWS_LINKS: NewsLinkItem[] = [
     date: '(2026-04-05)',
     href: 'https://www.mid-day.com/sunday-mid-day/article/new-book-on-ellora-caves-by-deepanjana-klein-and-arno-klein-dives-into-its-temples-23624195',
     title: 'Sunday Mid-day — Harmony in history',
+  },
+  {
+    label: 'TAKE On Art Magazine',
+    date: '(March 2026)',
+    href: '/news/TAKE%20On%20Art%20Magazine%20Hugo%20Weihe%20review%20March%202026.pdf',
+    title: 'TAKE On Art Magazine — Hugo Weihe review (March 2026)',
+    print: true,
+    tag: 'review',
   },
   {
     label: 'The Tribune',
@@ -24,6 +33,7 @@ export const NEWS_LINKS: NewsLinkItem[] = [
     date: '(2026-03-20)',
     href: 'https://serenademagazine.art/belonging-to-ellora-a-conversation-with-deepanjana-and-arno-klein/',
     title: 'Belonging to Ellora: A conversation',
+    tag: 'interview',
   },
   {
     label: 'Mint',
@@ -40,8 +50,8 @@ export const NEWS_LINKS: NewsLinkItem[] = [
   {
     label: 'Mumbai Mirror',
     date: '(2026-02-09)',
-    href: '/images/press/mumbai-mirror.jpg',
-    title: 'Mumbai Mirror — archived print clipping (opens image)',
+    href: '/news/MumbaiMirror_2026-02-09/MumbaiMirror_2026-02-09.jpg',
+    title: 'Mumbai Mirror (opens image)',
     print: true,
   },
 ];

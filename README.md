@@ -159,14 +159,14 @@ Run in the [Supabase SQL Editor](https://supabase.com/dashboard/project/_/sql):
 
 ```sql
 -- ENABLE before editing (Admin page or Edit mode)
-CREATE POLICY "Allow anon update"
+CREATE POLICY "Allow anon update on images"
   ON images FOR UPDATE TO anon
   USING (true) WITH CHECK (true);
 ```
 
 ```sql
 -- DISABLE when done — run this as soon as you finish editing
-DROP POLICY IF EXISTS "Allow anon update" ON images;
+DROP POLICY IF EXISTS "Allow anon update on images" ON images;
 ```
 
 ```sql
