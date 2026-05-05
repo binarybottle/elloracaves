@@ -49,24 +49,7 @@
         }
     </style>
 
-    <script>
-        /* The script for calculating the color contrast has been taken from
-        https://gomakethings.com/dynamically-changing-the-text-color-based-on-background-color-contrast-with-vanilla-js/ */
-        var accentColor = getComputedStyle(document.documentElement).getPropertyValue('--background-color');
-        accentColor = accentColor.trim().slice(1);
-
-        if (accentColor.length === 3) {
-            accentColor = accentColor[0] + accentColor[0] + accentColor[1] + accentColor[1] + accentColor[2] + accentColor[2];
-        }
-
-        var r = parseInt(accentColor.substr(0, 2), 16);
-        var g = parseInt(accentColor.substr(2, 2), 16);
-        var b = parseInt(accentColor.substr(4, 2), 16);
-        var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
-        var textColor = (yiq >= 128) ? 'dark' : 'light';
-
-        document.documentElement.className = `has-${textColor}-text`;
-    </script>
+    
 
     <meta name="description" content="Ellora is not a monument frozen in stone but a living conversation across faiths, centuries and disciplines. In this deeply personal dialogue, Deepanjana and Arno Klein reflect on cross-fertilisation, unfinished histories and belonging to a site that continues to astonish.">
     <link rel="icon" href="https://serenademagazine.art/content/images/size/w256h256/2024/04/301917572_473019344838800_4781239506812652563_n.jpeg" type="image/jpeg">
@@ -96,52 +79,11 @@
     <meta property="og:image:width" content="1024">
     <meta property="og:image:height" content="627">
     
-    <script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "publisher": {
-        "@type": "Organization",
-        "name": "Serenade Magazine - Visual Arts &amp; Photography",
-        "url": "https://serenademagazine.art/",
-        "logo": {
-            "@type": "ImageObject",
-            "url": "https://serenademagazine.art/content/images/2024/05/serenade-transparent-copy.png"
-        }
-    },
-    "author": {
-        "@type": "Person",
-        "name": "Nikhil Sardana",
-        "image": {
-            "@type": "ImageObject",
-            "url": "https://serenademagazine.art/content/images/2024/05/IMG_4126-e1448969477549-150x150.jpeg",
-            "width": 150,
-            "height": 150
-        },
-        "url": "https://serenademagazine.art/author/nikhil/",
-        "sameAs": [
-            "https://serenademagazine.com/author/nikhilsardana/"
-        ]
-    },
-    "headline": "Belonging to Ellora: A Conversation with Deepanjana and Arno Klein",
-    "url": "https://serenademagazine.art/belonging-to-ellora-a-conversation-with-deepanjana-and-arno-klein/",
-    "datePublished": "2026-03-20T04:00:58.000Z",
-    "dateModified": "2026-03-20T04:11:20.000Z",
-    "image": {
-        "@type": "ImageObject",
-        "url": "https://serenademagazine.art/content/images/2026/03/1-Ellora-page-26-27.jpg",
-        "width": 1024,
-        "height": 627
-    },
-    "keywords": "Interviews",
-    "description": "Ellora is not a monument frozen in stone but a living conversation across faiths, centuries and disciplines. In this deeply personal dialogue, Deepanjana and Arno Klein reflect on cross-fertilisation, unfinished histories and belonging to a site that continues to astonish.",
-    "mainEntityOfPage": "https://serenademagazine.art/belonging-to-ellora-a-conversation-with-deepanjana-and-arno-klein/"
-}
-    </script>
+    
 
     <meta name="generator" content="Ghost 6.22">
     <link rel="alternate" type="application/rss+xml" title="Serenade Magazine - Visual Arts &amp; Photography" href="https://serenademagazine.art/rss/">
-    <script defer="" src="./Belonging to Ellora_ A Conversation with Deepanjana and Arno Klein_files/portal.min.js" data-i18n="true" data-ghost="https://serenademagazine.art/" data-key="34def2728d878eee2de7d08755" data-api="https://serenade-1.ghost.io/ghost/api/content/" data-locale="en" crossorigin="anonymous"></script><style id="gh-members-styles">.gh-post-upgrade-cta-content,
+    <style id="gh-members-styles">.gh-post-upgrade-cta-content,
 .gh-post-upgrade-cta {
     display: flex;
     flex-direction: column;
@@ -205,13 +147,13 @@
 .gh-post-upgrade-cta a.gh-btn:hover {
     opacity: 0.92;
 }</style>
-    <script defer="" src="./Belonging to Ellora_ A Conversation with Deepanjana and Arno Klein_files/sodo-search.min.js" data-key="34def2728d878eee2de7d08755" data-styles="https://cdn.jsdelivr.net/ghost/sodo-search@~1.8/umd/main.css" data-sodo-search="https://serenade-1.ghost.io/" data-locale="en" crossorigin="anonymous"></script>
+    
     
     <link href="https://serenademagazine.art/webmentions/receive/" rel="webmention">
-    <script defer="" src="./Belonging to Ellora_ A Conversation with Deepanjana and Arno Klein_files/cards.min.js"></script>
+    
     <link rel="stylesheet" type="text/css" href="./Belonging to Ellora_ A Conversation with Deepanjana and Arno Klein_files/cards.min.css">
-    <script defer="" src="./Belonging to Ellora_ A Conversation with Deepanjana and Arno Klein_files/comment-counts.min.js" data-ghost-comments-counts-api="https://serenademagazine.art/members/api/comments/counts/"></script>
-    <script defer="" src="./Belonging to Ellora_ A Conversation with Deepanjana and Arno Klein_files/member-attribution.min.js"></script><style>:root {--ghost-accent-color: #FFCC00;}</style>
+    
+    <style>:root {--ghost-accent-color: #FFCC00;}</style>
     
 
 
@@ -236,14 +178,8 @@
     :where(.nav, .gh-head-menu) .nav-instagram a::before {content: "\f16d"}
 </style>
 <!-- Google tag (gtag.js) -->
-<script async="" src="./Belonging to Ellora_ A Conversation with Deepanjana and Arno Klein_files/js"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-B27N8R5SYB');
-</script>
+
 
 <style>.App{text-align:center}.App-logo{height:40vmin;pointer-events:none}@media (prefers-reduced-motion: no-preference){.App-logo{animation:App-logo-spin infinite 20s linear}}.App-header{background-color:#282c34;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:calc(10px + 2vmin);color:#fff}.App-link{color:#61dafb}@keyframes App-logo-spin{0%{transform:rotate(0)}to{transform:rotate(360deg)}}
 /*$vite$:1*/</style></head>
@@ -338,7 +274,7 @@
 
         <div class="gh-comments gh-canvas">
             
-        <div id="ghost-comments-root"><iframe innerref="[object Object]" frameborder="0" title="comments-frame" style="width: 100%; height: 367px;" src="./Belonging to Ellora_ A Conversation with Deepanjana and Arno Klein_files/saved_resource.html"></iframe></div><script defer="" src="./Belonging to Ellora_ A Conversation with Deepanjana and Arno Klein_files/comments-ui.min.js" data-locale="en" data-ghost-comments="https://serenademagazine.art/" data-api="https://serenade-1.ghost.io/ghost/api/content/" data-admin="https://serenade-1.ghost.io/ghost/" data-key="34def2728d878eee2de7d08755" data-title="null" data-count="true" data-post-id="69bc0984a9e2f900018cf52a" data-color-scheme="auto" data-avatar-saturation="60" data-accent-color="#FFCC00" data-comments-enabled="all" data-publication="Serenade Magazine - Visual Arts &amp; Photography" crossorigin="anonymous"></script>
+        <div id="ghost-comments-root"><iframe innerref="[object Object]" frameborder="0" title="comments-frame" style="width: 100%; height: 367px;" src="./Belonging to Ellora_ A Conversation with Deepanjana and Arno Klein_files/saved_resource.html"></iframe></div>
     
         </div>
 
@@ -539,7 +475,7 @@
         </div>
     </div>
 </div>
-<script src="./Belonging to Ellora_ A Conversation with Deepanjana and Arno Klein_files/source.js"></script>
+
 
 <link rel="stylesheet" href="./Belonging to Ellora_ A Conversation with Deepanjana and Arno Klein_files/brands.min.css" integrity="sha512-DJLNx+VLY4aEiEQFjiawXaiceujj5GA7lIY8CHCIGQCBPfsEG0nGz1edb4Jvw1LR7q031zS5PpPqFuPA8ihlRA==" crossorigin="anonymous" referrerpolicy="no-referrer">
 

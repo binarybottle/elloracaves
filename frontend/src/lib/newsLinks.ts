@@ -17,7 +17,7 @@ export const NEWS_LINKS: NewsLinkItem[] = [
   {
     label: 'TAKE On Art Magazine',
     date: '(March 2026)',
-    href: '/news/TAKE%20On%20Art%20Magazine%20Hugo%20Weihe%20review%20March%202026.pdf',
+    href: '/news/TAKE_On_Art_Magazine_Hugo_Weihe_review_2026-03.pdf',
     title: 'TAKE On Art Magazine — Hugo Weihe review (March 2026)',
     print: true,
     tag: 'review',
