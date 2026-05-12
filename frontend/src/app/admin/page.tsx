@@ -25,6 +25,7 @@ interface ImageRow {
   archival_ids: number[] | null;
   model3d_ids: number[] | null;
   medium: string | null;
+  motifs: string | null;
 }
 
 interface CaveOption { cave_id: number; cave_name: string | null; }
@@ -166,7 +167,7 @@ export default function ImagesReviewPage() {
     setEditingField(null);
   }
 
-  async function updateTextField(imageId: number, field: 'book_figure' | 'subject' | 'description' | 'photographer' | 'medium', value: string | null) {
+  async function updateTextField(imageId: number, field: 'book_figure' | 'subject' | 'description' | 'photographer' | 'medium' | 'motifs', value: string | null) {
     setSaving(imageId);
     const { error } = await supabase
       .from('images')
@@ -215,7 +216,7 @@ export default function ImagesReviewPage() {
       while (hasMore) {
         const { data, error } = await supabase
           .from('images')
-          .select('image_id, cave_id, plan_id, rank, file_path, subject, description, photographer, cloudflare_image_id, plan_x_norm, plan_y_norm, hide_plan_xy, best_id, book_page, book_figure, archival_ids, model3d_ids, medium')
+          .select('image_id, cave_id, plan_id, rank, file_path, subject, description, photographer, cloudflare_image_id, plan_x_norm, plan_y_norm, hide_plan_xy, best_id, book_page, book_figure, archival_ids, model3d_ids, medium, motifs')
           .order('cave_id')
           .order('file_path')
           .range(from, from + PAGE_SIZE - 1);
@@ -677,6 +678,19 @@ export default function ImagesReviewPage() {
                             }}
                             className="w-full bg-gray-800 text-white text-xs rounded border border-gray-700 px-1.5 py-1"
                             placeholder="e.g. photo, etching..."
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[10px] text-gray-600 block">Motifs</label>
+                          <input
+                            type="text"
+                            defaultValue={img.motifs || ''}
+                            onBlur={(e) => {
+                              const val = e.target.value.trim();
+                              if (val !== (img.motifs || '')) updateTextField(img.image_id, 'motifs', val || null);
+                            }}
+                            className="w-full bg-gray-800 text-white text-xs rounded border border-gray-700 px-1.5 py-1"
+                            placeholder="e.g. Buddha, stupa..."
                           />
                         </div>
                         <div className="text-[10px] font-mono text-gray-600 break-all pt-1 border-t border-gray-800">{img.file_path}</div>
