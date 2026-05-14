@@ -46,6 +46,7 @@ export default function ImagesReviewPage() {
   const [filterPlanId, setFilterPlanId] = useState('');
   const [filterFilePath, setFilterFilePath] = useState('');
   const [filterRank, setFilterRank] = useState('');
+  const [filterMotif, setFilterMotif] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [editingField, setEditingField] = useState<{ imageId: number; field: string } | null>(null);
   const [fieldInput, setFieldInput] = useState('');
@@ -290,10 +291,14 @@ export default function ImagesReviewPage() {
         if (String(img.rank) !== val) return false;
       }
     }
+    if (filterMotif.trim()) {
+      const q = filterMotif.trim().toLowerCase();
+      if (!(img.motifs || '').toLowerCase().includes(q)) return false;
+    }
     return true;
   });
 
-  const hasActiveFilter = !!(filterImageId.trim() || filterCaveId.trim() || filterPlanId.trim() || filterFilePath.trim() || filterRank.trim() || searchQuery.trim());
+  const hasActiveFilter = !!(filterImageId.trim() || filterCaveId.trim() || filterPlanId.trim() || filterFilePath.trim() || filterRank.trim() || filterMotif.trim() || searchQuery.trim());
 
   const sortedImages = useMemo(() => {
     const sorted = [...filteredImages].sort((a, b) => {
@@ -468,13 +473,20 @@ export default function ImagesReviewPage() {
                 <option key={id} value={String(id)}>{planLabel(id)}</option>
               ))}
             </select>
+            <input
+              type="text"
+              value={filterMotif}
+              onChange={(e) => setFilterMotif(e.target.value)}
+              placeholder="Motif…"
+              className="bg-gray-800 text-gray-300 text-sm rounded px-2 py-1 border border-gray-700 w-32"
+            />
             {hasActiveFilter && (
               <>
                 <span className="text-xs text-gray-500">
                   {filteredImages.length} of {images.length}
                 </span>
                 <button
-                  onClick={() => { setFilterImageId(''); setFilterCaveId(''); setFilterPlanId(''); setFilterFilePath(''); setFilterRank(''); setSearchQuery(''); }}
+                  onClick={() => { setFilterImageId(''); setFilterCaveId(''); setFilterPlanId(''); setFilterFilePath(''); setFilterRank(''); setFilterMotif(''); setSearchQuery(''); }}
                   className="text-xs text-gray-400 hover:text-white transition-colors underline"
                 >
                   Clear
