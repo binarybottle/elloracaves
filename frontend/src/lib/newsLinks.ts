@@ -14,13 +14,14 @@ export const NEWS_LINKS: NewsLinkItem[] = [
     href: 'https://epaper.telegraphindia.com/calcutta-edition/29/2026-06-05/page-11/article-2033333599.html',
     title: 'The Telegraph — Calcutta Edition, Page 11',
     print: true,
-    tag: 'review',
+    tag: 'announcement',
   },
   {
     label: 'Splainer',
     date: '(2026-06-06)',
     href: 'https://splainer.in/sections/2026/A-World-Cup-of-Woes/art',
     title: 'Splainer — A World Cup of Woes',
+    tag: 'excerpt',
   },
   {
     label: 'Mid-day',
@@ -60,6 +61,7 @@ export const NEWS_LINKS: NewsLinkItem[] = [
     date: '(2026-02-28)',
     href: 'https://www.hindustantimes.com/books/ht-picks-new-reads-101772215786492.html',
     title: 'HT Picks; New Reads',
+    tag: 'announcement',
   },
   {
     label: 'Mumbai Mirror',
