@@ -9,6 +9,20 @@ export type NewsLinkItem = {
 
 export const NEWS_LINKS: NewsLinkItem[] = [
   {
+    label: 'The Telegraph',
+    date: '(2026-06-05)',
+    href: 'https://epaper.telegraphindia.com/calcutta-edition/29/2026-06-05/page-11/article-2033333599.html',
+    title: 'The Telegraph — Calcutta Edition, Page 11',
+    print: true,
+    tag: 'review',
+  },
+  {
+    label: 'Splainer',
+    date: '(2026-06-06)',
+    href: 'https://splainer.in/sections/2026/A-World-Cup-of-Woes/art',
+    title: 'Splainer — A World Cup of Woes',
+  },
+  {
     label: 'Mid-day',
     date: '(2026-04-05)',
     href: 'https://www.mid-day.com/sunday-mid-day/article/new-book-on-ellora-caves-by-deepanjana-klein-and-arno-klein-dives-into-its-temples-23624195',
