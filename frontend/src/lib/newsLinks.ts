@@ -62,6 +62,7 @@ export const NEWS_LINKS: NewsLinkItem[] = [
     date: '(2026-03-14)',
     href: 'https://www.livemint.com/mint-lounge/art-and-culture/new-book-ellora-cross-fertilization-of-styles-in-buddhist-hindu-jain-cave-temples-deepanjana-and-arno-klein-11773461220789.html',
     title: 'The many histories of Ellora art — Mint Lounge',
+    tag: 'review',
   },
   {
     label: 'Hindustan Times',
