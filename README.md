@@ -132,6 +132,8 @@ This runs `npx @cloudflare/next-on-pages` (builds to `.vercel/output/static`) th
 
 ## Maintaining the Site
 
+A simple push to GitHub will update the website for basic text edits, via GitHub actions (see Settings → Secrets and variables → Actions)
+
 ### Admin page (`/admin`)
 
 The Admin page lets you bulk-review and edit image metadata: reassign images to different caves or plans, set `rank`, group images with `best_id`, and compare similar shots side-by-side.

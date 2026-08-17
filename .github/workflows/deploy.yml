@@ -1,0 +1,44 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: frontend/.nvmrc
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build for Cloudflare Pages
+        working-directory: frontend
+        # NEXT_PUBLIC_* values are inlined into the client bundle at build time,
+        # so they must be present here (wrangler.toml [vars] only covers runtime).
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: https://sekkcjgsudznjxlojjby.supabase.co
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNla2tjamdzdWR6bmp4bG9qamJ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ2NzY4MTcsImV4cCI6MjA4MDI1MjgxN30.feBIDaOcnClYRUG7O9W5uCwhws2hC8spSuObZjDvVtk
+          NEXT_PUBLIC_CF_IMAGES_ACCOUNT: KIW9yF8c-WGugbU7KgzvZQ
+        run: npm run pages:build
+
+      - name: Deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: frontend
+          command: pages deploy .vercel/output/static --project-name=elloracaves --branch=main
