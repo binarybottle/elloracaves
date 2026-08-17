@@ -132,7 +132,7 @@ This runs `npx @cloudflare/next-on-pages` (builds to `.vercel/output/static`) th
 
 ## Maintaining the Site
 
-A simple push to GitHub will update the website for basic text edits, via GitHub actions (see Settings → Secrets and variables → Actions)
+A simple push to the GitHub repo will update the website for basic text edits, via GitHub actions (see Settings → Secrets and variables → Actions)
 
 ### Admin page (`/admin`)
 
