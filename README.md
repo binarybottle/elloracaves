@@ -1,6 +1,6 @@
 # Ellora Caves Documentation
 
-This code maintains a website with a comprehensive photographic documentation of the Ellora cave temples, a UNESCO World Heritage Site in Maharashtra, India.
+This website represents a comprehensive photographic documentation of the Ellora cave temples, a UNESCO World Heritage Site in Maharashtra, India.
 
 ## Live Site
 
