@@ -29,11 +29,25 @@ export const NEWS_LINKS: NewsLinkItem[] = [
     title: 'The Telegraph — Calcutta Edition, Page 11',
     tag: 'announcement',
   },
+  {
+    label: 'Namaste (Air India)',
+    date: '(May 2026)',
+    href: '/news/NamasteAirIndia_inflight_magazine_2026-05_p66.png',
+    title: 'Namaste — Air India inflight magazine, New on the Shelf, page 66 (opens image)',
+    tag: 'announcement',
+  },
     {
     label: 'Mid-day',
     date: '(2026-04-05)',
     href: 'https://www.mid-day.com/sunday-mid-day/article/new-book-on-ellora-caves-by-deepanjana-klein-and-arno-klein-dives-into-its-temples-23624195',
     title: 'Sunday Mid-day — Harmony in history',
+    tag: 'excerpt',
+  },
+  {
+    label: 'Scroll.in',
+    date: '(2026-04-01)',
+    href: 'https://scroll.in/article/1091640/even-the-unfinished-buddhist-hindu-and-jain-temple-caves-in-ellora-have-stories-to-tell',
+    title: 'Even the ‘unfinished’ Buddhist, Hindu and Jain temple caves in Ellora have stories to tell',
     tag: 'excerpt',
   },
   {
