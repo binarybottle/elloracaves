@@ -9,6 +9,13 @@ export type NewsLinkItem = {
 
 export const NEWS_LINKS: NewsLinkItem[] = [
   {
+    label: 'Frontline',
+    date: '(2026-10-23)',
+    href: 'https://frontline.thehindu.com/arts-and-culture/art/ellora-caves-ancient-indian-art-architecture/article71582394.ece',
+    title: 'Frontline — Stories in stone',
+    tag: 'review',
+  },
+  {
     label: 'India Today',
     date: '(2026-07-13)',
     href: 'https://www.indiatoday.in/magazine/leisure/story/20260713-if-stones-could-sing-book-on-ellora-caves-ellora-cross-fertilization-of-style-in-buddhist-hindu-and-jain-cave-temples-by-deepanjana-klein-and-arno-klein-2939775-2026-07-03',
